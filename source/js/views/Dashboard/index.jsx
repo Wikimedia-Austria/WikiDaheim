@@ -37,6 +37,8 @@ export default class Dashboard extends Component {
           <Icon glyph='square' />
           <Icon glyph='circle' />
           <Icon glyph='triangle' />
+          <Icon glyph='marker_single' />
+          <Icon glyph='marker_cluster' />
         </div>
       </div>
     );

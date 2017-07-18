@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Routes from 'config/routes';
 import PropTypes from 'prop-types';
-import { loadCategories } from 'actions/app';
 
 import Header from 'components/Global/Header';
 

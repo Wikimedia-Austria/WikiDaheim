@@ -18,6 +18,9 @@ export const PLACE_LOAD_CATEGORY_ACTION_START = 'PLACE_LOAD_CATEGORY_ACTION_STAR
 export const PLACE_LOAD_CATEGORY_ACTION_ERROR = 'PLACE_LOAD_CATEGORY_ACTION_ERROR';
 export const PLACE_LOAD_CATEGORY_ACTION_SUCCESS = 'PLACE_LOAD_CATEGORY_ACTION_SUCCESS';
 
+export const PLACE_ITEM_HOVER = 'PLACE_ITEM_HOVER';
+export const PLACE_ITEM_LEAVE = 'PLACE_ITEM_LEAVE';
+
 /*
   AUTOCOMPLETE ACTIONS
 */
@@ -189,5 +192,21 @@ export function toggleCategory(categoryName) {
         .then(data => dispatch(placeLoadCategoryActionSuccess(data)))
         .catch(error => dispatch(placeLoadCategoryActionError(error)));
     }
+  };
+}
+
+
+/* PLACE ITEM HOVER */
+export function placeItemHover(data) {
+  return {
+    type: PLACE_ITEM_HOVER,
+    data,
+  };
+}
+
+export function placeItemLeave(error) {
+  return {
+    type: PLACE_ITEM_LEAVE,
+    error,
   };
 }

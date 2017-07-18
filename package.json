@@ -70,7 +70,8 @@
     "express": "^4.15.3",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
-    "mapbox-gl": "^0.38.0",
+    "js-md5": "^0.5.0",
+    "mapbox-gl": "^0.37.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-autocomplete": "^1.5.9",
@@ -80,7 +81,8 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.1.0"
   },
   "description": "WikiDaheim Client for Wikimedia Austria",
   "author": "Benedikt Reiter",

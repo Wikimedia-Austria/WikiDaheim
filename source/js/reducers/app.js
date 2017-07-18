@@ -1,4 +1,5 @@
 import { Map, List } from 'immutable';
+import uuidv4 from 'uuid/v4';
 
 import {
   AUTOCOMPLETE_ACTION_START,
@@ -17,7 +18,12 @@ import {
   PLACE_LOAD_CATEGORY_ACTION_START,
   PLACE_LOAD_CATEGORY_ACTION_ERROR,
   PLACE_LOAD_CATEGORY_ACTION_SUCCESS,
+
+  PLACE_ITEM_HOVER,
+  PLACE_ITEM_LEAVE,
 } from 'actions/app';
+
+import markerSingle from '../../assets/img/marker_single.png';
 
 const initialState = Map({
   searchLoading: false,
@@ -35,6 +41,8 @@ const initialState = Map({
   placeMapData: new Map(),
   articles: new List(),
   items: new List(),
+
+  hoveredElement: null,
 });
 
 const actionsMap = {
@@ -76,6 +84,7 @@ const actionsMap = {
         show: true,
         loaded: false,
         loading: false,
+        markerImage: markerSingle,
       })
     );
 
@@ -114,12 +123,15 @@ const actionsMap = {
       return category.set('loaded', loaded);
     });
 
+    // add UIDs to the items as the API doesn't
+    const items = action.data.categories.map((item) => Object.assign({}, item, { id: uuidv4() }));
+
     return state.merge({
       placeSelected: true,
       placeLoading: false,
       categories,
+      items,
       articles: action.data.articles,
-      items: action.data.categories,
     });
   },
 
@@ -177,11 +189,27 @@ const actionsMap = {
       }
     );
 
-    const items = state.get('items').merge(action.data.categories);
+    // add UIDs to the items as the API doesn't
+    const newItems = action.data.categories.map((item) => (
+      Object.assign({}, item, { id: uuidv4() })
+    ));
+    const items = state.get('items').merge(newItems);
 
     return state.merge({
       categories,
       items,
+    });
+  },
+
+  // MAP ITEMS HOVER
+  [PLACE_ITEM_HOVER]: (state, action) => {
+    return state.merge({
+      hoveredElement: action.data,
+    });
+  },
+  [PLACE_ITEM_LEAVE]: (state) => {
+    return state.merge({
+      hoveredElement: null,
     });
   },
 };

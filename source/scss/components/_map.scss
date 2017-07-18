@@ -1,0 +1,12 @@
+.mapboxgl-popup-content {
+  color: $primary-color-contrast;
+  background: transparent !important;
+  font-family: $main-font;
+  padding: 0 .5em !important;
+  line-height:2em;
+  border-radius:none !important;
+
+  strong {
+    font-weight:normal;
+  }
+}
