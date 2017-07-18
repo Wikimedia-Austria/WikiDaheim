@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Routes from 'config/routes';
 import PropTypes from 'prop-types';
+import { loadCategories } from 'actions/app';
 
-import Menu from 'components/Global/Menu';
+import Header from 'components/Global/Header';
 
 import svgSprite from 'svg-sprite-loader/runtime/sprite.build';
 
@@ -10,13 +11,13 @@ const sprite = svgSprite.stringify();
 
 export default class App extends Component {
   static propTypes = {
-    children: PropTypes.object,
+    children: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   }
 
   render() {
     return (
       <div className='App'>
-        <Menu />
+        <Header />
 
         <div className='Page'>
           <Routes />

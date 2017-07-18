@@ -1,6 +1,18 @@
-$font-family-serif: Garamond, "Times New Roman", serif;
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+html {
+  font-family: $main-font;
 
+  font-size:10px;
+
+  @include lg {
+    font-size: 12px;
+  }
+
+  @include xl {
+    font-size: 14px;
+  }
+}
+
+/*
 $grey-border: #eee;
 $grey-text: #aaa;
 $black: #000;
@@ -178,3 +190,4 @@ hr {
   border-top: 1px solid $grey-border;
   margin: 2rem 0;
 }
+*/

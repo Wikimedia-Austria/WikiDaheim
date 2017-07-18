@@ -1,3 +1,12 @@
+@import "base/config";
+
 @import "base/normalize";
 @import "base/breakpoints";
+@import "base/fonts";
 @import "base/app";
+
+/* components */
+@import "components/button";
+@import "components/header";
+@import "components/searchbar";
+@import "components/filters";
