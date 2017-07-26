@@ -30,16 +30,20 @@ export default class Header extends Component {
       <div className='Header'>
         <div className='Header-bar'>
           <div className='Header-logo'>
-            <img
-              src={ wikiDaheimLogo }
-              alt='WikiDaheim Logo'
-            />
+            <button onClick={ () => window.location = '/' }>
+              <img
+                src={ wikiDaheimLogo }
+                alt='WikiDaheim Logo'
+              />
+            </button>
           </div>
           <div className='Header-claim'>
-            <img
-              src={ wikiDaheimClaim }
-              alt='WikiDaheim'
-            />
+            <button onClick={ () => window.location = '/' }>
+              <img
+                src={ wikiDaheimClaim }
+                alt='WikiDaheim'
+              />
+            </button>
           </div>
           <div className='Header-menuToggle'>
             <MenuToggle />

@@ -1,0 +1,119 @@
+.ResultListItem {
+  display:flex;
+  margin:1em;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.2);
+  height:130px;
+  transition:background-color .2s ease;
+  flex-direction: row;
+  align-items:stretch;
+
+  &.ResultListItem--active {
+    background-color:rgba(0,0,0,.1);
+  }
+
+  &.ResultListItem--selected {
+    background-color:$warning-color;
+  }
+
+  .PhotoContainer {
+    width:20%;
+    flex-shrink: 0;
+    position:relative;
+    margin-right:1em;
+    background: $warning-color;
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    .PhotoContainer-InfoButton {
+      display:block;
+      position:absolute;
+      bottom:.25em;
+      left:.25em;
+      width:2em;
+      height:2em;
+      opacity:.8;
+      transition:opacity .2s ease;
+
+      background-image:url(../assets/icons/icon_info.svg);
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-origin: content-box;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      span {
+        display:none;
+      }
+    }
+
+    .PhotoContainer-UploadButton {
+      display:block;
+      position:absolute;
+      top:0;
+      right:0;
+      width:2.5em;
+      height:2.5em;
+      padding:.2em;
+
+      background-image:url(../assets/icons/icon_plus.svg);
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-origin: content-box;
+
+      span {
+        display:none;
+      }
+    }
+  }
+
+  .Details {
+    flex: 1;
+    display:flex;
+
+    .Details-left {
+      flex:1 0 40%;
+      padding:1em;
+      display:flex;
+      flex-direction: column;
+      box-sizing:border-box;
+
+      .Details-Title {
+        flex:1;
+      }
+    }
+
+    .Details-right {
+      flex:1 0 60%;
+      padding:1em;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      margin:0;
+      font-size:1em;
+      color: $primary-color;
+    }
+
+    p, strong {
+      font-size:.9em;
+      display:block;
+    }
+
+    p {
+      margin-bottom:0;
+      max-heigt: 5em;
+      overflow:hidden;
+    }
+
+    strong {
+
+    }
+
+    a {
+      font-size:.9em;
+    }
+  }
+}

@@ -8,7 +8,7 @@ import SearchBar from 'components/Dashboard/SearchBar';
 import ResultView from 'components/Dashboard/ResultView';
 import Filter from 'components/Dashboard/Filter';
 
-import Icon from 'components/Global/Icon';
+// import Icon from 'components/Global/Icon';
 
 @connect(() => ({}), null, null, { pure: false })
 export default class Dashboard extends Component {
@@ -27,20 +27,26 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className='Dashboard'>
-        <SearchBar />
-        <Filter />
-
-        <ResultView />
-
-        <h3>SVG sprite icon tests</h3>
-        <div className='Example'>
-          <Icon glyph='square' />
-          <Icon glyph='circle' />
-          <Icon glyph='triangle' />
-          <Icon glyph='marker_single' />
-          <Icon glyph='marker_cluster' />
+        <div className='Dashboard-Header'>
+          <SearchBar />
+          <Filter />
+        </div>
+        <div className='Dashboard-Content'>
+          <ResultView />
         </div>
       </div>
     );
   }
 }
+
+
+/*
+  <h3>SVG sprite icon tests</h3>
+  <div className='Example'>
+    <Icon glyph='square' />
+    <Icon glyph='circle' />
+    <Icon glyph='triangle' />
+    <Icon glyph='marker_single' />
+    <Icon glyph='marker_cluster' />
+  </div>
+*/

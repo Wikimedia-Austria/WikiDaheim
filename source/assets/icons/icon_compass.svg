@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <title>icon_compass</title>
+  <g id="icon_compass">
+    <polygon class="cls-1" points="25.154 1.184 20.757 16.785 11.665 10.17 25.154 1.184"/>
+    <polygon class="cls-2" points="5 29 9.397 13.399 18.489 20.013 5 29"/>
+  </g>
+</svg>

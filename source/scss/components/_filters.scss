@@ -14,14 +14,7 @@
     text-align:center;
 
     border:1px solid rgba(255,255,255,.05);
-
-    &:nth-child(1) {background-color:#ECAA42}
-    &:nth-child(2) {background-color:#BA5252}
-    &:nth-child(3) {background-color:#8A63AC}
-    &:nth-child(4) {background-color:#C95A9E}
-    &:nth-child(5) {background-color:#BA5252}
-    &:nth-child(6) {background-color:#6CB3DF}
-
+    
     @include sm {
       width: 50%;
     }
@@ -47,6 +40,47 @@
       }
     }
   }
+}
 
+.PropertyFilter {
+  display:flex;
 
+  button.PropertyFilter-Item {
+    position: relative;
+    flex: 1;
+    background-color: $primary-color;
+    color: $primary-color-contrast;
+    text-align: center;
+    font-size: 1.4em;
+    padding: calc(2vh + 0.2em) 0;
+    border-right: 1px solid rgba(255,255,255,.2);
+    transition: background-color .2s ease;
+
+    &:last-child {
+      border-right:none;
+    }
+
+    &:hover {
+      background-color: lighten($primary-color, 5%);
+    }
+
+    span {
+      position:absolute;
+      right:1em;
+      bottom:calc(2vh + 0.2em);
+      width:1.8em;
+      height: 1.8em;
+      background-image: url(../assets/icons/icon_unchecked.svg);
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size: contain;
+    }
+
+    &.PropertyFilter-Item--active {
+      span {
+        background: url(../assets/icons/icon_checked.svg);
+        background-repeat: no-repeat;
+      }
+    }
+  }
 }

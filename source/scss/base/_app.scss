@@ -12,6 +12,100 @@ html {
   }
 }
 
+.Dashboard {
+  height:100vh - $header-height;
+  max-height:calc(100vh - 6em);
+  display:flex;
+  flex-direction: column;
+
+  .Dashboard-Header {
+    flex:0;
+  }
+
+  .Dashboard-Content {
+    flex:1;
+    position:relative;
+  }
+}
+
+.ResultView {
+  display:flex;
+  flex-direction: row;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+
+  .ResultList {
+    overflow:auto;
+    flex:3;
+  }
+
+  .ResultMap {
+    flex:3;
+  }
+}
+
+.TextPage {
+  max-width: 550px;
+  margin: 5em auto 0;
+  text-align:center;
+  position: relative;
+
+  p {
+    text-align: justify;
+  }
+
+  .TextPage-CategoryInfo {
+    display:flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(196, 196, 196);
+    text-align:left;
+    padding:2em 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      margin-top:0;
+    }
+
+    p {
+      margin-bottom:0;
+    }
+
+    aside {
+      width:150px;
+      margin-right:1.5em;
+    }
+
+    div {
+      flex: 1;
+
+    }
+  }
+}
+
+.IntroScreen {
+  max-width: 500px;
+
+  .IntroScreen-CategoryList {
+    display:flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow:hidden;
+    margin-bottom:2em;
+
+    img {
+      flex: 1;
+      min-width:0;
+      max-height:85px;
+    }
+  }
+}
+
 /*
 $grey-border: #eee;
 $grey-text: #aaa;

@@ -1,0 +1,110 @@
+.CityInfo {
+  margin:1em;
+
+  header {
+    background-color: $primary-color;
+    color: $primary-color-contrast;
+    font-weight: bold;
+    positon: relative;
+    display:flex;
+    padding:1em;
+
+    h1 {
+      flex:1;
+      margin:0;
+    }
+
+    button {
+      width:3em;
+      height:3em;
+      background-image:url('../assets/icons/section_toggle_inactive.svg');
+    }
+
+    .CityInfo-UploadButton {
+      line-height:2.5em;
+      background-color: $secondary-color;
+      color: $secondary-color-contrast;
+      font-size:1.2em;
+      text-decoration:none;
+      padding:0 .75em;
+      margin-right:.5em;
+    }
+
+    button, .CityInfo-UploadButton {
+      transition: transform .2s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(.8);
+      }
+    }
+  }
+
+  &.CityInfo--opened {
+    header button {
+      background-image:url('../assets/icons/section_toggle_active.svg');
+    }
+
+    .CityInfo-Content {
+      max-height: 300px;
+    }
+  }
+
+  .CityInfo-Content {
+    background-color: $primary-color;
+    color: $primary-color-contrast;
+    max-height: 0;
+    transition: all .3s linear;
+    overflow: hidden;
+    display:flex;
+
+    .CityInfo-Text {
+      width:60%;
+      padding:1em;
+    }
+
+    .CityInfo-Sections {
+      width:40%;
+      padding:1em;
+
+      a {
+        display:block;
+        position:relative;
+        color: $primary-color-contrast;
+        text-decoration: none;
+        line-height:2.5em;
+        padding-right:3em;
+        margin-bottom:.2em;
+
+        span {
+          color:$unaviable-color;
+          display:block;
+          position: absolute;
+          top:0;
+          right:0;
+          width:2.5em;
+          height:2.5em;
+          background-image:url('../assets/icons/icon_section_unaviable.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+
+        }
+
+        &.CityInfo-Section--present {
+          color: $primary-color-contrast;
+          span {
+            background:url('../assets/icons/icon_section_aviable.svg');
+          }
+        }
+      }
+    }
+
+    h2 {
+      margin:0 0 .4em;
+      font-size: 1.2em;
+    }
+  }
+}

@@ -1,12 +1,12 @@
 import React from 'react';
 import CategoryFilter from './Filter/CategoryFilter';
+import PropertyFilter from './Filter/PropertyFilter';
 
 const Filter = () => (
-  <CategoryFilter />
+  <div>
+    <CategoryFilter />
+    <PropertyFilter />
+  </div>
 );
-
-Filter.propTypes = {
-
-};
 
 export default Filter;

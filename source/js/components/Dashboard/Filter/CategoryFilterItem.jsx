@@ -34,7 +34,10 @@ class CategoryFilterItem extends Component {
     });
 
     return (
-      <div className={ ItemClass }>
+      <div
+        className={ ItemClass }
+        style={ { backgroundColor: category.get('color') } }
+      >
         <button onClick={ this.toggle }>
           { category.get('title') }
         </button>

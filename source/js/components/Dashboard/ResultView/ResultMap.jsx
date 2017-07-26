@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
-import { placeItemHover, placeItemLeave } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged } from 'actions/app';
+import mapboxgl from 'mapbox-gl';
 
 /*
   possible enhancements: show city borders from
@@ -19,6 +20,7 @@ const Map = ReactMapboxGl({
   placeMapData: state.app.get('placeMapData'),
   categories: state.app.get('categories'),
   hoveredElement: state.app.get('hoveredElement'),
+  selectedElement: state.app.get('selectedElement'),
 }))
 class ResultMap extends Component {
   static propTypes = {
@@ -26,6 +28,7 @@ class ResultMap extends Component {
     categories: PropTypes.object,
     items: PropTypes.object,
     hoveredElement: PropTypes.object,
+    selectedElement: PropTypes.object,
     // from react-redux connect
     dispatch: PropTypes.func,
   };
@@ -33,28 +36,64 @@ class ResultMap extends Component {
   constructor(props) {
     super(props);
 
-    this.prepareMap = this.prepareMap.bind(this);
-    this.componentWillUpdate = this.componentWillUpdate.bind(this);
-
     this.state = {
       coordinates: this.props.placeMapData.get('geometry').get('coordinates').toJS(),
+      zoom: [11],
     };
+
+    this.prepareMap = this.prepareMap.bind(this);
+    this.componentWillUpdate = this.componentWillUpdate.bind(this);
+    this.onMapMove = this.onMapMove.bind(this);
   }
 
   componentWillUpdate(nextProps) {
+    const { dispatch } = this.props;
     // prevent the map from moving on every redux state change
     if (this.state.coordinates[0] === 0 || nextProps.placeMapData.get('id') !== this.props.placeMapData.get('id')) {
       const coordinates = nextProps.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({ coordinates });
     }
+
+    const currentSelected = this.props.selectedElement;
+    const nextSelected = nextProps.selectedElement;
+
+    if (
+      (!currentSelected && nextSelected) ||
+      (currentSelected && currentSelected.get('lastChange') !== nextSelected.get('lastChange'))
+    ) {
+      if (parseFloat(nextSelected.get('longitude')) > 0.0) {
+        const coordinates = [
+          parseFloat(nextSelected.get('longitude')),
+          parseFloat(nextSelected.get('latitude')),
+        ];
+
+        this.setState({
+          coordinates,
+          zoom: [17],
+        });
+
+        // dispatch a position change to reorder the list immediatelly (a little hackish)
+        dispatch(mapPositionChanged(coordinates));
+      }
+    }
+  }
+
+  onMapMove(map) {
+    const { dispatch } = this.props;
+    const mapCenter = map.getCenter();
+
+    dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
   }
 
   prepareMap(map) {
-    const { categories, items, dispatch } = this.props;
+    const { categories, dispatch } = this.props;
+
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.GeolocateControl());
 
     /* load category marker images */
     categories.forEach((category) => {
-      map.loadImage(category.get('markerImage'), (error, image) => {
+      map.loadImage(category.get('marker'), (error, image) => {
         if (error) throw error;
         map.addImage(category.get('name'), image);
       });
@@ -66,7 +105,7 @@ class ResultMap extends Component {
       canvas.style.cursor = 'pointer';
 
       dispatch(placeItemHover(
-        items.find((c) => c.get('id') === e.features[0].properties.id)
+        this.props.items.find((c) => c.get('id') === e.features[0].properties.id)
       ));
     });
 
@@ -76,18 +115,27 @@ class ResultMap extends Component {
 
       dispatch(placeItemLeave());
     });
+
+    map.on('click', 'unclustered-point', (e) => {
+      dispatch(placeItemSelect(
+        this.props.items.find((c) => c.get('id') === e.features[0].properties.id),
+        'map'
+      ));
+    });
+
+    this.onMapMove(map);
   }
 
   render() {
     const { items, categories, hoveredElement } = this.props;
 
+    const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
+
     const GEO_JSON_RESULTS = {
       type: 'geojson',
-        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
       data: {
         'type': 'FeatureCollection',
-        'features': items.toJS().map((item) => ({
+        'features': filteredItems.map((item) => ({
           'type': 'Feature',
           'properties': {
             'id': item.id,
@@ -108,8 +156,17 @@ class ResultMap extends Component {
     // show the mouse-hover-popup
     let popup = null;
 
-    if (hoveredElement) {
+    if (hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
       const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
+      const address = hoveredElement.get('adresse');
+
+      let popUpAddress = '';
+      if (address) {
+        popUpAddress = (
+          <span>{ address }</span>
+        );
+      }
+
       popup = (
         <Popup
           coordinates={ [parseFloat(hoveredElement.get('longitude')), parseFloat(hoveredElement.get('latitude'))] }
@@ -121,19 +178,22 @@ class ResultMap extends Component {
            }
         >
           <strong>{hoveredElement.get('name')}</strong>
+          {popUpAddress}
         </Popup>
       );
     }
 
-    return (<div>
+    return (<div className='ResultMap'>
       <Map
         style='mapbox://styles/wikimediaaustria/cj4yaqh5g4w9s2rqsjbqb1bqk' // eslint-disable-line react/style-prop-object
         containerStyle={ {
-          height: '60vh',
-          width: '100vw',
+          height: '100%',
+          width: '100%',
         } }
         center={ this.state.coordinates }
         onStyleLoad={ this.prepareMap }
+        onMoveEnd={ this.onMapMove }
+        zoom={ this.state.zoom }
       >
         <Source id='items' geoJsonSource={ GEO_JSON_RESULTS } />
         <Layer
@@ -196,6 +256,7 @@ class ResultMap extends Component {
               stops: categories.toJS().map((cat) => [cat.name, cat.name]),
             },
             'icon-size': 0.5,
+            'icon-allow-overlap': true,
           } }
         />
         {popup}

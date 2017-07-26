@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <title>icon_locate</title>
+  <g id="icon_locate">
+    <circle class="cls-1" cx="14.8397" cy="15.4337" r="11.4243"/>
+    <circle class="cls-1" cx="14.8397" cy="15.4337" r="3.5701"/>
+    <line class="cls-1" x1="14.8397" y1="1.5104" x2="14.8397" y2="3.6524"/>
+    <line class="cls-1" x1="14.8397" y1="26.858" x2="14.8397" y2="29"/>
+    <line class="cls-1" x1="3.1476" y1="15.4337" x2="1.0056" y2="15.4337"/>
+    <line class="cls-1" x1="28.1382" y1="16.3302" x2="27.1692" y2="16.3302"/>
+  </g>
+</svg>

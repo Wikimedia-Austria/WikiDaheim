@@ -18,8 +18,16 @@ export const PLACE_LOAD_CATEGORY_ACTION_START = 'PLACE_LOAD_CATEGORY_ACTION_STAR
 export const PLACE_LOAD_CATEGORY_ACTION_ERROR = 'PLACE_LOAD_CATEGORY_ACTION_ERROR';
 export const PLACE_LOAD_CATEGORY_ACTION_SUCCESS = 'PLACE_LOAD_CATEGORY_ACTION_SUCCESS';
 
+export const TOGGLE_FILTER = 'TOGGLE_FILTER';
+
 export const PLACE_ITEM_HOVER = 'PLACE_ITEM_HOVER';
 export const PLACE_ITEM_LEAVE = 'PLACE_ITEM_LEAVE';
+
+export const PLACE_ITEM_SELECT = 'PLACE_ITEM_SELECT';
+
+export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
+
+export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
 
 /*
   AUTOCOMPLETE ACTIONS
@@ -195,6 +203,13 @@ export function toggleCategory(categoryName) {
   };
 }
 
+/* TOGGLE FILTER */
+export function toggleFilter(data) {
+  return {
+    type: TOGGLE_FILTER,
+    data,
+  };
+}
 
 /* PLACE ITEM HOVER */
 export function placeItemHover(data) {
@@ -208,5 +223,31 @@ export function placeItemLeave(error) {
   return {
     type: PLACE_ITEM_LEAVE,
     error,
+  };
+}
+
+/* PLACE ITEM SELECT */
+export function placeItemSelect(data, source) {
+  return {
+    type: PLACE_ITEM_SELECT,
+    data,
+    source,
+  };
+}
+
+/* MAP MOVE */
+
+export function mapPositionChanged(data) {
+  return {
+    type: MAP_POSITION_CHANGED,
+    data,
+  };
+}
+
+/* TOGGLE CITY INFO */
+
+export function toggleCityInfo() {
+  return {
+    type: TOGGLE_CITY_INFO,
   };
 }

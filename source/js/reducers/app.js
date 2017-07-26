@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable';
+import { Map, List, Set, fromJS } from 'immutable';
 import uuidv4 from 'uuid/v4';
 
 import {
@@ -21,9 +21,14 @@ import {
 
   PLACE_ITEM_HOVER,
   PLACE_ITEM_LEAVE,
-} from 'actions/app';
 
-import markerSingle from '../../assets/img/marker_single.png';
+  PLACE_ITEM_SELECT,
+
+  MAP_POSITION_CHANGED,
+
+  TOGGLE_FILTER,
+  TOGGLE_CITY_INFO,
+} from 'actions/app';
 
 const initialState = Map({
   searchLoading: false,
@@ -35,14 +40,21 @@ const initialState = Map({
   categoriesError: false,
   categories: new List(),
 
+  activeFilters: new Set(),
+
   placeSelected: false,
   placeLoading: false,
   placeError: null,
   placeMapData: new Map(),
   articles: new List(),
   items: new List(),
+  commonscat: '',
 
   hoveredElement: null,
+  selectedElement: null,
+  currentMapPosition: fromJS([0, 0]),
+
+  showCityInfo: false,
 });
 
 const actionsMap = {
@@ -84,7 +96,6 @@ const actionsMap = {
         show: true,
         loaded: false,
         loading: false,
-        markerImage: markerSingle,
       })
     );
 
@@ -132,6 +143,7 @@ const actionsMap = {
       categories,
       items,
       articles: action.data.articles,
+      commonscat: action.data.commonscat,
     });
   },
 
@@ -156,6 +168,15 @@ const actionsMap = {
 
     return state.merge({
       categories,
+    });
+  },
+  [TOGGLE_FILTER]: (state, action) => {
+    const current = state.get('activeFilters');
+    const toggle = action.data;
+    const activeFilters = current.includes(toggle) ? current.delete(toggle) : current.add(toggle);
+
+    return state.merge({
+      activeFilters,
     });
   },
   [PLACE_LOAD_CATEGORY_ACTION_START]: (state, action) => {
@@ -210,6 +231,32 @@ const actionsMap = {
   [PLACE_ITEM_LEAVE]: (state) => {
     return state.merge({
       hoveredElement: null,
+    });
+  },
+
+  // MAP ITEM SELECT
+  [PLACE_ITEM_SELECT]: (state, action) => {
+    const selectedElement = action.data.merge({
+      'source': action.source,
+      'lastChange': Date.now(),
+    });
+
+    return state.merge({
+      selectedElement,
+    });
+  },
+
+  // MAP POSITION change
+  [MAP_POSITION_CHANGED]: (state, action) => {
+    return state.merge({
+      currentMapPosition: action.data,
+    });
+  },
+
+  // TOGGLE CITY INFO
+  [TOGGLE_CITY_INFO]: (state) => {
+    return state.merge({
+      showCityInfo: !state.get('showCityInfo'),
     });
   },
 };

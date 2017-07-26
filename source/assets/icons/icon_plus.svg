@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <title>icon_plus</title>
+  <g id="icon_plus">
+    <line class="cls-1" x1="15.1403" y1="2.3256" x2="15.1403" y2="28.1029"/>
+    <line class="cls-1" x1="28.029" y1="15.2142" x2="2.2517" y2="15.2142"/>
+  </g>
+</svg>

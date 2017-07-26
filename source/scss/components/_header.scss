@@ -1,4 +1,6 @@
 .Header {
+  height: $header-height;
+  min-height: 6em;
 
   .Header-bar {
     display: flex;

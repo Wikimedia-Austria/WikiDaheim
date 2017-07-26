@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ResultMap from './ResultView/ResultMap.jsx';
+import ResultMap from './ResultView/ResultMap';
+import ResultList from './ResultView/ResultList';
+import IntroScreen from './ResultView/IntroScreen';
 
 @connect(state => {
   const categories = state.app.get('categories');
+  const activeFilters = state.app.get('activeFilters');
   const items = state.app.get('items').filter((item) => {
-    return categories.find((c) => c.get('name') === item.get('category')).get('show');
+    const itemCategory = categories.find((c) => c.get('name') === item.get('category'));
+    if (itemCategory && !itemCategory.get('show')) return false;
+    if (activeFilters.size === 0) return true;
+
+    // check which filter is active and if the item qualifies
+    let qualified = false;
+    if (activeFilters.includes('incomplete') && !item.get('complete')) qualified = true;
+    if (activeFilters.includes('missing_images') && !item.get('foto')) qualified = true;
+    if (activeFilters.includes('missing_description') && !item.get('beschreibung')) qualified = true;
+    return qualified;
   });
 
   return {
@@ -27,8 +39,16 @@ class ResultView extends Component {
   render() {
     const { items, placeSelected } = this.props;
 
-    let resMap = <div>Hello World!</div>;
-    if (placeSelected) resMap = <ResultMap items={ items } />;
+    let resMap = <IntroScreen />;
+
+    if (placeSelected) {
+      resMap = (
+        <div className='ResultView'>
+          <ResultList items={ items } />
+          <ResultMap items={ items } />
+        </div>
+      );
+    }
 
     return resMap;
   }

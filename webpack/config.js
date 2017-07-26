@@ -58,7 +58,7 @@ if (IS_PRODUCTION) {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        comparisons: true,
+        comparisons: false, // mapbox-gl won't compile otherwose
         conditionals: true,
         dead_code: true,
         // drop_console: true,
@@ -111,7 +111,7 @@ const rules = [
             { removeUselessStrokeAndFill: true },
             {
               removeAttrs: {
-                attrs: ['fill', 'stroke.*'],
+                // attrs: ['fill', 'stroke.*'],
               },
             },
           ],
