@@ -133,7 +133,7 @@ class ResultListItem extends Component {
             >
               <p>
                 <Truncate lines={ 4 }>
-                  { item.get('beschreibung') }
+                  <span dangerouslySetInnerHTML={ { __html: item.get('beschreibung') } } />
                 </Truncate>
               </p>
             </ResultListItemDetail>
