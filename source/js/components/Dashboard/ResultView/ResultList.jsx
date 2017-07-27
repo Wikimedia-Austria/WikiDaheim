@@ -57,7 +57,10 @@ class ResultList extends Component {
   componentWillUpdate(nextProps, nextState) {
     // scroll top when list reorders
     if (
+      nextState.sortedList &&
+      this.state.sortedList &&
       this.state.sortedList.size > 0 &&
+      nextState.sortedList.size > 0 &&
       this.state.sortedList.get(0).get('id') !== nextState.sortedList.get(0).get('id')
     ) {
       this.scrollTop();
