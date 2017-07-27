@@ -1,9 +1,13 @@
 import { Map } from 'immutable';
 
-import { TOGGLE_MENU } from 'actions/menu';
+import {
+  TOGGLE_MENU,
+  TOGGLE_FILTER_MENU,
+} from 'actions/menu';
 
 const initialState = Map({
   showMenu: false,
+  showFilterMenu: false,
 });
 
 const actionsMap = {
@@ -12,6 +16,13 @@ const actionsMap = {
 
     return state.merge({
       showMenu,
+    });
+  },
+  [TOGGLE_FILTER_MENU]: (state) => {
+    const showFilterMenu = !state.get('showFilterMenu');
+
+    return state.merge({
+      showFilterMenu,
     });
   },
 };

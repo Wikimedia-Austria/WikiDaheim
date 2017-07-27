@@ -1,3 +1,7 @@
+.mapboxgl-popup {
+  pointer-events: none !important;
+}
+
 .mapboxgl-popup-content {
   color: $primary-color-contrast;
   background: transparent !important;
@@ -5,6 +9,7 @@
   padding: .5em .5em !important;
   border-radius:none !important;
   text-align: center;
+  pointer-events: none !important;
 
   strong {
     font-weight:normal;

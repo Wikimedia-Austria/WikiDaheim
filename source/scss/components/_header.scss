@@ -1,23 +1,45 @@
 .Header {
   height: $header-height;
-  min-height: 6em;
+  min-height: 4em;
 
   .Header-bar {
     display: flex;
+    position:fixed;
+    z-index:$z-index-menu - 1;
+    top:0;
+    left:0;
+    right:0;
+    background-color:white;
+    height: $header-height;
+    min-height: 4em;
+    overflow:hidden;
 
     img {
       height: $header-height;
       padding:1em;
-      min-height:6em;
+      min-height:4em;
+      box-sizing: border-box;
     }
 
     .Header-claim {
       flex: 1;
       text-align: center;
 
-      img {
-        padding: 2em;
+      button {
+        height:100%;
       }
+
+      img {
+        height:50%;
+        width:100%;
+        padding:0 1em;
+        min-height:2em;
+      }
+    }
+
+    .Header-menuToggle {
+      width: $header-height/3*2;
+      min-width: 2em;
     }
   }
 
@@ -35,6 +57,13 @@
 
     &.Header-menu--active {
       transform: translateX(0);
+    }
+
+    .Menu-link--imprint {
+      color:white;
+      position:absolute;
+      bottom:1em;
+      right: 1em;
     }
 
     a {

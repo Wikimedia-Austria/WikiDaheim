@@ -1,13 +1,15 @@
 .SearchBar-Bar {
   background-color: $primary-color;
+  display:flex;
+  align-items: center;
   padding: 0 1em;
 
-  @include sm {
+  @include md {
     padding: 0 25%;
   }
 
   > div {
-    width:100%;
+    flex:1;
   }
 
   input {
@@ -29,12 +31,10 @@
     background-color: $secondary-color;
     color: $secondary-color-contrast;
     font-size:1.6em;
-    fontSize: 90%;
     position: fixed;
     overflow: auto;
     left:0;
     width:100%;
-    maxHeight: 50%; // TODO: don't cheat, let it flow to the bottom
     z-index:$z-index-suggestions;
 
     @include sm {
@@ -43,12 +43,51 @@
       width:50%;
     }
 
+    .ViennaWarning {
+      background-color: $warning-color;
+      color: white;
+      font-size:.8em;
+    }
+
     div {
       padding: 1em;
     }
 
     .highlighted {
       background-color:lighten($secondary-color, 15%);
+    }
+  }
+
+  .SearchBar-Filter {
+    flex:0 1 auto;
+
+    @include md {
+      display:none;
+    }
+
+    .FilterButton {
+      width:calc(1.6em + 2vh);
+      height:calc(1.6em + 2vh);
+      position:relative;
+      background-image:url(../assets/icons/icon_filter.svg);
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+
+      &.FilterButton--filtersActive::after {
+        position:absolute;
+        content:'';
+        top:.25em;
+        right:0;
+        width:1.5em;
+        height:1.5em;
+        border-radius:50%;
+        background-color: $unaviable-color;
+      }
+    }
+
+    span {
+      display:none;
     }
   }
 }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
-import geolib from 'geolib';
 import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
 import scrollTo from 'lib/ScrollTo';
 import ResultListItem from './ResultListItem';
 import CityInfo from './CityInfo';
+import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
 
 @connect(state => ({
   currentMapPosition: state.app.get('currentMapPosition'),
@@ -28,7 +29,8 @@ class ResultList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      containerHeight: 500,
+      containerHeight: 5,
+      sortedList: new List(),
     };
 
     this.hoverItem = this.hoverItem.bind(this);
@@ -36,28 +38,41 @@ class ResultList extends Component {
     this.updateHeight = this.updateHeight.bind(this);
   }
 
-  componentDidMount() {
-    this.updateHeight();
-    window.addEventListener('resize', this.updateHeight);
+  componentWillMount() {
+    this.worker = new DistanceSort();
   }
 
-  componentWillUpdate(nextProps) {
-    const { items } = nextProps;
-    const currentSelected = this.props.selectedElement;
-    const nextSelected = nextProps.selectedElement;
+  componentDidMount() {
+    const { items, currentMapPosition } = this.props;
 
+    this.updateHeight();
+    window.addEventListener('resize', this.updateHeight);
+
+    this.worker.postMessage({
+      currentMapPosition: currentMapPosition.toJS(),
+      items: items.toJS(),
+    });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // scroll top when list reorders
     if (
-      (!currentSelected && nextSelected) ||
-      (currentSelected && currentSelected.get('lastChange') !== nextSelected.get('lastChange'))
+      this.state.sortedList.size > 0 &&
+      this.state.sortedList.get(0).get('id') !== nextState.sortedList.get(0).get('id')
     ) {
-      const list = document.getElementsByClassName('ResultList-List')[0];
-      const currentIndex = items.findIndex((item) => item.get('id') === nextSelected.get('id'));
+      this.scrollTop();
+      this.updateHeight();
+    }
 
-      if (parseFloat(nextSelected.get('longitude')) > 0.0) {
-        scrollTo(list, 0, 1000);
-      } else {
-        scrollTo(list, currentIndex * 130, 1000);
-      }
+    // check if we get a new list
+    if (
+      this.props.currentMapPosition !== nextProps.currentMapPosition ||
+      this.props.items !== nextProps.items
+    ) {
+      this.worker.postMessage({
+        currentMapPosition: nextProps.currentMapPosition.toJS(),
+        items: nextProps.items.toJS(),
+      });
     }
   }
 
@@ -77,6 +92,11 @@ class ResultList extends Component {
     dispatch(placeItemLeave());
   }
 
+  scrollTop() {
+    const list = document.getElementsByClassName('ResultList-List')[0];
+    scrollTo(list, 0, 1000);
+  }
+
   selectItem(item) {
     const { dispatch } = this.props;
 
@@ -84,7 +104,7 @@ class ResultList extends Component {
   }
 
   updateHeight() {
-    const container = document.getElementsByClassName('ResultList');
+    const container = document.getElementsByClassName('ResultList-ListWrapper');
 
     if (container.length > 0) {
       this.setState({ containerHeight: container[0].clientHeight });
@@ -92,30 +112,10 @@ class ResultList extends Component {
   }
 
   render() {
-    const { items, categories, currentMapPosition, hoveredElement, selectedElement } = this.props;
+    const { categories, hoveredElement, selectedElement } = this.props;
+    const sortedItems = this.state.sortedList;
 
-    const itemsWithDistance = items.map((item) => {
-      try {
-        return item.merge({ distance: geolib.getDistanceSimple(
-          {
-            latitude: currentMapPosition.get(1),
-            longitude: currentMapPosition.get(0),
-          },
-          {
-            latitude: item.get('latitude'),
-            longitude: item.get('longitude'),
-          }
-        ) });
-      } catch (err) {
-        return item.merge({ distance: 100000 });
-      }
-    });
-
-    const sortedItems = itemsWithDistance.sort((a, b) => {
-      if (a.get('distance') < b.get('distance')) { return -1; }
-      if (a.get('distance') > b.get('distance')) { return 1; }
-      return 0;
-    });
+    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
     const isHovered = (item) => {
       if (hoveredElement && item.get('id') === hoveredElement.get('id')) return true;
@@ -136,20 +136,22 @@ class ResultList extends Component {
       <div className='ResultList'>
         <CityInfo />
 
-        <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
-          { sortedItems.map((item) => (
-            <ResultListItem
-              item={ item }
-              categoryColor={ getCategoryColor(item) }
-              isHovered={ isHovered(item) }
-              isSelected={ isSelected(item) }
-              onHover={ () => this.hoverItem(item) }
-              onLeave={ () => this.leaveItem() }
-              onClick={ () => this.selectItem(item) }
-              key={ item.get('id') }
-            />
-          )) }
-        </Infinite>
+        <div className='ResultList-ListWrapper'>
+          <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
+            { sortedItems.map((item) => (
+              <ResultListItem
+                item={ item }
+                categoryColor={ getCategoryColor(item) }
+                isHovered={ isHovered(item) }
+                isSelected={ isSelected(item) }
+                onHover={ () => this.hoverItem(item) }
+                onLeave={ () => this.leaveItem() }
+                onClick={ () => this.selectItem(item) }
+                key={ item.get('id') }
+              />
+            )) }
+          </Infinite>
+        </div>
       </div>
     );
   }

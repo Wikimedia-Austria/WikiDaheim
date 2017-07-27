@@ -10,7 +10,7 @@ export default class About extends Component {
   render() {
     return (
       <div className='TextPage'>
-        <h1>Kategorien</h1>
+        <h1>Themen</h1>
 
         <div className='TextPage-CategoryInfo'>
           <aside>
@@ -84,7 +84,7 @@ export default class About extends Component {
           </div>
         </div>
 
-        <div className='TextPage-CategoryInfo'>
+        <div className='TextPage-CategoryInfo' style={{ display:none }}>
           <aside>
             <img src={ FriedhofIcon } role='presentation' />
           </aside>

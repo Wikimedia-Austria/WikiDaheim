@@ -45,9 +45,7 @@ export default class Header extends Component {
               />
             </button>
           </div>
-          <div className='Header-menuToggle'>
-            <MenuToggle />
-          </div>
+          <div className='Header-menuToggle' />
         </div>
 
         <div className={ headerMenuClass }>
@@ -57,16 +55,40 @@ export default class Header extends Component {
             exact
             to={ routeCodes.DASHBOARD }
           >
-            <span>Dashboard</span>
+            <span>WikiDaheim</span>
           </NavLink>
           <NavLink
             activeClassName='Menu-link--active'
             className='Menu-link'
             to={ routeCodes.ABOUT }
           >
-            <span>Über</span>
+            <span>Themen</span>
           </NavLink>
+          <NavLink
+            activeClassName='Menu-link--active'
+            className='Menu-link'
+            to={ routeCodes.COMPETITION }
+          >
+            <span>Wettbewerb</span>
+          </NavLink>
+          <NavLink
+            activeClassName='Menu-link--active'
+            className='Menu-link'
+            to={ routeCodes.CREDITS }
+          >
+            <span>Credits</span>
+          </NavLink>
+
+          <a
+            className='Menu-link--imprint'
+            href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Impressum
+          </a>
         </div>
+        <MenuToggle />
       </div>
     );
   }

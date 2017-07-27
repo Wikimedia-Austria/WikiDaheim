@@ -61,7 +61,8 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
     "webpack-dashboard": "^0.4.0",
-    "webpack-dev-server": "^2.2.1"
+    "webpack-dev-server": "^2.2.1",
+    "worker-loader": "^0.8.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -82,6 +83,7 @@
     "react-redux": "^4.4.8",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
     "react-truncate": "^2.1.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",

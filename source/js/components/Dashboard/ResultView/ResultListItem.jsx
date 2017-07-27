@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
 import md5 from 'js-md5';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import ResultListItemDetail from './ResultListItemDetail';
 
+injectTapEventPlugin();
 class ResultListItem extends Component {
   static propTypes = {
     item: PropTypes.object,
@@ -28,8 +30,15 @@ class ResultListItem extends Component {
     let photoSrc = 'none';
     let photoInfoLink = null;
     if (item.get('foto')) {
-      const photoLinkString = item.get('foto').replace(/ /g, '_');
-      const hash = md5(photoLinkString);
+      const hashString = item.get('foto')
+        .replace(/ /g, '_')
+        .replace(/\\/, '');
+
+      const photoLinkString = hashString
+        .replace(/&amp;/g, '%26')
+        .replace(/'/g, '%27');
+
+      const hash = md5(hashString);
       const hp1 = hash.substring(0, 1);
       const hp2 = hash.substring(0, 2);
       photoSrc = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
@@ -81,9 +90,9 @@ class ResultListItem extends Component {
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         className={ ItemClass }
-        onMouseEnter={ onHover }
-        onMouseLeave={ onLeave }
-        onClick={ onClick }
+        onMouseEnter={ window.USER_IS_TOUCHING ? null : onHover }
+        onMouseLeave={ window.USER_IS_TOUCHING ? null : onLeave }
+        onTouchTap={ onClick }
       >
         <div
           className='PhotoContainer'

@@ -236,11 +236,21 @@ export function placeItemSelect(data, source) {
 }
 
 /* MAP MOVE */
+let mapPositionTimeout = null;
 
 export function mapPositionChanged(data) {
-  return {
-    type: MAP_POSITION_CHANGED,
-    data,
+  return (dispatch) => {
+    if (mapPositionTimeout) {
+      clearTimeout(mapPositionTimeout);
+    }
+
+    // timeout to prevent multiple calls while touch zoom
+    mapPositionTimeout = setTimeout(() => {
+      dispatch({
+        type: MAP_POSITION_CHANGED,
+        data,
+      });
+    }, 100);
   };
 }
 

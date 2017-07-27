@@ -25,17 +25,22 @@ html {
   .Dashboard-Content {
     flex:1;
     position:relative;
+    overflow:auto;
   }
 }
 
 .ResultView {
   display:flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   position:absolute;
   top:0;
   right:0;
   bottom:0;
   left:0;
+
+  @include md {
+    flex-direction: row;
+  }
 
   .ResultList {
     overflow:auto;
@@ -43,18 +48,58 @@ html {
   }
 
   .ResultMap {
-    flex:3;
+    flex:1;
+
+    @include md {
+      flex: 3;
+    }
   }
 }
 
 .TextPage {
   max-width: 550px;
-  margin: 5em auto 0;
+  margin: 5vh auto 3em;
+  padding: 0 1em;
   text-align:center;
   position: relative;
 
   p {
     text-align: justify;
+
+    a {
+      padding: 0 .5em;
+    }
+  }
+
+  ul {
+    text-align:left;
+    padding-left:20px;
+
+    li {
+      margin-bottom: .5em;
+    }
+  }
+
+  &.TextPage-Competition {
+    text-align:left;
+
+    p {
+      text-align:left;
+    }
+
+    h2 {
+      margin-top:2em;
+    }
+  }
+
+  &.TextPage-Credits {
+    p {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top:2em;
+    }
   }
 
   .TextPage-CategoryInfo {
@@ -77,8 +122,12 @@ html {
     }
 
     aside {
-      width:150px;
+      width:50px;
       margin-right:1.5em;
+
+      @include sm {
+        width: 150px;
+      }
     }
 
     div {
@@ -105,183 +154,3 @@ html {
     }
   }
 }
-
-/*
-$grey-border: #eee;
-$grey-text: #aaa;
-$black: #000;
-$white: #fff;
-
-html {
-  font-size: 10px;
-
-  @include lg {
-    font-size: 12px;
-  }
-
-  @include xl {
-    font-size: 14px;
-  }
-}
-
-body {
-  color: $black;
-  font-family: $font-family-sans-serif;
-}
-
-.App {
-  font-size: 1.8rem;
-  padding: 2rem;
-
-  @include md {
-    padding: 3rem;
-  }
-
-  @include md {
-    padding: 4rem;
-  }
-}
-
-a {
-  color: $grey-text;
-}
-
-a:hover {
-  color: $black;
-}
-
-h1,
-h2,
-h3 {
-  margin: 2rem 0;
-}
-
-h1 {
-  font-size: 2.5rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.7rem;
-}
-
-button {
-  background: transparent;
-  border-radius: 1.6rem;
-  border: 0.1rem solid $black;
-  cursor: pointer;
-  font-size: 1.5rem;
-  padding: 0.7rem 2rem;
-}
-
-button:disabled {
-  opacity: 0.3;
-}
-
-button:hover {
-  background: $white;
-}
-
-.Menu {
-  align-items: center;
-  border-bottom: 1px solid $grey-border;
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 2rem;
-  margin: 0 auto 2rem;
-  max-width: 60rem;
-
-  @include lg {
-    margin-left: 20rem;
-    margin: 0 0 2rem 20rem;
-    padding-bottom: 0;
-  }
-}
-
-.Menu img {
-  display: block;
-}
-
-.Menu-logo {
-  margin-right: 2rem;
-  width: 6rem;
-
-  @include lg {
-    position: fixed;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    border-right: 1px solid $grey-border;
-    width: 20rem;
-    padding: 4rem;
-  }
-}
-
-.Menu-links {
-  @include md {
-  }
-}
-
-.Menu-link {
-  display: inline-block;
-  font-family: $font-family-serif;
-  font-style: italic;
-  margin-left: 1.5rem;
-  line-height: 3rem;
-  text-decoration: none;
-
-  @include md {
-    margin-left: 3rem;
-  }
-
-  @include lg {
-    margin: 0 3rem 0 0;
-    line-height: 7.5rem;
-  }
-}
-
-.Menu-link--active {
-  color: $black;
-}
-
-.Page {
-  max-width: 60rem;
-  margin: 0 auto;
-
-  @include lg {
-    margin: 0 0 0 20rem;
-  }
-}
-
-.Example {
-  background: #F6F8FA;
-  padding: 2rem;
-  border-radius: 0.4rem;
-}
-
-.Example .Icon {
-  margin-right: 10px;
-}
-
-.BackgroundImgExample {
-  background-image: url(../assets/img/book1.jpg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 16rem;
-  max-width: 25rem;
-}
-
-.ImgExample {
-  max-width: 25rem;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid $grey-border;
-  margin: 2rem 0;
-}
-*/

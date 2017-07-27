@@ -13,20 +13,22 @@ button {
   $distance: 27%;
   $lineHeight: 8%;
 
+  position: fixed;
+  top:0;
+  right:0;
   background-color: transparent;
-  position: relative;
   height: $header-height;
-  width: $header-height;
-  min-height: 6em;
-  min-width: 6em;
+  width: $header-height/3*2;
+  min-height: 4em;
+  min-width: 2.6em;
   z-index: $z-index-menu + 1;
 
   span {
     position: absolute;
     background-color: $primary-color;
     top: calc(50% - #{$lineHeight/2});
-    left: $distance;
-    right: $distance;
+    left: 0;
+    right: 1em;
     height: $lineHeight;
 
     transition: transform .2s 0s ease-in,

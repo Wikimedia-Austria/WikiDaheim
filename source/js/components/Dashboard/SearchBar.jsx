@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { autocomplete, selectPlace } from 'actions/app';
+import FilterButton from './Filter/FilterButton';
 
 @connect(state => ({
   searchData: state.app.get('searchData'),
@@ -36,6 +37,8 @@ class SearchBar extends Component {
       (obj) => obj.get('place_name') === place
     );
 
+    if (selectedPlace.get('text') === 'Wien') return;
+
     dispatch(selectPlace(selectedPlace));
   }
 
@@ -47,6 +50,29 @@ class SearchBar extends Component {
       searchText,
     } = this.props;
 
+    const renderItem = (item, isHighlighted) => {
+      if (item.text === 'Wien') {
+        return (
+          <div className='ViennaWarning'>
+            Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)
+          </div>
+        );
+      } else {
+        return (
+          <div className={ isHighlighted ? 'highlighted' : '' }>
+            {item.text}
+            {item.context.map((context) => {
+              const id = context.id.split('.');
+              if (['region'].includes(id[0])) {
+                return `, ${ context.text }`;
+              }
+              return '';
+            })}
+          </div>
+        );
+      }
+    };
+
     return (
       <section className='SearchBar'>
         <div className='SearchBar-Bar'>
@@ -54,18 +80,7 @@ class SearchBar extends Component {
             inputProps={ { placeholder: 'Gemeinde hier suchen...' } }
             getItemValue={ (item) => item.place_name }
             items={ searchData.toJS() }
-            renderItem={ (item, isHighlighted) =>
-              <div className={ isHighlighted ? 'highlighted' : '' }>
-                {item.text}
-                {item.context.map((context) => {
-                  const id = context.id.split('.');
-                  if (['region'].includes(id[0])) {
-                    return `, ${ context.text }`;
-                  }
-                  return '';
-                })}
-              </div>
-            }
+            renderItem={ renderItem }
             renderMenu={ (items) => (
               <div className='SearchBar-Suggestions' children={ items } /> // eslint-disable-line react/no-children-prop
             ) }
@@ -73,6 +88,10 @@ class SearchBar extends Component {
             onChange={ (e) => this.onInputChange(e.target.value) }
             onSelect={ (v) => this.onPlaceSelect(v) }
           />
+
+          <div className='SearchBar-Filter'>
+            <FilterButton />
+          </div>
         </div>
       </section>
     );

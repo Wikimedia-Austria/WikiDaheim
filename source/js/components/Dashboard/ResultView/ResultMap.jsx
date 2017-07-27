@@ -46,8 +46,12 @@ class ResultMap extends Component {
     this.onMapMove = this.onMapMove.bind(this);
   }
 
+  componentDidMount() {
+    const { dispatch, placeMapData } = this.props;
+    dispatch(mapPositionChanged(placeMapData.get('geometry').get('coordinates').toJS()));
+  }
+
   componentWillUpdate(nextProps) {
-    const { dispatch } = this.props;
     // prevent the map from moving on every redux state change
     if (this.state.coordinates[0] === 0 || nextProps.placeMapData.get('id') !== this.props.placeMapData.get('id')) {
       const coordinates = nextProps.placeMapData.get('geometry').get('coordinates').toJS();
@@ -71,9 +75,6 @@ class ResultMap extends Component {
           coordinates,
           zoom: [17],
         });
-
-        // dispatch a position change to reorder the list immediatelly (a little hackish)
-        dispatch(mapPositionChanged(coordinates));
       }
     }
   }
@@ -89,7 +90,7 @@ class ResultMap extends Component {
     const { categories, dispatch } = this.props;
 
     map.addControl(new mapboxgl.NavigationControl());
-    map.addControl(new mapboxgl.GeolocateControl());
+    // map.addControl(new mapboxgl.GeolocateControl());
 
     /* load category marker images */
     categories.forEach((category) => {
@@ -99,22 +100,24 @@ class ResultMap extends Component {
       });
     });
 
-    /* trigger react */
-    map.on('mouseenter', 'unclustered-point', (e) => {
-      const canvas = map.getCanvas();
-      canvas.style.cursor = 'pointer';
+    if (!window.USER_IS_TOUCHING) {
+      /* trigger react */
+      map.on('mouseenter', 'unclustered-point', (e) => {
+        const canvas = map.getCanvas();
+        canvas.style.cursor = 'pointer';
 
-      dispatch(placeItemHover(
-        this.props.items.find((c) => c.get('id') === e.features[0].properties.id)
-      ));
-    });
+        dispatch(placeItemHover(
+          this.props.items.find((c) => c.get('id') === e.features[0].properties.id)
+        ));
+      });
 
-    map.on('mouseleave', 'unclustered-point', () => {
-      const canvas = map.getCanvas();
-      canvas.style.cursor = '';
+      map.on('mouseleave', 'unclustered-point', () => {
+        const canvas = map.getCanvas();
+        canvas.style.cursor = '';
 
-      dispatch(placeItemLeave());
-    });
+        dispatch(placeItemLeave());
+      });
+    }
 
     map.on('click', 'unclustered-point', (e) => {
       dispatch(placeItemSelect(
@@ -122,8 +125,6 @@ class ResultMap extends Component {
         'map'
       ));
     });
-
-    this.onMapMove(map);
   }
 
   render() {
@@ -174,7 +175,7 @@ class ResultMap extends Component {
             'backgroundColor': hoveredCategory.get('color'),
           } }
           offset={
-            [0, -30]
+            [0, -35]
            }
         >
           <strong>{hoveredElement.get('name')}</strong>

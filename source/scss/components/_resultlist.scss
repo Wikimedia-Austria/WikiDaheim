@@ -1,18 +1,39 @@
+.ResultList {
+  display: flex;
+  height:100%;
+  overflow:hidden;
+  flex-direction: column;
+
+  .ResultList-ListWrapper {
+    flex: 1;
+    overflow:hidden;
+  }
+}
+
 .ResultListItem {
   display:flex;
-  margin:1em;
+  margin:.5em;
   box-shadow:.1em .1em .3em rgba(0,0,0,.2);
   height:130px;
   transition:background-color .2s ease;
   flex-direction: row;
   align-items:stretch;
+  cursor: pointer;
+
+  @include sm {
+    margin: 1em;
+  }
+
+  &:nth-child(2) {
+    margin-top:0;
+  }
 
   &.ResultListItem--active {
     background-color:rgba(0,0,0,.1);
   }
 
   &.ResultListItem--selected {
-    background-color:$warning-color;
+    background-color:lighten($warning-color, 20%);
   }
 
   .PhotoContainer {
@@ -72,23 +93,53 @@
   .Details {
     flex: 1;
     display:flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: hidden;
+
+    @include sm {
+      flex-direction: row;
+    }
 
     .Details-left {
-      flex:1 0 40%;
       padding:1em;
       display:flex;
-      flex-direction: column;
       box-sizing:border-box;
+      flex-direction: column;
+      padding-bottom:0;
+      flex: 1;
 
       .Details-Title {
         flex:1;
       }
+
+      @include sm {
+        flex:1 0 40%;
+        padding-bottom:1em;
+        max-width: 40%;
+        overflow: hidden;
+      }
     }
 
     .Details-right {
-      flex:1 0 60%;
       padding:1em;
       box-sizing: border-box;
+      padding-top: 0;
+
+      p {
+        display: none;
+      }
+
+      @include sm {
+        flex:1 0 60%;
+        padding-top: 1em;
+        max-width:60%;
+        overflow:hidden;
+
+        p {
+          display: block;
+        }
+      }
     }
 
     h2 {
@@ -106,10 +157,6 @@
       margin-bottom:0;
       max-heigt: 5em;
       overflow:hidden;
-    }
-
-    strong {
-
     }
 
     a {

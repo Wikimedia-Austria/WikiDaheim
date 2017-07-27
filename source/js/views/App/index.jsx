@@ -13,6 +13,13 @@ export default class App extends Component {
     children: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
   }
 
+  componentDidMount() {
+    window.addEventListener('touchstart', function onFirstTouch() {
+      window.USER_IS_TOUCHING = true;
+      window.removeEventListener('touchstart', onFirstTouch, false);
+    }, false);
+  }
+
   render() {
     return (
       <div className='App'>
