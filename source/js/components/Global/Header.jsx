@@ -7,7 +7,6 @@ import { routeCodes } from 'config/routes';
 import MenuToggle from './Header/MenuToggle';
 
 import wikiDaheimLogo from '../../../assets/img/wikidaheim-logo.svg';
-import wikiDaheimClaim from '../../../assets/img/wikidaheim-claim.svg';
 
 @connect(state => ({
   showMenu: state.menu.get('showMenu'),
@@ -38,12 +37,7 @@ export default class Header extends Component {
             </button>
           </div>
           <div className='Header-claim'>
-            <button onClick={ () => window.location = '/' }>
-              <img
-                src={ wikiDaheimClaim }
-                alt='WikiDaheim'
-              />
-            </button>
+            <button onClick={ () => window.location = '/' } />
           </div>
           <div className='Header-menuToggle' />
         </div>

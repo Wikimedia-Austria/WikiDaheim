@@ -49,9 +49,18 @@ html {
 
   .ResultMap {
     flex:1;
+    position:relative;
 
     @include md {
       flex: 3;
+    }
+
+    .mapboxgl-map {
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
     }
   }
 }
@@ -62,6 +71,7 @@ html {
   padding: 0 1em;
   text-align:center;
   position: relative;
+  -moz-osx-font-smoothing: grayscale;
 
   p {
     text-align: justify;

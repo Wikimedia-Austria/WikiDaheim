@@ -13,6 +13,7 @@
     height: $header-height;
     min-height: 4em;
     overflow:hidden;
+    align-items:center;
 
     img {
       height: $header-height;
@@ -24,16 +25,18 @@
     .Header-claim {
       flex: 1;
       text-align: center;
+      display:flex;
+      align-items:center;
 
       button {
-        height:100%;
-      }
-
-      img {
-        height:50%;
-        width:100%;
-        padding:0 1em;
+        height:$header-height/10*6;
         min-height:2em;
+        width:100%;
+        margin:0 2em;
+        background-image:url(../assets/img/wikidaheim-claim.svg);
+        background-repeat:no-repeat;
+        background-size: contain;
+        background-position:center;
       }
     }
 

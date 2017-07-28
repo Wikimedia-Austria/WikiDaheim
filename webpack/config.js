@@ -97,11 +97,12 @@ const rules = [
     exclude: /node_modules/,
     use: ['babel-loader'],
   },
+  /* // remove as safari does not support svg sprites
   {
     test: /\.svg$/,
     use: [
       {
-        loader: 'svg-sprite-loader',
+        loader: 'file-loader',
       },
       {
         loader: 'svgo-loader',
@@ -119,6 +120,12 @@ const rules = [
       },
     ],
     include: paths.icons,
+  },
+  */
+  {
+    test: /\.svg$/,
+    include: paths.icons,
+    use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
   },
   {
     test: /\.(png|gif|jpg|svg)$/,
