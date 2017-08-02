@@ -138,12 +138,12 @@ export function selectPlace(place) {
   return function (dispatch, getState) {
     dispatch(placeSelectActionStart(place));
 
-    const coordinates = place.get('geometry').get('coordinates');
+    const wikidata = place.get('properties').get('wikidata');
 
     const selectedCats = getState().app.get('categories').filter((cat) => cat.get('show'));
     const mappedCats = selectedCats.toJS().map((cat) => cat.name);
 
-    wikiDaheimApi.getTownData(coordinates.get(0), coordinates.get(1), mappedCats, true)
+    wikiDaheimApi.getTownData(wikidata, mappedCats, true)
       .then(data => dispatch(placeSelectActionSuccess(data)))
       .catch(error => dispatch(placeSelectActionError(error)));
   };
@@ -194,9 +194,9 @@ export function toggleCategory(categoryName) {
     if (state.get('placeSelected') && !currentCategory.get('loaded')) {
       dispatch(placeLoadCategoryActionStart(categoryName));
 
-      const coordinates = state.get('placeMapData').get('geometry').get('coordinates');
+      const wikidata = state.get('placeMapData').get('properties').get('wikidata');
 
-      wikiDaheimApi.getTownData(coordinates.get(0), coordinates.get(1), [categoryName], false)
+      wikiDaheimApi.getTownData(wikidata, [categoryName], false)
         .then(data => dispatch(placeLoadCategoryActionSuccess(data)))
         .catch(error => dispatch(placeLoadCategoryActionError(error)));
     }

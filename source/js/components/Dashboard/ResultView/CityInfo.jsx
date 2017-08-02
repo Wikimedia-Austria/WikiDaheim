@@ -115,7 +115,7 @@ class CityInfo extends Component {
         <header className='CityInfo-Header'>
           <h1>{ cityName }</h1>
           <a
-            href={ `https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=WikiDaheim-at&categories=${ commonscat }` }
+            href={ `https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=WikiDaheim-at&categories=${ commonscat }&descriptionlang=de` }
             target='_blank'
             rel='noopener noreferrer'
             className='CityInfo-UploadButton'

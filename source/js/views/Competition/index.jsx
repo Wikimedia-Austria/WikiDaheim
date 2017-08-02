@@ -7,9 +7,12 @@ export default class Competition extends Component {
         <h1>Fotowettbewerb WikiDaheim</h1>
 
         <p>
-          Hilf mit die (noch) unbekannten Seiten der österreichischen Gemeinden und Ortschaften
-          und deren einzigartigen Charakter in der Wikipedia durch frei
-          verfügbare Bilder zu vermitteln!
+          Stell deine Heimat mit deinen Fotos in der Wikipedia vor.
+        </p>
+        <p>
+          Hilf mit die Wikipedia-Seiten zu österreichischen Gemeinden zu
+          bebildern und zeige so mit frei verfügbaren Bildern deren
+          einzigartigen Charakter!
         </p>
 
         <h2>Wettbewerbszeitraum</h2>

@@ -19,6 +19,7 @@
   flex-direction: row;
   align-items:stretch;
   cursor: pointer;
+  color: $text-color;
 
   @include sm {
     margin: 1em;

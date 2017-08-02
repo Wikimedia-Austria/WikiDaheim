@@ -11,7 +11,7 @@ class IntroScreen extends Component {
   render() {
     return (
       <div className='IntroScreen TextPage'>
-        <h1>Willkommen bei WikiDaheim!</h1>
+        <h1>Stell deine Heimat<br />in der Wikipedia vor!</h1>
 
         <div className='IntroScreen-CategoryList'>
           <img src={ DenkmalIcon } role='presentation' />

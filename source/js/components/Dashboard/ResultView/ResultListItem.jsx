@@ -127,7 +127,7 @@ class ResultListItem extends Component {
             <ResultListItemDetail
               className='Details-Description'
               value={ item.get('beschreibung') }
-              editLink={ item.get('editLink').replace('&action=edit', '') }
+              editLink={ item.get('editLink') ? item.get('editLink').replace('&action=edit', '') : '#' }
               errorText='Beschreibung fehlt'
               color={ categoryColor }
             >
