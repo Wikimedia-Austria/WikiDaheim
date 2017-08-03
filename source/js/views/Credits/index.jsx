@@ -48,6 +48,13 @@ export default class Credits extends Component {
             rel='noopener noreferrer'
           >
             Benedikt Reiter
+          </a>,
+          <a
+            href='https://github.com/reiterbene/WikiDaheim'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Quellcode auf GitHub
           </a>
         </p>
 
