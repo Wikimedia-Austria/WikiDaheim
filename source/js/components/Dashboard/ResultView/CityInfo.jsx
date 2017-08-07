@@ -76,13 +76,13 @@ class CityInfo extends Component {
       }
 
       externalLinkOverlay = (
-        <div
+        <div // eslint-disable-line jsx-a11y/no-static-element-interactions
           className='ExternalLink-Overlay'
-          onClick={ () => this.setState({ 'shownLink': null }) } //eslint-disable-line
+          onClick={ () => this.setState({ 'shownLink': null }) }
         >
-          <div
+          <div // eslint-disable-line jsx-a11y/no-static-element-interactions
             className='ExternalLink-Overlay-Inner'
-            onClick={(e) => e.stopPropagation()} //eslint-disable-line
+            onClick={ (e) => e.stopPropagation() }
           >
             <button
               className='ExternalLink-Close'

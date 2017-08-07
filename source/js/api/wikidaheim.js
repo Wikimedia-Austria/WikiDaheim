@@ -11,10 +11,17 @@ const listCategories = () => {
   });
 };
 
-const getTownData = (wikidata, categories, getWikiData) => {
+const getTownData = (location, categories, getWikiData) => {
   const categoriesString = categories.join('|');
 
-  return fetch(`${ WIKIDAHEIM_ENDPOINT }?format=json&action=query&type=data&wikidata=${ wikidata }&categories=${ categoriesString }&wiki=${ +getWikiData }`, {
+  let locationQuery = '';
+  if (location.wikidata) {
+    locationQuery = `wikidata=${ location.wikidata }`;
+  } else {
+    locationQuery = `latitude=${ location.latitude }&longitude=${ location.longitude }`;
+  }
+
+  return fetch(`${ WIKIDAHEIM_ENDPOINT }?format=json&action=query&type=data&${ locationQuery }&categories=${ categoriesString }&wiki=${ +getWikiData }`, {
     method: 'get',
   }).then((res) => {
     if (!res.ok) throw Error(res.statusText);

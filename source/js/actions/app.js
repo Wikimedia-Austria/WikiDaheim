@@ -138,12 +138,19 @@ export function selectPlace(place) {
   return function (dispatch, getState) {
     dispatch(placeSelectActionStart(place));
 
+    const coordinates = place.get('geometry').get('coordinates');
     const wikidata = place.get('properties').get('wikidata');
+
+    const location = {
+      longitude: coordinates.get(0),
+      latitude: coordinates.get(1),
+      wikidata,
+    };
 
     const selectedCats = getState().app.get('categories').filter((cat) => cat.get('show'));
     const mappedCats = selectedCats.toJS().map((cat) => cat.name);
 
-    wikiDaheimApi.getTownData(wikidata, mappedCats, true)
+    wikiDaheimApi.getTownData(location, mappedCats, true)
       .then(data => dispatch(placeSelectActionSuccess(data)))
       .catch(error => dispatch(placeSelectActionError(error)));
   };
@@ -194,9 +201,17 @@ export function toggleCategory(categoryName) {
     if (state.get('placeSelected') && !currentCategory.get('loaded')) {
       dispatch(placeLoadCategoryActionStart(categoryName));
 
-      const wikidata = state.get('placeMapData').get('properties').get('wikidata');
+      const place = state.get('placeSelected');
+      const coordinates = place.get('geometry').get('coordinates');
+      const wikidata = place.get('properties').get('wikidata');
 
-      wikiDaheimApi.getTownData(wikidata, [categoryName], false)
+      const location = {
+        longitude: coordinates.get(0),
+        latitude: coordinates.get(1),
+        wikidata,
+      };
+
+      wikiDaheimApi.getTownData(location, [categoryName], false)
         .then(data => dispatch(placeLoadCategoryActionSuccess(data)))
         .catch(error => dispatch(placeLoadCategoryActionError(error)));
     }
