@@ -4,7 +4,7 @@ import { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
 import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
-import scrollTo from 'lib/ScrollTo';
+import scrollTo from 'lib/scrollTo';
 import ResultListItem from './ResultListItem';
 import CityInfo from './CityInfo';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
