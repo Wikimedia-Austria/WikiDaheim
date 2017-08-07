@@ -18,7 +18,7 @@ export default class Credits extends Component {
 
         <p>Fragen, Anregungen und Kritik können auch auf der
           <a
-            href='https://de.wikipedia.org/w/index.php?title=Wikipedia_Diskussion:WikiProjekt_%C3%96sterreich/WikiDaheim&action=edit&section=new'
+            href='https://de.wikipedia.org/w/index.php?title=Wikipedia_Diskussion:WikiDaheim&action=edit&section=new'
             target='_blank'
             rel='noopener noreferrer'
           >
