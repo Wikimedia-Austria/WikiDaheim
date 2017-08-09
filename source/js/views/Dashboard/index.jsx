@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 
 import { loadCategories } from 'actions/app';
 
-import SearchBar from 'components/Dashboard/SearchBar';
+import DashboardHeader from 'components/Dashboard/DashboardHeader';
 import ResultView from 'components/Dashboard/ResultView';
-import Filter from 'components/Dashboard/Filter';
 
 // import Icon from 'components/Global/Icon';
 
@@ -27,10 +26,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className='Dashboard'>
-        <div className='Dashboard-Header'>
-          <SearchBar />
-          <Filter />
-        </div>
+        <DashboardHeader />
         <div className='Dashboard-Content'>
           <ResultView />
         </div>
