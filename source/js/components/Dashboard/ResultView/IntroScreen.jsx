@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { routeCodes } from 'config/routes';
 import DenkmalIcon from '../../../../assets/img/icon_denkmalliste.svg';
 import NaturIcon from '../../../../assets/img/icon_naturdenkmaeler.svg';
 import CommonsIcon from '../../../../assets/img/icon_commons.svg';
@@ -37,6 +39,14 @@ class IntroScreen extends Component {
           sei es als Text in der Wikipedia oder als Foto,
           hilfst du Wikipedia und ihren Schwesterprojekten dabei,
           das Wissen dieser Welt zu sammeln und für alle frei verfügbar zu machen!
+          <h3>Fotowettbewerb</h3>
+          Alle hochgeladenen Bilder nehmen am Fotowettbewerb zu WikiDaheim teil,
+          wo die besten Motive zu österreichischen Gemeinden mit Preisen prämiert werden!
+          Die Regeln dazu kannst du auf der Seite
+          <Link to={ routeCodes.COMPETITION }>
+            <span>Wettbewerb</span>
+          </Link>
+          nachlesen.
         </p>
 
         <h2>Was ist für Wikipedia & Co. interessant?</h2>
