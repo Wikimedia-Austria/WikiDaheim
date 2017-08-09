@@ -35,6 +35,13 @@ plugins.push(
     template: path.join(paths.source, 'index.html'),
     path: paths.build,
     filename: 'index.html',
+  }),
+  // htaccess for HTML5 history API
+  new HtmlWebpackPlugin({
+    template: path.join(paths.source, './deploy/.htaccess'),
+    path: paths.build,
+    filename: '.htaccess',
+    inject: false,
   })
 );
 
