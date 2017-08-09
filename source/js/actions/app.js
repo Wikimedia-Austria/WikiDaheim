@@ -201,7 +201,7 @@ export function toggleCategory(categoryName) {
     if (state.get('placeSelected') && !currentCategory.get('loaded')) {
       dispatch(placeLoadCategoryActionStart(categoryName));
 
-      const place = state.get('placeSelected');
+      const place = state.get('placeMapData');
       const coordinates = place.get('geometry').get('coordinates');
       const wikidata = place.get('properties').get('wikidata');
 

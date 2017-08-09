@@ -114,6 +114,10 @@
         flex:1;
       }
 
+      .Details-Location {
+        font-size: .8em;
+      }
+
       @include sm {
         flex:1 0 40%;
         padding-bottom:1em;

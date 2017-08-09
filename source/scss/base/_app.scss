@@ -1,14 +1,14 @@
 html {
   font-family: $main-font;
 
-  font-size:10px;
+  font-size:12px;
 
   @include lg {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   @include xl {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -66,24 +66,33 @@ html {
 }
 
 .TextPage {
-  max-width: 550px;
   margin: 5vh auto 3em;
   padding: 0 1em;
-  text-align:center;
+  text-align:left;
   position: relative;
   -moz-osx-font-smoothing: grayscale;
   color: $text-color;
 
-  p {
-    text-align: justify;
+  width: 90%;
+  @include sm { width: 66.666666%; }
+  @include ml { width: 33%; }
 
+  h1 {
+    text-align:center;
+  }
+
+  h2 {
+    margin-top:2em;
+  }
+
+  p {
     a {
       padding: 0 .5em;
+      color: $unaviable-color;
     }
   }
 
   ul {
-    text-align:left;
     padding-left:20px;
 
     li {
@@ -92,11 +101,6 @@ html {
   }
 
   &.TextPage-Competition {
-    text-align:left;
-
-    p {
-      text-align:left;
-    }
 
     h2 {
       margin-top:2em;
@@ -109,6 +113,7 @@ html {
     }
 
     h2 {
+      text-align:center;
       margin-top:2em;
     }
   }
@@ -149,7 +154,9 @@ html {
 }
 
 .IntroScreen {
-  max-width: 500px;
+  width: 90%;
+  @include sm { width: 66.666666%; }
+  @include ml { width: 33%; }
 
   .IntroScreen-CategoryList {
     display:flex;

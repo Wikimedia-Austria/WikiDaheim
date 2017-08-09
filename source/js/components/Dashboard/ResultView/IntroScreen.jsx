@@ -16,9 +16,9 @@ class IntroScreen extends Component {
         <div className='IntroScreen-CategoryList'>
           <img src={ DenkmalIcon } role='presentation' />
           <img src={ NaturIcon } role='presentation' />
-          <img src={ CommonsIcon } role='presentation' />
-          <img src={ PublicArtIcon } role='presentation' />
           <img src={ KellerIcon } role='presentation' />
+          <img src={ PublicArtIcon } role='presentation' />
+          <img src={ CommonsIcon } role='presentation' />
           <img src={ FriedhofIcon } role='presentation' />
         </div>
 

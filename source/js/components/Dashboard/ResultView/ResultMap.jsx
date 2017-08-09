@@ -207,8 +207,8 @@ class ResultMap extends Component {
               type: 'interval',
               stops: [
                     [0, '#57599A'],
-                    [100, '#373974'],
-                    [750, '#23224E'],
+                    [30, '#373974'],
+                    [70, '#23224E'],
               ],
             },
             'circle-radius': {
@@ -216,8 +216,8 @@ class ResultMap extends Component {
               type: 'interval',
               stops: [
                     [0, 20],
-                    [100, 30],
-                    [750, 40],
+                    [30, 30],
+                    [70, 40],
               ],
             },
           } }

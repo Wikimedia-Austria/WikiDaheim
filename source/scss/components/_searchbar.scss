@@ -8,6 +8,10 @@
     padding: 0 25%;
   }
 
+  @include xl {
+    padding: 0 33.3333333%;
+  }
+
   > div {
     flex:1;
   }
@@ -41,6 +45,10 @@
       left:auto;
       font-size:2em;
       width:50%;
+    }
+
+    @include xl {
+      width: 33.3333333%;
     }
 
     .ViennaWarning {

@@ -79,17 +79,26 @@
       width:100%;
       color: $primary-color-contrast;
       text-decoration: none;
-      transition:opacity .2s;
+      transition:opacity .2s, background-color .2s;
       text-align:left;
 
       @include md {
         text-align: center;
-        text-decoration: line-through;
-        opacity:.5;
         padding-left:0;
 
         &:after {
           display: none;
+        }
+
+        &:before {
+          content:'';
+          position:absolute;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
+          background-color:rgba(0,0,0,.6);
+          transition: opacity .2s;
         }
       }
     }
@@ -98,11 +107,28 @@
       button {
         opacity:1;
 
-        @include md {
-          text-decoration:underline;
+        &:before {
+          opacity:0;
+          background-color: rgba(255,255,255, .2);
+        }
+
+        &:hover {
+          &:before {
+            opacity:1;
+          }
         }
       }
     }
+
+  /*  &.CategoryFilter-Item--inactive {
+      button {
+        opacity:1;
+
+        @include md {
+          background-color: #636470 !important;
+        }
+      }
+    } */
   }
 }
 

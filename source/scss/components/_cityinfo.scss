@@ -149,7 +149,7 @@
         font-size:1.2em;
         text-decoration:none;
         padding:0 .5em;
-        transition: transform .2s ease;
+        transition: background-color .2s ease;
         margin-right:.25em;
 
         @include sm {
@@ -162,11 +162,11 @@
         }
 
         &:hover {
-          transform: scale(1.05);
+          background-color: lighten($secondary-color, 10%);
         }
 
         &:active {
-          transform: scale(.8);
+          background-color: lighten($secondary-color, 15%);
         }
       }
     }

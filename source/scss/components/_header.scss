@@ -62,11 +62,21 @@
       transform: translateX(0);
     }
 
-    .Menu-link--imprint {
-      color:white;
+    footer {
       position:absolute;
       bottom:1em;
-      right: 1em;
+      left:5vw;
+    }
+
+    footer a {
+      display:inline-block;
+      color:white;
+
+      &:first-child {
+        border-right:1px solid white;
+        padding-right: .5em;
+        margin-right: .5em;
+      }
     }
 
     a {

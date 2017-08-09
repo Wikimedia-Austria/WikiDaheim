@@ -1,6 +1,7 @@
 $breakpoint-sm: 500px !default;
 $breakpoint-md: 769px !default;
 $breakpoint-lg: 1025px !default;
+$breakpoint-ml: 1500px !default;
 $breakpoint-xl: 2000px !default;
 
 @mixin sm() {
@@ -17,6 +18,12 @@ $breakpoint-xl: 2000px !default;
 
 @mixin lg() {
   @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin ml() {
+  @media (min-width: $breakpoint-ml) {
     @content;
   }
 }

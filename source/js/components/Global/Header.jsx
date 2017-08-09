@@ -73,14 +73,24 @@ export default class Header extends Component {
             <span>Credits</span>
           </NavLink>
 
-          <a
-            className='Menu-link--imprint'
-            href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Impressum
-          </a>
+          <footer>
+            <a
+              className='Menu-link--imprint'
+              href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Impressum
+            </a>
+            <a
+              className='Menu-link--facebook'
+              href='https://facebook.com/wikiDaheim'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Facebook
+            </a>
+          </footer>
         </div>
         <MenuToggle />
       </div>

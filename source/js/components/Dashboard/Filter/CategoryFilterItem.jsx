@@ -31,6 +31,7 @@ class CategoryFilterItem extends Component {
     const ItemClass = classNames({
       'CategoryFilter-Item': true,
       'CategoryFilter-Item--active': category.get('show'),
+      'CategoryFilter-Item--inactive': !category.get('show'),
     });
 
     return (
