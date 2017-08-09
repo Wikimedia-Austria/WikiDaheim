@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 203.9705">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
     <style>
       .clr-1 {fill: #595999}
@@ -28,12 +28,12 @@
   </defs>
   <title>WikiDaheim-logo</title>
   <g>
-    <polygon id="p-7" class="clr-1" points="100.04 201.495 50.008 151.463 100 100.971 150.032 151.503 100.04 201.495"/>
-    <polygon id="p-6" class="clr-2" points="0.081 201.495 50.06 151 100.04 201.495 0.081 201.495"/>
-    <polygon id="p-5" class="clr-3" points="150 151.381 100.02 101.401 150 51.421 150 151.381"/>
-    <polygon id="p-4" class="clr-3" points="200 201.495 100.04 201.495 200 101.536 200 201.495"/>
-    <polygon id="p-3" class="clr-1" points="200 0.941 150.02 50.921 150.02 151.515 200 101.536 200 0.941"/>
-    <polygon id="p-2" class="clr-2" points="200 0.941 0.081 0.941 0.081 0.941 100.04 102 200 0.941"/>
-    <polygon id="p-1" class="clr-3" points="0 0 0 203.971 0 202.341 99.96 101.17 0 0"/>
+    <polygon id="p-7" class="clr-1" points="100 200 50 150 100 100 150 150 100 200"/>
+    <polygon id="p-6" class="clr-2" points="0 200 50 150 100 200 0 200"/>
+    <polygon id="p-5" class="clr-3" points="150 150 100 100 150 50 150 150"/>
+    <polygon id="p-4" class="clr-3" points="200 200 100 200 200 100 200 200"/>
+    <polygon id="p-3" class="clr-1" points="200 0 150 50 150 150 200 100 200 0"/>
+    <polygon id="p-2" class="clr-2" points="200 0 0 0 100 100 200 0"/>
+    <polygon id="p-1" class="clr-3" points="0 0 0 200 100 100 0 0"/>
   </g>
 </svg>
