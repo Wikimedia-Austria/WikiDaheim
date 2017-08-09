@@ -37,6 +37,14 @@ class IntroScreen extends Component {
           sei es als Text in der Wikipedia oder als Foto,
           hilfst du Wikipedia und ihren Schwesterprojekten dabei,
           das Wissen dieser Welt zu sammeln und für alle frei verfügbar zu machen!
+          
+          <h3>Fotowettbewerb</h3>
+		      Alle hochgeladenen Bilder nehmen am Fotowettbewerb zu WikiDaheim teil, 
+		      wo die besten Motive zu österreichischen Gemeinden mit Preisen prämiert werden!
+		      Die Regeln dazu kannst du <a href='https://de.wikipedia.org/wiki/Wikipedia:WikiDaheim#Fotowettbewerb'
+            target='_blank'
+            rel='noopener noreferrer'
+          >hier</a> nachlesen.
         </p>
 
         <h2>Was ist für Wikipedia & Co. interessant?</h2>
