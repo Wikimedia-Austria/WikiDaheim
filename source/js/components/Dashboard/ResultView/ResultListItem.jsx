@@ -11,6 +11,7 @@ class ResultListItem extends Component {
   static propTypes = {
     item: PropTypes.object,
     categoryColor: PropTypes.string,
+    editLinkText: PropTypes.string,
     isHovered: PropTypes.bool,
     isSelected: PropTypes.bool,
     onHover: PropTypes.func,
@@ -19,7 +20,7 @@ class ResultListItem extends Component {
   };
 
   render() {
-    const { item, categoryColor, isHovered, isSelected, onHover, onLeave, onClick } = this.props;
+    const { item, categoryColor, editLinkText, isHovered, isSelected, onHover, onLeave, onClick } = this.props;
 
     const ItemClass = classNames({
       'ResultListItem': true,
@@ -128,6 +129,7 @@ class ResultListItem extends Component {
               className='Details-Description'
               value={ item.get('beschreibung') }
               editLink={ item.get('editLink') ? item.get('editLink').replace('&action=edit', '') : '#' }
+              editLinkText={ editLinkText }
               errorText='Beschreibung fehlt'
               color={ categoryColor }
             >

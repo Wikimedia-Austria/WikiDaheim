@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import EditLink from './EditLink';
 
 class ResultListItemDetail extends Component {
   static propTypes = {
@@ -9,12 +8,13 @@ class ResultListItemDetail extends Component {
     className: PropTypes.string,
     value: PropTypes.string,
     errorText: PropTypes.string,
+    editLinkText: PropTypes.string,
     color: PropTypes.string,
     children: PropTypes.object,
   };
 
   render() {
-    const { editLink, className, value, errorText, color, children } = this.props;
+    const { editLink, className, value, errorText, editLinkText, color, children } = this.props;
 
     let isMissing = true;
     let content = (
@@ -34,7 +34,14 @@ class ResultListItemDetail extends Component {
     return (
       <div className={ ItemClass }>
         { content }
-        <EditLink href={ editLink } color={ color } />
+        <a
+          href={ editLink }
+          target='_blank'
+          rel='noopener noreferrer'
+          style={ { 'color': color } }
+        >
+          { editLinkText }
+        </a>
       </div>
     );
   }
