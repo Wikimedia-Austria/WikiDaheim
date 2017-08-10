@@ -37,10 +37,11 @@
       display:block;
       width:100%;
       font-size: 2em;
-      color:white;
+      color: $primary-color;
       padding:.5em 0;
-      background-color: $warning-color;
+      background-color: $primary-color-contrast;
       font-weight:bold;
+      text-transform: uppercase;
     }
 
     @include md {

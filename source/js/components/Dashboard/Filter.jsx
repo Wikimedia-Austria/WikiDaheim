@@ -52,7 +52,7 @@ class Filter extends Component {
             className='FilterFinished-Button'
             onClick={ this.toggle }
           >
-            FERTIG
+            Fertig ✔
           </button>
         </footer>
       </section>
