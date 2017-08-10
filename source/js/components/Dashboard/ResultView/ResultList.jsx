@@ -120,39 +120,28 @@ class ResultList extends Component {
 
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
-    const isHovered = (item) => {
-      if (hoveredElement && item.get('id') === hoveredElement.get('id')) return true;
-      return false;
-    };
-
-    const isSelected = (item) => {
-      if (selectedElement && item.get('id') === selectedElement.get('id')) return true;
-      return false;
-    };
-
-    const getCategoryColor = (item) => {
-      const category = categories.find((c) => c.get('name') === item.get('category'));
-      return category.get('color');
-    };
-
     return (
       <div className='ResultList'>
         <CityInfo />
 
         <div className='ResultList-ListWrapper'>
           <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
-            { sortedItems.map((item) => (
-              <ResultListItem
+            { sortedItems.map((item) => {
+              const category = categories.find((c) => c.get('name') === item.get('category'));
+              const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
+              const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+              return (<ResultListItem
                 item={ item }
-                categoryColor={ getCategoryColor(item) }
-                isHovered={ isHovered(item) }
-                isSelected={ isSelected(item) }
+                categoryColor={ category.get('color') }
+                editLinkText={ category.get('editLinkText') }
+                isHovered={ isHovered }
+                isSelected={ isSelected }
                 onHover={ () => this.hoverItem(item) }
                 onLeave={ () => this.leaveItem() }
                 onClick={ () => this.selectItem(item) }
                 key={ item.get('id') }
-              />
-            )) }
+              />);
+            }) }
           </Infinite>
         </div>
       </div>
