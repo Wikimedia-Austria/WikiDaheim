@@ -94,10 +94,11 @@ class ResultMap extends Component {
 
     /* load category marker images */
     categories.forEach((category) => {
-      map.loadImage(category.get('marker'), (error, image) => {
-        if (error) throw error;
-        map.addImage(category.get('name'), image);
-      });
+      const img = new Image();
+      img.onload = (e) => {
+        map.addImage(category.get('name'), e.target);
+      };
+      img.src = category.get('marker');
     });
 
     if (!window.USER_IS_TOUCHING) {

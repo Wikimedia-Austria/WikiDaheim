@@ -16,9 +16,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 // Default client app entry file
-const entry = [
-  path.join(paths.javascript, 'client.js'),
-];
+const entry = {
+  main: [
+    'babel-polyfill',
+    path.join(paths.javascript, 'client.js'),
+  ],
+};
 
 plugins.push(
   // Creates vendor chunk from modules coming from node_modules folder
@@ -60,7 +63,7 @@ if (IS_DEVELOPMENT) {
   // In development we add 'react-hot-loader' for .js/.jsx files
   // Check rules in config.js
   rules[0].use.unshift('react-hot-loader/webpack');
-  entry.unshift('react-hot-loader/patch');
+  entry.main.splice(1, 0, 'react-hot-loader/patch');
 }
 
 // Webpack config

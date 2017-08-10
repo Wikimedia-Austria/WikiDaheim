@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import 'babel-polyfill';
 
 import configureStore from 'config/store';
 import Client from 'views/Client';
