@@ -28,7 +28,7 @@ class ResultListItem extends Component {
       'ResultListItem--selected': isSelected,
     });
 
-    let photoSrc = 'none';
+    const photoContainerStyle = { backgroundImage: 'none' };
     let photoInfoLink = null;
     if (item.get('foto')) {
       const hashString = item.get('foto')
@@ -42,7 +42,7 @@ class ResultListItem extends Component {
       const hash = md5(hashString);
       const hp1 = hash.substring(0, 1);
       const hp2 = hash.substring(0, 2);
-      photoSrc = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
+      photoContainerStyle.backgroundImage = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
 
       photoInfoLink = (
         <a
@@ -54,6 +54,14 @@ class ResultListItem extends Component {
           <span>Informationen zum Foto</span>
         </a>
       );
+    }
+
+    // parse hex categoryColor, make 50% transparent for background in PhotoContainer
+    if (categoryColor && categoryColor.match(/^#[0-9A-F]{6}$/i)) {
+      const r = parseInt(categoryColor.substring(1, 3), 16);
+      const g = parseInt(categoryColor.substring(3, 5), 16);
+      const b = parseInt(categoryColor.substring(5, 7), 16);
+      photoContainerStyle.backgroundColor = `rgba(${ r }, ${ g }, ${ b }, 0.5)`;
     }
 
     const locationInfo = item.get('adresse');
@@ -97,7 +105,7 @@ class ResultListItem extends Component {
       >
         <div
           className='PhotoContainer'
-          style={ { 'backgroundImage': photoSrc } }
+          style={ photoContainerStyle }
         >
           <a
             href={ item.get('uploadLink') }
