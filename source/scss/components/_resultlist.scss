@@ -34,7 +34,7 @@
   }
 
   &.ResultListItem--selected {
-    background-color:lighten($warning-color, 20%);
+    background-color:lighten($primary-color, 60%);
   }
 
   .PhotoContainer {
@@ -42,7 +42,7 @@
     flex-shrink: 0;
     position:relative;
     margin-right:1em;
-    background: $warning-color;
+    background: rgba(0,0,0,.2);
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center center;
