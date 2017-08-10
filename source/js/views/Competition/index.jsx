@@ -122,7 +122,7 @@ export default class Competition extends Component {
         <p>
           <strong>von Wikimedia Österreich</strong><br />
           <strong>1. Preis:</strong> eine Reise zur Wikimania 2018 nach Südafrika<br />
-          <strong>2. - 10. Preis:</strong> Gutscheine für Fotoequipment oder Fotoentwicklung
+          <strong>2.–10. Preis:</strong> Gutscheine für Fotoequipment oder Fotoentwicklung
         </p>
 
         <h2>Jury</h2>

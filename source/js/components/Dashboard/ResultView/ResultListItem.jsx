@@ -20,7 +20,16 @@ class ResultListItem extends Component {
   };
 
   render() {
-    const { item, categoryColor, editLinkText, isHovered, isSelected, onHover, onLeave, onClick } = this.props;
+    const {
+      item,
+      categoryColor,
+      editLinkText,
+      isHovered,
+      isSelected,
+      onHover,
+      onLeave,
+      onClick,
+    } = this.props;
 
     const ItemClass = classNames({
       'ResultListItem': true,
