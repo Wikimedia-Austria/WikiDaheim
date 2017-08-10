@@ -52,15 +52,10 @@
 .CategoryFilter {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
 
   @include md {
     background-color: rgb(100,100,100);
-  }
-
-  &:after {
-    content: "";
-    flex: auto;
   }
 
   .CategoryFilter-Item {
