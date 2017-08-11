@@ -30,6 +30,8 @@ class CityInfo extends Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.handleTkkChange = this.handleTkkChange.bind(this);
+    this.handleTkkPaste = this.handleTkkPaste.bind(this);
   }
 
   toggle() {
@@ -38,11 +40,32 @@ class CityInfo extends Component {
     dispatch(toggleCityInfo());
   }
 
+  handleTkkChange(event) {
+    this.setState({ tkk: event.target.value });
+  }
+
+  handleTkkPaste(event) {
+    if (event.clipboardData) {
+      const url = event.clipboardData.getData('text/plain');
+      const match = url.match(/tirisdienste\.at.*info_(\d+)0\.htm/);
+      if (match) {
+        const tkk = match[1];
+        this.setState({ tkk });
+        event.preventDefault();
+      }
+    }
+  }
+
+  get isValidTkkProvided() {
+    return this.state.tkk && this.state.tkk.match(/^[0-9]+$/);
+  }
+
   render() {
     const { articles, placeMapData, showCityInfo, commonscat } = this.props;
 
     const cityName = placeMapData.get('text');
     const currentArticle = articles.get(0);
+    const gkz = currentArticle.get('gemeindekennzahl');
 
     if (!currentArticle) return null;
 
@@ -97,6 +120,39 @@ class CityInfo extends Component {
           };
           break;
 
+        case 'tkk':
+          popupText = {
+            closeOnClick: false,
+            content: <section>
+              <h1>Kunstkataster</h1>
+              <p>Der Kunstkataster des Landes Tirol bietet eine systematische wissenschaftliche
+                Inventarisierung des Kulturgüterbestandes von Nord- und Osttirol.</p>
+            </section>,
+            footer: <section>
+              <p>…, Objekt heraussuchen und URL von Popup einfügen:</p>
+              <p>
+                <label htmlFor='tkkInput'>Inventarnummer: </label>
+                <input
+                  id='tkkInput'
+                  type='text'
+                  value={ this.state.tkk }
+                  onChange={ this.handleTkkChange }
+                  onPaste={ this.handleTkkPaste }
+                />
+              </p>
+              <p><a
+                href={ this.isValidTkkProvided ? `https://commons.wikimedia.org/wiki/special:uploadWizard?campaign=TKK&id=${ this.state.tkk }&categories=${ commonscat }&descriptionlang=de` : undefined }
+                target='_blank'
+                rel='noopener noreferrer'
+                className={ this.isValidTkkProvided ? '' : 'inactive' }
+              >
+                Foto für ID { this.state.tkk } hochladen
+              </a></p>
+            </section>,
+            link: `http://www.tirisdienste.at/scripts/esrimap.dll?Name=Kunst&RaumIdx0=0&RaumIdx2=0&RaumIdx1=${ gkz.replace(/^70/, '') }&ObjIdx=0&ObjIdx1=0&ObjIdx2=0&ZeitIdx=0&ZeitIdx1=0&KuenstIdx=0&KuenstIdx1=0&ObjOpt=1&Komb=1&ShowObj.x=0&ShowObj.x=8&ShowObj.y=13&MyAufl=1024`,
+          };
+          break;
+
         default:
       }
 
@@ -116,14 +172,15 @@ class CityInfo extends Component {
               Abbrechen
             </button>
             { popupText.content }
-            <a
+            <p><a
               href={ popupText.link }
               target='_blank'
               rel='noopener noreferrer'
-              onClick={ () => this.setState({ 'shownLink': null }) }
+              onClick={ () => popupText.closeOnClick !== false && this.setState({ 'shownLink': null }) }
             >
               Seite öffnen
-            </a>
+            </a></p>
+            { popupText.footer }
           </div>
         </div>
       );
@@ -192,6 +249,14 @@ class CityInfo extends Component {
             >
               Baugeschichte
             </button>
+            {
+              gkz && gkz.match && gkz.match(/^70/) ? <button
+                className='CityInfo-Link'
+                onClick={ () => this.setState({ 'shownLink': 'tkk' }) }
+              >
+                Kunstkataster
+              </button> : null
+            }
           </footer>
         </div>
         { externalLinkOverlay }

@@ -192,7 +192,7 @@
       position:absolute;
       top:50%;
       left: 50%;
-      max-width:350px;
+      max-width:550px;
       transform: translate(-50%, -50%);
     }
 
@@ -219,6 +219,11 @@
       text-decoration:none;
       padding:0 .5em;
       text-align:center;
+    }
+
+    a.inactive {
+      cursor: not-allowed;
+      background-color: rgba(0,0,0,.6);
     }
   }
 }
