@@ -50,24 +50,49 @@ class CityInfo extends Component {
 
     if (this.state.shownLink) {
       const latlong = placeMapData.get('geometry').get('coordinates');
-      let popupText = {
-        title: 'Bilderwünsche',
-        text: 'Die Bilderwünsche zeigen dir Wünsche für Fotos aus der Wikipedia an, die  interessante Objekte oder Naturlandschaften in deiner Umgebung auflisten. Du kannst die gemachten Bilder entweder direkt über Wikipedia oder auch über WikiDaheim hochladen.',
-        link: `https://tools.wmflabs.org/request/bwAPI/map.php?lat=${ latlong.get(1) }&lon=${ latlong.get(0) }&dist=10`,
-      };
+      let popupText;
       switch (this.state.shownLink) {
+        case 'bilder':
+          popupText = {
+            content: <section>
+              <h1>Bilderwünsche</h1>
+              <p>Die Bilderwünsche zeigen dir Wünsche für Fotos aus der Wikipedia an,
+                die interessante Objekte oder Naturlandschaften in deiner Umgebung auflisten.
+                Du kannst die gemachten Bilder entweder direkt über Wikipedia oder
+                auch über WikiDaheim hochladen.</p>
+            </section>,
+            link: `https://tools.wmflabs.org/request/bwAPI/map.php?lat=${ latlong.get(1) }&lon=${ latlong.get(0) }&dist=10`,
+          };
+          break;
+
         case 'regio':
           popupText = {
-            title: 'RegioWiki',
-            text: 'Im RegioWiki kannst du all jene Themen deiner Umgebung beschreiben, die nicht von großem überregionalem Interesse sind, aber für deine Gemeinde eine Bedeutung haben. Dazu zählen etwa die heimische Blasmusikkapelle, die Beschreibung des jährlichen Kirtags oder die Chronologie der Umzüge im Ort. Du kannst dich auf Regiowiki einfach registrieren und danach sofort loslegen!',
+            content: <section>
+              <h1>RegioWiki</h1>
+              <p>Im RegioWiki kannst du all jene Themen deiner Umgebung beschreiben,
+                die nicht von großem überregionalem Interesse sind, aber für deine Gemeinde
+                eine Bedeutung haben. Dazu zählen etwa die heimische Blasmusikkapelle,
+                die Beschreibung des jährlichen Kirtags oder die Chronologie der Umzüge im Ort.
+                Du kannst dich auf Regiowiki einfach registrieren und danach sofort loslegen!</p>
+            </section>,
             link: `http://regiowiki.at/wiki/${ currentArticle.get('source') }`,
           };
           break;
 
         case 'bau':
           popupText = {
-            title: 'Baugeschichte',
-            text: 'Das Projekt Baugeschichte.at soll Bewusstsein für die Umgebung schaffen und Veränderungen im Ortsbild sichtbar machen. Es soll Informationen über die Häuser und ihre Geschichten bieten. Dabei ist es möglich jedes Gebäude in der Straße zu erfassen - das Projekt soll die Lücke zwischen relevanten (denkmalgeschützten) Gebäuden, und denen die unter keinem Schutz stehen, aber trotzdem für den Ort interessant sind, schließen. Angefangen hat das Projekt in Graz, mittlerweile ist es aber auch möglich andere Orte einzutragen. Das können angemeldete User via Formular machen. Über die Mediawiki-API ist auch eine App für mobile Geräte angebunden.',
+            content: <section>
+              <h1>Baugeschichte</h1>
+              <p>Das Projekt Baugeschichte.at soll Bewusstsein für die Umgebung
+                schaffen und Veränderungen im Ortsbild sichtbar machen. Es soll Informationen
+                über die Häuser und ihre Geschichten bieten. Dabei ist es möglich jedes Gebäude
+                in der Straße zu erfassen - das Projekt soll die Lücke zwischen relevanten
+                (denkmalgeschützten) Gebäuden, und denen die unter keinem Schutz stehen,
+                aber trotzdem für den Ort interessant sind, schließen. Angefangen hat das
+                Projekt in Graz, mittlerweile ist es aber auch möglich andere Orte einzutragen.
+                Das können angemeldete User via Formular machen. Über die Mediawiki-API ist
+                auch eine App für mobile Geräte angebunden.</p>
+            </section>,
             link: 'http://www.baugeschichte.at/Hilfe:Inhaltsverzeichnis',
           };
           break;
@@ -90,8 +115,7 @@ class CityInfo extends Component {
             >
               Abbrechen
             </button>
-            <h1>{ popupText.title }</h1>
-            <p>{ popupText.text }</p>
+            { popupText.content }
             <a
               href={ popupText.link }
               target='_blank'
