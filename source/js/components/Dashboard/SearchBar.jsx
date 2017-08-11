@@ -60,20 +60,19 @@ class SearchBar extends Component {
             Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)
           </div>
         );
-      } else {
-        return (
-          <div className={ isHighlighted ? 'highlighted' : '' }>
-            {item.text}
-            {item.context.map((context) => {
-              const id = context.id.split('.');
-              if (['region'].includes(id[0])) {
-                return `, ${ context.text }`;
-              }
-              return '';
-            })}
-          </div>
-        );
       }
+      return (
+        <div className={ isHighlighted ? 'highlighted' : '' }>
+          {item.text}
+          {item.context.map((context) => {
+            const id = context.id.split('.');
+            if (['region'].includes(id[0])) {
+              return `, ${ context.text }`;
+            }
+            return '';
+          })}
+        </div>
+      );
     };
 
     return (

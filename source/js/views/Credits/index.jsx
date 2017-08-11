@@ -72,8 +72,8 @@ export default class Credits extends Component {
         <h2>Quellen</h2>
         <p>
           Die in den Themenkategorien verwendeten Texte stammen aus Wikipedia
-          unter &quot;Creative Commons Attribution-ShareAlike 3.0 Unported&quot;. 
-          Die angezeigten Bilder sind auf Wikimedia Commons unter einer freien Lizenz 
+          unter „Creative Commons Attribution-ShareAlike 3.0 Unported“.
+          Die angezeigten Bilder sind auf Wikimedia Commons unter einer freien Lizenz
           gemäß der jeweiligen Dateibeschreibungsseite veröffentlicht worden.
         </p>
 
