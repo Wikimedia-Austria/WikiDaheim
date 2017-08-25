@@ -113,7 +113,7 @@
           right:0;
           width:2.5em;
           height:2.5em;
-          background-image:url('../assets/icons/icon_section_unaviable.svg');
+          background-image:url('../assets/icons/icon_section_unavailable.svg');
           background-size: contain;
           background-repeat: no-repeat;
 
@@ -122,7 +122,7 @@
         &.CityInfo-Section--present {
           color: $primary-color-contrast;
           span {
-            background:url('../assets/icons/icon_section_aviable.svg');
+            background:url('../assets/icons/icon_section_available.svg');
           }
         }
       }
