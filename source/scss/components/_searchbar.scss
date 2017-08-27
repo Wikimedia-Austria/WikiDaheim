@@ -34,6 +34,7 @@
   .SearchBar-Suggestions {
     background-color: $secondary-color;
     color: $secondary-color-contrast;
+    cursor: pointer;
     font-size:1.6em;
     position: fixed;
     overflow: auto;
