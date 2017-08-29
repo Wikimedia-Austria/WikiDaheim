@@ -79,7 +79,7 @@ class SearchBar extends Component {
       <section className='SearchBar'>
         <div className='SearchBar-Bar'>
           <Autocomplete
-            inputProps={ { placeholder: 'Gemeinde hier suchen...' } }
+            inputProps={ { placeholder: 'Gemeinde hier suchen...', accessKey: 'f' } }
             getItemValue={ (item) => item.place_name }
             items={ searchData.toJS() }
             renderItem={ renderItem }
