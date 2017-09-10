@@ -166,6 +166,10 @@ html {
     overflow:hidden;
     margin-bottom:2em;
 
+    a {
+      flex-direction: column;
+    }
+
     img {
       flex: 1;
       min-width:0;
