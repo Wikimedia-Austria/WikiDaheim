@@ -172,4 +172,24 @@ html {
       max-height:85px;
     }
   }
+
+  hr {
+    margin-top: 3em;
+    background: $primary-color;
+    height: 1px;
+    border: none;
+  }
+
+  .Menu-link, .Menu-link--imprint, .Menu-link--facebook {
+    color: #595a99;
+    padding-right: 1em;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  footer {
+    display: inline;
+  }
 }
