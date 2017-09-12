@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { routeCodes } from 'config/routes';
+import Menu from 'components/Global/Header/Menu';
 import DenkmalIcon from '../../../../assets/img/icon_denkmalliste.svg';
 import NaturIcon from '../../../../assets/img/icon_naturdenkmaeler.svg';
 import CommonsIcon from '../../../../assets/img/icon_commons.svg';
@@ -70,6 +71,11 @@ class IntroScreen extends Component {
           ein Bild von der Feuerwehr oder die heimische Natur,
           alles ist auf die ein oder andere Art wissenswert!
         </p>
+
+        <hr />
+        <footer>
+          <Menu />
+        </footer>
       </div>
     );
   }

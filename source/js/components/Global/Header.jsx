@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { routeCodes } from 'config/routes';
+import Menu from './Header/Menu';
 import MenuToggle from './Header/MenuToggle';
 
 import wikiDaheimLogo from '../../../assets/img/wikidaheim-logo.svg';
@@ -43,54 +44,7 @@ export default class Header extends Component {
         </div>
 
         <div className={ headerMenuClass }>
-          <NavLink
-            activeClassName='Menu-link--active'
-            className='Menu-link'
-            exact
-            to={ routeCodes.DASHBOARD }
-          >
-            <span>WikiDaheim</span>
-          </NavLink>
-          <NavLink
-            activeClassName='Menu-link--active'
-            className='Menu-link'
-            to={ routeCodes.ABOUT }
-          >
-            <span>Themen</span>
-          </NavLink>
-          <NavLink
-            activeClassName='Menu-link--active'
-            className='Menu-link'
-            to={ routeCodes.COMPETITION }
-          >
-            <span>Wettbewerb</span>
-          </NavLink>
-          <NavLink
-            activeClassName='Menu-link--active'
-            className='Menu-link'
-            to={ routeCodes.CREDITS }
-          >
-            <span>Credits</span>
-          </NavLink>
-
-          <footer>
-            <a
-              className='Menu-link--imprint'
-              href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Impressum
-            </a>
-            <a
-              className='Menu-link--facebook'
-              href='https://facebook.com/wikiDaheim'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Facebook
-            </a>
-          </footer>
+          <Menu />
         </div>
         <MenuToggle />
       </div>
