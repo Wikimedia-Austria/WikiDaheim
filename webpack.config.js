@@ -13,7 +13,7 @@ const devServer = require('./webpack/dev-server').devServer;
 
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 // Default client app entry file
 const entry = {
@@ -32,6 +32,9 @@ plugins.push(
       const context = module.context;
       return context && context.indexOf('node_modules') >= 0;
     },
+  }),
+  new FaviconsWebpackPlugin({
+    logo: '../assets/img/wikidaheim-logo.svg',
   }),
   // Builds index.html from template
   new HtmlWebpackPlugin({
