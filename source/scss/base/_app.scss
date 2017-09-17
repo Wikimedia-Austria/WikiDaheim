@@ -86,11 +86,8 @@ html {
     font-weight: normal;
   }
 
-  p {
-    a {
-      padding: 0 .5em;
-      color: $unavailable-color;
-    }
+  a {
+    color: $unavailable-color;
   }
 
   ul {
