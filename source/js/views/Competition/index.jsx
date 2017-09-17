@@ -68,11 +68,11 @@ export default class Competition extends Component {
             Fotos müssen unter einer Creative-Commons-Lizenz auf Wikimedia Commons
             veröffentlicht werden.
             <a
-              href='https://creativecommons.org'
+              href='https://commons.wikimedia.org/wiki/Commons:Copyright_tags#Free_Creative_Commons_licenses'
               target='_blank'
               rel='noopener noreferrer'
             >
-              (https://creativecommons.org)
+              (zulässige Lizenzen auf Wikimedia Commons)
             </a>
           </li>
           <li>Eine aussagekräftige Beschreibung/Kategorisierung ist ausdrücklich erwünscht.</li>
