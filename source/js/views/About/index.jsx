@@ -84,7 +84,7 @@ export default class About extends Component {
           </div>
         </div>
 
-        <div className='TextPage-CategoryInfo' style={ { display: 'none' } }>
+        <div className='TextPage-CategoryInfo' >
           <aside>
             <img src={ FriedhofIcon } role='presentation' />
           </aside>
