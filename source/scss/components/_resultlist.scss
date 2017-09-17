@@ -47,6 +47,12 @@
     background-repeat: no-repeat;
     background-position: center center;
 
+    &.PhotoContainer--Audio {
+      background-image: url(../assets/icons/loudspeaker.svg);
+      background-size: 70%;
+      background-position: center;
+    }
+
     .PhotoContainer-InfoButton {
       display:block;
       position:absolute;

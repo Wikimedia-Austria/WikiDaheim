@@ -37,7 +37,8 @@ class ResultListItem extends Component {
       'ResultListItem--selected': isSelected,
     });
 
-    const photoContainerStyle = { backgroundImage: 'none' };
+    let photoContainerClass = 'PhotoContainer';
+    const photoContainerStyle = {};
     let photoInfoLink = null;
     if (item.get('foto')) {
       const hashString = item.get('foto')
@@ -47,11 +48,19 @@ class ResultListItem extends Component {
       const photoLinkString = hashString
         .replace(/&amp;/g, '%26')
         .replace(/'/g, '%27');
+      let photoLinkTitle = 'Informationen zum Foto';
 
       const hash = md5(hashString);
       const hp1 = hash.substring(0, 1);
       const hp2 = hash.substring(0, 2);
-      photoContainerStyle.backgroundImage = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
+
+      if (item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
+        // audio file extensions from https://commons.wikimedia.org/wiki/Special:MediaStatistics
+        photoContainerClass += ' PhotoContainer--Audio';
+        photoLinkTitle = 'Informationen zur Audiodatei';
+      } else {
+        photoContainerStyle.backgroundImage = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
+      }
 
       photoInfoLink = (
         <a
@@ -59,9 +68,8 @@ class ResultListItem extends Component {
           target='_blank'
           rel='noopener noreferrer'
           className='PhotoContainer-InfoButton'
-        >
-          <span>Informationen zum Foto</span>
-        </a>
+          title={ photoLinkTitle }
+        />
       );
     }
 
@@ -113,7 +121,7 @@ class ResultListItem extends Component {
         onTouchTap={ onClick }
       >
         <div
-          className='PhotoContainer'
+          className={ photoContainerClass }
           style={ photoContainerStyle }
         >
           <a
