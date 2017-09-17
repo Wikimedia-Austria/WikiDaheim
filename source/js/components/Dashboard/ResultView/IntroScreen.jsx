@@ -16,14 +16,14 @@ class IntroScreen extends Component {
       <div className='IntroScreen TextPage'>
         <h1>Stell deine Heimat<br />in der Wikipedia vor!</h1>
 
-        <div className='IntroScreen-CategoryList'>
-          <img src={ DenkmalIcon } role='presentation' />
-          <img src={ NaturIcon } role='presentation' />
-          <img src={ KellerIcon } role='presentation' />
-          <img src={ PublicArtIcon } role='presentation' />
-          <img src={ CommonsIcon } role='presentation' />
-          <img src={ FriedhofIcon } role='presentation' />
-        </div>
+        <Link className='IntroScreen-CategoryList' to={ routeCodes.ABOUT }>
+          <img src={ DenkmalIcon } role='presentation' title='Denkmäler' />
+          <img src={ NaturIcon } role='presentation' title='Natur' />
+          <img src={ KellerIcon } role='presentation' title='Kellergassen' />
+          <img src={ PublicArtIcon } role='presentation' title='Public Arts' />
+          <img src={ CommonsIcon } role='presentation' title='Gemeingüter' />
+          <img src={ FriedhofIcon } role='presentation' title='Friedhöfe' />
+        </Link>
 
         <p>
           WikiDaheim ist ein Projekt von Freiwilligen der Wikimedia-Projekte wie Wikipedia,
