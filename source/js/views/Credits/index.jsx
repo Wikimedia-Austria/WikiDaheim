@@ -16,7 +16,9 @@ export default class Credits extends Component {
           <a href='mailto:wikidaheim@wikimedia.at'>wikidaheim@wikimedia.at</a>
         </p>
 
-        <p>Fragen, Anregungen und Kritik können auch auf der <a
+        <p>Fragen, Anregungen und Kritik können auch auf der
+          { ' ' }
+          <a
             href='https://de.wikipedia.org/w/index.php?title=Wikipedia_Diskussion:WikiDaheim&action=edit&section=new'
             target='_blank'
             rel='noopener noreferrer'

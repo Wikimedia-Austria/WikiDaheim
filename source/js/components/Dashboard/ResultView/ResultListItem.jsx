@@ -69,7 +69,9 @@ class ResultListItem extends Component {
           rel='noopener noreferrer'
           className='PhotoContainer-InfoButton'
           title={ photoLinkTitle }
-        />
+        >
+          <span>{ photoLinkTitle }</span>
+        </a>
       );
     }
 
@@ -160,7 +162,9 @@ class ResultListItem extends Component {
             >
               <p>
                 <Truncate lines={ 4 }>
-                  <span dangerouslySetInnerHTML={ { __html: item.get('beschreibung') } } />
+                  <span
+                    dangerouslySetInnerHTML={ { __html: item.get('beschreibung') } } // eslint-disable-line react/no-danger
+                  />
                 </Truncate>
               </p>
             </ResultListItemDetail>

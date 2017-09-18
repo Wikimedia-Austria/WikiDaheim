@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
-import { routeCodes } from 'config/routes';
 import Menu from './Header/Menu';
 import MenuToggle from './Header/MenuToggle';
 
