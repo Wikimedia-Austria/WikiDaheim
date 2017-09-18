@@ -47,11 +47,9 @@ class IntroScreen extends Component {
         <p>
           Alle hochgeladenen Bilder nehmen am Fotowettbewerb zu WikiDaheim teil,
           wo die besten Motive zu österreichischen Gemeinden mit Preisen prämiert werden!
-          Die Regeln dazu kannst du auf der Seite
-          <Link to={ routeCodes.COMPETITION }>
+          Die Regeln dazu kannst du auf der Seite <Link to={ routeCodes.COMPETITION }>
             <span>Wettbewerb</span>
-          </Link>
-          nachlesen.
+          </Link> nachlesen.
         </p>
 
         <h2>Was ist für Wikipedia & Co. interessant?</h2>
