@@ -68,7 +68,7 @@ export default class Competition extends Component {
               target='_blank'
               rel='noopener noreferrer'
             >
-              Creative-Commons-Lizenz
+              freien Creative-Commons-Lizenz
             </a> auf <a
               href='https://commons.wikimedia.org/wiki/Hauptseite'
               target='_blank'
