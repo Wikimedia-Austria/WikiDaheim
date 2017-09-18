@@ -21,6 +21,7 @@
     "lint": "npm run lint-hook --silent || true",
     "hook-add": "prepush install",
     "hook-remove": "prepush remove",
+    "deploy": "gh-pages -d build/",
     "test": "npm run lint"
   },
   "devDependencies": {
@@ -71,6 +72,7 @@
     "es6-promise": "^3.3.1",
     "express": "^4.15.3",
     "geolib": "^2.0.22",
+    "gh-pages": "^1.0.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "js-md5": "^0.5.0",
