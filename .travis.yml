@@ -17,7 +17,7 @@ cache:
 script:
   - npm run lint
   # set publicPath to make gh-pages work
-  - npm run client:build -- --output-public-path .
+  - npm run client:build -- --output-public-path . --define "__reactRouter__='HashRouter'"
 
 deploy:
   - provider: script
