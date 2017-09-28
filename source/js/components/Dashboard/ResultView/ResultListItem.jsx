@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
-import md5 from 'js-md5';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import ResultListItemDetail from './ResultListItemDetail';
 
@@ -50,16 +49,13 @@ class ResultListItem extends Component {
         .replace(/'/g, '%27');
       let photoLinkTitle = 'Informationen zum Foto';
 
-      const hash = md5(hashString);
-      const hp1 = hash.substring(0, 1);
-      const hp2 = hash.substring(0, 2);
-
       if (item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
         // audio file extensions from https://commons.wikimedia.org/wiki/Special:MediaStatistics
         photoContainerClass += ' PhotoContainer--Audio';
         photoLinkTitle = 'Informationen zur Audiodatei';
       } else {
-        photoContainerStyle.backgroundImage = `url('https://upload.wikimedia.org/wikipedia/commons/thumb/${ hp1 }/${ hp2 }/${ photoLinkString }/256px-${ photoLinkString }')`;
+        const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ item.get('foto') }?width=256`;
+        photoContainerStyle.backgroundImage = `url('${ url }')`;
       }
 
       photoInfoLink = (
