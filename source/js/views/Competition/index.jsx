@@ -17,13 +17,14 @@ export default class Competition extends Component {
 
         <h2>Wettbewerbszeitraum</h2>
         <p>
-          Lade deine Bilder bis Mitternacht (24:00, MESZ) am 7. Oktober 2017
-          über diese Website hoch. (Alternative für erfahrene BenutzerInnen:
+          Von 28. Juli 2017 bis Mitternacht (24:00, MESZ) am 7. Oktober 2017
+          war es möglich, Bilder auf dieser Website hochzuladen. 
+          <!-- (Alternative für erfahrene BenutzerInnen:
           direkt über Wikimedia Commons unter Verwendung der
-          Vorlage {'{{WikiDaheim|2017|at|topic=}}'} hochladen.)
+          Vorlage {'{{WikiDaheim|2017|at|topic=}}'} hochladen.) -->
         </p>
 
-        <h2>Mach mit!</h2>
+<!--        <h2>Mach mit!</h2>
         <p>
           Auch du kannst teilnehmen, ob mit Landschaftspanorama, Einzeldenkmal,
           Weitwinkel oder Makroaufnahme!
@@ -42,10 +43,10 @@ export default class Competition extends Component {
         <p>
           Die Einreichung erfolgt über den Uploadbutton.
         </p>
-
+-->
         <p>
           <strong>Information:</strong><br />
-          Die zehn besten Bilder von denkmalgeschützten Objekten sind automatisch
+          Die zehn besten Bilder von denkmalgeschützten Objekten wurden automatisch
           auch Teil des internationalen Wettbewerbs <a
             href='http://www.wikilovesmonuments.org/'
             target='_blank'
