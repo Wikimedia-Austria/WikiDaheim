@@ -33,6 +33,7 @@ const plugins = [
   // Injects env variables to our app
   new webpack.DefinePlugin({
     'process.env': {
+      CONTINUOUS_INTEGRATION: JSON.stringify(process.env.CONTINUOUS_INTEGRATION),
       NODE_ENV: JSON.stringify(NODE_ENV),
       SERVER_RENDER: JSON.stringify(SERVER_RENDER) === 'true',
     },
