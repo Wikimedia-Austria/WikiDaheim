@@ -41,6 +41,7 @@ class IntroScreen extends Component {
           hilfst du Wikipedia und ihren Schwesterprojekten dabei,
           das Wissen dieser Welt zu sammeln und für alle frei verfügbar zu machen!
         </p>
+
         {/*
         <h3>Fotowettbewerb</h3>
 
@@ -52,6 +53,7 @@ class IntroScreen extends Component {
           </Link> nachlesen.
         </p>
         */}
+
         <h2>Was ist für Wikipedia & Co. interessant?</h2>
 
         <p>
