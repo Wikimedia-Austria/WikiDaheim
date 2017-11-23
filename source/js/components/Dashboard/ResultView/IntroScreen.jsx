@@ -12,6 +12,7 @@ import FriedhofIcon from '../../../../assets/img/icon_friedhof.svg';
 class IntroScreen extends Component {
 
   render() {
+    const winnerImage = 'https://commons.wikimedia.org/wiki/Special:FilePath/Hadeldorfstraße_5_Meiningen,_Interior_03.jpg';
     return (
       <div className='IntroScreen TextPage'>
         <h1>Stell deine Heimat<br />in der Wikipedia vor!</h1>
@@ -32,6 +33,31 @@ class IntroScreen extends Component {
           den Charakter eines Ortes mit Bildern oder Texten zu zeigen,
           noch kaum erschlossen worden.
         </p>
+
+        <h2>Ergebnisse des Fotowettbewerbs</h2>
+
+        Die <a href="https://commons.wikimedia.org/wiki/WikiDaheim_Winners_2017_in_Austria">Gewinner des Fotowettbewerbs 2017</a> stehen fest.
+
+        <figure style={{marginLeft: 0, marginRight: 0}}>
+          <img 
+            src={`${winnerImage}?width=1024`}
+          />
+          <figcaption>
+            &copy;
+            {" "}
+            <a href="https://commons.wikimedia.org/wiki/User:B%C3%B6hringer">
+              Böhringer Friedrich
+            </a>,
+            {" "}
+            <a href="https://commons.wikimedia.org/wiki/File:Hadeldorfstraße_5_Meiningen,_Interior_03.jpg">
+              Hadeldorfstraße 5 Meiningen, Interior 03
+            </a>,
+            {" "}
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/at/deed.en">
+              CC BY-SA 3.0 AT
+            </a>
+          </figcaption>
+        </figure>
 
         <h2>Wie kann ich beitragen?</h2>
 
