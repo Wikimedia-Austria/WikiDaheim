@@ -39,7 +39,9 @@ class IntroScreen extends Component {
         <p>
         Die <a href="https://commons.wikimedia.org/wiki/WikiDaheim_Winners_2017_in_Austria">Gewinner des Fotowettbewerbs 2017</a> stehen fest!
         Vielen Dank an alle Teilnehmer des Wettbewerbs! Die Preisverleihung findet am 24. Jänner 2018 um 17 Uhr im Ahnensaal in der Wiener Hofburg statt.
+        </p>
         
+        <p>
         Das Siegerbild stammt von Friedrich Böhringer aus Vorarlberg:
         </p>
         <figure style={{marginLeft: 0, marginRight: 0}}>
