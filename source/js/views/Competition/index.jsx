@@ -116,7 +116,7 @@ export default class Competition extends Component {
             Leitlinie für Qualitätsbilder
           </a> ist eine gute Anlaufstelle für die Kriterien, die Fotos erfüllen sollten.
         </p>
-
+<!--
         <h2>Preise</h2>
         <p>
           <strong>von Wikimedia Österreich</strong><br />
@@ -129,7 +129,7 @@ export default class Competition extends Component {
           </a> nach Südafrika<br />
           <strong>2.–10. Preis:</strong> Gutscheine für Fotoequipment oder Fotoentwicklung
         </p>
-
+-->
         <h2>Jury</h2>
         <p>
           Eine Vorjury aus WikipedianerInnen sichtet alle Einsendungen,
