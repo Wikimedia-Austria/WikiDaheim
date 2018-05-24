@@ -133,6 +133,16 @@ const rules = [
     include: paths.images,
     use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
   },
+  {
+    test: /\.html$/,
+    include: paths.source,
+    use: [{
+      loader: 'html-loader',
+      options: {
+        minimize: IS_PRODUCTION,
+      },
+    }],
+  },
 ];
 
 // Almost the same rule is used in both development and production

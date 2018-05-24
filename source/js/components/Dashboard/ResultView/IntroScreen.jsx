@@ -9,10 +9,11 @@ import PublicArtIcon from '../../../../assets/img/icon_public_art.svg';
 import KellerIcon from '../../../../assets/img/icon_kellergasse.svg';
 import FriedhofIcon from '../../../../assets/img/icon_friedhof.svg';
 
+import __html from './IntroScreen.content.html';
+
 class IntroScreen extends Component {
 
   render() {
-    const winnerImage = 'https://commons.wikimedia.org/wiki/Special:FilePath/Hadeldorfstraße_5_Meiningen,_Interior_03.jpg';
     return (
       <div className='IntroScreen TextPage'>
         <h1>Stell deine Heimat<br />in der Wikipedia vor!</h1>
@@ -26,83 +27,9 @@ class IntroScreen extends Component {
           <img src={ FriedhofIcon } role='presentation' title='Friedhöfe' />
         </Link>
 
-        <p>
-          WikiDaheim ist ein Projekt von Freiwilligen der Wikimedia-Projekte wie Wikipedia,
-          das sich mit dem Sammeln von Informationen über Gemeinden in ganz Österreich beschäftigt.
-          Gerade in Österreich sind die Möglichkeiten,
-          den Charakter eines Ortes mit Bildern oder Texten zu zeigen,
-          noch kaum erschlossen worden.
-        </p>
-
-        <h2>Ergebnisse des Fotowettbewerbs</h2>
-        
-        <p>
-        Die <a href="https://commons.wikimedia.org/wiki/WikiDaheim_Winners_2017_in_Austria">Gewinner des Fotowettbewerbs 2017</a> stehen fest!
-        Vielen Dank an alle Teilnehmer des Wettbewerbs! Die Preisverleihung findet am 24. Jänner 2018 um 17 Uhr im Ahnensaal in der Wiener Hofburg statt.
-        </p>
-        
-        <p>
-        Das Siegerbild stammt von Friedrich Böhringer aus Vorarlberg:
-        </p>
-        <figure style={{marginLeft: 0, marginRight: 0}}>
-          <img 
-            src={`${winnerImage}?width=1024`}
-          />
-          <figcaption>
-            &copy;
-            {" "}
-            <a href="https://commons.wikimedia.org/wiki/User:B%C3%B6hringer">
-              Böhringer Friedrich
-            </a>,
-            {" "}
-            <a href="https://commons.wikimedia.org/wiki/File:Hadeldorfstraße_5_Meiningen,_Interior_03.jpg">
-              Hadeldorfstraße 5 Meiningen, Interior 03
-            </a>,
-            {" "}
-            <a href="https://creativecommons.org/licenses/by-sa/3.0/at/deed.en">
-              CC BY-SA 3.0 AT
-            </a>
-          </figcaption>
-        </figure>
-
-        <h2>Wie kann ich beitragen?</h2>
-
-        <p>
-          Indem du Informationen zu deiner Heimatgemeinde beiträgst,
-          sei es als Text in der Wikipedia oder als Foto,
-          hilfst du Wikipedia und ihren Schwesterprojekten dabei,
-          das Wissen dieser Welt zu sammeln und für alle frei verfügbar zu machen!
-        </p>
-
-        {/*
-        <h3>Fotowettbewerb</h3>
-
-        <p>
-          Alle hochgeladenen Bilder nehmen am Fotowettbewerb zu WikiDaheim teil,
-          wo die besten Motive zu österreichischen Gemeinden mit Preisen prämiert werden!
-          Die Regeln dazu kannst du auf der Seite <Link to={ routeCodes.COMPETITION }>
-            <span>Wettbewerb</span>
-          </Link> nachlesen.
-        </p>
-        */}
-
-        <h2>Was ist für Wikipedia & Co. interessant?</h2>
-
-        <p>
-          Interessant sind vor allem Informationen und Bilder,
-          die noch unbekannte Seiten der Gemeinden Österreichs hervorheben.
-          Wenn Dir also bei der Lektüre deines Gemeindeartikels etwas auffällt
-          oder die Bilder zu deiner Gemeinde Lücken aufweisen,
-          ist das deine Chance, diese Lücken zu füllen und zur Wikipedia beizutragen!
-        </p>
-
-        <p>
-          Falls Dir dazu nichts Konkretes einfallen möchte, so haben wir Themen vorbereitet,
-          wo Wikipedia & Co. deine Hilfe gebrauchen könnten.
-          Sei es ein denkmalgeschütztes Objekt im Ort,
-          ein Bild von der Feuerwehr oder die heimische Natur,
-          alles ist auf die ein oder andere Art wissenswert!
-        </p>
+        <div
+          dangerouslySetInnerHTML={ { __html } }  // eslint-disable-line react/no-danger
+        />
 
         <hr />
         <footer>
