@@ -17,14 +17,13 @@ export default class Competition extends Component {
 
         <h2>Wettbewerbszeitraum</h2>
         <p>
-          Vo 1. Juli 2018 bis Mitternacht (24:00, MESZ) am 7. Oktober 2018
+          Von 1. Juli 2018 bis Mitternacht (24:00, MESZ) am 7. Oktober 2018
           ist es möglich, Bilder auf dieser Website hochzuladen.
           {/* (Alternative für erfahrene BenutzerInnen:
           direkt über Wikimedia Commons unter Verwendung der
           Vorlage {'{{WikiDaheim|2017|at|topic=}}'} hochladen.) */}
         </p>
 
-        {
         <h2>Mach mit!</h2>
         <p>
           Auch du kannst teilnehmen, ob mit Landschaftspanorama, Einzeldenkmal,
@@ -44,7 +43,6 @@ export default class Competition extends Component {
         <p>
           Die Einreichung erfolgt über den Uploadbutton.
         </p>
-        }
 
         <p>
           <strong>Information:</strong><br />
@@ -116,8 +114,8 @@ export default class Competition extends Component {
             Leitlinie für Qualitätsbilder
           </a> ist eine gute Anlaufstelle für die Kriterien, die Fotos erfüllen sollten.
         </p>
-<!--
-        <h2>Preise</h2>
+
+        {/* <h2>Preise</h2>
         <p>
           <strong>von Wikimedia Österreich</strong><br />
           <strong>1. Preis:</strong> eine Reise zur <a
@@ -128,8 +126,8 @@ export default class Competition extends Component {
             Wikimania 2018
           </a> nach Südafrika<br />
           <strong>2.–10. Preis:</strong> Gutscheine für Fotoequipment oder Fotoentwicklung
-        </p>
--->
+        </p> */}
+
         <h2>Jury</h2>
         <p>
           Eine Vorjury aus WikipedianerInnen sichtet alle Einsendungen,
