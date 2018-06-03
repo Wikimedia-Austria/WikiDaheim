@@ -43,7 +43,7 @@ export default class Header extends Component {
             target='_blank'
             rel='noopener noreferrer'
           >
-            Impressum
+            Impressum & Datenschutz
           </a>
           <a
             className='Menu-link--facebook'
