@@ -7,6 +7,7 @@ import ResultList from './ResultView/ResultList';
 @connect(state => ({
   activeFilters: state.app.get('activeFilters'),
   categories: state.app.get('categories'),
+  categoriesLoading: state.app.get('categoriesLoading'),
   items: state.app.get('items'),
   placeSelected: state.app.get('placeSelected'),
 }))
@@ -15,11 +16,12 @@ class ResultView extends Component {
     // categories: PropTypes.array,
     activeFilters: PropTypes.object,
     categories: PropTypes.object,
+    categoriesLoading: PropTypes.bool,
     items: PropTypes.array,
   };
 
   render() {
-    const { items, categories, activeFilters } = this.props;
+    const { items, categories, activeFilters, categoriesLoading } = this.props;
 
     const filteredItems = items.filter((item) => {
       const itemCategory = categories.find((c) => c.get('name') === item.get('category'));
@@ -33,6 +35,8 @@ class ResultView extends Component {
       if (activeFilters.includes('missing_description') && !item.get('beschreibung')) qualified = true;
       return qualified;
     });
+
+    if (categories.toJS().length === 0 || categoriesLoading) return null;
 
     return (<div className='ResultView'>
       <ResultList items={ filteredItems } />

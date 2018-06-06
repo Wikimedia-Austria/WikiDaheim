@@ -39,6 +39,10 @@ class ResultMap extends Component {
     let coordinates = [13.2, 47.516231]; // Center of Austria
     let zoom = [7];
 
+    /*
+     *if a city is already selected chose its center as the map center
+     * TODO: maybe deprecated due to map show on start?
+     */
     if (this.props.placeMapData.get('geometry')) {
       coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
       zoom = 15;
@@ -52,9 +56,14 @@ class ResultMap extends Component {
     this.prepareMap = this.prepareMap.bind(this);
     this.componentWillUpdate = this.componentWillUpdate.bind(this);
     this.onMapMove = this.onMapMove.bind(this);
+    this.updateHighlightedArea = this.updateHighlightedArea.bind(this);
   }
 
   componentDidMount() {
+    /*
+     * dispatch a map position change for the result list on map initialization
+     * TODO: maybe deprecated due to map show on start?
+    */
     const { dispatch, placeMapData } = this.props;
     let { coordinates } = this.state;
 
@@ -96,12 +105,15 @@ class ResultMap extends Component {
 
         this.setState({
           coordinates,
-          zoom: [15],
+          zoom: [17],
         });
       }
     }
   }
 
+  /*
+    dispatch map position events from mapbox to redux
+  */
   onMapMove(map) {
     const { dispatch } = this.props;
     const mapCenter = map.getCenter();
@@ -109,6 +121,8 @@ class ResultMap extends Component {
     dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
   }
 
+  /*
+  */
   prepareMap(map) {
     const { categories, dispatch } = this.props;
 
@@ -116,11 +130,9 @@ class ResultMap extends Component {
 
     /* load category marker images */
     categories.forEach((category) => {
-      const img = new Image();
-      img.onload = (e) => {
-        map.addImage(category.get('name'), e.target);
-      };
-      img.src = category.get('marker');
+      map.loadImage(category.get('marker'), (error, image) => {
+        map.addImage(category.get('name'), image);
+      });
     });
 
     if (!window.USER_IS_TOUCHING) {
@@ -148,6 +160,21 @@ class ResultMap extends Component {
         'map'
       ));
     });
+  }
+
+  /*
+    removes the municipality selection layer from the currently selected municipality
+  */
+  updateHighlightedArea(map) {
+    const { placeMapData } = this.props;
+    const municipalityName = placeMapData.get('text');
+
+    if (municipalityName) {
+      const pre = placeMapData.get('place_name').includes('Wien,') ? 'Wien ' : '';
+      map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
+    } else {
+      map.setFilter('municipalities', ['has', 'name']);
+    }
   }
 
   render() {
@@ -209,7 +236,7 @@ class ResultMap extends Component {
 
     return (<div className='ResultMap'>
       <Map
-        style='mapbox://styles/wikimediaaustria/cj4yaqh5g4w9s2rqsjbqb1bqk' // eslint-disable-line react/style-prop-object
+        style='mapbox://styles/wikimediaaustria/cji05myuu486p2slazs7ljpyw' // eslint-disable-line react/style-prop-object
         containerStyle={ {
           height: '100%',
           width: '100%',
@@ -217,6 +244,7 @@ class ResultMap extends Component {
         center={ this.state.coordinates }
         onStyleLoad={ this.prepareMap }
         onMoveEnd={ this.onMapMove }
+        onMoveStart={ this.updateHighlightedArea }
         zoom={ this.state.zoom }
       >
         <Source id='items' geoJsonSource={ GEO_JSON_RESULTS } />
