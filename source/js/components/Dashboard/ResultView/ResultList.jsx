@@ -120,8 +120,6 @@ class ResultList extends Component {
     const { placeSelected, categories, hoveredElement, selectedElement } = this.props;
     const sortedItems = this.state.sortedList;
 
-    console.log('res render', this.props); //eslint-disable-line
-
     if (!placeSelected) return null;
 
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });

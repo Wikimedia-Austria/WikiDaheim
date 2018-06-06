@@ -6,6 +6,10 @@ import { Provider } from 'react-redux';
 import configureStore from 'config/store';
 import Client from 'views/Client';
 
+import { addLocaleData, IntlProvider } from 'react-intl';
+import localeDE from 'react-intl/locale-data/de';
+import messagesDE from 'translations/de.json';
+
 import es6Promise from 'es6-promise';
 import 'isomorphic-fetch';
 
@@ -13,15 +17,24 @@ import 'isomorphic-fetch';
 import '../scss/app.scss';
 
 es6Promise.polyfill();
+addLocaleData([localeDE]);
 
 const store = configureStore();
+
+console.log(IntlProvider); //eslint-disable-line
 
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <Provider store={ store }>
-        <Component />
-      </Provider>
+      <IntlProvider
+        messages={ messagesDE }
+        locale={ navigator.locale }
+        defaultLocale='de'
+      >
+        <Provider store={ store }>
+          <Component />
+        </Provider>
+      </IntlProvider>
     </AppContainer>,
     document.getElementById('root')
   );
