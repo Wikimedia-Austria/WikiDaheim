@@ -36,9 +36,17 @@ class ResultMap extends Component {
   constructor(props) {
     super(props);
 
+    let coordinates = [13.2, 47.516231]; // Center of Austria
+    let zoom = [7];
+
+    if (this.props.placeMapData.get('geometry')) {
+      coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
+      zoom = 15;
+    }
+
     this.state = {
-      coordinates: this.props.placeMapData.get('geometry').get('coordinates').toJS(),
-      zoom: [11],
+      coordinates,
+      zoom,
     };
 
     this.prepareMap = this.prepareMap.bind(this);
@@ -48,16 +56,31 @@ class ResultMap extends Component {
 
   componentDidMount() {
     const { dispatch, placeMapData } = this.props;
-    dispatch(mapPositionChanged(placeMapData.get('geometry').get('coordinates').toJS()));
+    let { coordinates } = this.state;
+
+    if (placeMapData.get('geometry')) {
+      coordinates = placeMapData.get('geometry').get('coordinates').toJS();
+    }
+
+    dispatch(mapPositionChanged(coordinates));
   }
 
   componentWillUpdate(nextProps) {
-    // prevent the map from moving on every redux state change
+    /*
+     * move the center of the map to the city center when a new city is selected
+     */
     if (this.state.coordinates[0] === 0 || nextProps.placeMapData.get('id') !== this.props.placeMapData.get('id')) {
+      // prevent the map from moving on every redux state change
       const coordinates = nextProps.placeMapData.get('geometry').get('coordinates').toJS();
-      this.setState({ coordinates });
+      this.setState({
+        coordinates,
+        zoom: [15],
+      });
     }
 
+    /*
+     * move the center of the map to the currently selected POI
+    */
     const currentSelected = this.props.selectedElement;
     const nextSelected = nextProps.selectedElement;
 
@@ -73,7 +96,7 @@ class ResultMap extends Component {
 
         this.setState({
           coordinates,
-          zoom: [17],
+          zoom: [15],
         });
       }
     }
@@ -90,7 +113,6 @@ class ResultMap extends Component {
     const { categories, dispatch } = this.props;
 
     map.addControl(new mapboxgl.NavigationControl());
-    // map.addControl(new mapboxgl.GeolocateControl());
 
     /* load category marker images */
     categories.forEach((category) => {
