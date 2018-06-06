@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ResultMap from './ResultView/ResultMap';
 import ResultList from './ResultView/ResultList';
-import IntroScreen from './ResultView/IntroScreen';
 
 @connect(state => ({
   activeFilters: state.app.get('activeFilters'),
@@ -17,13 +16,10 @@ class ResultView extends Component {
     activeFilters: PropTypes.object,
     categories: PropTypes.object,
     items: PropTypes.array,
-    placeSelected: PropTypes.bool,
-    // from react-redux connect
-    // dispatch: PropTypes.func,
   };
 
   render() {
-    const { items, categories, activeFilters, placeSelected } = this.props;
+    const { items, categories, activeFilters } = this.props;
 
     const filteredItems = items.filter((item) => {
       const itemCategory = categories.find((c) => c.get('name') === item.get('category'));
@@ -38,18 +34,10 @@ class ResultView extends Component {
       return qualified;
     });
 
-    let resMap = <IntroScreen />;
-
-    if (placeSelected) {
-      resMap = (
-        <div className='ResultView'>
-          <ResultList items={ filteredItems } />
-          <ResultMap items={ filteredItems } />
-        </div>
-      );
-    }
-
-    return resMap;
+    return (<div className='ResultView'>
+      <ResultList items={ filteredItems } />
+      <ResultMap items={ filteredItems } />
+    </div>);
   }
 
 }

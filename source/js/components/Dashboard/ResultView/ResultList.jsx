@@ -14,9 +14,11 @@ import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disab
   hoveredElement: state.app.get('hoveredElement'),
   selectedElement: state.app.get('selectedElement'),
   categories: state.app.get('categories'),
+  placeSelected: state.app.get('placeSelected'),
 }))
 class ResultList extends Component {
   static propTypes = {
+    placeSelected: PropTypes.bool,
     currentMapPosition: PropTypes.object,
     hoveredElement: PropTypes.object,
     selectedElement: PropTypes.object,
@@ -115,8 +117,12 @@ class ResultList extends Component {
   }
 
   render() {
-    const { categories, hoveredElement, selectedElement } = this.props;
+    const { placeSelected, categories, hoveredElement, selectedElement } = this.props;
     const sortedItems = this.state.sortedList;
+
+    console.log('res render', this.props); //eslint-disable-line
+
+    if (!placeSelected) return null;
 
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
