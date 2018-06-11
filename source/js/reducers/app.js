@@ -110,16 +110,17 @@ const actionsMap = {
   },
 
   [PLACE_SELECT_ACTION_START]: (state, action) => {
-    const region = action.data.get('context').find((context) => {
+    /* add the region to the municipality (only available when triggered fron search) */
+    const region = action.data.get('context') ? action.data.get('context').find((context) => {
       const id = context.get('id').split('.');
       if (id[0] === 'region') return true;
       return false;
-    });
+    }) : false;
 
     return state.merge({
       searchLoading: false,
       searchData: new List(),
-      searchText: `${ action.data.get('text') }, ${ region.get('text') }`,
+      searchText: region ? `${ action.data.get('text') }, ${ region.get('text') }` : action.data.get('text'),
       placeMapData: action.data,
       placeLoading: true,
       placeError: null,

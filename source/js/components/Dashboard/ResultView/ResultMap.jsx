@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fromJS } from 'immutable';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
 
 /*
@@ -85,7 +86,7 @@ class ResultMap extends Component {
       const coordinates = nextProps.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({
         coordinates,
-        zoom: [15],
+        zoom: [12],
       });
     }
 
@@ -177,6 +178,7 @@ class ResultMap extends Component {
           const { iso, name } = e.features[0].properties;
 
           if (!hoveredMunicipality || hoveredMunicipality.get('iso') !== iso) {
+            console.log(e);
             dispatch(municipalityHover({
               iso,
               name,
@@ -186,7 +188,7 @@ class ResultMap extends Component {
 
             this.updateHighlightedArea(map);
           }
-        }, 100);
+        }, 50);
       });
 
       map.on('mouseleave', 'municipalities', () => {
@@ -206,6 +208,25 @@ class ResultMap extends Component {
       ));
     });
 
+    map.on('click', 'municipalities', (e) => {
+      const { lngLat } = e;
+      const { properties } = e.features[0];
+      const { iso, name } = properties;
+
+      dispatch(municipalityLeave());
+      dispatch(selectPlace(fromJS({
+        id: iso,
+        text: name,
+        geometry: {
+          coordinates: [
+            lngLat.lng,
+            lngLat.lat,
+          ],
+        },
+        properties,
+      })));
+    });
+
     this.updateHighlightedArea(map);
   }
 
@@ -219,7 +240,7 @@ class ResultMap extends Component {
     const { hoveredMunicipality } = this.props;
 
     if (municipalityName) {
-      const pre = placeMapData.get('place_name').includes('Wien,') ? 'Wien ' : '';
+      const pre = placeMapData.get('text').includes('Wien,') ? 'Wien ' : '';
       map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
     } else {
       map.setFilter('municipalities', ['has', 'name']);
