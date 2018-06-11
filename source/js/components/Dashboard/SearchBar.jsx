@@ -41,8 +41,6 @@ class SearchBar extends Component {
 
     if (selectedPlace.get('text') === 'Wien') return;
 
-    console.log(selectedPlace.toJS());
-
     dispatch(selectPlace(selectedPlace));
   }
 

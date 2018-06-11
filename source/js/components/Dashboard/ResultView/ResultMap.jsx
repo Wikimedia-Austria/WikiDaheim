@@ -178,7 +178,6 @@ class ResultMap extends Component {
           const { iso, name } = e.features[0].properties;
 
           if (!hoveredMunicipality || hoveredMunicipality.get('iso') !== iso) {
-            console.log(e);
             dispatch(municipalityHover({
               iso,
               name,
