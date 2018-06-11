@@ -22,8 +22,10 @@ import {
 
   PLACE_ITEM_HOVER,
   PLACE_ITEM_LEAVE,
-
   PLACE_ITEM_SELECT,
+
+  MUNICIPALITY_HOVER,
+  MUNICIPALITY_LEAVE,
 
   MAP_POSITION_CHANGED,
 
@@ -52,6 +54,7 @@ const initialState = Map({
   commonscat: '',
 
   hoveredElement: null,
+  hoveredMunicipality: null,
   selectedElement: null,
   currentMapPosition: fromJS([0, 0]),
 
@@ -244,6 +247,18 @@ const actionsMap = {
 
     return state.merge({
       selectedElement,
+    });
+  },
+
+  // MAP MUNICIPALITIES HOVER
+  [MUNICIPALITY_HOVER]: (state, action) => {
+    return state.merge({
+      hoveredMunicipality: action.data,
+    });
+  },
+  [MUNICIPALITY_LEAVE]: (state) => {
+    return state.merge({
+      hoveredMunicipality: null,
     });
   },
 

@@ -22,8 +22,10 @@ export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
 export const PLACE_ITEM_HOVER = 'PLACE_ITEM_HOVER';
 export const PLACE_ITEM_LEAVE = 'PLACE_ITEM_LEAVE';
-
 export const PLACE_ITEM_SELECT = 'PLACE_ITEM_SELECT';
+
+export const MUNICIPALITY_HOVER = 'MUNICIPALITY_HOVER';
+export const MUNICIPALITY_LEAVE = 'MUNICIPALITY_LEAVE';
 
 export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
 
@@ -247,6 +249,21 @@ export function placeItemSelect(data, source) {
     type: PLACE_ITEM_SELECT,
     data,
     source,
+  };
+}
+
+/* MUNICIPALITY HOVER */
+export function municipalityHover(data) {
+  return {
+    type: MUNICIPALITY_HOVER,
+    data,
+  };
+}
+
+export function municipalityLeave(error) {
+  return {
+    type: MUNICIPALITY_LEAVE,
+    error,
   };
 }
 

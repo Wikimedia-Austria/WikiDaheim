@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
 
 /*
@@ -20,6 +20,7 @@ const Map = ReactMapboxGl({
   placeMapData: state.app.get('placeMapData'),
   categories: state.app.get('categories'),
   hoveredElement: state.app.get('hoveredElement'),
+  hoveredMunicipality: state.app.get('hoveredMunicipality'),
   selectedElement: state.app.get('selectedElement'),
 }))
 class ResultMap extends Component {
@@ -28,6 +29,7 @@ class ResultMap extends Component {
     categories: PropTypes.object,
     items: PropTypes.object,
     hoveredElement: PropTypes.object,
+    hoveredMunicipality: PropTypes.object,
     selectedElement: PropTypes.object,
     // from react-redux connect
     dispatch: PropTypes.func,
@@ -125,6 +127,7 @@ class ResultMap extends Component {
   */
   prepareMap(map) {
     const { categories, dispatch } = this.props;
+    let municipalityHoverTimer = null;
 
     map.addControl(new mapboxgl.NavigationControl());
 
@@ -136,7 +139,9 @@ class ResultMap extends Component {
     });
 
     if (!window.USER_IS_TOUCHING) {
-      /* trigger react */
+      /*
+        trigger Pin hover
+      */
       map.on('mouseenter', 'unclustered-point', (e) => {
         const canvas = map.getCanvas();
         canvas.style.cursor = 'pointer';
@@ -152,6 +157,46 @@ class ResultMap extends Component {
 
         dispatch(placeItemLeave());
       });
+
+      /*
+       trigger municipality hover
+      */
+      map.on('mousemove', 'municipalities', (e) => {
+        if (municipalityHoverTimer) clearTimeout(municipalityHoverTimer);
+
+        /*
+          the hover action is packed into a small timeout to reduce
+          event calls when moving over a large area
+        */
+        municipalityHoverTimer = setTimeout(() => {
+          const canvas = map.getCanvas();
+          canvas.style.cursor = 'pointer';
+
+          const { hoveredMunicipality } = this.props;
+          const { lngLat } = e;
+          const { iso, name } = e.features[0].properties;
+
+          if (!hoveredMunicipality || hoveredMunicipality.get('iso') !== iso) {
+            dispatch(municipalityHover({
+              iso,
+              name,
+              longitude: lngLat.lng,
+              latitude: lngLat.lat,
+            }));
+
+            this.updateHighlightedArea(map);
+          }
+        }, 100);
+      });
+
+      map.on('mouseleave', 'municipalities', () => {
+        if (municipalityHoverTimer) clearTimeout(municipalityHoverTimer);
+
+        const canvas = map.getCanvas();
+        canvas.style.cursor = '';
+
+        dispatch(municipalityLeave());
+      });
     }
 
     map.on('click', 'unclustered-point', (e) => {
@@ -160,6 +205,8 @@ class ResultMap extends Component {
         'map'
       ));
     });
+
+    this.updateHighlightedArea(map);
   }
 
   /*
@@ -169,16 +216,24 @@ class ResultMap extends Component {
     const { placeMapData } = this.props;
     const municipalityName = placeMapData.get('text');
 
+    const { hoveredMunicipality } = this.props;
+
     if (municipalityName) {
       const pre = placeMapData.get('place_name').includes('Wien,') ? 'Wien ' : '';
       map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
     } else {
       map.setFilter('municipalities', ['has', 'name']);
     }
+
+    if (hoveredMunicipality) {
+      map.setFilter('municipalities-hover', ['==', 'iso', hoveredMunicipality.get('iso')]);
+    } else {
+      map.setFilter('municipalities-hover', ['!has', 'iso']);
+    }
   }
 
   render() {
-    const { items, categories, hoveredElement } = this.props;
+    const { items, categories, hoveredElement, hoveredMunicipality } = this.props;
 
     const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
 
@@ -230,6 +285,23 @@ class ResultMap extends Component {
         >
           <strong>{hoveredElement.get('name')}</strong>
           {popUpAddress}
+        </Popup>
+      );
+    }
+
+    if (hoveredMunicipality) {
+      popup = (
+        <Popup
+          coordinates={ [parseFloat(hoveredMunicipality.get('longitude')), parseFloat(hoveredMunicipality.get('latitude'))] }
+          offset={
+            [0, 35]
+           }
+          style={ {
+            'backgroundColor': 'black',
+          } }
+        >
+          <span>zu Gemeinde wechseln</span>
+          <strong>{hoveredMunicipality.get('name')}</strong>
         </Popup>
       );
     }
