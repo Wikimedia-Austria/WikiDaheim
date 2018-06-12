@@ -8,6 +8,15 @@
     flex: 1;
     overflow:hidden;
   }
+
+  @include md {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 1000;
+    width:40%;
+  }
 }
 
 .ResultListItem {
@@ -20,6 +29,7 @@
   align-items:stretch;
   cursor: pointer;
   color: $text-color;
+  background-color: white;
 
   @include sm {
     margin: 1em;

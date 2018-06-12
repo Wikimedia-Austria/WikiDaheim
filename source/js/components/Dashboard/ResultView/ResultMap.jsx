@@ -119,11 +119,11 @@ class ResultMap extends Component {
   }
 
   /*
+    sets mapbox.js options and registers event listeners for the map
   */
   prepareMap(map) {
     const { categories, dispatch } = this.props;
     let municipalityHoverTimer = null;
-
     map.addControl(new mapboxgl.NavigationControl());
 
     /* load category marker images */
