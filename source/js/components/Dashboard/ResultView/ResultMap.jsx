@@ -7,12 +7,6 @@ import { MAPBOX_API_KEY } from 'config/config';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
 
-/*
-  possible enhancements: show city borders from
-  https://raw.githubusercontent.com/ginseng666/GeoJSON-TopoJSON-Austria/master/2017/simplified-99.9/gemeinden_999_geo.json
-*/
-
-
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
 });
@@ -187,7 +181,7 @@ class ResultMap extends Component {
 
             this.updateHighlightedArea(map);
           }
-        }, 50);
+        }, 20);
       });
 
       map.on('mouseleave', 'municipalities', () => {
@@ -245,11 +239,22 @@ class ResultMap extends Component {
       map.setFilter('municipalities', ['has', 'name']);
     }
 
-    if (hoveredMunicipality) {
-      map.setFilter('municipalities-hover', ['==', 'iso', hoveredMunicipality.get('iso')]);
-    } else {
-      map.setFilter('municipalities-hover', ['!has', 'iso']);
+    if (map.getSource('municipality-hover-item')) {
+      if (hoveredMunicipality) {
+        const features = map.querySourceFeatures('composite', {
+          sourceLayer: 'gemeinden_wien_bezirke_geo',
+          filter: ['==', 'iso', hoveredMunicipality.get('iso')],
+        });
+
+        map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features });
+      } else {
+        // map.setFilter('municipalities-hover', ['!has', 'iso']);
+        map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features: [] });
+      }
     }
+
+    // REMOVE ME: filter out old hover layer
+    map.setFilter('municipalities-hover', ['!has', 'iso']);
   }
 
   render() {
@@ -340,6 +345,13 @@ class ResultMap extends Component {
         zoom={ this.state.zoom }
       >
         <Source id='items' geoJsonSource={ GEO_JSON_RESULTS } />
+        <Source
+          id='municipality-hover-item'
+          geoJsonSource={ {
+            type: 'geojson',
+            data: { type: 'FeatureCollection', features: [] },
+          } }
+        />
         <Layer
           id='clusters'
           sourceId='items'
@@ -401,6 +413,16 @@ class ResultMap extends Component {
             },
             'icon-size': 0.5,
             'icon-allow-overlap': true,
+          } }
+        />
+
+        <Layer
+          id='municipality-hover'
+          type='fill'
+          sourceId='municipality-hover-item'
+          paint={ {
+            'fill-color': '#57599A',
+            'fill-opacity': 1,
           } }
         />
         {popup}
