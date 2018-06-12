@@ -109,16 +109,6 @@ class ResultMap extends Component {
   }
 
   /*
-    dispatch map position events from mapbox to redux
-  */
-  onMapMove(map) {
-    const { dispatch } = this.props;
-    const mapCenter = map.getCenter();
-
-    dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
-  }
-
-  /*
     sets mapbox.js options and registers event listeners for the map
   */
   prepareMap(map) {
@@ -224,7 +214,18 @@ class ResultMap extends Component {
   }
 
   /*
-    removes the municipality selection layer from the currently selected municipality
+    dispatch map position events from mapbox to redux
+  */
+  onMapMove(map) {
+    const { dispatch } = this.props;
+    const mapCenter = map.getCenter();
+
+    dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
+  }
+
+  /*
+    removes the municipality selection layer from the currently selected municipality,
+    adds hover effect to other municipailties
   */
   updateHighlightedArea(map) {
     const { placeMapData } = this.props;
@@ -232,6 +233,7 @@ class ResultMap extends Component {
 
     const { hoveredMunicipality } = this.props;
 
+    // filter current municipality
     if (municipalityName) {
       const pre = placeMapData.get('text').includes('Wien,') ? 'Wien ' : '';
       map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
@@ -239,6 +241,7 @@ class ResultMap extends Component {
       map.setFilter('municipalities', ['has', 'name']);
     }
 
+    // hover-effect for municipalities
     if (map.getSource('municipality-hover-item')) {
       if (hoveredMunicipality) {
         const features = map.querySourceFeatures('composite', {
@@ -248,15 +251,14 @@ class ResultMap extends Component {
 
         map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features });
       } else {
-        // map.setFilter('municipalities-hover', ['!has', 'iso']);
         map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features: [] });
       }
     }
-
-    // REMOVE ME: filter out old hover layer
-    map.setFilter('municipalities-hover', ['!has', 'iso']);
   }
 
+  /*
+    render the map
+  */
   render() {
     const { items, categories, hoveredElement, hoveredMunicipality } = this.props;
 
