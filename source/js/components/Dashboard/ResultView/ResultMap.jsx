@@ -189,6 +189,8 @@ class ResultMap extends Component {
         this.props.items.find((c) => c.get('id') === e.features[0].properties.id),
         'map'
       ));
+
+      e.stopPropagation();
     });
 
     map.on('click', 'municipalities', (e) => {
@@ -289,33 +291,6 @@ class ResultMap extends Component {
     // show the mouse-hover-popup
     let popup = null;
 
-    if (hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
-      const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
-      const address = hoveredElement.get('adresse');
-
-      let popUpAddress = '';
-      if (address) {
-        popUpAddress = (
-          <span>{ address }</span>
-        );
-      }
-
-      popup = (
-        <Popup
-          coordinates={ [parseFloat(hoveredElement.get('longitude')), parseFloat(hoveredElement.get('latitude'))] }
-          style={ {
-            'backgroundColor': hoveredCategory.get('color'),
-          } }
-          offset={
-            [0, -35]
-           }
-        >
-          <strong>{hoveredElement.get('name')}</strong>
-          {popUpAddress}
-        </Popup>
-      );
-    }
-
     if (hoveredMunicipality) {
       popup = (
         <Popup
@@ -329,6 +304,42 @@ class ResultMap extends Component {
         >
           <span>zu Gemeinde wechseln</span>
           <strong>{hoveredMunicipality.get('name')}</strong>
+        </Popup>
+      );
+    }
+
+    if (hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
+      const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
+      const address = hoveredElement.get('adresse');
+
+      let popUpAddress = '';
+      if (address) {
+        popUpAddress = (
+          <span>{ address }</span>
+        );
+      }
+
+      const photoContainerStyle = {};
+      if (hoveredElement.get('foto') && !hoveredElement.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
+        const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ hoveredElement.get('foto') }?width=256`;
+        photoContainerStyle.backgroundImage = `url('${ url }')`;
+      }
+
+      popup = (
+        <Popup
+          coordinates={ [parseFloat(hoveredElement.get('longitude')), parseFloat(hoveredElement.get('latitude'))] }
+          style={ {
+            'backgroundColor': hoveredCategory.get('color'),
+          } }
+          offset={
+            [0, -100]
+           }
+        >
+          <div className='PhotoContainer' style={ photoContainerStyle } />
+          <div className='DescriptionContainer'>
+            <strong>{hoveredElement.get('name')}</strong>
+            {popUpAddress}
+          </div>
         </Popup>
       );
     }

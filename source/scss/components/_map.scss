@@ -19,6 +19,16 @@
     display: block;
     font-size: .8em;
   }
+
+  .PhotoContainer {
+    height: 10em;
+    min-width: 15em;
+    margin: -0.5em -0.5em 0.5em -0.5em;
+    background-color: rgba(255, 255, 255, 0.5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }
 
 .mapboxgl-ctrl-group {
