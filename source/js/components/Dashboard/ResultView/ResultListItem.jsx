@@ -40,16 +40,18 @@ class ResultListItem extends Component {
     const photoContainerStyle = {};
     let photoInfoLink = null;
     if (item.get('foto')) {
-      const hashString = item.get('foto')
+      const photoLinkString = item.get('foto')
         .replace(/ /g, '_')
-        .replace(/\\/, '');
-
-      const photoLinkString = hashString
+        .replace(/\\/, '')
         .replace(/&amp;/g, '%26')
         .replace(/'/g, '%27');
+
+
+      const isAudio = item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/);
+
       let photoLinkTitle = 'Informationen zum Foto';
 
-      if (item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
+      if (isAudio) {
         // audio file extensions from https://commons.wikimedia.org/wiki/Special:MediaStatistics
         photoContainerClass += ' PhotoContainer--Audio';
         photoLinkTitle = 'Informationen zur Audiodatei';

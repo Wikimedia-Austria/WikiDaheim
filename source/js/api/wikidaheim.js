@@ -17,6 +17,8 @@ const getTownData = (location, categories, getWikiData) => {
   let locationQuery = '';
   if (location.wikidata) {
     locationQuery = `wikidata=${ location.wikidata }`;
+  } else if (location.town) {
+    locationQuery = `town=${ location.town }`;
   } else {
     locationQuery = `latitude=${ location.latitude }&longitude=${ location.longitude }`;
   }
