@@ -109,6 +109,16 @@ class ResultMap extends Component {
   }
 
   /*
+    dispatch map position events from mapbox to redux
+  */
+  onMapMove(map) {
+    const { dispatch } = this.props;
+    const mapCenter = map.getCenter();
+
+    dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
+  }
+
+  /*
     sets mapbox.js options and registers event listeners for the map
   */
   prepareMap(map) {
@@ -213,16 +223,6 @@ class ResultMap extends Component {
     });
 
     this.updateHighlightedArea(map);
-  }
-
-  /*
-    dispatch map position events from mapbox to redux
-  */
-  onMapMove(map) {
-    const { dispatch } = this.props;
-    const mapCenter = map.getCenter();
-
-    dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
   }
 
   /*
