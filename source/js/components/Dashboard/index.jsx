@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 import { loadCategories } from 'actions/app';
 
-import DashboardHeader from 'components/Dashboard/DashboardHeader';
-import ResultView from 'components/Dashboard/ResultView';
+import DashboardHeader from './DashboardHeader';
+import ResultView from './ResultView';
 
 // import Icon from 'components/Global/Icon';
 
@@ -34,15 +34,3 @@ export default class Dashboard extends Component {
     );
   }
 }
-
-
-/*
-  <h3>SVG sprite icon tests</h3>
-  <div className='Example'>
-    <Icon glyph='square' />
-    <Icon glyph='circle' />
-    <Icon glyph='triangle' />
-    <Icon glyph='marker_single' />
-    <Icon glyph='marker_cluster' />
-  </div>
-*/

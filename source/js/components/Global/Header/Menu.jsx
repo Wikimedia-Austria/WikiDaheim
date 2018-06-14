@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { routeCodes } from 'config/routes';
+import { FALLBACK_LANGUAGE } from 'config/config';
+
+import pages from 'views/views.json';
 
 export default class Header extends Component {
   render() {
@@ -14,35 +17,20 @@ export default class Header extends Component {
         >
           <span>WikiDaheim</span>
         </NavLink>
-        <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          exact
-          to={ routeCodes.ABOUT }
-        >
-          <span>Über</span>
-        </NavLink>
-        <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          to={ routeCodes.TOPICS }
-        >
-          <span>Themen</span>
-        </NavLink>
-        <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          to={ routeCodes.COMPETITION }
-        >
-          <span>Wettbewerb</span>
-        </NavLink>
-        <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          to={ routeCodes.CREDITS }
-        >
-          <span>Credits</span>
-        </NavLink>
+
+        { pages.map((page) => (
+          <NavLink
+            key={ page.slug }
+            activeClassName='Menu-link--active'
+            className='Menu-link'
+            exact
+            to={ routeCodes[page.slug] }
+          >
+            <span>
+              { page.menu_title[FALLBACK_LANGUAGE] }
+            </span>
+          </NavLink>
+        )) }
 
         <footer>
           <a

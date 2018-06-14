@@ -2,7 +2,11 @@
   "plugins": [
     "transform-class-properties",
     "syntax-decorators",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    ["wildcard", {
+      "exts" : ["html"],
+      "noModifyCase" : true
+    }]
   ],
   "presets": [
     ["es2015", { "modules": false }],

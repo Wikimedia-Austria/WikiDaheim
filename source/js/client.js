@@ -4,7 +4,8 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
 import configureStore from 'config/store';
-import Client from 'views/Client';
+import { FALLBACK_LANGUAGE } from 'config/config';
+import Client from 'components/Client';
 
 import { addLocaleData, IntlProvider } from 'react-intl';
 import localeDE from 'react-intl/locale-data/de';
@@ -28,8 +29,8 @@ const render = Component => {
     <AppContainer>
       <IntlProvider
         messages={ messagesDE }
-        locale={ navigator.locale }
-        defaultLocale='de'
+        locale='de'
+        defaultLocale={ FALLBACK_LANGUAGE }
       >
         <Provider store={ store }>
           <Component />
@@ -44,8 +45,8 @@ const render = Component => {
 render(Client);
 
 if (module.hot) {
-  module.hot.accept('./views/Client/', () => {
-    const NewClient = require('./views/Client/index').default; // eslint-disable-line global-require
+  module.hot.accept('./components/Client', () => {
+    const NewClient = require('./components/Client').default; // eslint-disable-line global-require
 
     render(NewClient);
   });

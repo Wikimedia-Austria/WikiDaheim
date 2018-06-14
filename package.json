@@ -62,6 +62,7 @@
     "worker-loader": "^0.8.1"
   },
   "dependencies": {
+    "babel-plugin-wildcard": "^5.0.0",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "es6-promise": "^3.3.1",
