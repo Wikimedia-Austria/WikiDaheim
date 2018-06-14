@@ -1,8 +1,8 @@
 {
   "name": "WikiDaheim",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
-  "license": "(cc) by-sa 2017 Benedikt Reiter",
+  "license": "(cc) by-sa 2017-2018 Benedikt Reiter",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
@@ -10,12 +10,6 @@
     "client:watch": "webpack",
     "client:build": "npm run clean && NODE_ENV=\"production\" webpack",
     "client:preview": "npm run clean && NODE_ENV=\"production\" webpack-dev-server",
-    "server:watch": "SERVER_RENDER=\"true\" webpack --config webpack.config.server.js",
-    "server:restart": "nodemon ./build/server.js",
-    "server:build": "SERVER_RENDER=\"true\" NODE_ENV=\"production\" webpack --config webpack.config.server.js",
-    "server:dev": "npm run clean && concurrently --prefix \"[{name}]\" --names \"webpack-server,watch-server\" --kill-others \"npm run server:watch\" \"npm run server:restart\"",
-    "server-and-client:dev": "concurrently --prefix \"[{name}]\" --names \"webpack-server,webpack-client,watch-server\" --kill-others \"npm run server:watch\" \"npm run client:watch\" \"npm run server:restart\"",
-    "server-and-client:build": "npm run build-client && npm run build-server",
     "clean": "rm -rf ./build",
     "lint-hook": "eslint ./source/js ./webpack ./*.js -f table --ext .js --ext .jsx",
     "lint": "npm run lint-hook --silent || true",
