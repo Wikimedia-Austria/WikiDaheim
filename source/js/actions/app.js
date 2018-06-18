@@ -142,12 +142,14 @@ export function selectPlace(place) {
 
     const coordinates = place.get('geometry').get('coordinates');
     const wikidata = place.get('properties').get('wikidata');
-    const town = place.get('text');
+    const iso = place.get('iso');
+    const name = place.get('text');
 
     const location = {
       longitude: coordinates.get(0),
       latitude: coordinates.get(1),
-      town,
+      name,
+      iso,
       wikidata,
     };
 

@@ -218,6 +218,7 @@ class ResultMap extends Component {
       dispatch(municipalityLeave());
       dispatch(selectPlace(fromJS({
         id: iso,
+        iso,
         text: name,
         geometry: {
           coordinates: [

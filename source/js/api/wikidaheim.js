@@ -15,10 +15,11 @@ const getTownData = (location, categories, getWikiData) => {
   const categoriesString = categories.join('|');
 
   let locationQuery = '';
+
   if (location.wikidata) {
     locationQuery = `wikidata=${ location.wikidata }`;
-  } else if (location.town) {
-    locationQuery = `town=${ location.town }`;
+  } else if (location.iso && !location.name.includes('Wien')) {
+    locationQuery = `gemeindekennzahl=${ location.iso }`;
   } else {
     locationQuery = `latitude=${ location.latitude }&longitude=${ location.longitude }`;
   }
