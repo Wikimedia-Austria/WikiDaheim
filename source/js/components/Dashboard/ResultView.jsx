@@ -36,7 +36,7 @@ class ResultView extends Component {
       return qualified;
     });
 
-    if (categories.toJS().length === 0 || categoriesLoading) return null;
+    // if (categories.toJS().length === 0 || categoriesLoading) return null;
 
     return (<div className='ResultView'>
       <ResultList items={ filteredItems } />

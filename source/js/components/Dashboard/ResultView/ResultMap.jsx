@@ -137,7 +137,12 @@ class ResultMap extends Component {
       /*
         trigger Pin hover
       */
-      map.on('mouseenter', 'unclustered-point', (e) => {
+      map.on('mousemove', 'unclustered-point', (e) => {
+        const { hoveredElement } = this.props;
+
+        // only trigger if we move over a new pin
+        if (hoveredElement && hoveredElement.get('id') === e.features[0].properties.id) return;
+
         const canvas = map.getCanvas();
         canvas.style.cursor = 'pointer';
 
@@ -157,6 +162,14 @@ class ResultMap extends Component {
        trigger municipality hover
       */
       map.on('mousemove', 'municipalities', (e) => {
+        const { hoveredMunicipality } = this.props;
+        const { lngLat } = e;
+        const { iso, name } = e.features[0].properties;
+
+        // check if we are already hovering over this place
+        if (hoveredMunicipality && hoveredMunicipality.get('iso') === iso) return;
+
+        // clear the micro-timeout
         if (municipalityHoverTimer) clearTimeout(municipalityHoverTimer);
 
         /*
@@ -167,20 +180,14 @@ class ResultMap extends Component {
           const canvas = map.getCanvas();
           canvas.style.cursor = 'pointer';
 
-          const { hoveredMunicipality } = this.props;
-          const { lngLat } = e;
-          const { iso, name } = e.features[0].properties;
+          dispatch(municipalityHover({
+            iso,
+            name,
+            longitude: lngLat.lng,
+            latitude: lngLat.lat,
+          }));
 
-          if (!hoveredMunicipality || hoveredMunicipality.get('iso') !== iso) {
-            dispatch(municipalityHover({
-              iso,
-              name,
-              longitude: lngLat.lng,
-              latitude: lngLat.lat,
-            }));
-
-            this.updateHighlightedArea(map);
-          }
+          this.updateHighlightedArea(map);
         }, 20);
       });
 
@@ -302,7 +309,7 @@ class ResultMap extends Component {
             'backgroundColor': 'black',
           } }
         >
-          <span>zu Gemeinde wechseln</span>
+          <span>zu Gebiet wechseln</span>
           <strong>{hoveredMunicipality.get('name')}</strong>
         </Popup>
       );
@@ -435,7 +442,7 @@ class ResultMap extends Component {
           sourceId='municipality-hover-item'
           paint={ {
             'fill-color': '#57599A',
-            'fill-opacity': 1,
+            'fill-opacity': 0.2,
           } }
         />
         {popup}

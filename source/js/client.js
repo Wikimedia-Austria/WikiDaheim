@@ -1,18 +1,26 @@
+/* REACT */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import { Provider } from 'react-redux';
 
+/* DEV TOOLS */
+import { AppContainer } from 'react-hot-loader';
+
+/* REDUX */
+import { Provider } from 'react-redux';
 import configureStore from 'config/store';
-import { FALLBACK_LANGUAGE } from 'config/config';
+
+/* APP COMPONENTS */
 import Client from 'components/Client';
 
-import { addLocaleData, IntlProvider } from 'react-intl';
-import localeDE from 'react-intl/locale-data/de';
-import messagesDE from 'translations/de.json';
-
+/* POLYFILLS */
 import es6Promise from 'es6-promise';
 import 'isomorphic-fetch';
+
+/* INTERNATIONALIZATION */
+import { addLocaleData, IntlProvider } from 'react-intl';
+import localeDE from 'react-intl/locale-data/de';
+import { FALLBACK_LANGUAGE } from 'config/config';
+import * as Messages from './languages';
 
 // Load SCSS
 import '../scss/app.scss';
@@ -28,7 +36,7 @@ const render = Component => {
   ReactDOM.render(
     <AppContainer>
       <IntlProvider
-        messages={ messagesDE }
+        messages={ Messages.de }
         locale='de'
         defaultLocale={ FALLBACK_LANGUAGE }
       >
