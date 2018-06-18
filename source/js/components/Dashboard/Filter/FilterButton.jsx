@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { toggleFilterMenu } from 'actions/menu';
+import { FormattedMessage } from 'react-intl';
 
 @connect(state => {
   let filtersActive = false;
@@ -51,7 +52,11 @@ class FilterButton extends Component {
         className={ ItemClass }
         onClick={ this.toggle }
       >
-        <span>List filtern</span>
+        <FormattedMessage
+          id='filter.filterButtonTitle'
+          description='Title of the Filter Menu Toggle-Button'
+          defaultMessage='Liste filtern'
+        />
       </button>
     );
   }

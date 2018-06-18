@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { toggleFilterMenu } from 'actions/menu';
+import { FormattedMessage } from 'react-intl';
 import CategoryFilter from './Filter/CategoryFilter';
 import PropertyFilter from './Filter/PropertyFilter';
 
@@ -40,20 +41,55 @@ class Filter extends Component {
 
     return (
       <section className={ ItemClass }>
-        <h1>Filter</h1>
-        <h2>Themen</h2>
+        <FormattedMessage
+          id='filter.title'
+          description='Title of the Filter Menu'
+          defaultMessage='Filter'
+        >
+          {(text) => (
+            <h1>{ text }</h1>
+          )}
+        </FormattedMessage>
+
+        <FormattedMessage
+          id='filter.categoryFilterTitle'
+          description='Title of the Categories-Filter'
+          defaultMessage='Themen'
+        >
+          {(text) => (
+            <h2>{ text }</h2>
+          )}
+        </FormattedMessage>
+
         <CategoryFilter />
 
-        <h2>Eigenschaften</h2>
+        <FormattedMessage
+          id='filter.propertyFilterTitle'
+          description='Title of the Properties-Filter'
+          defaultMessage='Eigenschaften'
+        >
+          {(text) => (
+            <h2>{ text }</h2>
+          )}
+        </FormattedMessage>
+
         <PropertyFilter />
 
         <footer>
-          <button
-            className='FilterFinished-Button'
-            onClick={ this.toggle }
+          <FormattedMessage
+            id='filter.finishedButton'
+            description='Title of the Filter Menu Finish-Button'
+            defaultMessage='Fertig'
           >
-            Fertig
-          </button>
+            {(text) => (
+              <button
+                className='FilterFinished-Button'
+                onClick={ this.toggle }
+              >
+                { text }
+              </button>
+            )}
+          </FormattedMessage>
         </footer>
       </section>
     );

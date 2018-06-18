@@ -7,7 +7,7 @@ class ResultListItemDetail extends Component {
     editLink: PropTypes.string,
     className: PropTypes.string,
     value: PropTypes.string,
-    errorText: PropTypes.string,
+    errorText: PropTypes.object,
     editLinkText: PropTypes.string,
     color: PropTypes.string,
     children: PropTypes.object,

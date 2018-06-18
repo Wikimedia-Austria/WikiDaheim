@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { routeCodes } from 'config/routes';
 import { FALLBACK_LANGUAGE } from 'config/config';
 
@@ -33,22 +34,39 @@ export default class Header extends Component {
         )) }
 
         <footer>
-          <a
-            className='Menu-link--imprint'
-            href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
-            target='_blank'
-            rel='noopener noreferrer'
+          <FormattedMessage
+            id='menu.imprint'
+            desctiption='Link title to Wikimedia Imprint and Privacy Page'
+            defaultMessage='Impressum & Datenschutz'
           >
-            Impressum & Datenschutz
-          </a>
-          <a
-            className='Menu-link--facebook'
-            href='https://facebook.com/wikiDaheim'
-            target='_blank'
-            rel='noopener noreferrer'
+            {(title) => (
+              <a
+                className='Menu-link--imprint'
+                href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                { title }
+              </a>
+            )}
+          </FormattedMessage>
+
+          <FormattedMessage
+            id='menu.facebook'
+            desctiption='Link title to WikiDaheim Facebook-Page'
+            defaultMessage='Facebook'
           >
-            Facebook
-          </a>
+            {(title) => (
+              <a
+                className='Menu-link--facebook'
+                href='https://facebook.com/wikiDaheim'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                { title }
+              </a>
+            )}
+          </FormattedMessage>
         </footer>
       </div>
     );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
+import { FormattedMessage } from 'react-intl';
 import { autocomplete, selectPlace } from 'actions/app';
 import FilterButton from './Filter/FilterButton';
 
@@ -57,7 +58,11 @@ class SearchBar extends Component {
       if (item.text === 'Wien') {
         return (
           <div className='ViennaWarning'>
-            Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)
+            <FormattedMessage
+              id='search.viennaWarning'
+              description='Warning to search for Viennese district.'
+              defaultMessage='Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)'
+            />
           </div>
         );
       }
@@ -78,18 +83,26 @@ class SearchBar extends Component {
     return (
       <section className='SearchBar'>
         <div className='SearchBar-Bar'>
-          <Autocomplete
-            inputProps={ { placeholder: 'Gemeinde hier suchen...', accessKey: 'f' } }
-            getItemValue={ (item) => item.place_name }
-            items={ searchData.toJS() }
-            renderItem={ renderItem }
-            renderMenu={ (items) => (
-              <div className='SearchBar-Suggestions' children={ items } /> // eslint-disable-line react/no-children-prop
-            ) }
-            value={ searchText }
-            onChange={ (e) => this.onInputChange(e.target.value) }
-            onSelect={ (v) => this.onPlaceSelect(v) }
-          />
+          <FormattedMessage
+            id='search.placeholder'
+            description='Placeholder Text for Search Bar'
+            defaultMessage='Gemeinde hier suchen...'
+          >
+            {(placeholder) => (
+              <Autocomplete
+                inputProps={ { placeholder, accessKey: 'f' } }
+                getItemValue={ (item) => item.place_name }
+                items={ searchData.toJS() }
+                renderItem={ renderItem }
+                renderMenu={ (items) => (
+                  <div className='SearchBar-Suggestions' children={ items } /> // eslint-disable-line react/no-children-prop
+                ) }
+                value={ searchText }
+                onChange={ (e) => this.onInputChange(e.target.value) }
+                onSelect={ (v) => this.onPlaceSelect(v) }
+              />
+            )}
+          </FormattedMessage>
           {
             placeSelected ? <div className='SearchBar-Filter'><FilterButton /></div> : null
           }

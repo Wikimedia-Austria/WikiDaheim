@@ -6,6 +6,7 @@ import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
+import { FormattedMessage } from 'react-intl';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
@@ -310,7 +311,11 @@ class ResultMap extends Component {
             'backgroundColor': 'black',
           } }
         >
-          <span>zu Gebiet wechseln</span>
+          <FormattedMessage
+            id='map.switchMunicipality'
+            description='Title for the Switch Municipality Popup'
+            defaultMessage='zu Gebiet wechseln'
+          />
           <strong>{hoveredMunicipality.get('name')}</strong>
         </Popup>
       );

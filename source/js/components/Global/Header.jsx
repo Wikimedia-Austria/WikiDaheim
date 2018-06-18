@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+import { FormattedMessage } from 'react-intl';
 import Menu from './Header/Menu';
 import MenuToggle from './Header/MenuToggle';
 
@@ -29,10 +31,18 @@ export default class Header extends Component {
         <div className='Header-bar'>
           <div className='Header-logo'>
             <button onClick={ () => window.location = '/' }>
-              <img
-                src={ wikiDaheimLogo }
-                alt='WikiDaheim Logo'
-              />
+              <FormattedMessage
+                id='header.logoAlt'
+                description='Alt Text of the header Logo'
+                defaultMessage='WikiDaheim-Logo'
+              >
+                {(alt) => (
+                  <img
+                    src={ wikiDaheimLogo }
+                    alt={ alt }
+                  />
+                )}
+              </FormattedMessage>
             </button>
           </div>
           <div className='Header-claim'>
