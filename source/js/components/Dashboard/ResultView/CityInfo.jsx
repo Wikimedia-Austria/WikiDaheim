@@ -106,13 +106,13 @@ class CityInfo extends Component {
 
         case 'bau': {
           const title = (<FormattedMessage
-            id='cityinfo.regiowikiTitle'
+            id='cityinfo.construtionHistoryTitle'
             description='Title for Construction History'
             defaultMessage='Baugeschichte'
           />);
 
           const text = (<FormattedMessage
-            id='cityinfo.regiowikiText'
+            id='cityinfo.construtionHistoryText'
             description='Text for Construction History'
             defaultMessage='Das Projekt Baugeschichte.at soll Bewusstsein für
             die Umgebung schaffen und Veränderungen im Ortsbild sichtbar machen.
@@ -225,7 +225,7 @@ class CityInfo extends Component {
               onClick={ () => this.setState({ 'shownLink': 'bau' }) }
             >
               <FormattedMessage
-                id='cityinfo.regiowikiTitle'
+                id='cityinfo.construtionHistoryTitle'
                 description='Title for Construction History'
                 defaultMessage='Baugeschichte'
               />

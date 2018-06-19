@@ -20,7 +20,7 @@ import 'isomorphic-fetch';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import localeDE from 'react-intl/locale-data/de';
 import { FALLBACK_LANGUAGE } from 'config/config';
-import * as Messages from './languages';
+import * as Messages from '../translations/locales';
 
 // Load SCSS
 import '../scss/app.scss';

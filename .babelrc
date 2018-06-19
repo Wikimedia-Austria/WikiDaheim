@@ -6,6 +6,9 @@
     ["wildcard", {
       "exts" : ["html", "json"],
       "noModifyCase" : true
+    }],
+    ["react-intl", {
+        "messagesDir": "./source/translations/extractedMessages"
     }]
   ],
   "presets": [

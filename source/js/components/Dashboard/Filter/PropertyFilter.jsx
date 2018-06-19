@@ -34,7 +34,7 @@ class PropertyFilter extends Component {
         </FormattedMessage>
 
         <FormattedMessage
-          id='filter.incomplete'
+          id='filter.missingDescription'
           description='Title of the Missing Description-Filter'
           defaultMessage='Fehlende Beschreibung'
         >
