@@ -7,6 +7,7 @@ import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
 import scrollTo from 'lib/scrollTo';
 import ResultListItem from './ResultListItem';
 import CityInfo from './CityInfo';
+import SearchBar from '../SearchBar';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
 
 @connect(state => ({
@@ -126,6 +127,8 @@ class ResultList extends Component {
 
     return (
       <div className='ResultList'>
+        <SearchBar />
+
         <CityInfo />
 
         <div className='ResultList-ListWrapper'>

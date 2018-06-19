@@ -26,7 +26,6 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className='Dashboard'>
-        <DashboardHeader />
         <div className='Dashboard-Content'>
           <ResultView />
         </div>

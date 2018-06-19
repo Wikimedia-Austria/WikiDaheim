@@ -35,14 +35,14 @@ export default class Header extends Component {
 
         <footer>
           <FormattedMessage
-            id='menu.imprint'
-            desctiption='Link title to Wikimedia Imprint and Privacy Page'
-            defaultMessage='Impressum & Datenschutz'
+            id='menu.facebook'
+            desctiption='Link title to WikiDaheim Facebook-Page'
+            defaultMessage='Facebook'
           >
             {(title) => (
               <a
-                className='Menu-link--imprint'
-                href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
+                className='Menu-link--facebook'
+                href='https://facebook.com/wikiDaheim'
                 target='_blank'
                 rel='noopener noreferrer'
               >
@@ -52,14 +52,14 @@ export default class Header extends Component {
           </FormattedMessage>
 
           <FormattedMessage
-            id='menu.facebook'
-            desctiption='Link title to WikiDaheim Facebook-Page'
-            defaultMessage='Facebook'
+            id='menu.imprint'
+            desctiption='Link title to Wikimedia Imprint and Privacy Page'
+            defaultMessage='Impressum & Datenschutz'
           >
             {(title) => (
               <a
-                className='Menu-link--facebook'
-                href='https://facebook.com/wikiDaheim'
+                className='Menu-link--imprint'
+                href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
                 target='_blank'
                 rel='noopener noreferrer'
               >

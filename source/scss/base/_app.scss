@@ -13,7 +13,7 @@ html {
 }
 
 .Dashboard {
-  height:100vh - $header-height;
+  height:calc(100vh - #{$header-height});
   max-height:calc(100vh - 6em);
   display:flex;
   flex-direction: column;
