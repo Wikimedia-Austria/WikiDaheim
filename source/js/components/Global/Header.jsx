@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import Menu from './Header/Menu';
 import MenuToggle from './Header/MenuToggle';
+import LanguageSwitch from './Header/LanguageSwitch';
 
 import wikiDaheimLogo from '../../../assets/img/wikidaheim-logo.svg';
 
@@ -47,6 +48,9 @@ export default class Header extends Component {
           </div>
           <div className='Header-claim'>
             <button onClick={ () => window.location = '/' } />
+          </div>
+          <div className='Header-languageSwitch'>
+            <LanguageSwitch />
           </div>
           <div className='Header-menuToggle' />
         </div>
