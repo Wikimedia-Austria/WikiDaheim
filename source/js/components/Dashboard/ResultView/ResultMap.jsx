@@ -55,6 +55,9 @@ class ResultMap extends Component {
     this.componentWillUpdate = this.componentWillUpdate.bind(this);
     this.onMapMove = this.onMapMove.bind(this);
     this.updateHighlightedArea = this.updateHighlightedArea.bind(this);
+    this.triggerMunicipalityHover = this.triggerMunicipalityHover.bind(this);
+    this.triggerMunicipalityLeave = this.triggerMunicipalityLeave.bind(this);
+    this.triggerMunicipalitySelect = this.triggerMunicipalitySelect.bind(this);
   }
 
   componentDidMount() {
@@ -160,47 +163,20 @@ class ResultMap extends Component {
       });
 
       /*
-       trigger municipality hover
+       trigger municipality hover (small zoom size layer)
       */
-      map.on('mousemove', 'municipalities', (e) => {
-        const { hoveredMunicipality } = this.props;
-        const { lngLat } = e;
-        const { iso, name } = e.features[0].properties;
+      map.on('mousemove', 'municipalities', (e) => this.triggerMunicipalityHover(e, map));
+      map.on('mouseleave', 'municipalities', (e) => this.triggerMunicipalityLeave(e, map));
 
-        // check if we are already hovering over this place
-        if (hoveredMunicipality && hoveredMunicipality.get('iso') === iso) return;
-
-        // clear the micro-timeout
-        if (municipalityHoverTimer) clearTimeout(municipalityHoverTimer);
-
-        /*
-          the hover action is packed into a small timeout to reduce
-          event calls when moving over a large area
-        */
-        municipalityHoverTimer = setTimeout(() => {
-          const canvas = map.getCanvas();
-          canvas.style.cursor = 'pointer';
-
-          dispatch(municipalityHover({
-            iso,
-            name,
-            longitude: lngLat.lng,
-            latitude: lngLat.lat,
-          }));
-
-          this.updateHighlightedArea(map);
-        }, 20);
-      });
-
-      map.on('mouseleave', 'municipalities', () => {
-        if (municipalityHoverTimer) clearTimeout(municipalityHoverTimer);
-
-        const canvas = map.getCanvas();
-        canvas.style.cursor = '';
-
-        dispatch(municipalityLeave());
-      });
+      /*
+        trigger municipality hover (large zoom size layer)
+      */
+      map.on('mousemove', 'municipalities-detail', (e) => this.triggerMunicipalityHover(e, map));
+      map.on('mouseleave', 'municipalities-detail', (e) => this.triggerMunicipalityLeave(e, map));
     }
+
+    map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
+    map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));
 
     map.on('click', 'unclustered-point', (e) => {
       dispatch(placeItemSelect(
@@ -211,27 +187,89 @@ class ResultMap extends Component {
       e.stopPropagation();
     });
 
-    map.on('click', 'municipalities', (e) => {
-      const { lngLat } = e;
-      const { properties } = e.features[0];
-      const { iso, name } = properties;
-
-      dispatch(municipalityLeave());
-      dispatch(selectPlace(fromJS({
-        id: iso,
-        iso,
-        text: name,
-        geometry: {
-          coordinates: [
-            lngLat.lng,
-            lngLat.lat,
-          ],
-        },
-        properties,
-      })));
-    });
-
     this.updateHighlightedArea(map);
+  }
+
+  triggerMunicipalityHover(e, map) {
+    const { dispatch } = this.props;
+    const { lngLat } = e;
+    const element = e.features[0];
+    const layerId = element.layer.id;
+    let iso;
+    let name;
+
+    if (layerId === 'municipalities') {
+      iso = element.properties.iso;
+      name = element.properties.name;
+    } else {
+      iso = element.properties.GKZ;
+      name = element.properties.PG;
+    }
+
+
+    // check if we are already hovering over this place
+    // if (hoveredMunicipality && hoveredMunicipality.get('iso') === iso) return;
+
+    // clear the micro-timeout
+    if (this.municipalityHoverTimer) clearTimeout(this.municipalityHoverTimer);
+
+    /*
+      the hover action is packed into a small timeout to reduce
+      event calls when moving over a large area
+    */
+    this.municipalityHoverTimer = setTimeout(() => {
+      const canvas = map.getCanvas();
+      canvas.style.cursor = 'pointer';
+
+      dispatch(municipalityHover({
+        iso,
+        name,
+        longitude: lngLat.lng,
+        latitude: lngLat.lat,
+      }));
+
+      this.updateHighlightedArea(map);
+    }, 0);
+  }
+
+  triggerMunicipalityLeave(e, map) {
+    const { dispatch } = this.props;
+    const canvas = map.getCanvas();
+
+    if (this.municipalityHoverTimer) clearTimeout(this.municipalityHoverTimer);
+    canvas.style.cursor = '';
+
+    dispatch(municipalityLeave());
+  }
+
+  triggerMunicipalitySelect(e) {
+    const { dispatch } = this.props;
+    const { lngLat } = e;
+    const { properties, layer } = e.features[0];
+    let iso;
+    let name;
+
+    if (layer.id === 'municipalities') {
+      iso = properties.iso;
+      name = properties.name;
+    } else {
+      iso = properties.GKZ;
+      name = properties.PG;
+    }
+
+    dispatch(municipalityLeave());
+    dispatch(selectPlace(fromJS({
+      id: iso,
+      iso,
+      text: name,
+      geometry: {
+        coordinates: [
+          lngLat.lng,
+          lngLat.lat,
+        ],
+      },
+      properties,
+    })));
   }
 
   /*
@@ -241,6 +279,7 @@ class ResultMap extends Component {
   updateHighlightedArea(map) {
     const { placeMapData } = this.props;
     const municipalityName = placeMapData.get('text');
+    const municipalityGkz = placeMapData.get('iso');
 
     const { hoveredMunicipality } = this.props;
 
@@ -248,17 +287,28 @@ class ResultMap extends Component {
     if (municipalityName) {
       const pre = placeMapData.get('text').includes('Wien,') ? 'Wien ' : '';
       map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
+      map.setFilter('municipalities-detail', ['!=', 'GKZ', municipalityGkz.toString()]);
     } else {
       map.setFilter('municipalities', ['has', 'name']);
+      map.setFilter('municipalities-detail', ['has', 'GKZ']);
     }
 
     // hover-effect for municipalities
     if (map.getSource('municipality-hover-item')) {
       if (hoveredMunicipality) {
-        const features = map.querySourceFeatures('composite', {
-          sourceLayer: 'gemeinden_wien_bezirke_geo',
-          filter: ['==', 'iso', hoveredMunicipality.get('iso')],
-        });
+        let features;
+
+        if (map.getZoom() <= 9.1) {
+          features = map.querySourceFeatures('composite', {
+            sourceLayer: 'gemeinden_wien_bezirke_geo',
+            filter: ['==', 'iso', hoveredMunicipality.get('iso')],
+          });
+        } else {
+          features = map.querySourceFeatures('composite', {
+            sourceLayer: 'VGD-Oesterreich_gst-1ajjr4',
+            filter: ['==', 'GKZ', hoveredMunicipality.get('iso')],
+          });
+        }
 
         map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features });
       } else {
@@ -305,7 +355,7 @@ class ResultMap extends Component {
         <Popup
           coordinates={ [parseFloat(hoveredMunicipality.get('longitude')), parseFloat(hoveredMunicipality.get('latitude'))] }
           offset={
-            [0, 35]
+            [0, 40]
            }
           style={ {
             'backgroundColor': 'black',
@@ -447,8 +497,8 @@ class ResultMap extends Component {
           type='fill'
           sourceId='municipality-hover-item'
           paint={ {
-            'fill-color': '#57599A',
-            'fill-opacity': 0.2,
+            'fill-color': '#000',
+            'fill-opacity': 0.08,
           } }
         />
         {popup}
