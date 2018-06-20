@@ -8,4 +8,8 @@
     "locale": "en",
     "title": "English"
   }
+  {
+    "locale": "hu",
+    "title": "Magyar"
+  }  
 ]
