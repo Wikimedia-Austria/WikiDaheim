@@ -287,7 +287,9 @@ class ResultMap extends Component {
     if (municipalityName) {
       const pre = placeMapData.get('text').includes('Wien,') ? 'Wien ' : '';
       map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
-      map.setFilter('municipalities-detail', ['!=', 'GKZ', municipalityGkz.toString()]);
+
+      if (municipalityGkz) map.setFilter('municipalities-detail', ['!=', 'GKZ', municipalityGkz.toString()]);
+      else map.setFilter('municipalities-detail', ['!=', 'PG', municipalityName]);
     } else {
       map.setFilter('municipalities', ['has', 'name']);
       map.setFilter('municipalities-detail', ['has', 'GKZ']);
@@ -374,6 +376,7 @@ class ResultMap extends Component {
     if (hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
       const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
       const address = hoveredElement.get('adresse');
+      let hasPhoto = false;
 
       let popUpAddress = '';
       if (address) {
@@ -384,6 +387,7 @@ class ResultMap extends Component {
 
       const photoContainerStyle = {};
       if (hoveredElement.get('foto') && !hoveredElement.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
+        hasPhoto = true;
         const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ hoveredElement.get('foto') }?width=256`;
         photoContainerStyle.backgroundImage = `url('${ url }')`;
       }
@@ -395,10 +399,10 @@ class ResultMap extends Component {
             'backgroundColor': hoveredCategory.get('color'),
           } }
           offset={
-            [0, -100]
+            [0, hasPhoto ? -100 : -40]
            }
         >
-          <div className='PhotoContainer' style={ photoContainerStyle } />
+          { hasPhoto ? <div className='PhotoContainer' style={ photoContainerStyle } /> : null }
           <div className='DescriptionContainer'>
             <strong>{hoveredElement.get('name')}</strong>
             {popUpAddress}

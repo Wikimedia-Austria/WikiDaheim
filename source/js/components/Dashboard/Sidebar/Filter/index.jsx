@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { toggleFilterMenu } from 'actions/menu';
 import { FormattedMessage } from 'react-intl';
-import CategoryFilter from './Filter/CategoryFilter';
-import PropertyFilter from './Filter/PropertyFilter';
+import CategoryFilter from './CategoryFilter';
+import PropertyFilter from './PropertyFilter';
 
 @connect(state => {
   return {

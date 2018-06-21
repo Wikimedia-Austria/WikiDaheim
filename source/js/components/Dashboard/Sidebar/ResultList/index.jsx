@@ -6,8 +6,6 @@ import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
 import scrollTo from 'lib/scrollTo';
 import ResultListItem from './ResultListItem';
-import CityInfo from './CityInfo';
-import SearchBar from '../SearchBar';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
 
 @connect(state => ({
@@ -126,31 +124,25 @@ class ResultList extends Component {
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
     return (
-      <div className='ResultList'>
-        <SearchBar />
-
-        <CityInfo />
-
-        <div className='ResultList-ListWrapper'>
-          <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
-            { sortedItems.map((item) => {
-              const category = categories.find((c) => c.get('name') === item.get('category'));
-              const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
-              const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
-              return (<ResultListItem
-                item={ item }
-                categoryColor={ category.get('color') }
-                editLinkText={ category.get('editLinkText') }
-                isHovered={ isHovered }
-                isSelected={ isSelected }
-                onHover={ () => this.hoverItem(item) }
-                onLeave={ () => this.leaveItem() }
-                onClick={ () => this.selectItem(item) }
-                key={ item.get('id') }
-              />);
-            }) }
-          </Infinite>
-        </div>
+      <div className='ResultList-ListWrapper'>
+        <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
+          { sortedItems.map((item) => {
+            const category = categories.find((c) => c.get('name') === item.get('category'));
+            const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
+            const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+            return (<ResultListItem
+              item={ item }
+              categoryColor={ category.get('color') }
+              editLinkText={ category.get('editLinkText') }
+              isHovered={ isHovered }
+              isSelected={ isSelected }
+              onHover={ () => this.hoverItem(item) }
+              onLeave={ () => this.leaveItem() }
+              onClick={ () => this.selectItem(item) }
+              key={ item.get('id') }
+            />);
+          }) }
+        </Infinite>
       </div>
     );
   }

@@ -2,14 +2,26 @@
   background-color: $primary-color;
   display:flex;
   align-items: center;
-  padding: 0 1em;
+  padding: 1rem;
+  position: relative;
+  z-index: $z-index-menu - 9;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+  margin: 0 0.5rem;
 
-  @include md {
-    padding: 0 25%;
-  }
+  &::before {
+    content:'';
+    display: block;
+    width:3.25em;
+    height:2.5em;
+    padding:.2em 0.75em .2em .2em;
+    margin-right: 1em;
 
-  @include xl {
-    padding: 0 33.3333333%;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+
+    background-image:url(../assets/icons/icon_search.svg);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
   }
 
   > div {
@@ -22,35 +34,23 @@
     border: none;
     background-color: transparent;
     color:$primary-color-contrast;
-    font-size:1.6em;
-    padding:2vh 0;
+    font-size:1.5rem;
     outline:none;
-
-    @include sm {
-      font-size:2em;
-    }
   }
 
   .SearchBar-Suggestions {
     background-color: $secondary-color;
     color: $secondary-color-contrast;
     cursor: pointer;
-    font-size:1.6em;
-    position: fixed;
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
     overflow: auto;
     left:0;
     width:100%;
+    padding: 0;
     z-index:$z-index-suggestions;
-
-    @include sm {
-      left:auto;
-      font-size:2em;
-      width:50%;
-    }
-
-    @include xl {
-      width: 33.3333333%;
-    }
 
     .ViennaWarning {
       background-color: $unavailable-color;
@@ -59,7 +59,7 @@
     }
 
     div {
-      padding: 1em;
+      padding: 1rem;
     }
 
     .highlighted {

@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import SearchBar from 'components/Dashboard/SearchBar';
-import Filter from 'components/Dashboard/Filter';
+import ResultList from './ResultList';
+import SearchBar from './SearchBar';
+import CityInfo from './CityInfo';
 
 @connect(state => ({
   placeSelected: state.app.get('placeSelected'),
 }))
-export default class DashboardHeader extends Component {
+class Sidebar extends Component {
   static propTypes = {
     placeSelected: PropTypes.bool,
+    items: PropTypes.object,
   };
 
   render() {
-    const { placeSelected } = this.props;
+    const { items } = this.props;
+
     return (
-      <div className='DashboardHeader'>
+      <div className='ResultList'>
         <SearchBar />
-        {placeSelected ? <Filter /> : null}
+        <CityInfo />
+        <ResultList items={ items } />
       </div>
     );
   }
 }
+
+export default Sidebar;

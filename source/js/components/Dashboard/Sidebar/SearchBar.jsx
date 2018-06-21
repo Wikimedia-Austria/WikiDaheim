@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { FormattedMessage } from 'react-intl';
 import { autocomplete, selectPlace } from 'actions/app';
-import FilterButton from './Filter/FilterButton';
 
 @connect(state => ({
-  placeSelected: state.app.get('placeSelected'),
   searchData: state.app.get('searchData'),
   searchText: state.app.get('searchText'),
 }))
 class SearchBar extends Component {
   static propTypes = {
-    placeSelected: PropTypes.bool,
     searchData: PropTypes.array,
     searchText: PropTypes.string,
     // from react-redux connect
@@ -49,7 +46,6 @@ class SearchBar extends Component {
     const {
 //      searchLoading,
 //      searchError,
-      placeSelected,
       searchData,
       searchText,
     } = this.props;
@@ -103,9 +99,6 @@ class SearchBar extends Component {
               />
             )}
           </FormattedMessage>
-          {
-            placeSelected ? <div className='SearchBar-Filter'><FilterButton /></div> : null
-          }
         </div>
       </section>
     );

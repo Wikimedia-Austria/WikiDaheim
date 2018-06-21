@@ -5,37 +5,32 @@
 .Dropdown-control {
   position: relative;
   overflow: hidden;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 2px;
   box-sizing: border-box;
-  color: #333;
+  color: $primary-color;
   cursor: default;
   outline: none;
-  padding: 8px 52px 8px 10px;
   transition: all 200ms ease;
-}
-
-.Dropdown-control:hover {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  padding: 1.5rem 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .Dropdown-arrow {
-  border-color: #999 transparent transparent;
+  border-color: #CCC transparent transparent;
   border-style: solid;
   border-width: 5px 5px 0;
   content: ' ';
   display: block;
   height: 0;
-  margin-top: -ceil(2.5);
   position: absolute;
-  right: 10px;
-  top: 14px;
-  width: 0
+  width: 0;
+  right: 0;
+  top: 0.9em;
 }
 
 .is-open .Dropdown-arrow {
-  border-color: transparent transparent #999;
+  border-color: transparent transparent $primary-color;
   border-width: 0 5px 5px;
 }
 
@@ -50,23 +45,27 @@
   position: absolute;
   top: 100%;
   width: 100%;
+  min-width: 10rem;
   z-index: 1000;
+  right: 0;
   -webkit-overflow-scrolling: touch;
 }
 
 .Dropdown-menu .Dropdown-group > .Dropdown-title{
   padding: 8px 10px;
-  color: rgba(51, 51, 51, 1);
+  color: $primary-color;
   font-weight: bold;
   text-transform: capitalize;
 }
 
 .Dropdown-option {
   box-sizing: border-box;
-  color: rgba(51, 51, 51, 0.8);
+  color: $primary-color;
   cursor: pointer;
   display: block;
-  padding: 8px 10px;
+  padding: 1.5rem 1rem;
+  font-size: 1.5rem;
+  font-weight: bold
 }
 
 .Dropdown-option:last-child {

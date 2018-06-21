@@ -23,7 +23,7 @@
 
 .ResultListItem {
   display:flex;
-  margin:.5em;
+  margin: 1rem 0.5rem;
   box-shadow:.1em .1em .3em rgba(0,0,0,.15);
   min-height:130px;
   max-height:130px;
@@ -35,10 +35,6 @@
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(2px);
   transition: max-height .2s ease;
-
-  @include sm {
-    margin: 1em;
-  }
 
   &:nth-child(2) {
     margin-top:0;
