@@ -1,7 +1,5 @@
 {
   "cancel": "Abbrechen",
-  "cityinfo.articleSections": "Artikelabschnitte",
-  "cityinfo.description": "Hier kannst du Bilder zu {cityName} hochladen.\n              Weiters kannst du Abschnitte zum Wikipedia-Artikel\n              dieser Gemeinde bearbeiten oder sogar anlegen,\n              wenn sie fehlen sollten!<br />\n              Unterhalb stehen einige Vorschläge zu Objekten,\n              die du in {cityName} fotografieren könntest.",
   "cityinfo.openLink": "Seite öffnen",
   "cityinfo.regiowikiText": "Im RegioWikiAT kannst du all jene Themen deiner\n            Umgebung beschreiben, die nicht von großem überregionalem Interesse\n            sind, aber für deine Gemeinde eine Bedeutung haben. Dazu zählen etwa\n            die heimische Blasmusikkapelle, die Beschreibung des jährlichen\n            Kirtags oder die Chronologie der Umzüge im Ort. Du kannst dich auf\n            RegiowikiAT einfach registrieren und danach sofort loslegen!",
   "cityinfo.regiowikiTitle": "RegioWikiAT",

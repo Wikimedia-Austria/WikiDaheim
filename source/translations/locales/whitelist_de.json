@@ -7,14 +7,7 @@
   "filter.incomplete",
   "filter.missingImages",
   "filter.missingDescription",
-  "cityinfo.imageRequestsTitle",
-  "cityinfo.imageRequestsText",
-  "cityinfo.regiowikiTitle",
-  "cityinfo.regiowikiText",
-  "cityinfo.construtionHistoryTitle",
   "uploadPhoto",
-  "cityinfo.description",
-  "cityinfo.articleSections",
   "cancel",
   "cityinfo.openLink",
   "item.photoLinkTitle",
@@ -26,6 +19,6 @@
   "search.viennaWarning",
   "search.placeholder",
   "header.logoAlt",
-  "menu.imprint",
-  "menu.facebook"
+  "menu.facebook",
+  "menu.imprint"
 ]
