@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { routeCodes } from 'config/routes';
@@ -6,8 +8,16 @@ import { FALLBACK_LANGUAGE } from 'config/config';
 
 import pages from 'views/views.json';
 
-export default class Header extends Component {
+@connect(state => ({
+  currentLanguage: state.locale.get('language'),
+}), null, null, { pure: false })
+class Header extends Component {
+  static propTypes = {
+    currentLanguage: PropTypes.string,
+  };
+
   render() {
+    const { currentLanguage } = this.props;
     return (
       <div>
         <NavLink
@@ -28,7 +38,9 @@ export default class Header extends Component {
             to={ routeCodes[page.slug] }
           >
             <span>
-              { page.menu_title[FALLBACK_LANGUAGE] }
+              { page.menu_title[currentLanguage] ?
+                page.menu_title[currentLanguage] : page.menu_title[FALLBACK_LANGUAGE]
+              }
             </span>
           </NavLink>
         )) }
@@ -72,3 +84,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default Header;

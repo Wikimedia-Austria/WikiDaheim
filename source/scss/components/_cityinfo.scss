@@ -26,10 +26,10 @@
 
       span {
         font-family: sans-serif;
-        color: lighten($primary-color, 40%);
+        color: fade_out($primary-color, 0.4);
 
         a {
-          color: lighten($primary-color, 40%);
+          color: fade_out($primary-color, 0.4);
         }
       }
 

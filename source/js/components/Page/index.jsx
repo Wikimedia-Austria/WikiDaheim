@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FALLBACK_LANGUAGE } from 'config/config';
 import classNames from 'classnames';
 import * as Views from '../../views';
 
-export default class About extends Component {
+@connect(state => ({
+  currentLanguage: state.locale.get('language'),
+}))
+class About extends Component {
   static propTypes = {
     page: PropTypes.object,
+    currentLanguage: PropTypes.string,
   };
 
   render() {
+    const { currentLanguage } = this.props;
     const { slug } = this.props.page;
 
-    const templateName = `${ slug }_${ FALLBACK_LANGUAGE }`;
+    const templateName = `${ slug }_${ currentLanguage }`;
+
     let content = `
       <h2>Error loading page.</h2>
       <p>Neither the language-specific template nor the the fallback file was found.</p>
       <code>Searching for: "views/${ templateName }.html"</code>
     `;
 
-    if (Views.hasOwnProperty(templateName)) { // eslint-disable-line no-prototype-builtins
-      content = Views[templateName];
+    if (Views.hasOwnProperty(`${ slug }_${ currentLanguage }`)) { // eslint-disable-line no-prototype-builtins
+      content = Views[`${ slug }_${ currentLanguage }`];
+    } else if (Views.hasOwnProperty(`${ slug }_${ FALLBACK_LANGUAGE }`)) { // eslint-disable-line no-prototype-builtins
+      content = Views[`${ slug }_${ FALLBACK_LANGUAGE }`];
     }
 
     const ItemClass = classNames(
@@ -38,3 +47,5 @@ export default class About extends Component {
     );
   }
 }
+
+export default About;
