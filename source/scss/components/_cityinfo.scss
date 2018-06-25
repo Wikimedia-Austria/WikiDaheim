@@ -87,6 +87,7 @@
     background-color:white;
     position:relative;
     padding:3em;
+    box-shadow:.1em .1em .3em rgba(0,0,0,.15);
 
     @include sm {
       position:absolute;
@@ -119,6 +120,7 @@
       text-decoration:none;
       padding:0 .5em;
       text-align:center;
+      margin-top: 2rem;
     }
   }
 }

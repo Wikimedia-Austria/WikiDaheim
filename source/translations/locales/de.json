@@ -1,6 +1,10 @@
 {
   "cancel": "Abbrechen",
-  "cityinfo.openLink": "Seite öffnen",
+  "cityinfo.editWikiLink": "Wikipedia-Artikel bearbeiten",
+  "cityinfo.editWikiLinkDescription": "Fehlende Abschnitte: {missingSectionsCount, plural, =0 {keine} other {}}",
+  "cityinfo.gpxText": "Hier können Sie eine GPX-Datei herunterladen.",
+  "cityinfo.gpxTitle": "GPX-Datei",
+  "cityinfo.openLink": "öffnen",
   "cityinfo.regiowikiText": "Im RegioWikiAT kannst du all jene Themen deiner\n            Umgebung beschreiben, die nicht von großem überregionalem Interesse\n            sind, aber für deine Gemeinde eine Bedeutung haben. Dazu zählen etwa\n            die heimische Blasmusikkapelle, die Beschreibung des jährlichen\n            Kirtags oder die Chronologie der Umzüge im Ort. Du kannst dich auf\n            RegiowikiAT einfach registrieren und danach sofort loslegen!",
   "cityinfo.regiowikiTitle": "RegioWikiAT",
   "filter.categoryFilterTitle": "Themen",
@@ -22,5 +26,6 @@
   "menu.imprint": "Impressum & Datenschutz",
   "search.placeholder": "Gemeinde hier suchen...",
   "search.viennaWarning": "Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)",
-  "uploadPhoto": "Foto hochladen"
+  "uploadPhoto": "Foto hochladen",
+  "uploadPhoto.description": "Lade ein Foto zu {cityName} hoch"
 }

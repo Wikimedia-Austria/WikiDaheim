@@ -1,5 +1,9 @@
 {
   "cancel": "Mégsem",
+  "cityinfo.editWikiLink": "Wikipedia-Artikel bearbeiten",
+  "cityinfo.editWikiLinkDescription": "Fehlende Abschnitte: {missingSectionsCount, plural, =0 {keine} other {}}",
+  "cityinfo.gpxText": "Hier können Sie eine GPX-Datei herunterladen.",
+  "cityinfo.gpxTitle": "GPX-Datei",
   "cityinfo.openLink": "Oldal megnyitása",
   "cityinfo.regiowikiText": "A RégióWikiben bármilyen olyan témáról írhatsz, ami nem tart számot nemzeti vagy nemzetközi érdeklődésre, de fontosak a település számára. Ilyennek számít például a helyi fúvószenekar, az éves Kirtag leírása vagy helyi felvonulás időrendje. Egyszerűen regisztrálj a RégióWikire, és már rögtön kezdheted is!",
   "cityinfo.regiowikiTitle": "RégióWiki",
@@ -22,5 +26,6 @@
   "menu.imprint": "Impresszum és adatvédelem",
   "search.placeholder": "Település keresése…",
   "search.viennaWarning": "Bécsi kereséseknél, kérjük, add meg a kívánt kerületet is (pl. Ottakring)!",
-  "uploadPhoto": "Fénykép feltöltése"
+  "uploadPhoto": "Fénykép feltöltése",
+  "uploadPhoto.description": "Lade ein Foto zu {cityName} hoch"
 }

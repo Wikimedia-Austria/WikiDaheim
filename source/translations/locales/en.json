@@ -1,6 +1,10 @@
 {
   "cancel": "Cancel",
-  "cityinfo.openLink": "Open page",
+  "cityinfo.editWikiLink": "Wikipedia-Artikel bearbeiten",
+  "cityinfo.editWikiLinkDescription": "Fehlende Abschnitte: {missingSectionsCount, plural, =0 {keine} other {}}",
+  "cityinfo.gpxText": "Hier können Sie eine GPX-Datei herunterladen.",
+  "cityinfo.gpxTitle": "GPX-Datei",
+  "cityinfo.openLink": "Open",
   "cityinfo.regiowikiText": "RegioWikiAT is a wiki focused on writing about topics\n that only have very local relevance\n This includes for example local brass instrument groups (Blasmusikkapellen)\n or local events in your village.\n You can register on RegiowikiAT and write about these topics right away!",
   "cityinfo.regiowikiTitle": "RegioWikiAT",
   "filter.categoryFilterTitle": "Topics",
@@ -22,5 +26,6 @@
   "menu.imprint": "Imprint and Privacy",
   "search.placeholder": "Search here for municipality...",
   "search.viennaWarning": "When searching for objects in Vienna, please type in a district (for example Ottakring)",
-  "uploadPhoto": "Upload picture"
+  "uploadPhoto": "Upload picture",
+  "uploadPhoto.description": "Upload a Photo to {cityName}"
 }

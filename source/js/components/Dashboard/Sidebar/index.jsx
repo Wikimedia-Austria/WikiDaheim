@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ResultList from './ResultList';
 import SearchBar from './SearchBar';
 import CityInfo from './CityInfo';
+import Filter from './Filter';
 
 @connect(state => ({
   placeSelected: state.app.get('placeSelected'),
@@ -21,6 +22,7 @@ class Sidebar extends Component {
       <div className='ResultList'>
         <SearchBar />
         <CityInfo />
+        <Filter items={ items } />
         <ResultList items={ items } />
       </div>
     );
