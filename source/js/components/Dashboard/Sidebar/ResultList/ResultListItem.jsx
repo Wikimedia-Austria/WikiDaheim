@@ -4,14 +4,13 @@ import classNames from 'classnames';
 import Truncate from 'react-truncate';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { FormattedMessage } from 'react-intl';
-import ResultListItemDetail from './ResultListItemDetail';
+import CategoryName from 'components/Global/CategoryName';
 
 injectTapEventPlugin();
 class ResultListItem extends Component {
   static propTypes = {
     item: PropTypes.object,
-    categoryColor: PropTypes.string,
-    editLinkText: PropTypes.string,
+    category: PropTypes.object,
     isHovered: PropTypes.bool,
     isSelected: PropTypes.bool,
     onHover: PropTypes.func,
@@ -22,14 +21,14 @@ class ResultListItem extends Component {
   render() {
     const {
       item,
-      categoryColor,
-      editLinkText,
+      category,
       isHovered,
       isSelected,
       onHover,
       onLeave,
       onClick,
     } = this.props;
+    const categoryColor = category.get('color');
 
     const ItemClass = classNames({
       'ResultListItem': true,
@@ -111,32 +110,38 @@ class ResultListItem extends Component {
       );
     }
 
-    const articleLinkUrl = item.get('artikel_url');
-    let articleLink = '';
+    /* check if an description exists */
+    const descriptionText = item.get('beschreibung');
+    let descriptionMissing = true;
+    let descriptionContent = (<FormattedMessage
+      id='item.missingDescription'
+      description='Title for Description Missing-Info'
+      defaultMessage='Beschreibung fehlt'
+    />);
 
-    if (articleLinkUrl) {
-      articleLink = (
-        <a
-          href={ articleLinkUrl }
-          style={ { 'color': categoryColor } }
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          {item.get('artikel') ? (
-            <FormattedMessage
-              id='item.readArticle'
-              description='Title for Read Article-Link'
-              defaultMessage='Artikel lesen'
-            />
-          ) : (
-            <FormattedMessage
-              id='item.createArticle'
-              description='Title for Create Article-Link'
-              defaultMessage='Artikel anlegen'
-            />
-          )}
-        </a>
-      );
+    const descriptionLinkText = category.get('name') === 'commons' ? (
+      <FormattedMessage
+        id='item.viewCommons'
+        description='Title for the Commons Category Link'
+        defaultMessage='zur Commons-Kategorie'
+      />
+    ) : (
+      <FormattedMessage
+        id='item.viewEntry'
+        description='Title for the Object Entry Link'
+        defaultMessage='zum Eintrag'
+      />
+    );
+
+    if (descriptionText && descriptionText.length > 0) {
+      descriptionMissing = false;
+      descriptionContent = (<p>
+        <Truncate lines={ 4 }>
+          <span
+            dangerouslySetInnerHTML={ { __html: item.get('beschreibung') } } // eslint-disable-line react/no-danger
+          />
+        </Truncate>
+      </p>);
     }
 
     return (
@@ -146,28 +151,28 @@ class ResultListItem extends Component {
         onMouseLeave={ window.USER_IS_TOUCHING ? null : onLeave }
         onTouchTap={ onClick }
       >
-        <div
-          className={ photoContainerClass }
-          style={ photoContainerStyle }
-        >
-          <a
-            href={ item.get('uploadLink') }
-            target='_blank'
-            rel='noopener noreferrer'
-            className='PhotoContainer-UploadButton'
-            style={ { 'backgroundColor': categoryColor } }
+        <div className='Details-Container'>
+          <div
+            className={ photoContainerClass }
+            style={ photoContainerStyle }
           >
-            <FormattedMessage
-              id='uploadPhoto'
-              description='Text for Photo Upload-Button'
-              defaultMessage='Foto hochladen'
-            />
-          </a>
-          { photoInfoLink }
-        </div>
+            <a
+              href={ item.get('uploadLink') }
+              target='_blank'
+              rel='noopener noreferrer'
+              className='PhotoContainer-UploadButton'
+              style={ { 'backgroundColor': categoryColor } }
+            >
+              <FormattedMessage
+                id='uploadPhoto'
+                description='Text for Photo Upload-Button'
+                defaultMessage='Foto hochladen'
+              />
+            </a>
+            { photoInfoLink }
+          </div>
 
-        <div className='Details'>
-          <div className='Details-left'>
+          <div className='Details'>
             <div className='Details-Title'>
               <h2>
                 <Truncate lines={ 3 }>
@@ -180,34 +185,66 @@ class ResultListItem extends Component {
                   ) }
                 </Truncate>
               </h2>
-              {articleLink}
+              <div className='Details-Category' style={ { color: categoryColor } }>
+                <CategoryName category={ category } />
+              </div>
             </div>
 
             { location }
           </div>
-          <div className='Details-right'>
-            <ResultListItemDetail
-              className='Details-Description'
-              value={ item.get('beschreibung') }
-              editLink={ item.get('editLink') ? item.get('editLink').replace('&action=edit', '') : '#' }
-              editLinkText={ editLinkText }
-              errorText={ (
-                <FormattedMessage
-                  id='item.missingDescription'
-                  description='Title for Description Missing-Info'
-                  defaultMessage='Beschreibung fehlt'
-                />
-              ) }
-              color={ categoryColor }
+        </div>
+
+        <div className='Details-Container-Expanded'>
+          <div className='Details-Text'>
+
+            { descriptionContent }
+            <a
+              href={ item.get('editLink') ? item.get('editLink').replace('&action=edit', '') : '#' }
+              target='_blank'
+              rel='noopener noreferrer'
+              style={ { color: categoryColor } }
             >
-              <p>
-                <Truncate lines={ 4 }>
-                  <span
-                    dangerouslySetInnerHTML={ { __html: item.get('beschreibung') } } // eslint-disable-line react/no-danger
+              { descriptionLinkText }
+            </a>
+          </div>
+          <div className='Details-Links'>
+            <a
+              href={ item.get('uploadLink') }
+              target='_blank'
+              rel='noopener noreferrer'
+              className='Details-Link-Upload'
+            >
+              <FormattedMessage
+                id='uploadPhoto'
+                description='Text for Photo Upload-Button'
+                defaultMessage='Foto hochladen'
+              />
+            </a>
+            {item.get('artikel_url') ?
+              <a
+                href={ item.get('artikel_url') }
+                className={ classNames({
+                  'Details-Link-Article': true,
+                  'Details-Link-Article-View': item.get('artikel'),
+                }) }
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                {item.get('artikel') ? (
+                  <FormattedMessage
+                    id='item.readArticle'
+                    description='Title for Read Article-Link'
+                    defaultMessage='Artikel lesen'
                   />
-                </Truncate>
-              </p>
-            </ResultListItemDetail>
+                ) : (
+                  <FormattedMessage
+                    id='item.createArticle'
+                    description='Title for Create Article-Link'
+                    defaultMessage='Artikel anlegen'
+                  />
+                )}
+              </a>
+            : null }
           </div>
         </div>
       </div>

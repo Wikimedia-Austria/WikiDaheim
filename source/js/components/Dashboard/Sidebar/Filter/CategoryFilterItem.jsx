@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { toggleCategory } from 'actions/app';
+import CategoryName from 'components/Global/CategoryName';
 
 @connect()
 class CategoryFilterItem extends Component {
@@ -40,7 +41,7 @@ class CategoryFilterItem extends Component {
         style={ { backgroundColor: category.get('color') } }
       >
         <button onClick={ this.toggle }>
-          { category.get('title') }
+          <CategoryName category={ category } />
         </button>
       </div>
     );

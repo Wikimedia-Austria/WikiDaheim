@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
 import scrollTo from 'lib/scrollTo';
+import { FormattedMessage } from 'react-intl';
 import ResultListItem from './ResultListItem';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
 
@@ -123,6 +124,16 @@ class ResultList extends Component {
 
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
+    if (sortedItems.size === 0) {
+      return (<div className='ResultList-EmptyInfo'>
+        <FormattedMessage
+          id='filter.noresults'
+          description='Infotext if there are no elements matching the filter criteria.'
+          defaultMessage='Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.'
+        />
+      </div>);
+    }
+
     return (
       <div className='ResultList-ListWrapper'>
         <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
@@ -132,8 +143,7 @@ class ResultList extends Component {
             const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
             return (<ResultListItem
               item={ item }
-              categoryColor={ category.get('color') }
-              editLinkText={ category.get('editLinkText') }
+              category={ category }
               isHovered={ isHovered }
               isSelected={ isSelected }
               onHover={ () => this.hoverItem(item) }

@@ -16,14 +16,15 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { items } = this.props;
+    const { placeSelected, items } = this.props;
 
     return (
       <div className='ResultList'>
         <SearchBar />
-        <CityInfo />
-        <Filter items={ items } />
-        <ResultList items={ items } />
+
+        {placeSelected ? <CityInfo /> : null}
+        {placeSelected ? <Filter items={ items } /> : null}
+        {placeSelected ? <ResultList items={ items } /> : null}
       </div>
     );
   }

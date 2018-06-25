@@ -57,6 +57,8 @@
     right: auto;
     top: $header-height;
     width: calc(33% + 0.5rem);
+    min-width: 480px;
+    max-width: 610px;
     box-shadow:.1em .1em .3em rgba(0,0,0,.15);
     z-index: $z-index-menu - 5;
   }
