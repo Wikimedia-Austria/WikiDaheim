@@ -20,10 +20,13 @@ class Sidebar extends Component {
 
     return (
       <div className='ResultList'>
-        <SearchBar />
+        <div className='upperContent'>
+          <SearchBar />
 
-        {placeSelected ? <CityInfo /> : null}
-        {placeSelected ? <Filter items={ items } /> : null}
+          {placeSelected ? <CityInfo /> : null}
+          {placeSelected ? <Filter items={ items } /> : null}
+        </div>
+
         {placeSelected ? <ResultList items={ items } /> : null}
       </div>
     );

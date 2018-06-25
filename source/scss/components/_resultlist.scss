@@ -13,11 +13,13 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    bottom: 1rem;
     z-index: 1000;
     width:33%;
     min-width: 400px;
     max-width: 600px;
+    height: auto;
+    max-height: calc(100vh - #{$header-height} - 2rem);
+    overflow: visible;
   }
 
   @include lg {

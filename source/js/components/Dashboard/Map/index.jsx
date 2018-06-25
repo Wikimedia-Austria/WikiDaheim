@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
+import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
+import CategoryName from 'components/Global/CategoryName';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
@@ -127,7 +129,6 @@ class ResultMap extends Component {
   */
   prepareMap(map) {
     const { categories, dispatch } = this.props;
-    let municipalityHoverTimer = null;
     map.addControl(new mapboxgl.NavigationControl());
 
     /* load category marker images */
@@ -377,11 +378,13 @@ class ResultMap extends Component {
       const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
       const address = hoveredElement.get('adresse');
       let hasPhoto = false;
+      let descriptionText = hoveredElement.get('beschreibung');
+      let hasText = false;
 
       let popUpAddress = '';
       if (address) {
         popUpAddress = (
-          <span>{ address }</span>
+          <span>, { address }</span>
         );
       }
 
@@ -390,7 +393,10 @@ class ResultMap extends Component {
         hasPhoto = true;
         const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ hoveredElement.get('foto') }?width=256`;
         photoContainerStyle.backgroundImage = `url('${ url }')`;
+      } else if (descriptionText && descriptionText.length > 0) {
+        hasText = true;
       }
+
 
       popup = (
         <Popup
@@ -399,13 +405,24 @@ class ResultMap extends Component {
             'backgroundColor': hoveredCategory.get('color'),
           } }
           offset={
-            [0, hasPhoto ? -100 : -40]
+            [0, hasPhoto || hasText ? -100 : -40]
            }
         >
           { hasPhoto ? <div className='PhotoContainer' style={ photoContainerStyle } /> : null }
+
+          { hasText ? <div className='TextContainer'>
+            <div>
+              <Truncate lines={ 4 }>
+                <p
+                  dangerouslySetInnerHTML={ { __html: descriptionText } } // eslint-disable-line
+                />
+              </Truncate>
+            </div>
+          </div> : null }
+
           <div className='DescriptionContainer'>
             <strong>{hoveredElement.get('name')}</strong>
-            {popUpAddress}
+            <CategoryName category={ hoveredCategory } />{popUpAddress}
           </div>
         </Popup>
       );

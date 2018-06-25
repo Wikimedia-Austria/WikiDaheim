@@ -14,7 +14,6 @@ html {
 
 .Dashboard {
   height:calc(100vh - #{$header-height});
-  max-height:calc(100vh - 6em);
   display:flex;
   flex-direction: column;
 
@@ -43,7 +42,6 @@ html {
   }
 
   .ResultList {
-    overflow:auto;
     flex:3;
   }
 

@@ -109,10 +109,16 @@ class ResultList extends Component {
   }
 
   updateHeight() {
-    const container = document.getElementsByClassName('ResultList-ListWrapper');
+    const container = document.getElementsByClassName('ResultView');
+    const upperContent = document.getElementsByClassName('upperContent');
 
-    if (container.length > 0) {
-      this.setState({ containerHeight: container[0].clientHeight });
+    if (container.length > 0 && upperContent.length > 0) {
+      this.setState({
+        containerHeight:
+          container[0].clientHeight
+          - upperContent[0].clientHeight
+          - 30,
+      });
     }
   }
 
