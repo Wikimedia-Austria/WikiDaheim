@@ -151,6 +151,7 @@ class ResultMap extends Component {
   prepareMap(map) {
     const { categories, dispatch } = this.props;
     map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.GeolocateControl());
 
     /* load category marker images */
     categories.forEach((category) => {

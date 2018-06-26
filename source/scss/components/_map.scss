@@ -69,6 +69,18 @@
   }
 }
 
+
+.mapboxgl-ctrl-top-right {
+  right: auto !important;
+  left: calc(100vw - 40px) !important;
+}
+
+.mapboxgl-ctrl-bottom-right {
+  right: auto !important;
+  left: 100vw !important;
+  transform: translateX(-100%);
+}
+
 .mapboxgl-ctrl-group {
   box-shadow:none !important;
   background-color: $primary-color !important;
