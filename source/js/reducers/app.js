@@ -57,7 +57,7 @@ const initialState = Map({
   hoveredElement: null,
   hoveredMunicipality: null,
   selectedElement: null,
-  currentMapPosition: fromJS([0, 0]),
+  currentMapPosition: fromJS([13.2, 47.516231]),
   currentMapZoom: 7,
 
   showCityInfo: false,
