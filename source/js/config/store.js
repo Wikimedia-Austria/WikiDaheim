@@ -1,10 +1,13 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'dev/logger';
+import { loadState, saveState } from 'lib/localStorage';
 
 import rootReducer from 'reducers';
 
 const isProduction = process.env.NODE_ENV === 'production';
+
+const persistedState = loadState();
 
 // Creating store
 export default () => {
@@ -16,6 +19,7 @@ export default () => {
 
     store = createStore(
       rootReducer,
+      persistedState,
       middleware
     );
   } else {
@@ -36,6 +40,7 @@ export default () => {
 
     store = createStore(
       rootReducer,
+      persistedState,
       enhancer
     );
 
@@ -47,6 +52,11 @@ export default () => {
       });
     }
   }
+
+  // save state to local storage
+  store.subscribe(() => {
+    saveState(store.getState());
+  });
 
   return store;
 };

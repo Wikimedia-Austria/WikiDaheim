@@ -5,10 +5,11 @@ import { fromJS } from 'immutable';
 import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
+import classNames from 'classnames';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
@@ -16,19 +17,26 @@ const Map = ReactMapboxGl({
 
 @connect(state => ({
   placeMapData: state.app.get('placeMapData'),
+  currentMapPosition: state.app.get('currentMapPosition'),
+  currentMapZoom: state.app.get('currentMapZoom'),
   categories: state.app.get('categories'),
   hoveredElement: state.app.get('hoveredElement'),
   hoveredMunicipality: state.app.get('hoveredMunicipality'),
   selectedElement: state.app.get('selectedElement'),
+  placeSelected: state.app.get('placeSelected'),
 }))
 class ResultMap extends Component {
   static propTypes = {
     placeMapData: PropTypes.object,
+    currentMapPosition: PropTypes.array,
+    currentMapZoom: PropTypes.number,
     categories: PropTypes.object,
     items: PropTypes.object,
     hoveredElement: PropTypes.object,
     hoveredMunicipality: PropTypes.object,
     selectedElement: PropTypes.object,
+    placeSelected: PropTypes.bool,
+
     // from react-redux connect
     dispatch: PropTypes.func,
   };
@@ -43,9 +51,10 @@ class ResultMap extends Component {
      *if a city is already selected chose its center as the map center
      * TODO: maybe deprecated due to map show on start?
      */
-    if (this.props.placeMapData.get('geometry')) {
-      coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
-      zoom = 15;
+
+    if (this.props.currentMapPosition) {
+      coordinates = this.props.currentMapPosition.toJS();
+      zoom = [this.props.currentMapZoom];
     }
 
     this.state = {
@@ -112,16 +121,28 @@ class ResultMap extends Component {
         });
       }
     }
+
+    /*
+      re-adjust the map center after adding the sidebar shift
+    */
+
+    if (!this.props.placeSelected && nextProps.placeSelected) {
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 400);
+    }
   }
 
   /*
     dispatch map position events from mapbox to redux
   */
   onMapMove(map) {
-    const { dispatch } = this.props;
+    const { dispatch, currentMapZoom } = this.props;
     const mapCenter = map.getCenter();
 
     dispatch(mapPositionChanged([mapCenter.lng, mapCenter.lat]));
+
+    if (map.getZoom() !== currentMapZoom) {
+      dispatch(mapZoomChanged(map.getZoom()));
+    }
   }
 
   /*
@@ -324,7 +345,13 @@ class ResultMap extends Component {
     render the map
   */
   render() {
-    const { items, categories, hoveredElement, hoveredMunicipality } = this.props;
+    const {
+      items,
+      categories,
+      hoveredElement,
+      hoveredMunicipality,
+      placeSelected,
+    } = this.props;
 
     const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
 
@@ -428,7 +455,12 @@ class ResultMap extends Component {
       );
     }
 
-    return (<div className='ResultMap'>
+    const wrapperClasses = classNames(
+      'ResultMap-Wrapper',
+      { 'ResultMap-Wrapper--shifted': placeSelected }
+    );
+
+    return (<div className='ResultMap'><div className={ wrapperClasses }>
       <Map
         style='mapbox://styles/wikimediaaustria/cji05myuu486p2slazs7ljpyw' // eslint-disable-line react/style-prop-object
         containerStyle={ {
@@ -523,7 +555,7 @@ class ResultMap extends Component {
           } }
         />
         {popup}
-      </Map></div>
+      </Map></div></div>
     );
   }
 

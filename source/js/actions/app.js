@@ -28,6 +28,7 @@ export const MUNICIPALITY_HOVER = 'MUNICIPALITY_HOVER';
 export const MUNICIPALITY_LEAVE = 'MUNICIPALITY_LEAVE';
 
 export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
+export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
 
 export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
 
@@ -287,6 +288,14 @@ export function mapPositionChanged(data) {
         data,
       });
     }, 100);
+  };
+}
+
+/* MAP ZOOM */
+export function mapZoomChanged(data) {
+  return {
+    type: MAP_ZOOM_CHANGED,
+    data,
   };
 }
 

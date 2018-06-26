@@ -28,6 +28,7 @@ import {
   MUNICIPALITY_LEAVE,
 
   MAP_POSITION_CHANGED,
+  MAP_ZOOM_CHANGED,
 
   TOGGLE_FILTER,
   TOGGLE_CITY_INFO,
@@ -57,6 +58,7 @@ const initialState = Map({
   hoveredMunicipality: null,
   selectedElement: null,
   currentMapPosition: fromJS([0, 0]),
+  currentMapZoom: 7,
 
   showCityInfo: false,
 });
@@ -260,6 +262,8 @@ const actionsMap = {
   [MAP_POSITION_CHANGED]: (state, action) => {
     // check if this is in the area of the selected element which was selected from the list
     // if yes do not fire a position change to keep the list in shape
+
+    // TODO: find a better trigger solution
     if (
       state.get('selectedElement') &&
       state.get('selectedElement').get('longitude') > 0 &&
@@ -284,6 +288,13 @@ const actionsMap = {
 
     return state.merge({
       currentMapPosition: action.data,
+    });
+  },
+
+  // MAP ZOOM change
+  [MAP_ZOOM_CHANGED]: (state, action) => {
+    return state.merge({
+      currentMapZoom: action.data,
     });
   },
 

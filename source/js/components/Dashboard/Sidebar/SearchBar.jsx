@@ -4,10 +4,16 @@ import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { FormattedMessage } from 'react-intl';
 import { autocomplete, selectPlace } from 'actions/app';
+import { BounceLoader } from 'react-spinners';
 
 @connect(state => ({
   searchData: state.app.get('searchData'),
   searchText: state.app.get('searchText'),
+  isLoading: (
+    state.app.get('categoriesLoading') ||
+    state.app.get('searchLoading') ||
+    state.app.get('placeLoading')
+  ),
 }))
 class SearchBar extends Component {
   static propTypes = {
@@ -15,6 +21,7 @@ class SearchBar extends Component {
     searchText: PropTypes.string,
     // from react-redux connect
     dispatch: PropTypes.func,
+    isLoading: PropTypes.bool,
   };
 
   constructor() {
@@ -44,8 +51,7 @@ class SearchBar extends Component {
 
   render() {
     const {
-//      searchLoading,
-//      searchError,
+      isLoading,
       searchData,
       searchText,
     } = this.props;
@@ -79,6 +85,16 @@ class SearchBar extends Component {
     return (
       <section className='SearchBar'>
         <div className='SearchBar-Bar'>
+          {isLoading ? (
+            <div className='SearchBar-Loader'>
+              <div className='SearchBar-Loader-inner'>
+                <BounceLoader
+                  color={ '#fff' }
+                  loading={ true }
+                />
+              </div>
+            </div>
+          ) : null}
           <FormattedMessage
             id='search.placeholder'
             description='Placeholder Text for Search Bar'

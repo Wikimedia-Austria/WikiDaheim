@@ -1,3 +1,19 @@
+.SearchBar-Loader {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 4.2rem;
+  height: 100%;
+  background-color: $primary-color;
+
+  .SearchBar-Loader-inner {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
 .SearchBar-Bar {
   background-color: $primary-color;
   display:flex;

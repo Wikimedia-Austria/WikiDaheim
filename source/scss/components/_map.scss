@@ -1,3 +1,25 @@
+.ResultMap {
+  overflow: hidden;
+
+  .ResultMap-Wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    &.ResultMap-Wrapper--shifted {
+      @include md {
+        width:133%;
+        min-width: calc(100% + 400px);
+        max-width: calc(100% + 600px);
+      }
+
+      @include lg {
+        min-width: calc(100% + 470px);
+      }
+    }
+  }
+}
+
 .mapboxgl-popup {
   pointer-events: none !important;
 }
