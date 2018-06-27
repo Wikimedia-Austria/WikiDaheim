@@ -9,6 +9,7 @@ import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, ma
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
+import FocusHandler from 'components/Global/FocusHandler';
 import classNames from 'classnames';
 
 const Map = ReactMapboxGl({
@@ -402,11 +403,11 @@ class ResultMap extends Component {
       );
     }
 
-    if (hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
+    if (window.innerWidth > 669 && hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
       const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
       const address = hoveredElement.get('adresse');
       let hasPhoto = false;
-      let descriptionText = hoveredElement.get('beschreibung');
+      const descriptionText = hoveredElement.get('beschreibung');
       let hasText = false;
 
       let popUpAddress = '';
@@ -556,7 +557,7 @@ class ResultMap extends Component {
           } }
         />
         {popup}
-      </Map></div></div>
+      </Map></div><FocusHandler view='map' /></div>
     );
   }
 

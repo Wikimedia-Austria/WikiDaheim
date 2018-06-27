@@ -21,6 +21,7 @@
   "filter.missingImages": "Fehlende Bilder",
   "filter.noresults": "Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.",
   "filter.propertyFilterTitle": "Eigenschaften",
+  "filter.resultssorting": "Objekte werden analysiert...",
   "filter.title": "Filter",
   "header.logoAlt": "WikiDaheim-Logo",
   "item.createArticle": "Artikel anlegen",

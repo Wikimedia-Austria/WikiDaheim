@@ -1,0 +1,18 @@
+.FocusHandler {
+  position: absolute;
+  top: 0;
+  left:0;
+  bottom: 0;
+  right: 0;
+  transition: background-color .2s ease;
+  pointer-events: none;
+  z-index: $z-index-menu - 9;
+
+  @include md {
+    display: none;
+  }
+
+  &.FocusHandler--ready {
+    pointer-events: all;
+  }
+}

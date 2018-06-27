@@ -3,6 +3,8 @@
   height:100%;
   overflow:hidden;
   flex-direction: column;
+  background-color: white;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
 
   .ResultList-ListWrapper {
     flex: 1;
@@ -11,8 +13,6 @@
 
   @include md {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
     z-index: 1000;
     width:33%;
     min-width: 400px;
@@ -20,6 +20,8 @@
     height: auto;
     max-height: calc(100vh - #{$header-height} - 2rem);
     overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
   }
 
   @include lg {
@@ -30,8 +32,8 @@
 .ResultListItem {
   margin: 1rem 0.5rem;
   box-shadow:.1em .1em .3em rgba(0,0,0,.15);
-  min-height:130px;
-  max-height:130px;
+  min-height:100px;
+  max-height:100px;
   transition:background-color .2s ease;
   cursor: pointer;
   color: $text-color;
@@ -39,6 +41,11 @@
   backdrop-filter: blur(2px);
   transition: max-height .2s ease;
   overflow: hidden;
+
+  @include md {
+    min-height: 130px;
+    max-height: 130px;
+  }
 
   &:nth-child(2) {
     margin-top:0;
@@ -68,7 +75,11 @@
     display: flex;
     flex-direction: row;
     align-items:stretch;
-    height: 130px;
+    height: 100px;
+
+    @include md {
+      height: 130px;
+    }
   }
 
   .PhotoContainer {
@@ -147,6 +158,16 @@
       font-size: .8em;
     }
 
+    .Details-Location {
+      span { padding-right: 0.5em; }
+      br { display: none; }
+
+      @include md {
+        span { padding-right: 0; }
+        br { display: inherit; }
+      }
+    }
+
     @include sm {
       padding-bottom:1em;
       overflow: hidden;
@@ -196,13 +217,18 @@
     padding: 1rem;
 
     a {
-      padding-right: 1.5rem;
+      padding-right: 1rem;
       padding-left: 2.5rem;
       color: $primary-color;
       text-decoration: none;
       font-weight: bold;
       position: relative;
       line-height: 2rem;
+      font-size: 0.85em;
+
+      @include md {
+        padding-right: 1.5rem;
+      }
 
       &::before {
         content: '';

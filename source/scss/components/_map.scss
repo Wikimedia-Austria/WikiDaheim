@@ -79,6 +79,12 @@
   right: auto !important;
   left: 100vw !important;
   transform: translateX(-100%);
+  min-width: 300px;
+  bottom: 4.5rem !important;
+
+  @include md {
+    bottom: 0 !important;
+  }
 }
 
 .mapboxgl-ctrl-group {

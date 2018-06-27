@@ -36,6 +36,7 @@ html {
   right:0;
   bottom:0;
   left:0;
+  overflow: hidden;
 
   @include md {
     flex-direction: row;
@@ -43,14 +44,33 @@ html {
 
   .ResultList {
     flex:3;
+    position: absolute;
+    height: 80%;
+    top: calc(100vh - #{$header-height} - 4.5rem);
+    left: 0;
+    right: 0;
+    z-index: $z-index-menu - 9;
+    transition: top .4s ease;
+
+    @include md {
+      height: auto;
+      top: 1.5rem;
+      left: 1rem;
+      right: auto;
+      transition: none;
+    }
   }
 
   .ResultMap {
     flex:1;
     position:relative;
+    transform: translateY(-40%);
+    transition: transform .4s ease;
 
     @include md {
       flex: 3;
+      transform: none;
+      transition: none;
     }
 
     .mapboxgl-map {
@@ -59,6 +79,26 @@ html {
       left:0;
       bottom:0;
       right:0;
+    }
+  }
+
+  &.ResultView-Map {
+    .ResultMap {
+      transform: translateY(0);
+
+      @include md {
+        transform: none;
+      }
+    }
+  }
+
+  &.ResultView-List {
+    .ResultList {
+      top: 20%;
+
+      @include md {
+        top: 1.5rem;
+      }
     }
   }
 }

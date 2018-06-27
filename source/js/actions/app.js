@@ -30,7 +30,7 @@ export const MUNICIPALITY_LEAVE = 'MUNICIPALITY_LEAVE';
 export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
 export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
 
-export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
+export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
 
 /*
   AUTOCOMPLETE ACTIONS
@@ -299,10 +299,10 @@ export function mapZoomChanged(data) {
   };
 }
 
-/* TOGGLE CITY INFO */
-
-export function toggleCityInfo() {
+/* MAP ZOOM */
+export function mobileViewSwitch(data) {
   return {
-    type: TOGGLE_CITY_INFO,
+    type: MOBILE_VIEW_SWITCH,
+    data,
   };
 }

@@ -33,6 +33,7 @@ class ResultList extends Component {
     this.state = {
       containerHeight: 5,
       sortedList: new List(),
+      inSelectTimeout: false,
     };
 
     this.hoverItem = this.hoverItem.bind(this);
@@ -67,11 +68,24 @@ class ResultList extends Component {
     ) {
       this.scrollTop();
       this.updateHeight();
+    } else if (
+        (!this.props.selectedElement && nextProps.selectedElement) ||
+        (this.props.selectedElement.get('id') !== nextProps.selectedElement.get('id'))
+      ) {
+      const list = document.getElementsByClassName('ResultList-List')[0];
+      const currentIndex = nextState.sortedList.findIndex((item) => item.get('id') === nextProps.selectedElement.get('id'));
+
+      if (currentIndex && window.innerWidth < 770) {
+        scrollTo(list, (currentIndex * 112) - 5, 400);
+      }
     }
 
     // check if we get a new list
     if (
-      this.props.currentMapPosition !== nextProps.currentMapPosition ||
+      (
+        !this.state.inSelectTimeout &&
+        this.props.currentMapPosition !== nextProps.currentMapPosition
+      ) ||
       this.props.items !== nextProps.items
     ) {
       this.worker.postMessage({
@@ -79,6 +93,13 @@ class ResultList extends Component {
         items: nextProps.items.toJS(),
       });
     }
+
+    // uncomment to show a "objects are being alanyzed screen" when new items are
+    // loaded into the list
+    /*
+    if (this.props.items !== nextProps.items) {
+      this.setState({ sortedList: fromJS([]) });
+    }*/
   }
 
   componentWillUnmount() {
@@ -105,6 +126,17 @@ class ResultList extends Component {
   selectItem(item) {
     const { dispatch } = this.props;
 
+    this.setState({
+      inSelectTimeout: true,
+    });
+
+    if (this.selectTimer) clearTimeout(this.selectTimer);
+    this.selectTimer = setTimeout(() => {
+      this.setState({
+        inSelectTimeout: false,
+      });
+    }, 10000);
+
     dispatch(placeItemSelect(item, 'list'));
   }
 
@@ -123,14 +155,14 @@ class ResultList extends Component {
   }
 
   render() {
-    const { placeSelected, categories, hoveredElement, selectedElement } = this.props;
+    const { items, placeSelected, categories, hoveredElement, selectedElement } = this.props;
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
 
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
-    if (sortedItems.size === 0) {
+    if (items.size === 0) {
       return (<div className='ResultList-EmptyInfo'>
         <FormattedMessage
           id='filter.noresults'
@@ -138,11 +170,19 @@ class ResultList extends Component {
           defaultMessage='Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.'
         />
       </div>);
+    } else if(items.size !== 0 && sortedItems.size === 0) {
+      return (<div className='ResultList-EmptyInfo'>
+        <FormattedMessage
+          id='filter.resultssorting'
+          description='Infotext if the Elements in the List are being sorted.'
+          defaultMessage='Objekte werden analysiert...'
+        />
+      </div>);
     }
 
     return (
       <div className='ResultList-ListWrapper'>
-        <Infinite containerHeight={ this.state.containerHeight } elementHeight={ 130 } className='ResultList-List'>
+        <Infinite containerHeight={ this.state.containerHeight } elementHeight={ window.innerWidth < 770 ? 112 : 144 } className='ResultList-List'>
           { sortedItems.map((item) => {
             const category = categories.find((c) => c.get('name') === item.get('category'));
             const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');

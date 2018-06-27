@@ -6,6 +6,11 @@
   box-shadow:.1em .1em .3em rgba(0,0,0,.15);
   z-index: $z-index-menu - 10;
   overflow: hidden;
+  display: none;
+
+  @include md {
+    display: block;
+  }
 
   .CityInfo-Content {
     padding-left: 0.2rem;

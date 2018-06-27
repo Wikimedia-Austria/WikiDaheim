@@ -31,7 +31,8 @@ import {
   MAP_ZOOM_CHANGED,
 
   TOGGLE_FILTER,
-  TOGGLE_CITY_INFO,
+
+  MOBILE_VIEW_SWITCH,
 } from 'actions/app';
 
 const initialState = Map({
@@ -60,7 +61,7 @@ const initialState = Map({
   currentMapPosition: fromJS([13.2, 47.516231]),
   currentMapZoom: 7,
 
-  showCityInfo: false,
+  mobileView: 'map',
 });
 
 const actionsMap = {
@@ -243,6 +244,7 @@ const actionsMap = {
 
     return state.merge({
       selectedElement,
+      mobileView: 'list',
     });
   },
 
@@ -260,32 +262,6 @@ const actionsMap = {
 
   // MAP POSITION change
   [MAP_POSITION_CHANGED]: (state, action) => {
-    // check if this is in the area of the selected element which was selected from the list
-    // if yes do not fire a position change to keep the list in shape
-
-    // TODO: find a better trigger solution
-    if (
-      state.get('selectedElement') &&
-      state.get('selectedElement').get('longitude') > 0 &&
-      state.get('selectedElement').get('source') === 'list'
-    ) {
-      const currentSelected = state.get('selectedElement');
-      const distance = geolib.getDistanceSimple(
-        {
-          latitude: currentSelected.get('latitude'),
-          longitude: currentSelected.get('longitude'),
-        },
-        {
-          latitude: action.data[1],
-          longitude: action.data[0],
-        }
-      );
-
-      if (distance < 15) {
-        return state;
-      }
-    }
-
     return state.merge({
       currentMapPosition: action.data,
     });
@@ -298,10 +274,10 @@ const actionsMap = {
     });
   },
 
-  // TOGGLE CITY INFO
-  [TOGGLE_CITY_INFO]: (state) => {
+  // MAP ZOOM change
+  [MOBILE_VIEW_SWITCH]: (state, action) => {
     return state.merge({
-      showCityInfo: !state.get('showCityInfo'),
+      mobileView: action.data,
     });
   },
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { loadCategories } from 'actions/app';
 
@@ -12,9 +13,9 @@ import Sidebar from './Sidebar';
 @connect(state => ({
   activeFilters: state.app.get('activeFilters'),
   categories: state.app.get('categories'),
-  categoriesLoading: state.app.get('categoriesLoading'),
   items: state.app.get('items'),
   placeSelected: state.app.get('placeSelected'),
+  mobileView: state.app.get('mobileView'),
 }), null, null, { pure: false })
 export default class Dashboard extends Component {
   static propTypes = {
@@ -23,8 +24,8 @@ export default class Dashboard extends Component {
     dispatch: PropTypes.func,
     activeFilters: PropTypes.object,
     categories: PropTypes.object,
-    categoriesLoading: PropTypes.bool,
     items: PropTypes.array,
+    mobileView: PropTypes.string,
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { items, categories, activeFilters, categoriesLoading } = this.props;
+    const { items, categories, activeFilters, mobileView } = this.props;
 
     const filteredItems = items.filter((item) => {
       const itemCategory = categories.find((c) => c.get('name') === item.get('category'));
@@ -49,10 +50,17 @@ export default class Dashboard extends Component {
       return qualified;
     });
 
+    const resultViewClasses = classNames(
+      'ResultView', {
+        'ResultView-Map': mobileView === 'map',
+        'ResultView-List': mobileView === 'list',
+      }
+    );
+
     return (
       <div className='Dashboard'>
         <div className='Dashboard-Content'>
-          <div className='ResultView'>
+          <div className={ resultViewClasses }>
             <Sidebar items={ filteredItems } />
             {categories.size > 0 ? <Map items={ filteredItems } /> : null }
           </div>
