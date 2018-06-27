@@ -75,7 +75,7 @@
     "gh-pages": "^1.0.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
-    "mapbox-gl": "^0.40",
+    "mapbox-gl": "^0.44",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-autocomplete": "^1.5.9",
@@ -92,7 +92,8 @@
     "react-truncate": "^2.1.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "viewport-units-buggyfill": "^0.6.2"
   },
   "description": "WikiDaheim Client for Wikimedia Austria",
   "author": "Benedikt Reiter",

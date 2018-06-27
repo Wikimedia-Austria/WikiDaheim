@@ -70,7 +70,7 @@ class ResultList extends Component {
       this.updateHeight();
     } else if (
         (!this.props.selectedElement && nextProps.selectedElement) ||
-        (this.props.selectedElement.get('id') !== nextProps.selectedElement.get('id'))
+        (this.props.selectedElement && this.props.selectedElement.get('id') !== nextProps.selectedElement.get('id'))
       ) {
       const list = document.getElementsByClassName('ResultList-List')[0];
       const currentIndex = nextState.sortedList.findIndex((item) => item.get('id') === nextProps.selectedElement.get('id'));

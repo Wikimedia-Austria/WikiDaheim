@@ -16,11 +16,13 @@ import Client from 'components/Client';
 /* POLYFILLS */
 import es6Promise from 'es6-promise';
 import 'isomorphic-fetch';
+import ViewportUnits from 'viewport-units-buggyfill';
 
 // Load SCSS
 import '../scss/app.scss';
 
 es6Promise.polyfill();
+ViewportUnits.init();
 
 const store = configureStore();
 
