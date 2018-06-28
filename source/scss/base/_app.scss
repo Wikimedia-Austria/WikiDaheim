@@ -150,6 +150,25 @@ html {
     }
   }
 
+  &.TextPage--index {
+    margin: 0;
+    padding: 2rem 2rem 1rem;
+    width: auto;
+    background-color: white;
+    box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+    font-size: 0.9em;
+    overflow: auto;
+
+    @include md {
+      margin: 0 0.5rem;
+    }
+
+    h2 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5rem;
+    }
+  }
+
   .TextPage-CategoryInfo {
     display:flex;
     align-items: center;
@@ -182,49 +201,5 @@ html {
       flex: 1;
 
     }
-  }
-}
-
-.IntroScreen {
-  width: 90%;
-  @include sm { width: 66.666666%; }
-  @include ml { width: 33%; }
-
-  .IntroScreen-CategoryList {
-    display:flex;
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow:hidden;
-    margin-bottom:2em;
-
-    a {
-      flex-direction: column;
-    }
-
-    img {
-      flex: 1;
-      min-width:0;
-      max-height:85px;
-    }
-  }
-
-  hr {
-    margin-top: 3em;
-    background: $primary-color;
-    height: 1px;
-    border: none;
-  }
-
-  .Menu-link, .Menu-link--imprint, .Menu-link--facebook {
-    color: #595a99;
-    padding-right: 1em;
-
-    &:hover {
-      color: $primary-color;
-    }
-  }
-
-  footer {
-    display: inline;
   }
 }

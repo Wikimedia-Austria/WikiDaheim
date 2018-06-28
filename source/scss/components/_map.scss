@@ -76,6 +76,11 @@
   left: calc(100vw - 40px) !important;
 }
 
+.mapboxgl-ctrl-bottom-left {
+  left: calc(100vw - 10px) !important;
+  transform: translate(-100%, -20px);
+}
+
 .mapboxgl-ctrl-bottom-right {
   right: auto !important;
   left: 100vw !important;

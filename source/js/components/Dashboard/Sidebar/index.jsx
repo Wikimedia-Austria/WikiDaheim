@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FocusHandler from 'components/Global/FocusHandler';
+import Page from 'components/Page';
 import ResultList from './ResultList';
 import SearchBar from './SearchBar';
 import CityInfo from './CityInfo';
@@ -28,7 +29,7 @@ class Sidebar extends Component {
           {placeSelected ? <Filter items={ items } /> : null}
         </div>
 
-        {placeSelected ? <ResultList items={ items } /> : null}
+        {placeSelected ? <ResultList items={ items } /> : <Page page={ { slug: 'index' } } />}
         <FocusHandler view='list' />
       </div>
     );
