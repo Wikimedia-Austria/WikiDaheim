@@ -84,19 +84,6 @@ export default class About extends Component {
           </div>
         </div>
 
-        <div className='TextPage-CategoryInfo' >
-          <aside>
-            <img src={ FriedhofIcon } role='presentation' />
-          </aside>
-          <div>
-            <h2>Friedhöfe</h2>
-            <p>
-              Friedhöfe sind ein zentraler Ort für die Erinnerungskultur in Österreich.
-              Vielleicht findet sich ja auch in deinem Ort ein Grabstein einer Person,
-              die in Wikipedia einen Artikel hat!
-            </p>
-          </div>
-        </div>
       </div>
     );
   }
