@@ -29,7 +29,7 @@ class Header extends Component {
           <span>WikiDaheim</span>
         </NavLink>
 
-        { pages.map((page) => (
+        { pages.filter(page => page.in_menu).map((page) => (
           <NavLink
             key={ page.slug }
             activeClassName='Menu-link--active'

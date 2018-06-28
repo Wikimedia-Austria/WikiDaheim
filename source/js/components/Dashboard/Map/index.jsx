@@ -199,9 +199,6 @@ class ResultMap extends Component {
       map.on('mouseleave', 'municipalities-detail', (e) => this.triggerMunicipalityLeave(e, map));
     }
 
-    map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
-    map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));
-
     map.on('click', 'unclustered-point', (e) => {
       dispatch(placeItemSelect(
         this.props.items.find((c) => c.get('id') === e.features[0].properties.id),
@@ -210,6 +207,9 @@ class ResultMap extends Component {
 
       e.stopPropagation();
     });
+
+    map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
+    map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));
 
     this.updateHighlightedArea(map);
   }
@@ -267,6 +267,9 @@ class ResultMap extends Component {
   }
 
   triggerMunicipalitySelect(e) {
+    console.log(e);
+    e.originalEvent.stopPropagation();
+    e.originalEvent.preventDefault();
     const { dispatch } = this.props;
     const { lngLat } = e;
     const { properties, layer } = e.features[0];
@@ -276,7 +279,7 @@ class ResultMap extends Component {
     if (layer.id === 'municipalities') {
       iso = properties.iso;
       name = properties.name;
-    } else {
+    } else if (layer.id === 'municipalities-detail') {
       iso = properties.GKZ;
       name = properties.PG;
     }
