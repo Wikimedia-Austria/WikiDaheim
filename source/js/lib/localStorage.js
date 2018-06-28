@@ -34,3 +34,11 @@ export const saveState = (state) => {
     // Ignore write errors
   }
 };
+
+export const clearState = () => {
+  try {
+    localStorage.removeItem('state');
+  } catch (err) {
+    // Ignore write errors
+  }
+};

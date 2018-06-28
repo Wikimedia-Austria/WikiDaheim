@@ -177,8 +177,6 @@ const actionsMap = {
     const activeFilters =
       current.includes(toggle) ? current.filterNot(x => x === toggle) : current.push(toggle);
 
-      console.log(activeFilters.toJS(), toggle);
-
     return state.merge({
       activeFilters,
     });

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FormattedMessage } from 'react-intl';
-import Menu from './Header/Menu';
-import MenuToggle from './Header/MenuToggle';
-import LanguageSwitch from './Header/LanguageSwitch';
+import { clearState } from 'lib/localStorage';
+import Menu from './Menu';
+import MenuToggle from './MenuToggle';
+import LanguageSwitch from './LanguageSwitch';
 
-import wikiDaheimLogo from '../../../assets/img/wikidaheim-logo.svg';
+import wikiDaheimLogo from '../../../../assets/img/wikidaheim-logo.svg';
 
 @connect(state => ({
   showMenu: state.menu.get('showMenu'),
@@ -17,6 +18,12 @@ export default class Header extends Component {
   static propTypes = {
     showMenu: PropTypes.bool,
   };
+
+  clearAndReload() {
+    clearState();
+    window.location = '/';
+  }
+
   render() {
     const {
       showMenu,
@@ -31,7 +38,7 @@ export default class Header extends Component {
       <div className='Header'>
         <div className='Header-bar'>
           <div className='Header-logo'>
-            <button onClick={ () => window.location = '/' }>
+            <button onClick={ this.clearAndReload }>
               <FormattedMessage
                 id='header.logoAlt'
                 description='Alt Text of the header Logo'
@@ -47,7 +54,7 @@ export default class Header extends Component {
             </button>
           </div>
           <div className='Header-claim'>
-            <button onClick={ () => window.location = '/' } />
+            <button onClick={ this.clearAndReload } />
           </div>
           <div className='Header-languageSwitch'>
             <LanguageSwitch />
