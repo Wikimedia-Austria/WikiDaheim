@@ -15,6 +15,7 @@ import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disab
   selectedElement: state.app.get('selectedElement'),
   categories: state.app.get('categories'),
   placeSelected: state.app.get('placeSelected'),
+  syncListAndMap: state.app.get('syncListAndMap'),
 }))
 class ResultList extends Component {
   static propTypes = {
@@ -24,6 +25,7 @@ class ResultList extends Component {
     selectedElement: PropTypes.object,
     categories: PropTypes.object,
     items: PropTypes.object,
+    syncListAndMap: PropTypes.bool,
     // from react-redux connect
     dispatch: PropTypes.func,
   };
@@ -83,10 +85,11 @@ class ResultList extends Component {
     // check if we get a new list
     if (
       (
-        !this.state.inSelectTimeout &&
+        !this.state.inSelectTimeout && nextProps.syncListAndMap &&
         this.props.currentMapPosition !== nextProps.currentMapPosition
       ) ||
-      this.props.items !== nextProps.items
+      this.props.items !== nextProps.items ||
+      (!this.props.syncListAndMap && nextProps.syncListAndMap)
     ) {
       this.worker.postMessage({
         currentMapPosition: nextProps.currentMapPosition.toJS(),

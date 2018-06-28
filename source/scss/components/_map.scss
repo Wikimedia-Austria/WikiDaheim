@@ -19,6 +19,34 @@
       }
     }
   }
+
+  .SyncListToggle {
+    display: none;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 0;
+    height: 0;
+
+    @include md {
+      display: block;
+      width: 33vw;
+      min-width: 400px;
+      max-width: 600px;
+    }
+
+    @include lg {
+      min-width: 470px;
+    }
+
+
+    .SyncListToggle-Button {
+      position: absolute;
+      right: -2rem;
+      bottom: 0;
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+      transform: translateX(100%);
+    }
+  }
 }
 
 .mapboxgl-popup {

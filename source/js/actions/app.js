@@ -32,6 +32,8 @@ export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
 
 export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
 
+export const TOGGLE_SYNC_LIST_MAP = 'TOGGLE_SYNC_LIST_MAP';
+
 /*
   AUTOCOMPLETE ACTIONS
 */
@@ -304,5 +306,13 @@ export function mobileViewSwitch(data) {
   return {
     type: MOBILE_VIEW_SWITCH,
     data,
+  };
+}
+
+/* List and Map Toggle */
+
+export function toggleSyncListAndMap() {
+  return {
+    type: TOGGLE_SYNC_LIST_MAP,
   };
 }

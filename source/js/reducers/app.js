@@ -31,6 +31,7 @@ import {
   MAP_ZOOM_CHANGED,
 
   TOGGLE_FILTER,
+  TOGGLE_SYNC_LIST_MAP,
 
   MOBILE_VIEW_SWITCH,
 } from 'actions/app';
@@ -62,6 +63,7 @@ const initialState = Map({
   currentMapZoom: 7,
 
   mobileView: 'map',
+  syncListAndMap: true,
 });
 
 const actionsMap = {
@@ -279,6 +281,14 @@ const actionsMap = {
   [MOBILE_VIEW_SWITCH]: (state, action) => {
     return state.merge({
       mobileView: action.data,
+    });
+  },
+
+  [TOGGLE_SYNC_LIST_MAP]: (state) => {
+    const syncListAndMap = !state.get('syncListAndMap');
+
+    return state.merge({
+      syncListAndMap,
     });
   },
 };

@@ -10,6 +10,7 @@ import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
+import MapSyncToggle from 'components/Global/MapSyncToggle';
 import classNames from 'classnames';
 
 const Map = ReactMapboxGl({
@@ -560,7 +561,10 @@ class ResultMap extends Component {
           } }
         />
         {popup}
-      </Map></div><FocusHandler view='map' /></div>
+      </Map></div>
+      <FocusHandler view='map' />
+      <MapSyncToggle />
+    </div>
     );
   }
 
