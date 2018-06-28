@@ -1,6 +1,5 @@
 import { Map, List, Set, fromJS } from 'immutable';
 import uuidv4 from 'uuid/v4';
-import geolib from 'geolib';
 
 import {
   AUTOCOMPLETE_ACTION_START,
@@ -34,6 +33,7 @@ import {
   TOGGLE_SYNC_LIST_MAP,
 
   MOBILE_VIEW_SWITCH,
+  TOGGLE_CITY_INFO,
 } from 'actions/app';
 
 const initialState = Map({
@@ -64,6 +64,7 @@ const initialState = Map({
 
   mobileView: 'map',
   syncListAndMap: true,
+  showCityInfo: false,
 });
 
 const actionsMap = {
@@ -289,6 +290,15 @@ const actionsMap = {
 
     return state.merge({
       syncListAndMap,
+    });
+  },
+
+  [TOGGLE_CITY_INFO]: (state) => {
+    const showCityInfo = !state.get('showCityInfo');
+    console.log('TCI');
+
+    return state.merge({
+      showCityInfo,
     });
   },
 };

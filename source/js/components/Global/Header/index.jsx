@@ -14,7 +14,7 @@ import wikiDaheimLogo from '../../../../assets/img/wikidaheim-logo.svg';
 @connect(state => ({
   showMenu: state.menu.get('showMenu'),
 }), null, null, { pure: false })
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     showMenu: PropTypes.bool,
   };
@@ -70,3 +70,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default Header;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { FormattedMessage } from 'react-intl';
-import { autocomplete, selectPlace } from 'actions/app';
+import { autocomplete, selectPlace, toggleCityInfo } from 'actions/app';
 import { BounceLoader } from 'react-spinners';
 
 @connect(state => ({
@@ -14,6 +14,7 @@ import { BounceLoader } from 'react-spinners';
     state.app.get('searchLoading') ||
     state.app.get('placeLoading')
   ),
+  placeSelected: state.app.get('placeSelected'),
 }))
 class SearchBar extends Component {
   static propTypes = {
@@ -22,6 +23,7 @@ class SearchBar extends Component {
     // from react-redux connect
     dispatch: PropTypes.func,
     isLoading: PropTypes.bool,
+    placeSelected: PropTypes.bool,
   };
 
   constructor() {
@@ -29,6 +31,7 @@ class SearchBar extends Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onPlaceSelect = this.onPlaceSelect.bind(this);
+    this.toggleCityInfo = this.toggleCityInfo.bind(this);
   }
 
   onInputChange(text) {
@@ -49,11 +52,17 @@ class SearchBar extends Component {
     dispatch(selectPlace(selectedPlace));
   }
 
+  toggleCityInfo() {
+    const { dispatch } = this.props;
+    dispatch(toggleCityInfo());
+  }
+
   render() {
     const {
       isLoading,
       searchData,
       searchText,
+      placeSelected,
     } = this.props;
 
     const renderItem = (item, isHighlighted) => {
@@ -115,6 +124,12 @@ class SearchBar extends Component {
               />
             )}
           </FormattedMessage>
+          {placeSelected ? (
+            <button
+              className='SearchBar-CityInfoToggle'
+              onClick={ this.toggleCityInfo }
+            />
+          ) : null}
         </div>
       </section>
     );

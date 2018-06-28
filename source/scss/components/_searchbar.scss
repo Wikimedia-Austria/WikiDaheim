@@ -119,4 +119,37 @@
       display:none;
     }
   }
+
+  .SearchBar-CityInfoToggle {
+    height: 2.5rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    border: 1rem solid $primary-color;
+    border-left-width: 0.75rem;
+    border-right-width: 0.75rem;
+    transform: translateX(0.5rem);
+
+    &::before,
+    &::after {
+      content: '';
+      height: 0.5rem;
+      width: 0.5rem;
+      border-radius: 50%;
+      background-color: white;
+      position: absolute;
+      top:0;
+      left:0;
+      transform: translateY(-0.9rem);
+    }
+
+    &::after {
+      transform: translateY(0.9rem);
+    }
+
+    @include md {
+      display: none;
+    }
+  }
 }

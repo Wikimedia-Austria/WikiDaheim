@@ -32,6 +32,7 @@
   "item.viewCommons": "zur Commons-Kategorie",
   "item.viewEntry": "zum Eintrag",
   "map.switchMunicipality": "switch to municipality",
+  "map.toggleSyncListAndMap": "Liste beim Verschieben der Karte synchronisieren",
   "menu.facebook": "Facebook",
   "menu.imprint": "Imprint and Privacy",
   "search.placeholder": "Search here for municipality...",

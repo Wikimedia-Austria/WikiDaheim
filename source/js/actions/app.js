@@ -33,6 +33,7 @@ export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
 export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
 
 export const TOGGLE_SYNC_LIST_MAP = 'TOGGLE_SYNC_LIST_MAP';
+export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
 
 /*
   AUTOCOMPLETE ACTIONS
@@ -301,7 +302,7 @@ export function mapZoomChanged(data) {
   };
 }
 
-/* MAP ZOOM */
+/* Mobile View Switch */
 export function mobileViewSwitch(data) {
   return {
     type: MOBILE_VIEW_SWITCH,
@@ -314,5 +315,13 @@ export function mobileViewSwitch(data) {
 export function toggleSyncListAndMap() {
   return {
     type: TOGGLE_SYNC_LIST_MAP,
+  };
+}
+
+/* Mobile City Info */
+
+export function toggleCityInfo() {
+  return {
+    type: TOGGLE_CITY_INFO,
   };
 }

@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
+import classNames from 'classnames';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { toggleCityInfo } from 'actions/app';
 import ExternalLinkOverlay from './ExternalLinkOverlay';
+import MapSyncToggle from 'components/Global/MapSyncToggle';
 
 @connect(state => ({
   articles: state.app.get('articles'),
@@ -16,6 +19,8 @@ class CityInfo extends Component {
     articles: PropTypes.instanceOf(List),
     placeMapData: PropTypes.instanceOf(Map),
     commonscat: PropTypes.string,
+    showCityInfo: PropTypes.bool,
+    dispatch: PropTypes.func,
   };
 
   constructor(props) {
@@ -24,10 +29,21 @@ class CityInfo extends Component {
     this.state = {
       shownLink: null,
     };
+
+    this.toggleCityInfo = this.toggleCityInfo.bind(this);
+  }
+
+  toggleCityInfo() {
+    const { dispatch } = this.props;
+    dispatch(toggleCityInfo());
   }
 
   render() {
-    const { articles, placeMapData, commonscat } = this.props;
+    const { articles, placeMapData, commonscat, showCityInfo } = this.props;
+
+    const classnames = classNames('CityInfo', {
+      'CityInfo--active': showCityInfo,
+    });
 
     const cityName = placeMapData.get('text');
     const currentArticle = articles.get(0);
@@ -101,90 +117,93 @@ class CityInfo extends Component {
         default:
       }
     }
-
     return (
-      <section className='CityInfo'>
-        <div className='CityInfo-Content'>
-          <a
-            href={ `https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=WikiDaheim-at&categories=${ commonscat }&descriptionlang=de` }
-            target='_blank'
-            rel='noopener noreferrer'
-            className='CityInfo-Link'
-          >
-            <FormattedMessage
-              id='uploadPhoto'
-              description='Text for Photo Upload-Button'
-              defaultMessage='Foto hochladen'
+      <section className={ classnames }>
+        <button className='CityInfo-Closer' onClick={ this.toggleCityInfo } />
+        <div className='CityInfo-Wrapper'>
+          <div className='CityInfo-Content'>
+            <a
+              href={ `https://commons.wikimedia.org/w/index.php?title=Special:UploadWizard&campaign=WikiDaheim-at&categories=${ commonscat }&descriptionlang=de` }
+              target='_blank'
+              rel='noopener noreferrer'
+              className='CityInfo-Link'
             >
-              {(text) => (<strong>{text}</strong>)}
-            </FormattedMessage>
+              <FormattedMessage
+                id='uploadPhoto'
+                description='Text for Photo Upload-Button'
+                defaultMessage='Foto hochladen'
+              >
+                {(text) => (<strong>{text}</strong>)}
+              </FormattedMessage>
 
-            <FormattedMessage
-              id='uploadPhoto.description'
-              description='Description text for Photo Upload Button'
-              defaultMessage='Lade ein Foto zu {cityName} hoch'
-              values={ { cityName } }
-            />
-          </a>
-          <a
-            href={ currentArticle.get('editLink') }
-            target='_blank'
-            rel='noopener noreferrer'
-            className='CityInfo-Link CityInfo-Link-Wiki'
-          >
-            <FormattedMessage
-              id='cityinfo.editWikiLink'
-              description='Text edit Wiki button'
-              defaultMessage='Wikipedia-Artikel bearbeiten'
-            >
-              {(text) => (<strong>{text}</strong>)}
-            </FormattedMessage>
-
-            <span>
-              <FormattedHTMLMessage
-                id='cityinfo.editWikiLinkDescription'
-                description='Description text for the "Edit Wiki"-Link'
-                defaultMessage='Fehlende Abschnitte: {missingSectionsCount, plural,
-                    =0 {keine}
-                    other {}
-                }'
-                values={ {
-                  missingSectionsCount: missingSections.length,
-                  missingSections: '',
-                } }
+              <FormattedMessage
+                id='uploadPhoto.description'
+                description='Description text for Photo Upload Button'
+                defaultMessage='Lade ein Foto zu {cityName} hoch'
+                values={ { cityName } }
               />
-              {missingSections.length > 0 ?
-                <span
-                  dangerouslySetInnerHTML={ { __html: missingSections } } // eslint-disable-line
-                />
-              : null }
-            </span>
-          </a>
-        </div>
-        <footer className='CityInfo-Footer'>
-          <button
-            className='CityInfo-Link'
-            onClick={ () => this.setState({ 'shownLink': 'regio' }) }
-          >
-            <FormattedMessage
-              id='cityinfo.regiowikiTitle'
-              description='Title for RegioWiki'
-              defaultMessage='RegioWiki'
-            />
-          </button>
+            </a>
+            <a
+              href={ currentArticle.get('editLink') }
+              target='_blank'
+              rel='noopener noreferrer'
+              className='CityInfo-Link CityInfo-Link-Wiki'
+            >
+              <FormattedMessage
+                id='cityinfo.editWikiLink'
+                description='Text edit Wiki button'
+                defaultMessage='Wikipedia-Artikel bearbeiten'
+              >
+                {(text) => (<strong>{text}</strong>)}
+              </FormattedMessage>
 
-          <button
-            className='CityInfo-Link'
-            onClick={ () => this.setState({ 'shownLink': 'gpx' }) }
-          >
-            <FormattedMessage
-              id='cityinfo.gpxTitle'
-              description='Title for GPX-Download'
-              defaultMessage='GPX-Datei'
-            />
-          </button>
-        </footer>
-        { externalLinkOverlay }
+              <span>
+                <FormattedHTMLMessage
+                  id='cityinfo.editWikiLinkDescription'
+                  description='Description text for the "Edit Wiki"-Link'
+                  defaultMessage='Fehlende Abschnitte: {missingSectionsCount, plural,
+                      =0 {keine}
+                      other {}
+                  }'
+                  values={ {
+                    missingSectionsCount: missingSections.length,
+                    missingSections: '',
+                  } }
+                />
+                {missingSections.length > 0 ?
+                  <span
+                    dangerouslySetInnerHTML={ { __html: missingSections } } // eslint-disable-line
+                  />
+                : null }
+              </span>
+            </a>
+          </div>
+          <footer className='CityInfo-Footer'>
+            <button
+              className='CityInfo-Link'
+              onClick={ () => this.setState({ 'shownLink': 'regio' }) }
+            >
+              <FormattedMessage
+                id='cityinfo.regiowikiTitle'
+                description='Title for RegioWiki'
+                defaultMessage='RegioWiki'
+              />
+            </button>
+
+            <button
+              className='CityInfo-Link'
+              onClick={ () => this.setState({ 'shownLink': 'gpx' }) }
+            >
+              <FormattedMessage
+                id='cityinfo.gpxTitle'
+                description='Title for GPX-Download'
+                defaultMessage='GPX-Datei'
+              />
+            </button>
+          </footer>
+          <MapSyncToggle />
+          { externalLinkOverlay }
+        </div>
       </section>
     );
   }
