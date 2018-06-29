@@ -1,6 +1,5 @@
 import { Map, List, Set, fromJS } from 'immutable';
 import uuidv4 from 'uuid/v4';
-import geolib from 'geolib';
 
 import {
   AUTOCOMPLETE_ACTION_START,
@@ -22,12 +21,18 @@ import {
 
   PLACE_ITEM_HOVER,
   PLACE_ITEM_LEAVE,
-
   PLACE_ITEM_SELECT,
 
+  MUNICIPALITY_HOVER,
+  MUNICIPALITY_LEAVE,
+
   MAP_POSITION_CHANGED,
+  MAP_ZOOM_CHANGED,
 
   TOGGLE_FILTER,
+  TOGGLE_SYNC_LIST_MAP,
+
+  MOBILE_VIEW_SWITCH,
   TOGGLE_CITY_INFO,
 } from 'actions/app';
 
@@ -52,9 +57,13 @@ const initialState = Map({
   commonscat: '',
 
   hoveredElement: null,
+  hoveredMunicipality: null,
   selectedElement: null,
-  currentMapPosition: fromJS([0, 0]),
+  currentMapPosition: fromJS([13.2, 47.516231]),
+  currentMapZoom: 7,
 
+  mobileView: 'map',
+  syncListAndMap: true,
   showCityInfo: false,
 });
 
@@ -107,16 +116,10 @@ const actionsMap = {
   },
 
   [PLACE_SELECT_ACTION_START]: (state, action) => {
-    const region = action.data.get('context').find((context) => {
-      const id = context.get('id').split('.');
-      if (id[0] === 'region') return true;
-      return false;
-    });
-
     return state.merge({
       searchLoading: false,
       searchData: new List(),
-      searchText: `${ action.data.get('text') }, ${ region.get('text') }`,
+      searchText: action.data.get('text'),
       placeMapData: action.data,
       placeLoading: true,
       placeError: null,
@@ -174,7 +177,8 @@ const actionsMap = {
   [TOGGLE_FILTER]: (state, action) => {
     const current = state.get('activeFilters');
     const toggle = action.data;
-    const activeFilters = current.includes(toggle) ? current.delete(toggle) : current.add(toggle);
+    const activeFilters =
+      current.includes(toggle) ? current.filterNot(x => x === toggle) : current.push(toggle);
 
     return state.merge({
       activeFilters,
@@ -244,44 +248,57 @@ const actionsMap = {
 
     return state.merge({
       selectedElement,
+      mobileView: 'list',
+    });
+  },
+
+  // MAP MUNICIPALITIES HOVER
+  [MUNICIPALITY_HOVER]: (state, action) => {
+    return state.merge({
+      hoveredMunicipality: action.data,
+    });
+  },
+  [MUNICIPALITY_LEAVE]: (state) => {
+    return state.merge({
+      hoveredMunicipality: null,
     });
   },
 
   // MAP POSITION change
   [MAP_POSITION_CHANGED]: (state, action) => {
-    // check if this is in the area of the selected element which was selected from the list
-    // if yes do not fire a position change to keep the list in shape
-    if (
-      state.get('selectedElement') &&
-      state.get('selectedElement').get('longitude') > 0 &&
-      state.get('selectedElement').get('source') === 'list'
-    ) {
-      const currentSelected = state.get('selectedElement');
-      const distance = geolib.getDistanceSimple(
-        {
-          latitude: currentSelected.get('latitude'),
-          longitude: currentSelected.get('longitude'),
-        },
-        {
-          latitude: action.data[1],
-          longitude: action.data[0],
-        }
-      );
-
-      if (distance < 15) {
-        return state;
-      }
-    }
-
     return state.merge({
       currentMapPosition: action.data,
     });
   },
 
-  // TOGGLE CITY INFO
-  [TOGGLE_CITY_INFO]: (state) => {
+  // MAP ZOOM change
+  [MAP_ZOOM_CHANGED]: (state, action) => {
     return state.merge({
-      showCityInfo: !state.get('showCityInfo'),
+      currentMapZoom: action.data,
+    });
+  },
+
+  // MAP ZOOM change
+  [MOBILE_VIEW_SWITCH]: (state, action) => {
+    return state.merge({
+      mobileView: action.data,
+    });
+  },
+
+  [TOGGLE_SYNC_LIST_MAP]: (state) => {
+    const syncListAndMap = !state.get('syncListAndMap');
+
+    return state.merge({
+      syncListAndMap,
+    });
+  },
+
+  [TOGGLE_CITY_INFO]: (state) => {
+    const showCityInfo = !state.get('showCityInfo');
+    console.log('TCI');
+
+    return state.merge({
+      showCityInfo,
     });
   },
 };

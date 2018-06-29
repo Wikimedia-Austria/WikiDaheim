@@ -1,4 +1,5 @@
 @import "base/config";
+@import '~mapbox-gl/dist/mapbox-gl.css';
 
 @import "base/normalize";
 @import "base/breakpoints";
@@ -7,9 +8,12 @@
 
 /* components */
 @import "components/button";
+@import "components/dropdown";
 @import "components/header";
 @import "components/searchbar";
 @import "components/filters";
 @import "components/map";
 @import "components/resultlist";
 @import "components/cityinfo";
+@import "components/focushandler";
+@import "components/synclisttoggle";

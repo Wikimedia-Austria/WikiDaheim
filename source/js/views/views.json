@@ -1,0 +1,37 @@
+[
+  {
+    "slug" : "about",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Über",
+      "en" : "About"
+    }
+  },
+
+  {
+    "slug" : "topics",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Themen",
+      "en" : "Topics"
+    }
+  },
+
+  {
+    "slug" : "competition",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Wettbewerb",
+      "en" : "Competition"
+    }
+  },
+
+  {
+    "slug" : "credits",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Credits",
+      "en" : "Credits"
+    }
+  }
+]

@@ -10,8 +10,8 @@ button {
 }
 
 .Menu-toggle {
-  $distance: 27%;
-  $lineHeight: 8%;
+  $distance: 30%;
+  $lineHeight: 0.25em;
 
   position: fixed;
   top:0;
@@ -37,7 +37,7 @@ button {
                 background-color .2s ease;
 
     &:nth-child(2) { top: $distance + 2% }
-    &:nth-child(3) { top: calc(100% - 2% - #{$lineHeight + $distance}) }
+    &:nth-child(3) { top: calc(100% - 2% - #{$lineHeight} - #{$distance} ) }
   }
 
   &:hover {

@@ -3,26 +3,48 @@
   height:100%;
   overflow:hidden;
   flex-direction: column;
+  background-color: white;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
 
   .ResultList-ListWrapper {
     flex: 1;
     overflow:hidden;
   }
+
+  @include md {
+    position: absolute;
+    z-index: 1000;
+    width:33%;
+    min-width: 400px;
+    max-width: 600px;
+    height: auto;
+    max-height: calc(100vh - #{$header-height} - 2rem);
+    overflow: visible;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  @include lg {
+    min-width: 470px;
+  }
 }
 
 .ResultListItem {
-  display:flex;
-  margin:.5em;
-  box-shadow:.1em .1em .3em rgba(0,0,0,.2);
-  height:130px;
+  margin: 1rem 0.5rem;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+  min-height:100px;
+  max-height:100px;
   transition:background-color .2s ease;
-  flex-direction: row;
-  align-items:stretch;
   cursor: pointer;
   color: $text-color;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+  transition: max-height .2s ease;
+  overflow: hidden;
 
-  @include sm {
-    margin: 1em;
+  @include md {
+    min-height: 130px;
+    max-height: 130px;
   }
 
   &:nth-child(2) {
@@ -30,11 +52,34 @@
   }
 
   &.ResultListItem--active {
-    background-color:rgba(0,0,0,.1);
+    background-color:rgba(235, 235, 235, 0.9);
   }
 
   &.ResultListItem--selected {
-    background-color:lighten($primary-color, 60%);
+    background-color: rgba(255, 255, 255, 0.9);
+    cursor: auto;
+    max-height: 530px;
+
+    .Details {
+      .Details-right {
+        display: block;
+      }
+
+      a {
+        display: inline;
+      }
+    }
+  }
+
+  .Details-Container {
+    display: flex;
+    flex-direction: row;
+    align-items:stretch;
+    height: 100px;
+
+    @include md {
+      height: 130px;
+    }
   }
 
   .PhotoContainer {
@@ -98,59 +143,34 @@
   }
 
   .Details {
-    flex: 1;
+    padding:1em 1em 1em 0;
     display:flex;
+    box-sizing:border-box;
     flex-direction: column;
-    max-height: 100%;
-    overflow: hidden;
+    flex: 1;
+
+    .Details-Title {
+      flex: 1;
+    }
+
+    .Details-Category,
+    .Details-Location {
+      font-size: .8em;
+    }
+
+    .Details-Location {
+      span { padding-right: 0.5em; }
+      br { display: none; }
+
+      @include md {
+        span { padding-right: 0; }
+        br { display: inherit; }
+      }
+    }
 
     @include sm {
-      flex-direction: row;
-    }
-
-    .Details-left {
-      padding:1em;
-      display:flex;
-      box-sizing:border-box;
-      flex-direction: column;
-      padding-bottom:0;
-      flex: 1;
-
-      .Details-Title {
-        flex:1;
-      }
-
-      .Details-Location {
-        font-size: .8em;
-      }
-
-      @include sm {
-        flex:1 0 40%;
-        padding-bottom:1em;
-        max-width: 40%;
-        overflow: hidden;
-      }
-    }
-
-    .Details-right {
-      padding:1em;
-      box-sizing: border-box;
-      padding-top: 0;
-
-      p {
-        display: none;
-      }
-
-      @include sm {
-        flex:1 0 60%;
-        padding-top: 1em;
-        max-width:60%;
-        overflow:hidden;
-
-        p {
-          display: block;
-        }
-      }
+      padding-bottom:1em;
+      overflow: hidden;
     }
 
     h2 {
@@ -172,6 +192,75 @@
 
     a {
       font-size:.9em;
+      display: none;
     }
   }
+
+  .Details-Text {
+    height: 9rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color:rgba(0, 0, 0, 0.05);
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .Details-Links {
+    display: flex;
+    padding: 1rem;
+
+    a {
+      padding-right: 1rem;
+      padding-left: 2.5rem;
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      line-height: 2rem;
+      font-size: 0.85em;
+
+      @include md {
+        padding-right: 1.5rem;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width:2rem;
+        height:2rem;
+        padding:.2rem;
+        margin-right: 1rem;
+        background-color: $primary-color;
+
+        background-image:url(../assets/icons/icon_upload.svg);
+        background-size:contain;
+        background-repeat: no-repeat;
+        background-origin: content-box;
+      }
+
+      &.Details-Link-Article {
+        &::before {
+          background-image:url(../assets/icons/icon_plus.svg);
+        }
+      }
+    }
+  }
+}
+
+.ResultList-EmptyInfo {
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+  background-color: white;
+  margin: 0 0.5rem;
+  padding: 2rem 1rem;
+  text-align: center;
 }

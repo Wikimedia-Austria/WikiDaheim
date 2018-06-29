@@ -1,0 +1,15 @@
+[
+  {
+    "locale": "de",
+    "title": "Deutsch",
+    "default": true
+  },
+  {
+    "locale": "en",
+    "title": "English"
+  },
+  {
+    "locale": "hu",
+    "title": "Magyar"
+  }
+]

@@ -1,198 +1,187 @@
 .CityInfo {
-  margin:.5em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: $z-index-menu +1;
+  pointer-events: none;
 
-  @include sm {
-    margin: 1em;
+  @include md {
+    position: relative;
+    z-index: auto;
+    pointer-events: all;
   }
 
-  header {
-    background-color: $primary-color;
-    color: $primary-color-contrast;
-    font-weight: bold;
-    positon: relative;
-    display:flex;
-    padding:.5em;
+  .CityInfo-Closer {
+    display: block;
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    transition: background-color .4s ease;
 
-    @include sm {
-      padding:1em;
-    }
-
-    h1 {
-      flex:1;
-      margin:0;
-      display:none;
-
-      @include sm {
-        display:block;
-      }
-    }
-
-    button {
-      width:3em;
-      height:3em;
-      background-image:url('../assets/icons/section_toggle_inactive.svg');
-    }
-
-    .CityInfo-UploadButton {
-      line-height:2.5em;
-      background-color: $secondary-color;
-      color: $secondary-color-contrast;
-      font-size:1.2em;
-      text-decoration:none;
-      padding:0 .75em;
-      margin-right:auto;
-
-      @include sm {
-        margin-right: .5em;
-      }
-    }
-
-    button, .CityInfo-UploadButton {
-      transition: transform .2s ease;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-
-      &:active {
-        transform: scale(.8);
-      }
+    @include md {
+      display: none;
     }
   }
 
-  &.CityInfo--opened {
-    header button {
-      background-image:url('../assets/icons/section_toggle_active.svg');
+
+  .SyncListToggle {
+    border-top: 1px solid rgba(0,0,0,.2);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+
+    .SyncListToggle-Button {
+      position: relative;
+      text-align: left;
+      line-height: 1.25em;
+      min-height: 2.25rem;
     }
 
-    .CityInfo-Content {
-      max-height: 300px;
+    @include md {
+      display: none;
     }
+  }
+
+  &.CityInfo--active {
+    pointer-events: all;
+
+    .CityInfo-Closer {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .CityInfo-Wrapper {
+      transform: none;
+    }
+  }
+}
+
+.CityInfo-Wrapper {
+  margin: 0;
+  background-color: white;
+  color: $primary-color;
+  padding: 0 1rem 3rem;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+  z-index: $z-index-menu - 10;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform .4s ease;
+
+  @include md {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    right: auto;
+    margin: 0 0.5rem 1rem;
+    padding-bottom: 1rem;
+    transform: none;
   }
 
   .CityInfo-Content {
-    background-color: $primary-color;
-    color: $primary-color-contrast;
-    max-height: 0;
-    transition: all .3s linear;
-    overflow: hidden;
+    padding-left: 0.2rem;
 
-
-    .CityInfo-Content-Top {
-      display:flex;
+    .CityInfo-Link {
+      color: $primary-color;
+      text-decoration: none;
+      display: flex;
       flex-direction: column;
+      position: relative;
+      padding: 0.2rem 0 0 4rem;
+      margin: 1.5rem 0;
+      line-height: 1.5em;
+      height: 3rem;
 
-      @include md {
-        flex-direction: row;
-      }
-    }
+      strong {
+        font-size: 1.2rem;
 
-    .CityInfo-Text {
-      flex:6;
-      padding:1em;
-    }
-
-    .CityInfo-Sections {
-      flex:4;
-      padding:1em;
-
-      a {
-        display:block;
-        position:relative;
-        color: $primary-color-contrast;
-        text-decoration: none;
-        line-height:2.5em;
-        padding-right:3em;
-        margin-bottom:.2em;
-
-        span {
-          color:$unavailable-color;
-          display:block;
-          position: absolute;
-          top:0;
-          right:0;
-          width:2.5em;
-          height:2.5em;
-          background-image:url('../assets/icons/icon_section_unavailable.svg');
-          background-size: contain;
-          background-repeat: no-repeat;
-
-        }
-
-        &.CityInfo-Section--present {
-          color: $primary-color-contrast;
-          span {
-            background:url('../assets/icons/icon_section_available.svg');
-          }
+        @include md {
+          font-size: 1.5rem;
         }
       }
-    }
 
-    h2 {
-      margin:0 0 .4em;
-      font-size: 1.2em;
-    }
+      span {
+        font-family: sans-serif;
+        color: fade_out($primary-color, 0.4);
 
-    .CityInfo-Content-Links {
-      display:flex;
-      padding: .5em;
-
-      @include sm {
-        padding:1em;
-      }
-
-      .CityInfo-Link {
-        flex:1;
-        line-height:2.5em;
-        background-color: $secondary-color;
-        color: $secondary-color-contrast;
-        font-size:1.2em;
-        text-decoration:none;
-        padding:0 .5em;
-        transition: background-color .2s ease;
-        margin-right:.25em;
-
-        @include sm {
-          margin-right: .5em;
-          padding: 0 .75em;
-        }
-
-        &:last-child {
-          margin: 0;
-        }
-
-        &:hover {
-          background-color: lighten($secondary-color, 10%);
-        }
-
-        &:active {
-          background-color: lighten($secondary-color, 15%);
+        a {
+          color: fade_out($primary-color, 0.4);
         }
       }
+
+      &::before {
+        content:'';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width:3rem;
+        height:3rem;
+        padding:.2rem;
+        margin-right: 1rem;
+        background-color: $primary-color;
+
+        background-image:url(../assets/icons/icon_upload.svg);
+        background-size:contain;
+        background-repeat: no-repeat;
+        background-origin: content-box;
+      }
+
+      &.CityInfo-Link-Wiki {
+        &::before {
+          background-image:url(../assets/icons/icon_edit.svg);
+        }
+      }
+    }
+  }
+
+  .CityInfo-Footer {
+    border-top: 1px solid rgba(0,0,0,.2);
+    display: flex;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+
+    .CityInfo-Link {
+      color: rgba(0,0,0,.8);
+      text-decoration: underline;
+      padding-right: 1em;
     }
   }
 }
 
 .ExternalLink-Overlay {
   position:fixed;
-  top:0;
+  top:$header-height;
   left:0;
   right:0;
   bottom:0;
   background-color: rgba(0,0,0,.6);
   backdrop-filter: blur(5px);
   z-index: $z-index-menu + 100;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 
   .ExternalLink-Overlay-Inner {
     background-color:white;
     position:relative;
     padding:3em;
+    box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+    flex: 0;
 
     @include sm {
       position:absolute;
       top:50%;
       left: 50%;
-      max-width:350px;
+      max-width:500px;
       transform: translate(-50%, -50%);
     }
 
@@ -210,6 +199,12 @@
       margin-bottom:1em;
     }
 
+    p {
+      font-family: sans-serif;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
     a {
       display:block;
       line-height:2.5em;
@@ -219,6 +214,7 @@
       text-decoration:none;
       padding:0 .5em;
       text-align:center;
+      margin-top: 2rem;
     }
   }
 }

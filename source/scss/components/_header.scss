@@ -12,12 +12,12 @@
     background-color:white;
     height: $header-height;
     min-height: 4em;
-    overflow:hidden;
     align-items:center;
+    line-height: 0;
 
     img {
       height: $header-height;
-      padding:1em;
+      padding:0.5em;
       min-height:4em;
       box-sizing: border-box;
     }
@@ -41,7 +41,7 @@
     }
 
     .Header-menuToggle {
-      width: $header-height/3*2;
+      width: $header-height;
       min-width: 2em;
     }
   }
@@ -53,8 +53,9 @@
     top:0;
     right:0;
     bottom:0;
-    padding:$header-height 5vw 0;
+    padding:$header-height 5vw 0 5vw;
     transform: translateX(100%);
+    min-width: 250px;
 
     transition: transform .4s ease;
 
@@ -69,14 +70,8 @@
     }
 
     footer a {
-      display:inline-block;
+      display:block;
       color:white;
-
-      &:first-child {
-        border-right:1px solid white;
-        padding-right: .5em;
-        margin-right: .5em;
-      }
     }
 
     a {
@@ -86,7 +81,7 @@
       span {
         display: inline-block;
         color: $primary-color-contrast;
-        font-size: 3em;
+        font-size: 2em;
         position: relative;
         margin-bottom: .5em;
 

@@ -22,11 +22,17 @@ export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
 export const PLACE_ITEM_HOVER = 'PLACE_ITEM_HOVER';
 export const PLACE_ITEM_LEAVE = 'PLACE_ITEM_LEAVE';
-
 export const PLACE_ITEM_SELECT = 'PLACE_ITEM_SELECT';
 
-export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
+export const MUNICIPALITY_HOVER = 'MUNICIPALITY_HOVER';
+export const MUNICIPALITY_LEAVE = 'MUNICIPALITY_LEAVE';
 
+export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
+export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
+
+export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
+
+export const TOGGLE_SYNC_LIST_MAP = 'TOGGLE_SYNC_LIST_MAP';
 export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
 
 /*
@@ -140,10 +146,14 @@ export function selectPlace(place) {
 
     const coordinates = place.get('geometry').get('coordinates');
     const wikidata = place.get('properties').get('wikidata');
+    const iso = place.get('iso');
+    const name = place.get('text');
 
     const location = {
       longitude: coordinates.get(0),
       latitude: coordinates.get(1),
+      name,
+      iso,
       wikidata,
     };
 
@@ -250,6 +260,21 @@ export function placeItemSelect(data, source) {
   };
 }
 
+/* MUNICIPALITY HOVER */
+export function municipalityHover(data) {
+  return {
+    type: MUNICIPALITY_HOVER,
+    data,
+  };
+}
+
+export function municipalityLeave(error) {
+  return {
+    type: MUNICIPALITY_LEAVE,
+    error,
+  };
+}
+
 /* MAP MOVE */
 let mapPositionTimeout = null;
 
@@ -269,7 +294,31 @@ export function mapPositionChanged(data) {
   };
 }
 
-/* TOGGLE CITY INFO */
+/* MAP ZOOM */
+export function mapZoomChanged(data) {
+  return {
+    type: MAP_ZOOM_CHANGED,
+    data,
+  };
+}
+
+/* Mobile View Switch */
+export function mobileViewSwitch(data) {
+  return {
+    type: MOBILE_VIEW_SWITCH,
+    data,
+  };
+}
+
+/* List and Map Toggle */
+
+export function toggleSyncListAndMap() {
+  return {
+    type: TOGGLE_SYNC_LIST_MAP,
+  };
+}
+
+/* Mobile City Info */
 
 export function toggleCityInfo() {
   return {

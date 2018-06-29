@@ -1,0 +1,23 @@
+[
+  "filter.title",
+  "filter.categoryFilterTitle",
+  "filter.propertyFilterTitle",
+  "filter.finishedButton",
+  "filter.filterButtonTitle",
+  "filter.incomplete",
+  "filter.missingImages",
+  "filter.missingDescription",
+  "map.switchMunicipality",
+  "uploadPhoto",
+  "cancel",
+  "item.photoLinkTitle",
+  "item.readArticle",
+  "item.createArticle",
+  "item.missingTitle",
+  "item.missingDescription",
+  "search.viennaWarning",
+  "search.placeholder",
+  "header.logoAlt",
+  "menu.facebook",
+  "menu.imprint"
+]

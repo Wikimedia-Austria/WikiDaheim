@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { toggleFilterMenu } from 'actions/menu';
+import { FormattedMessage } from 'react-intl';
 
 @connect(state => {
   let filtersActive = false;
@@ -16,9 +17,10 @@ import { toggleFilterMenu } from 'actions/menu';
     showFilterMenu: state.menu.get('showFilterMenu'),
     filtersActive,
   };
-})
-class FilterButton extends Component {
+}, null, null, { pure: false })
+class FilterTitle extends Component {
   static propTypes = {
+    items: PropTypes.object,
     showFilterMenu: PropTypes.bool,
     filtersActive: PropTypes.bool,
 
@@ -38,24 +40,44 @@ class FilterButton extends Component {
   }
 
   render() {
-    const { showFilterMenu, filtersActive } = this.props;
+    const { items, showFilterMenu, filtersActive } = this.props;
 
-    const ItemClass = classNames({
+    const ButtonClass = classNames({
       'FilterButton': true,
       'FilterButton--open': showFilterMenu,
       'FilterButton--filtersActive': filtersActive,
     });
 
     return (
-      <button
-        className={ ItemClass }
-        onClick={ this.toggle }
-      >
-        <span>List filtern</span>
-      </button>
+      <header className='FilterTitle'>
+        <h2>
+          <FormattedMessage
+            id='filter.itemCount'
+            description='Title of the Filter Menu'
+            defaultMessage='{itemCount, plural,
+                =0 {keine Objekte}
+                one {1 Objekte}
+                other {{itemCount} Objekte}
+            }'
+            values={ {
+              itemCount: items ? items.size : 0,
+            } }
+          />
+        </h2>
+        <button
+          className={ ButtonClass }
+          onClick={ this.toggle }
+        >
+          <FormattedMessage
+            id='filter.filterButtonTitle'
+            description='Title of the Filter Menu Toggle-Button'
+            defaultMessage='Liste filtern'
+          />
+        </button>
+      </header>
     );
   }
 
 }
 
-export default FilterButton;
+export default FilterTitle;

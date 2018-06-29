@@ -1,30 +1,38 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Dashboard from 'views/Dashboard';
-import Topics from 'views/Topics';
-import About from 'views/About';
-import Competition from 'views/Competition';
-import Credits from 'views/Credits';
-import NotFound from 'views/NotFound';
+import { PUBLIC_ROOT } from 'config/config';
+import pages from 'views/views.json';
 
-const publicPath = '/';
+import Dashboard from 'components/Dashboard';
+import Page from 'components/Page';
 
-export const routeCodes = {
-  DASHBOARD: publicPath,
-  ABOUT: `${ publicPath }about`,
-  COMPETITION: `${ publicPath }competition`,
-  CREDITS: `${ publicPath }credits`,
-  TOPICS: `${ publicPath }topics`,
+const routeCodes = {
+  DASHBOARD: PUBLIC_ROOT,
 };
+
+const loadedPages = pages.map((page) => {
+  routeCodes[page.slug] = PUBLIC_ROOT.concat(page.slug);
+  return page;
+});
 
 export default () => (
   <Switch>
-    <Route exact path={ publicPath } component={ Dashboard } />
-    <Route path={ routeCodes.ABOUT } component={ About } />
-    <Route path={ routeCodes.TOPICS } component={ Topics } />
-    <Route path={ routeCodes.COMPETITION } component={ Competition } />
-    <Route path={ routeCodes.CREDITS } component={ Credits } />
-    <Route path='*' component={ NotFound } />
+    <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
+
+    { loadedPages.map((page) => (
+      <Route
+        exact
+        key={ page.slug }
+        path={ routeCodes[page.slug] }
+        render={ (routeProps) => (
+          <Page { ...routeProps } page={ page } />
+        ) }
+      />
+    )) }
+
+    <Route path='*' component={ Dashboard } />
   </Switch>
 );
+
+export { routeCodes };
