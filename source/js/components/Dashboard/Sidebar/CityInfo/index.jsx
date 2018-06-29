@@ -5,20 +5,22 @@ import { List, Map } from 'immutable';
 import classNames from 'classnames';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { toggleCityInfo } from 'actions/app';
-import ExternalLinkOverlay from './ExternalLinkOverlay';
 import MapSyncToggle from 'components/Global/MapSyncToggle';
+import ExternalLinkOverlay from './ExternalLinkOverlay';
 
 @connect(state => ({
   articles: state.app.get('articles'),
   placeMapData: state.app.get('placeMapData'),
   showCityInfo: state.app.get('showCityInfo'),
   commonscat: state.app.get('commonscat'),
+  gpxlink: state.app.get('gpxlink'),
 }))
 class CityInfo extends Component {
   static propTypes = {
     articles: PropTypes.instanceOf(List),
     placeMapData: PropTypes.instanceOf(Map),
     commonscat: PropTypes.string,
+    gpxlink: PropTypes.string,
     showCityInfo: PropTypes.bool,
     dispatch: PropTypes.func,
   };
@@ -39,7 +41,7 @@ class CityInfo extends Component {
   }
 
   render() {
-    const { articles, placeMapData, commonscat, showCityInfo } = this.props;
+    const { articles, placeMapData, commonscat, showCityInfo, gpxlink } = this.props;
 
     const classnames = classNames('CityInfo', {
       'CityInfo--active': showCityInfo,
@@ -109,7 +111,7 @@ class CityInfo extends Component {
           externalLinkOverlay = (<ExternalLinkOverlay
             title={ title }
             text={ text }
-            link='#'
+            link={ gpxlink }
             closeAction={ () => this.setState({ 'shownLink': null }) }
           />);
           break;
@@ -118,6 +120,7 @@ class CityInfo extends Component {
       }
     }
     return (
+      <div>
       <section className={ classnames }>
         <button className='CityInfo-Closer' onClick={ this.toggleCityInfo } />
         <div className='CityInfo-Wrapper'>
@@ -202,9 +205,9 @@ class CityInfo extends Component {
             </button>
           </footer>
           <MapSyncToggle />
-          { externalLinkOverlay }
         </div>
       </section>
+      { externalLinkOverlay }</div>
     );
   }
 

@@ -55,6 +55,7 @@ const initialState = Map({
   articles: new List(),
   items: new List(),
   commonscat: '',
+  gpxlink: '',
 
   hoveredElement: null,
   hoveredMunicipality: null,
@@ -148,6 +149,7 @@ const actionsMap = {
       items,
       articles: action.data.articles,
       commonscat: action.data.commonscat,
+      gpxlink: action.data.GPX,
     });
   },
 
@@ -295,7 +297,6 @@ const actionsMap = {
 
   [TOGGLE_CITY_INFO]: (state) => {
     const showCityInfo = !state.get('showCityInfo');
-    console.log('TCI');
 
     return state.merge({
       showCityInfo,

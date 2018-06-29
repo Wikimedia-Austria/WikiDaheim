@@ -10,6 +10,7 @@ const paths = {
   javascript: path.join(__dirname, '../source/js'),
   images: path.join(__dirname, '../source/assets/img'),
   icons: path.join(__dirname, '../source/assets/icons'),
+  fonts: path.join(__dirname, '../source/assets/fonts'),
   build: path.join(__dirname, '../build'),
 };
 
@@ -131,6 +132,11 @@ const rules = [
   {
     test: /\.(png|gif|jpg|svg)$/,
     include: paths.images,
+    use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
+  },
+  {
+    test: /\.(woff)$/,
+    include: paths.fonts,
     use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
   },
   {

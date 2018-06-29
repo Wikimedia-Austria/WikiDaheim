@@ -8,19 +8,6 @@ class PropertyFilter extends Component {
     return (
       <div className='PropertyFilter'>
         <FormattedMessage
-          id='filter.incomplete'
-          description='Title of the Incomplete Objects-Filter'
-          defaultMessage='Unvollständige Objekte'
-        >
-          {(title) => (
-            <PropertyFilterItem
-              title={ title }
-              id='incomplete'
-            />
-          )}
-        </FormattedMessage>
-
-        <FormattedMessage
           id='filter.missingImages'
           description='Title of the Missing Images-Filter'
           defaultMessage='Fehlende Bilder'
