@@ -1,3 +1,9 @@
+.FilterWrapper {
+  @include md {
+    position: relative;
+  }
+}
+
 .FilterTitle {
   display: flex;
   padding: 1rem 0.5rem;
@@ -27,12 +33,12 @@
 }
 
 .FilterSection {
-  position:fixed;
-  top: $header-height;
+  position:absolute;
   left:0;
   bottom:0;
   right:0;
   padding:1em;
+  padding-top: 0;
   background-color: $secondary-color;
   z-index:$z-index-suggestions + 100;
   color:white;
@@ -40,6 +46,8 @@
   -webkit-overflow-scrolling: touch;
   transform: translateY(100%);
   transition: transform .5s ease-in-out;
+  max-height: 95%;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
 
   &.FilterSection--active {
     transform: translateY(0);
@@ -50,20 +58,65 @@
   }
 
   @include md {
-    transform: translateX(-110%);
+    position: absolute;
+    right: -1.5rem;
+    top: -10rem;
+    bottom: auto;
+    height: auto;
+    max-height: 1000px;
     z-index: $z-index-menu - 10;
     margin: 0 0.5rem;
-    left: -0.5rem;
-    right: auto;
-    width: calc(33% + 0.5rem);
-    min-width: 480px;
-    max-width: 610px;
     box-shadow:.1em .1em .3em rgba(0,0,0,.15);
-    z-index: $z-index-menu - 5;
+    z-index: auto;
+    overflow: visible;
+    pointer-events: none;
+    transform: translateX(105%);
+    opacity: 0;
+    transition:
+      transform .3s ease,
+      opacity .3s ease;
+
+    &.FilterSection--active {
+      pointer-events: all;
+      transform: translateX(100%);
+      opacity: 1;
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 11rem;
+      left: -1rem;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 1rem 1rem 1rem 0;
+      border-color: transparent $secondary-color transparent transparent;
+    }
   }
 
   h1 {
-    margin-top: 0;
+    display: none;
+  }
+
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 1em;
+    font-size: 1rem;
+
+    &:nth-child(2) {
+      margin-top: 1rem;
+    }
+
+    @include md {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+
+      &:nth-child(2) {
+        margin-top: 1rem;
+      }
+    }
   }
 
   footer {
@@ -79,6 +132,10 @@
       margin-top: 1rem;
       font-size: 1.4em;
     }
+
+    @include md {
+      display: none;
+    }
   }
 }
 
@@ -86,20 +143,25 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
+  margin: -0.5em;
 
   .CategoryFilter-Item {
-    width: 100%;
-    margin-bottom: .5em;
+    width: calc(50% - 0.5em);
+    margin:0.25em;
 
     button{
       position:relative;
-      font-size:1.4em;
       padding: 0.5em 0 0.5em 0.5em;
       width:100%;
       color: $primary-color-contrast;
       text-decoration: none;
       transition:opacity .2s, background-color .2s;
       text-align:left;
+      font-size: 1.2rem;
+
+      @include md {
+        font-size: 1.3rem;
+      }
     }
 
     &.CategoryFilter-Item--active {
@@ -131,7 +193,7 @@
     background-color: $primary-color;
     color: $primary-color-contrast;
     text-align: left;
-    font-size: 1.4em;
+    font-size: 1.3em;
     padding: 0.5em 0 0.5em 0.5em;
     margin-bottom: .5em;
     transition: background-color .2s ease;
