@@ -22,7 +22,7 @@ import ViewportUnits from 'viewport-units-buggyfill';
 import '../scss/app.scss';
 
 es6Promise.polyfill();
-//ViewportUnits.init();
+ViewportUnits.init();
 
 const store = configureStore();
 
