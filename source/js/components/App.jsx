@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Routes from 'config/routes';
 import PropTypes from 'prop-types';
 
 import Header from 'components/Global/Header';
 import CookieBanner from 'react-cookie-banner';
 import { FormattedMessage } from 'react-intl';
+import findGetParameter from 'lib/findGetParameter';
+import { setLanguage } from 'actions/locale';
 
 import svgSprite from 'svg-sprite-loader/runtime/sprite.build';
+import languages from '../../translations/languages.json';
 
 const sprite = svgSprite.stringify();
 
+@connect()
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+    // from react-redux connect
+    dispatch: PropTypes.func,
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
+
     window.addEventListener('touchstart', function onFirstTouch() {
       window.USER_IS_TOUCHING = true;
       window.removeEventListener('touchstart', onFirstTouch, false);
     }, false);
+
+    /* check if we have to set the language due to a url parameter */
+    const wishedLanguage = findGetParameter('hlang');
+    if (wishedLanguage && languages.filter(l => l.locale === wishedLanguage).length > 0) {
+      dispatch(setLanguage(wishedLanguage));
+    }
   }
 
   render() {
