@@ -48,7 +48,7 @@ html {
     flex:3;
     position: absolute;
     height: 80%;
-    top: calc(100vh - #{$header-height} - 4.5rem);
+    top: calc(100% - 4.5rem);
     left: 0;
     right: 0;
     z-index: $z-index-menu - 9;

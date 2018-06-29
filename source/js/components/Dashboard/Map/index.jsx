@@ -206,7 +206,7 @@ class ResultMap extends Component {
         'map'
       ));
 
-      e.stopPropagation();
+      e.originalEvent.stopPropagation();
     });
 
     map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
@@ -268,9 +268,6 @@ class ResultMap extends Component {
   }
 
   triggerMunicipalitySelect(e) {
-    console.log(e);
-    e.originalEvent.stopPropagation();
-    e.originalEvent.preventDefault();
     const { dispatch } = this.props;
     const { lngLat } = e;
     const { properties, layer } = e.features[0];
@@ -335,7 +332,7 @@ class ResultMap extends Component {
           });
         } else {
           features = map.querySourceFeatures('composite', {
-            sourceLayer: 'VGD-Oesterreich_gst-1ajjr4',
+            sourceLayer: 'GKZGN-1ab8iv',
             filter: ['==', 'GKZ', hoveredMunicipality.get('iso')],
           });
         }
