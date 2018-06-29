@@ -35,12 +35,16 @@ plugins.push(
   }),
   new FaviconsWebpackPlugin({
     logo: '../assets/img/wikidaheim-logo.svg',
+    title: 'WikiDaheim',
+    background: '#24224c'
   }),
   // Builds index.html from template
   new HtmlWebpackPlugin({
     template: path.join(paths.source, 'index.html'),
     path: paths.build,
     filename: 'index.html',
+    title: 'WikiDaheim',
+    minify: true,
   }),
   // htaccess for HTML5 history API
   new HtmlWebpackPlugin({
