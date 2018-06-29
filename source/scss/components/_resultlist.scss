@@ -93,8 +93,10 @@
     background-position: center center;
 
     &.PhotoContainer--Audio {
+      background: white;
       background-image: url(../assets/icons/loudspeaker.svg);
-      background-size: 70%;
+      background-repeat: no-repeat;
+      background-size: 60%;
       background-position: center;
     }
 

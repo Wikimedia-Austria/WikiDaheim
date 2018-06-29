@@ -54,6 +54,14 @@ class ResultListItem extends Component {
       if (!isAudio) {
         const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ item.get('foto') }?width=256`;
         photoContainerStyle.backgroundImage = `url('${ url }')`;
+
+        // parse hex categoryColor, make 50% transparent for background in PhotoContainer
+        if (categoryColor && categoryColor.match(/^#[0-9A-F]{6}$/i)) {
+          const r = parseInt(categoryColor.substring(1, 3), 16);
+          const g = parseInt(categoryColor.substring(3, 5), 16);
+          const b = parseInt(categoryColor.substring(5, 7), 16);
+          photoContainerStyle.backgroundColor = `rgba(${ r }, ${ g }, ${ b }, 0.5)`;
+        }
       }
 
       photoInfoLink = (
@@ -85,14 +93,6 @@ class ResultListItem extends Component {
       'PhotoContainer',
       { 'PhotoContainer--Audio': isAudio }
     );
-
-    // parse hex categoryColor, make 50% transparent for background in PhotoContainer
-    if (categoryColor && categoryColor.match(/^#[0-9A-F]{6}$/i)) {
-      const r = parseInt(categoryColor.substring(1, 3), 16);
-      const g = parseInt(categoryColor.substring(3, 5), 16);
-      const b = parseInt(categoryColor.substring(5, 7), 16);
-      photoContainerStyle.backgroundColor = `rgba(${ r }, ${ g }, ${ b }, 0.5)`;
-    }
 
     const locationInfo = item.get('adresse');
     let location = '';
