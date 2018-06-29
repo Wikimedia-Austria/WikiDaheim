@@ -33,5 +33,13 @@
       "de" : "Credits",
       "en" : "Credits"
     }
-  }
+  },
+  {
+    "slug" : "monuments",
+    "in_menu": false,
+    "menu_title" : {
+      "de" : "Denkmale",
+      "en" : "Monuments"
+    }
+  }  
 ]
