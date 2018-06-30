@@ -14,7 +14,7 @@ import languages from '../../translations/languages.json';
 
 const sprite = svgSprite.stringify();
 
-@connect()
+@connect(null, null, null, { pure: false })
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
