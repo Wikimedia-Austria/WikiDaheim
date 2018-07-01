@@ -15,7 +15,7 @@
   "filter.categoryFilterTitle": "Topics",
   "filter.filterButtonTitle": "Filter list",
   "filter.finishedButton": "Done",
-  "filter.itemCount": "{itemCount, plural, =0 {keine Objekte} one {1 Objekte} other {{itemCount} Objekte}}",
+  "filter.itemCount": "{itemCount, plural, =0 {no objects} one {1 object} other {{itemCount} objects}}",
   "filter.missingDescription": "Missing description",
   "filter.missingImages": "Missing pictures",
   "filter.noresults": "No object fits the selected criteria. Please change the filter settings.",
