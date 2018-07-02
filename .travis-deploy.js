@@ -81,7 +81,7 @@ const listFiles = dir => {
       } else {
         const lastSeparator = dir.lastIndexOf(path.sep);
         const parentDir = dir.substring(lastSeparator);
-        const targetPath = ${parentDir}${path.sep}${file}.replace(/\\/g, '/');
+        const targetPath = `${parentDir}${path.sep}${file}`.replace(/\\/g, '/');
 
         filesList.push({
         'local': fullPath,
