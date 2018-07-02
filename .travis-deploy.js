@@ -12,7 +12,7 @@ var HOST = ENV.wikidaheim_ftp_server;
 var ftpDeploy = new FtpDeploy();
 
 var config = {
-    user: USERNAME,
+    username: USERNAME,
     password: PASSWORD,
     host: HOST,
     port: 21,
@@ -25,7 +25,6 @@ var config = {
 
 console.log(config);
 
-// use with callback
 ftpDeploy.deploy(config, function(err) {
     if (err) console.log(err);
     else console.log('finished');
