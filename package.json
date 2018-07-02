@@ -52,6 +52,7 @@
     "path": "^0.12.7",
     "postcss-loader": "^1.1.1",
     "prepush": "^3.1.11",
+    "promise-ftp-common": "^1.1.5",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-intl-translations-manager": "^5.0.3",
     "redux-logger": "^2.7.4",

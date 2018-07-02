@@ -23,6 +23,6 @@ var config = {
 }
 // use with callback
 ftpDeploy.deploy(config, function(err) {
-    if (err) console.log(err)
+    if (err) console.log(err);
     else console.log('finished');
 });
