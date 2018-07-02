@@ -22,6 +22,9 @@ var config = {
     exclude: [],
     deleteRoot: false,
 }
+
+console.log(config);
+
 // use with callback
 ftpDeploy.deploy(config, function(err) {
     if (err) console.log(err);
