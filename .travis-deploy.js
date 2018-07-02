@@ -1,5 +1,5 @@
 // deploy.js
-var ftpSync = require('ftpsync');
+var FtpDeploy = require('ftp-deploy');
 var fs = require('fs');
 var path = require('path');
 var ENV = process.env;
@@ -9,19 +9,20 @@ var USERNAME = ENV.wikidaheim_ftp_user;
 var PASSWORD = ENV.wikidaheim_ftp_password;
 var HOST = ENV.wikidaheim_ftp_server;
 
-var options = {
-  host: HOST,
-  user: USERNAME,
-  pass: PASSWORD,
-  local: BUILD_PATH,
-  remote: TARGET_PATH
-};
+var ftpDeploy = new FtpDeploy();
 
-ftpSync.settings = options;
-ftpSync.run(function(err, result) {
-  if(err) {
-    throw err;
-  } else {
-    console.log('Successfully synced files.');
-  }
+var config = {
+    user: USERNAME,
+    password: PASSWORD,
+    host: HOST,
+    port: 21,
+    localRoot: BUILD_PATH,
+    remoteRoot: TARGET_PATH,
+    include: ['*', '**/*', '*.htaccess'],
+    deleteRoot: false,
+}
+// use with callback
+ftpDeploy.deploy(config, function(err) {
+    if (err) console.log(err)
+    else console.log('finished');
 });

@@ -44,7 +44,7 @@
     "file-loader": "^1.1.11",
     "fs": "^0.0.1-security",
     "ftp": "^0.3.10",
-    "ftpsync": "^0.2.0",
+    "ftp-deploy": "^2.1.1",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^3.13.0",
