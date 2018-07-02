@@ -22,7 +22,7 @@ client.on('ready', function() {
      * somehow you need to workout what files you are going to upload
      * you may need to compare with what already exists in the server
      */
-    var uploadList = /* your upload list */
+    var uploadList = listFiles( BUILD_PATH );
     var total = uploadList.length;
     var uploadCount = 0;
     var errorList = [];
@@ -61,3 +61,35 @@ client.connect({
   user: USERNAME,
   password: PASSWORD,
 });
+
+const listFiles = dir => {
+  let filesList = [];
+
+  const files = fs.readdirSync(dir);
+  files.map(file => {
+    const fullPath = path.resolve(dir, file);
+    const stats = fs.lstatSync(fullPath);
+
+    if (stats.isDirectory()) {
+      filesList = filesList.concat(listFiles(fullPath));
+    } else {
+      if (dir.endsWith(BUILD_PATH)) {
+        filesList.push({
+        'local': fullPath,
+        'target': file
+        });
+      } else {
+        const lastSeparator = dir.lastIndexOf(path.sep);
+        const parentDir = dir.substring(lastSeparator);
+        const targetPath = ${parentDir}${path.sep}${file}.replace(/\\/g, '/');
+
+        filesList.push({
+        'local': fullPath,
+        'target': targetPath
+        });
+      }
+    }
+  });
+
+  return filesList;
+};
