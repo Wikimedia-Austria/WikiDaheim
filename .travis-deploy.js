@@ -8,7 +8,7 @@ var BUILD_PATH = path.resolve(__dirname, ENV.FTP_BUILD_PATH || 'build');
 var TARGET_PATH = '/';
 var USERNAME = ENV.wikidaheim_ftp_user;
 var PASSWORD = ENV.wikidaheim_ftp_password;
-var HOST = ENV.wikidaheim_ftp_user;
+var HOST = ENV.wikidaheim_ftp_server;
 var PORT = ENV.FTP_SERVER_PORT || 21;
 
 var client = new Client();
