@@ -23,7 +23,13 @@ var config = {
     deleteRoot: false,
 }
 
-console.log(config);
+ftpDeploy.on('uploaded', function(data) {
+	console.log(data);
+});
+
+ftpDeploy.on('upload-error', function (data) {
+	console.log(data.err);
+});
 
 ftpDeploy.deploy(config, function(err) {
     if (err) console.log(err);
