@@ -112,7 +112,6 @@ class ResultListItem extends Component {
 
     /* check if an description exists */
     const descriptionText = item.get('beschreibung');
-    let descriptionMissing = true;
     let descriptionContent = (<FormattedMessage
       id='item.missingDescription'
       description='Title for Description Missing-Info'
@@ -134,7 +133,6 @@ class ResultListItem extends Component {
     );
 
     if (descriptionText && descriptionText.length > 0) {
-      descriptionMissing = false;
       descriptionContent = (<p>
         <Truncate lines={ 4 }>
           <span

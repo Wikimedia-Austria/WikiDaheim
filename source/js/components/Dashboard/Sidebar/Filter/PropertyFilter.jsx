@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PropertyFilterItem from './PropertyFilterItem';
 import { FormattedMessage } from 'react-intl';
+
+import PropertyFilterItem from './PropertyFilterItem';
 
 class PropertyFilter extends Component {
 

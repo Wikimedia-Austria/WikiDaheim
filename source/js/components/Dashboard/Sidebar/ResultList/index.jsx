@@ -173,7 +173,7 @@ class ResultList extends Component {
           defaultMessage='Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.'
         />
       </div>);
-    } else if(items.size !== 0 && sortedItems.size === 0) {
+    } else if (items.size !== 0 && sortedItems.size === 0) {
       return (<div className='ResultList-EmptyInfo'>
         <FormattedMessage
           id='filter.resultssorting'

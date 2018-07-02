@@ -36,7 +36,7 @@ plugins.push(
   new FaviconsWebpackPlugin({
     logo: '../assets/img/wikidaheim-logo.svg',
     title: 'WikiDaheim',
-    background: '#24224c'
+    background: '#24224c',
   }),
   // Builds index.html from template
   new HtmlWebpackPlugin({
