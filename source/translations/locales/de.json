@@ -16,7 +16,7 @@
   "filter.categoryFilterTitle": "Themen",
   "filter.filterButtonTitle": "Liste filtern",
   "filter.finishedButton": "Fertig",
-  "filter.itemCount": "{itemCount, plural, =0 {keine Objekte} one {1 Objekte} other {{itemCount} Objekte}}",
+  "filter.itemCount": "{itemCount, plural, =0 {keine Objekte} one {1 Objekt} other {{itemCount} Objekte}}",
   "filter.missingDescription": "Fehlende Beschreibung",
   "filter.missingImages": "Fehlende Bilder",
   "filter.noresults": "Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.",
