@@ -177,6 +177,7 @@ function placeToggleCategory(data) {
   };
 }
 
+/*
 function placeLoadCategoryActionStart(data) {
   return {
     type: PLACE_LOAD_CATEGORY_ACTION_START,
@@ -191,13 +192,13 @@ function placeLoadCategoryActionSuccess(data) {
   };
 }
 
-export function placeLoadCategoryActionError(error) {
+function placeLoadCategoryActionError(error) {
   return {
     type: PLACE_LOAD_CATEGORY_ACTION_ERROR,
     error,
   };
 }
-
+*/
 
 export function toggleCategory(categoryName) {
   return function (dispatch /* , getState */) {

@@ -14,6 +14,7 @@ var conn = ftp.create( {
 		user:     USERNAME,
 		password: PASSWORD,
 		parallel: 10,
+    log: function(e) { console.log(e); },
 	} );
 
 fs.src( [ `${ BUILD_PATH }/**` ], { buffer: false } )
