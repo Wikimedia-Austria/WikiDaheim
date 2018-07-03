@@ -41,6 +41,12 @@ export default class CategoryName extends Component {
           defaultMessage='Gemeingüter'
         />);
 
+      case 'request':
+        return (<FormattedMessage
+          id='category.request'
+          defaultMessage='Bilderwunsch'
+        />);
+
       default:
         return (<span>{ category.get('title') }</span>);
     }

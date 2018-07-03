@@ -5,6 +5,7 @@
   "category.kellergasse": "Cellar streets",
   "category.naturdenkmal": "Nature",
   "category.publicart": "Public Art",
+  "category.request": "Bilderwunsch",
   "cityinfo.editWikiLink": "Edit article on Wikipedia",
   "cityinfo.editWikiLinkDescription": "Missing topics: {missingSectionsCount, plural, =0 {keine} other {}}",
   "cityinfo.gpxText": "Download a GPX file of the objects on your map.",

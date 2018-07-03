@@ -20,10 +20,13 @@ class FocusHandler extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
     const { dispatch, view } = this.props;
 
     dispatch(mobileViewSwitch(view));
+
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   render() {
@@ -41,6 +44,7 @@ class FocusHandler extends Component {
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
         className={ classnames }
         onClick={ this.handleClick }
+        onTouchMove={ this.handleClick }
       />
     );
   }

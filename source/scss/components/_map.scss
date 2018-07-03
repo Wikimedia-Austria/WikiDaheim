@@ -85,11 +85,15 @@
 
   .TextContainer {
     height: 10em;
-    max-width: 20em;
     padding: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    div {
+      max-width: 25em;
+      min-width: 20em;
+    }
 
     p, span {
       font-size: 0.8rem;
