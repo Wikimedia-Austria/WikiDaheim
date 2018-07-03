@@ -22,21 +22,27 @@
       box-sizing: border-box;
     }
 
+    .Header-logo {
+      @include md {
+        margin-left: 1rem;
+      }
+    }
+
     .Header-claim {
       flex: 1;
-      text-align: center;
       display:flex;
+      text-align: center;
       align-items:center;
 
       button {
         height:$header-height/10*6;
         min-height:2em;
         width:100%;
-        margin:0 2em;
+        margin:0 1em 0 4.5rem;
         background-image:url(../assets/img/wikidaheim-claim.svg);
         background-repeat:no-repeat;
         background-size: contain;
-        background-position:center;
+        background-position: center center;
       }
     }
 
