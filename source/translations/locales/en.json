@@ -7,7 +7,7 @@
   "category.publicart": "Public Art",
   "category.request": "Image Request",
   "cityinfo.editWikiLink": "Edit article on Wikipedia",
-  "cityinfo.editWikiLinkDescription": "Missing topics: {missingSectionsCount, plural, =0 {keine} other {}}",
+  "cityinfo.editWikiLinkDescription": "Missing topics: {missingSectionsCount, plural, =0 {none} other {}}",
   "cityinfo.gpxText": "Download a GPX file of the objects on your map.",
   "cityinfo.gpxTitle": "GPX file",
   "cityinfo.openLink": "Open",
