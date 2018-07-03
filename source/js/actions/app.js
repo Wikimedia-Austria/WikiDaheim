@@ -157,7 +157,8 @@ export function selectPlace(place) {
       wikidata,
     };
 
-    const selectedCats = getState().app.get('categories').filter((cat) => cat.get('show'));
+    // const selectedCats = getState().app.get('categories').filter((cat) => cat.get('show'));
+    const selectedCats = getState().app.get('categories'); // always load all categories
     const mappedCats = selectedCats.toJS().map((cat) => cat.name);
 
     wikiDaheimApi.getTownData(location, mappedCats, true)
@@ -199,9 +200,11 @@ export function placeLoadCategoryActionError(error) {
 
 
 export function toggleCategory(categoryName) {
-  return function (dispatch, getState) {
+  return function (dispatch /* , getState */) {
     dispatch(placeToggleCategory(categoryName));
 
+    // currently disabled, as we load all categories at the initial fetch of town data
+    /*
     const state = getState().app;
     const currentCategory = state.get('categories').find((category) =>
       category.get('name') === categoryName
@@ -224,7 +227,7 @@ export function toggleCategory(categoryName) {
       wikiDaheimApi.getTownData(location, [categoryName], false)
         .then(data => dispatch(placeLoadCategoryActionSuccess(data)))
         .catch(error => dispatch(placeLoadCategoryActionError(error)));
-    }
+    } */
   };
 }
 
