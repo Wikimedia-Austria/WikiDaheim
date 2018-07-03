@@ -9,6 +9,7 @@ import CategoryName from 'components/Global/CategoryName';
 class CategoryFilterItem extends Component {
   static propTypes = {
     category: PropTypes.object,
+    asIcon: PropTypes.bool,
     // from react-redux connect
     dispatch: PropTypes.func,
   }
@@ -27,18 +28,28 @@ class CategoryFilterItem extends Component {
 
 
   render() {
-    const { category } = this.props;
+    const { category, asIcon } = this.props;
 
     const ItemClass = classNames({
       'CategoryFilter-Item': true,
+      'CategoryFilter-Item-Icon': asIcon,
       'CategoryFilter-Item--active': category.get('show'),
       'CategoryFilter-Item--inactive': !category.get('show'),
     });
 
+    const style = {};
+
+    if (asIcon) {
+      const icon = category.get('icon');
+      style.backgroundImage = `url('data:image/svg+xml;utf8,${ icon }')`;
+    } else {
+      style.backgroundColor = category.get('color');
+    }
+
     return (
       <div
         className={ ItemClass }
-        style={ { backgroundColor: category.get('color') } }
+        style={ style }
       >
         <button onClick={ this.toggle }>
           <CategoryName category={ category } />

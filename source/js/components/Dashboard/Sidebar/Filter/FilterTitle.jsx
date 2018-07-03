@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { toggleFilterMenu } from 'actions/menu';
 import { FormattedMessage } from 'react-intl';
+import CategoryFilter from './CategoryFilter';
 
 @connect(state => {
   let filtersActive = false;
@@ -64,6 +65,9 @@ class FilterTitle extends Component {
             } }
           />
         </h2>
+
+        <CategoryFilter asIcons={ true } />
+
         <button
           className={ ButtonClass }
           onClick={ this.toggle }

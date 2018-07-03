@@ -9,12 +9,14 @@ import CategoryFilterItem from './CategoryFilterItem';
 }))
 class CategoryFilter extends Component {
   static propTypes = {
+    asIcons: PropTypes.bool,
     categories: PropTypes.array,
   };
 
   render() {
     const {
       categories,
+      asIcons,
     } = this.props;
 
     // check if every single item is selected
@@ -22,6 +24,7 @@ class CategoryFilter extends Component {
 
     const ItemClass = classNames({
       'CategoryFilter': true,
+      'CategoryFilter-Icons': asIcons,
       'CategoryFilter--all-active': allSelected,
     });
 
@@ -30,6 +33,7 @@ class CategoryFilter extends Component {
         {categories.map((category) => <CategoryFilterItem
           category={ category }
           key={ category.get('name') }
+          asIcon={ asIcons }
         />)}
       </div>
     );

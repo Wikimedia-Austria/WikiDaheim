@@ -15,7 +15,6 @@ import PropertyFilter from './PropertyFilter';
 class FilterList extends Component {
   static propTypes = {
     showFilterMenu: PropTypes.bool,
-
     dispatch: PropTypes.func,
   };
 
