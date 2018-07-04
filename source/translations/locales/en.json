@@ -39,5 +39,5 @@
   "search.placeholder": "Search here for municipality...",
   "search.viennaWarning": "When searching for objects in Vienna, please type in a district (for example Ottakring)",
   "uploadPhoto": "Upload picture",
-  "uploadPhoto.description": "Upload a Photo to {cityName}"
+  "uploadPhoto.description": "Upload a picture for {cityName}"
 }
