@@ -66,7 +66,10 @@ class SearchBar extends Component {
     } = this.props;
 
     const renderItem = (item, isHighlighted) => {
-      if (item.text === 'Wien') {
+      if (
+        item.text === 'Wien'
+        || item.text === 'Vienna'
+      ) {
         return (
           <div className='ViennaWarning'>
             <FormattedMessage

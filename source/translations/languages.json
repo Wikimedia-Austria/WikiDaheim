@@ -2,10 +2,12 @@
   {
     "locale": "de",
     "title": "Deutsch",
-    "default": true
+    "default": true,
+    "mapbox_language_code": "de_AT"
   },
   {
     "locale": "en",
-    "title": "English"
+    "title": "English",
+    "mapbox_language_code": "en_GB"
   }
 ]
