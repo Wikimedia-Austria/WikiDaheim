@@ -63,7 +63,7 @@ function autocompleteActionError(error) {
 let timeout = null;
 
 export function autocomplete(query) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(autocompleteActionStart(query));
 
     if (timeout) {
@@ -72,7 +72,9 @@ export function autocomplete(query) {
 
     // timeout to prevent a call to the API with every keystroke
     timeout = setTimeout(() => {
-      mapboxApi.search(query)
+      const lang = getState().locale.get('language');
+
+      mapboxApi.search(query, lang)
         .then(data => dispatch(autocompleteActionSuccess(data)))
         .catch(error => dispatch(autocompleteActionError(error)));
     }, 300);

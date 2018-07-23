@@ -166,6 +166,10 @@ html {
     h2 {
       margin-top: 1.5em;
       margin-bottom: 0.5rem;
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
   }
 

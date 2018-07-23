@@ -1,11 +1,16 @@
 import { Map } from 'immutable';
 
-import {
-  SET_LOCALE,
-} from 'actions/locale';
+import { SET_LOCALE } from 'actions/locale';
+import { FALLBACK_LANGUAGE } from 'config/config';
+
+import languages from '../../translations/languages.json';
+
+const detectedLanguage = languages.filter(
+  l => l.locale === navigator.language.substring(0, 2)
+).map(l => l.locale);
 
 const initialState = Map({
-  language: 'de', // TODO: read default language from file
+  language: detectedLanguage[0] || FALLBACK_LANGUAGE,
 });
 
 const actionsMap = {
