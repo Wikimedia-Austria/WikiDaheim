@@ -14,6 +14,6 @@ script:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${TRAVIS_BUILD_DIR}/deploy_key" --progress $TRAVIS_BUILD_DIR/dist ${sftp_user}@${sftp_server}:${sftp_path}
+  script: rsync -r --delete-after --quiet -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${TRAVIS_BUILD_DIR}/deploy_key" --progress $TRAVIS_BUILD_DIR/build ${sftp_user}@${sftp_server}:${sftp_path}
   on:
     branch: master
