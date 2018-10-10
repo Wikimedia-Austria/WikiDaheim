@@ -1,22 +1,19 @@
 language: node_js
-
 node_js:
-  - node
-
+- node
 before_install:
-  - npm install --global npm@lts
-
+- openssl aes-256-cbc -K $encrypted_703dd908551c_key -iv $encrypted_703dd908551c_iv
+  -in deploy_key.enc -out ./deploy_key -d
+- npm install --global npm@lts
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 script:
-  - npm run lint
-  - npm run build
-
+- npm run lint
+- npm run build
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: node .travis-deploy.js
-    on:
-      branch: master
+- provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist ${sftp_user}@${sftp_server}:${sftp_path}
+  on:
+    branch: master
