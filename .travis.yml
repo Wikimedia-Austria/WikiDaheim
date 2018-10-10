@@ -1,8 +1,6 @@
 language: node_js
 node_js:
 - node
-addons:
-  ssh_known_hosts: ${sftp_server}
 before_install:
 - openssl aes-256-cbc -K $encrypted_703dd908551c_key -iv $encrypted_703dd908551c_iv
   -in deploy_key.enc -out ./deploy_key -d
@@ -16,6 +14,6 @@ script:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/dist ${sftp_user}@${sftp_server}:${sftp_path}
+  script: rsync -r --delete-after --quiet -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${TRAVIS_BUILD_DIR}/deploy_key" --progress $TRAVIS_BUILD_DIR/dist ${sftp_user}@${sftp_server}:${sftp_path}
   on:
     branch: master
