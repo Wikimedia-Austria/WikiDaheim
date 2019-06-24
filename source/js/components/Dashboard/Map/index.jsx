@@ -206,7 +206,7 @@ class ResultMap extends Component {
         'map'
       ));
 
-      e.stopPropagation();
+      //e.stopPropagation();
     });
 
     map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));

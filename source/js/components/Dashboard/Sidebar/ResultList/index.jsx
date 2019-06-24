@@ -57,6 +57,8 @@ class ResultList extends Component {
       currentMapPosition: currentMapPosition.toJS(),
       items: items.toJS(),
     });
+
+    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -162,8 +164,6 @@ class ResultList extends Component {
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
-
-    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
     if (items.size === 0) {
       return (<div className='ResultList-EmptyInfo'>

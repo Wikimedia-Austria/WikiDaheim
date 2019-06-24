@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 
-injectTapEventPlugin();
 class ResultListItem extends Component {
   static propTypes = {
     item: PropTypes.object,
@@ -147,7 +145,7 @@ class ResultListItem extends Component {
         className={ ItemClass }
         onMouseEnter={ window.USER_IS_TOUCHING ? null : onHover }
         onMouseLeave={ window.USER_IS_TOUCHING ? null : onLeave }
-        onTouchTap={ onClick }
+        onClick={ onClick }
       >
         <div className='Details-Container'>
           <div

@@ -140,6 +140,11 @@ const rules = [
     use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
   },
   {
+    test: /\.css$/,
+    include: /node_modules/,
+    loaders: ['style-loader', 'css-loader'],
+  },
+  {
     test: /\.html$/,
     include: paths.source,
     use: [{
