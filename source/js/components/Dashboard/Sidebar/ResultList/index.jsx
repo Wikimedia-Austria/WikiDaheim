@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, fromJS } from 'immutable';
+import Immutable, { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
 import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
@@ -90,7 +90,7 @@ class ResultList extends Component {
         !this.state.inSelectTimeout && nextProps.syncListAndMap &&
         this.props.currentMapPosition !== nextProps.currentMapPosition
       ) ||
-      this.props.items !== nextProps.items ||
+      !Immutable.is(this.props.items, nextProps.items) ||
       (!this.props.syncListAndMap && nextProps.syncListAndMap)
     ) {
       this.worker.postMessage({
