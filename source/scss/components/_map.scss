@@ -51,6 +51,13 @@
 
 .mapboxgl-popup {
   pointer-events: none !important;
+
+  &.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+    border-top-color: inherit;
+  }
 }
 
 .mapboxgl-popup-content {
