@@ -160,6 +160,16 @@
       font-size: .8em;
     }
 
+    .Details-Category {
+      .CategoryName--request:nth-child(2) {
+        color: black;
+
+        &::before {
+          content: ', ';
+        }
+      }
+    }
+
     .Details-Location {
       span { padding-right: 0.5em; }
       br { display: none; }

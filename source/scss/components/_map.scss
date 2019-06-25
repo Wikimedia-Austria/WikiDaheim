@@ -74,9 +74,15 @@
     display: block;
   }
 
-  span {
+  > span {
     display: inline-block;
     font-size: .8em;
+  }
+
+  .CategoryName--request:nth-child(3) {
+    &::before {
+      content: ', ';
+    }
   }
 
   .PhotoContainer,

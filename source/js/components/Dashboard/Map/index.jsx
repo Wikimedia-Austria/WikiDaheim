@@ -455,7 +455,8 @@ class ResultMap extends Component {
 
           <div className='DescriptionContainer'>
             <strong>{hoveredElement.get('name')}</strong>
-            <CategoryName category={ hoveredCategory } />{popUpAddress}
+            {hoveredElement.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+            {popUpAddress}
           </div>
         </Popup>
       );
