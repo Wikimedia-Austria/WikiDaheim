@@ -164,7 +164,7 @@ const actionsMap = {
         // populate item with information from the request
         return Object.assign({}, item, {
           categories: item.categories.concat(nearestElement.categories),
-          source: item.source || { title: nearestElement.title, link: nearestElement.editLink },
+          source: nearestElement.source || { title: nearestElement.name, link: nearestElement.editLink },
         });
       }
 

@@ -67,6 +67,7 @@
 
       a {
         display: inline;
+        pointer-events: all !important;
       }
     }
   }
@@ -155,8 +156,35 @@
       flex: 1;
     }
 
+    .Details-Sbs {
+
+      @include md {
+        display: flex;
+      }
+
+      a {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        font-size: 1em;
+        pointer-events: none;
+        border-bottom: 1px solid transparent;
+        max-height: 1.3em;
+        overflow: hidden;
+
+        @include md {
+          max-height: none;
+        }
+
+        &:hover {
+          border-bottom-color: $primary-color;
+        }
+      }
+    }
+
     .Details-Category,
-    .Details-Location {
+    .Details-Location,
+    .Details-Source {
       font-size: .8em;
     }
 
@@ -170,13 +198,29 @@
       }
     }
 
-    .Details-Location {
+    .Details-Location,
+    .Details-Source {
+      flex: 1;
+
       span { padding-right: 0.5em; }
       br { display: none; }
+      strong { font-weight: bold; }
 
       @include md {
         span { padding-right: 0; }
         br { display: inherit; }
+      }
+    }
+
+    .Details-Source {
+      opacity: .5;
+
+      p > span > span > span:nth-of-type(1) {
+        font-weight: bold;
+      }
+
+      @include md {
+        text-align: right;
       }
     }
 

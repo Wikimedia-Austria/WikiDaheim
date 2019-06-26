@@ -92,6 +92,7 @@ class ResultListItem extends Component {
       { 'PhotoContainer--Audio': isAudio }
     );
 
+    // pre-render the location info (if any)
     const locationInfo = item.get('adresse');
     let location = '';
 
@@ -104,6 +105,35 @@ class ResultListItem extends Component {
               { item.get('gemeinde') }
             </Truncate>
           </p>
+        </div>
+      );
+    }
+
+    // pre-render the source info (if any)
+    const sourceInfo = item.get('source');
+    let source = '';
+
+    if (sourceInfo) {
+      source = (
+        <div className='Details-Source'>
+          <a
+            href={ sourceInfo.get('link') }
+            target='_blank'
+            rel='noopener noreferrer'
+            title={ sourceInfo.get('title') }
+          >
+            <p>
+              <Truncate lines={ 2 }>
+                <FormattedMessage
+                  id='item.imageRequestSource'
+                  description='Title for the Image Request Source Headline'
+                  defaultMessage='Quelle Bilderwunsch:'
+                />
+                <br />
+                { sourceInfo.get('title') }
+              </Truncate>
+            </p>
+          </a>
         </div>
       );
     }
@@ -185,8 +215,10 @@ class ResultListItem extends Component {
                 {item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
               </div>
             </div>
-
-            { location }
+            <div className="Details-Sbs">
+              { location }
+              { source }
+            </div>
           </div>
         </div>
 
