@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, fromJS } from 'immutable';
+import Immutable, { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
 import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
@@ -57,6 +57,8 @@ class ResultList extends Component {
       currentMapPosition: currentMapPosition.toJS(),
       items: items.toJS(),
     });
+
+    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -88,7 +90,7 @@ class ResultList extends Component {
         !this.state.inSelectTimeout && nextProps.syncListAndMap &&
         this.props.currentMapPosition !== nextProps.currentMapPosition
       ) ||
-      this.props.items !== nextProps.items ||
+      !Immutable.is(this.props.items, nextProps.items) ||
       (!this.props.syncListAndMap && nextProps.syncListAndMap)
     ) {
       this.worker.postMessage({
@@ -162,8 +164,6 @@ class ResultList extends Component {
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
-
-    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
 
     if (items.size === 0) {
       return (<div className='ResultList-EmptyInfo'>

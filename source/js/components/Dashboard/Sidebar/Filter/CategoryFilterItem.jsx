@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { toggleCategory } from 'actions/app';
 import CategoryName from 'components/Global/CategoryName';
+import { Base64 } from 'js-base64';
 
 @connect()
 class CategoryFilterItem extends Component {
@@ -41,7 +42,7 @@ class CategoryFilterItem extends Component {
 
     if (asIcon) {
       const icon = category.get('icon');
-      style.backgroundImage = `url('data:image/svg+xml;utf8,${ icon }')`;
+      style.backgroundImage = `url('data:image/svg+xml;base64,${ Base64.encode(icon) }')`;
     } else {
       style.backgroundColor = category.get('color');
     }

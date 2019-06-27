@@ -51,6 +51,13 @@
 
 .mapboxgl-popup {
   pointer-events: none !important;
+
+  &.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+    border-top-color: inherit;
+  }
 }
 
 .mapboxgl-popup-content {
@@ -67,9 +74,15 @@
     display: block;
   }
 
-  span {
+  > span {
     display: inline-block;
     font-size: .8em;
+  }
+
+  .CategoryName--request:nth-child(3) {
+    &::before {
+      content: ', ';
+    }
   }
 
   .PhotoContainer,
@@ -141,6 +154,7 @@
   .mapboxgl-ctrl-icon {
     background-origin: content-box;
     background-repeat: no-repeat;
+    padding: .5em;
   }
 
   .mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-in {

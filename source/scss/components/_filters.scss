@@ -153,10 +153,11 @@
 
   &.CategoryFilter-Icons {
     display: none;
+    margin: -.5em 0;
 
     @include md {
       display: flex;
-      padding: 0.35rem 0.75rem;
+      padding: 0.35rem;
       box-shadow:.1em .1em .3em rgba(0,0,0,.15);
       background-color: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(2px);

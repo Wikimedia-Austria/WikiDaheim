@@ -38,7 +38,7 @@ export default class Dashboard extends Component {
     const { items, categories, activeFilters, mobileView } = this.props;
 
     const filteredItems = items.filter((item) => {
-      const itemCategory = categories.find((c) => c.get('name') === item.get('category'));
+      const itemCategory = categories.find((c) => item.get('categories').includes( c.get('name') ));
       if (itemCategory && !itemCategory.get('show')) return false;
       if (activeFilters.size === 0) return true;
 

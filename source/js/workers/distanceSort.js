@@ -1,4 +1,4 @@
-import geolib from 'geolib';
+import { getDistance } from 'geolib';
 import { fromJS } from 'immutable';
 
 self.addEventListener('message', e => {
@@ -7,7 +7,7 @@ self.addEventListener('message', e => {
 
   const itemsWithDistance = items.map((item) => {
     try {
-      return item.merge({ distance: geolib.getDistanceSimple(
+      return item.merge({ distance: getDistance(
         {
           latitude: currentMapPosition.get(1),
           longitude: currentMapPosition.get(0),

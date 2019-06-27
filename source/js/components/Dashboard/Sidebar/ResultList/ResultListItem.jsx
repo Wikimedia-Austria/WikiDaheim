@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 
-injectTapEventPlugin();
 class ResultListItem extends Component {
   static propTypes = {
     item: PropTypes.object,
@@ -21,7 +19,7 @@ class ResultListItem extends Component {
   render() {
     const {
       item,
-      category,
+      category,   // main category
       isHovered,
       isSelected,
       onHover,
@@ -94,6 +92,7 @@ class ResultListItem extends Component {
       { 'PhotoContainer--Audio': isAudio }
     );
 
+    // pre-render the location info (if any)
     const locationInfo = item.get('adresse');
     let location = '';
 
@@ -106,6 +105,35 @@ class ResultListItem extends Component {
               { item.get('gemeinde') }
             </Truncate>
           </p>
+        </div>
+      );
+    }
+
+    // pre-render the source info (if any)
+    const sourceInfo = item.get('source');
+    let source = '';
+
+    if (sourceInfo) {
+      source = (
+        <div className='Details-Source'>
+          <a
+            href={ sourceInfo.get('link') }
+            target='_blank'
+            rel='noopener noreferrer'
+            title={ sourceInfo.get('title') }
+          >
+            <p>
+              <Truncate lines={ 2 }>
+                <FormattedMessage
+                  id='item.imageRequestSource'
+                  description='Title for the Image Request Source Headline'
+                  defaultMessage='Quelle Bilderwunsch:'
+                />
+                <br />
+                { sourceInfo.get('title') }
+              </Truncate>
+            </p>
+          </a>
         </div>
       );
     }
@@ -147,7 +175,7 @@ class ResultListItem extends Component {
         className={ ItemClass }
         onMouseEnter={ window.USER_IS_TOUCHING ? null : onHover }
         onMouseLeave={ window.USER_IS_TOUCHING ? null : onLeave }
-        onTouchTap={ onClick }
+        onClick={ onClick }
       >
         <div className='Details-Container'>
           <div
@@ -184,11 +212,13 @@ class ResultListItem extends Component {
                 </Truncate>
               </h2>
               <div className='Details-Category' style={ { color: categoryColor } }>
-                <CategoryName category={ category } />
+                {item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
               </div>
             </div>
-
-            { location }
+            <div className="Details-Sbs">
+              { location }
+              { source }
+            </div>
           </div>
         </div>
 

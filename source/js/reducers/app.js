@@ -1,5 +1,6 @@
 import { Map, List, Set, fromJS } from 'immutable';
 import uuidv4 from 'uuid/v4';
+import { isPointWithinRadius } from 'geolib';
 
 import {
   AUTOCOMPLETE_ACTION_START,
@@ -140,13 +141,46 @@ const actionsMap = {
     });
 
     // add UIDs to the items as the API doesn't
-    const items = action.data.categories.map((item) => Object.assign({}, item, { id: uuidv4() }));
+    const items = action.data.categories.map((item) => Object.assign({}, item, {
+      id: uuidv4(),
+      categories: [item.category],
+    }));
+
+    // merge Image Requests with other categories if they are a duplicate
+    let imageRequests = items.filter((item) => item.category === 'request');
+    const nonImageRequests = items.filter((item) => !['request', 'commons'].includes(item.category));
+
+    // loop through all non-image-requests and check if there is an image request nearby
+    // if so, add the information to the current item and discard to image request item
+    const mappedNonImageRequests = nonImageRequests.map((item) => {
+      const nearestElement = imageRequests.find((r) => isPointWithinRadius(r, item, 15));
+
+      if (nearestElement) {
+        // rm request from request array
+        imageRequests.splice(
+          imageRequests.findIndex(i => i.id === nearestElement.id)
+        , 1);
+
+        // populate item with information from the request
+        return Object.assign({}, item, {
+          categories: item.categories.concat(nearestElement.categories),
+          source: nearestElement.source || { title: nearestElement.name, link: nearestElement.editLink },
+        });
+      }
+
+      return item;
+    });
+
+    const processedItems = mappedNonImageRequests.concat(
+      imageRequests,
+      items.filter((item) => item.category === 'commons')
+    );
 
     return state.merge({
       placeSelected: true,
       placeLoading: false,
       categories,
-      items,
+      items: processedItems,
       articles: action.data.articles,
       commonscat: action.data.commonscat,
       gpxlink: action.data.GPX,
@@ -187,6 +221,7 @@ const actionsMap = {
     });
   },
   [PLACE_LOAD_CATEGORY_ACTION_START]: (state, action) => {
+    console.error('DEPRECATED API IN USE');
     const curr = state.get('categories');
     const categories = curr.update(
       curr.findIndex((cat) => cat.get('name') === action.data), (old) => {
@@ -205,6 +240,7 @@ const actionsMap = {
     });
   },
   [PLACE_LOAD_CATEGORY_ACTION_SUCCESS]: (state, action) => {
+    console.error('DEPRECATED API IN USE');
     const loadedCategory = action.data.selectedCats[0];
 
     const curr = state.get('categories');
@@ -217,9 +253,12 @@ const actionsMap = {
       }
     );
 
-    // add UIDs to the items as the API doesn't
+    // add UIDs to the items as the API doesn't, also prepare for category merging
     const newItems = action.data.categories.map((item) => (
-      Object.assign({}, item, { id: uuidv4() })
+      Object.assign({}, item, {
+        id: uuidv4(),
+        categories: [item.category],
+      })
     ));
     const items = state.get('items').merge(newItems);
 

@@ -206,7 +206,7 @@ class ResultMap extends Component {
         'map'
       ));
 
-      e.stopPropagation();
+      //e.stopPropagation();
     });
 
     map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
@@ -392,7 +392,7 @@ class ResultMap extends Component {
         <Popup
           coordinates={ [parseFloat(hoveredMunicipality.get('longitude')), parseFloat(hoveredMunicipality.get('latitude'))] }
           offset={
-            [0, 40]
+            [0, -15]
            }
           style={ {
             'backgroundColor': 'black',
@@ -437,10 +437,9 @@ class ResultMap extends Component {
           coordinates={ [parseFloat(hoveredElement.get('longitude')), parseFloat(hoveredElement.get('latitude'))] }
           style={ {
             'backgroundColor': hoveredCategory.get('color'),
+            'borderColor': hoveredCategory.get('color'),
           } }
-          offset={
-            [0, hasPhoto || hasText ? -100 : -40]
-           }
+          offset={ [0, -30] }
         >
           { hasPhoto ? <div className='PhotoContainer' style={ photoContainerStyle } /> : null }
 
@@ -456,7 +455,8 @@ class ResultMap extends Component {
 
           <div className='DescriptionContainer'>
             <strong>{hoveredElement.get('name')}</strong>
-            <CategoryName category={ hoveredCategory } />{popUpAddress}
+            {hoveredElement.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+            {popUpAddress}
           </div>
         </Popup>
       );
@@ -548,6 +548,7 @@ class ResultMap extends Component {
               stops: categories.toJS().map((cat) => [cat.name, cat.name]),
             },
             'icon-size': 0.5,
+            'icon-offset': [0, -10],
             'icon-allow-overlap': true,
           } }
         />

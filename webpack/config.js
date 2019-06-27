@@ -4,6 +4,7 @@ const path = require('path');
 const SpritePlugin = require('svg-sprite-loader/plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const paths = {
   source: path.join(__dirname, '../source'),
@@ -53,6 +54,8 @@ const plugins = [
       context: paths.source,
     },
   }),
+  // Budle Analyzer
+  //new BundleAnalyzerPlugin(),
 ];
 
 if (IS_PRODUCTION) {
@@ -138,6 +141,11 @@ const rules = [
     test: /\.(woff)$/,
     include: paths.fonts,
     use: 'url-loader?limit=20480&name=client/assets/[name]-[hash].[ext]',
+  },
+  {
+    test: /\.css$/,
+    include: /node_modules/,
+    loaders: ['style-loader', 'css-loader'],
   },
   {
     test: /\.html$/,

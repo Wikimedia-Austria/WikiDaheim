@@ -5,50 +5,66 @@ import { FormattedMessage } from 'react-intl';
 
 export default class CategoryName extends Component {
   static propTypes = {
-    category: PropTypes.object,
+    category: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]),
   };
+
   render() {
     const { category } = this.props;
 
-    switch (category.get('name')) {
+    const categoryName = typeof category === 'string' ? category : category.get('name');
+
+    let message = '';
+
+    switch (categoryName) {
       case 'denkmalliste':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.denkmalliste'
           defaultMessage='Denkmale'
         />);
+        break;
 
       case 'naturdenkmal':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.naturdenkmal'
           defaultMessage='Natur'
         />);
+        break;
 
       case 'kellergasse':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.kellergasse'
           defaultMessage='Kellergassen'
         />);
+        break;
 
       case 'publicart':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.publicart'
           defaultMessage='Public Art'
         />);
+        break;
 
       case 'commons':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.commons'
           defaultMessage='Gemeingüter'
         />);
+        break;
 
       case 'request':
-        return (<FormattedMessage
+        message = (<FormattedMessage
           id='category.request'
           defaultMessage='Bilderwunsch'
         />);
+        break;
 
       default:
-        return (<span>{ category.get('title') }</span>);
+        message = (<span>{ typeof category === 'string' ? category : category.get('title') }</span>);
     }
+
+    return (<span className={ `CategoryName--${ categoryName }` }>{ message }</span>);
   }
 }
