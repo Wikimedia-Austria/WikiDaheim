@@ -14,7 +14,7 @@
   ],
   "presets": [
     "@babel/preset-env",
-    "@babel/preset-react"
+    "@babel/react"
   ],
   "env": {
     "development": {
@@ -23,7 +23,6 @@
       ]
     },
     "production": {
-      "presets": ["react-optimize"]
     }
   }
 }
