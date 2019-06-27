@@ -212,7 +212,7 @@ class ResultListItem extends Component {
                 </Truncate>
               </h2>
               <div className='Details-Category' style={ { color: categoryColor } }>
-                {item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+                {item.get('categories') && item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
               </div>
             </div>
             <div className="Details-Sbs">
