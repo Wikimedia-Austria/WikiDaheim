@@ -127,7 +127,7 @@ class ResultListItem extends Component {
                 <FormattedMessage
                   id='item.imageRequestSource'
                   description='Title for the Image Request Source Headline'
-                  defaultMessage='Quelle Bilderwunsch:'
+                  defaultMessage='Quelle:'
                 />
                 <br />
                 { sourceInfo.get('title') }
