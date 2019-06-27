@@ -163,21 +163,22 @@
       }
 
       a {
-        display: inline-block;
+        display: block;
         text-decoration: none;
         color: inherit;
         font-size: 1em;
         pointer-events: none;
-        border-bottom: 1px solid transparent;
         max-height: 1.3em;
         overflow: hidden;
+        opacity: .5;
+        transition: opacity .15s ease;
 
         @include md {
           max-height: none;
         }
 
         &:hover {
-          border-bottom-color: $primary-color;
+          opacity: 1;
         }
       }
     }
@@ -213,8 +214,6 @@
     }
 
     .Details-Source {
-      opacity: .5;
-
       p > span > span > span:nth-of-type(1) {
         font-weight: bold;
       }
@@ -242,7 +241,7 @@
 
     p {
       margin-bottom:0;
-      max-heigt: 5em;
+      max-height: 5em;
       overflow:hidden;
     }
 
