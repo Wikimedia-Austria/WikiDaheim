@@ -25,6 +25,15 @@
       "en" : "Competition"
     }
   },
+  
+  {
+    "slug" : "wlm",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Wiki Loves Monuments",
+      "en" : "Wiki Loves Monuments"
+    }
+  },  
 
   {
     "slug" : "credits",
