@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Truncate from 'react-truncate';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
+import SourceName from 'components/Global/SourceName';
 
 class ResultListItem extends Component {
   static propTypes = {
@@ -11,6 +12,7 @@ class ResultListItem extends Component {
     category: PropTypes.object,
     isHovered: PropTypes.bool,
     isSelected: PropTypes.bool,
+    currentLanguage: PropTypes.string,
     onHover: PropTypes.func,
     onLeave: PropTypes.func,
     onClick: PropTypes.func,
@@ -22,6 +24,7 @@ class ResultListItem extends Component {
       category,   // main category
       isHovered,
       isSelected,
+      currentLanguage,
       onHover,
       onLeave,
       onClick,
@@ -37,6 +40,9 @@ class ResultListItem extends Component {
     let isAudio = null;
     const photoContainerStyle = {};
     let photoInfoLink = null;
+
+    // add the currently selected language as caption language
+    const uploadLink = item.get('uploadLink').replace('captionlang=de', `captionlang=${ currentLanguage }`);
 
     if (item.get('foto')) {
       const photoLinkString = item.get('foto')
@@ -130,7 +136,7 @@ class ResultListItem extends Component {
                   defaultMessage='Quelle:'
                 />
                 <br />
-                { sourceInfo.get('title') }
+                <SourceName source={ sourceInfo.get('title') } />
               </Truncate>
             </p>
           </a>
@@ -183,7 +189,7 @@ class ResultListItem extends Component {
             style={ photoContainerStyle }
           >
             <a
-              href={ item.get('uploadLink') }
+              href={ uploadLink }
               target='_blank'
               rel='noopener noreferrer'
               className='PhotoContainer-UploadButton'
@@ -237,7 +243,7 @@ class ResultListItem extends Component {
           </div>
           <div className='Details-Links'>
             <a
-              href={ item.get('uploadLink') }
+              href={ uploadLink }
               target='_blank'
               rel='noopener noreferrer'
               className='Details-Link-Upload'

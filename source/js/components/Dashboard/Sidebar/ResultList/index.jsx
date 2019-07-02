@@ -16,6 +16,7 @@ import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disab
   categories: state.app.get('categories'),
   placeSelected: state.app.get('placeSelected'),
   syncListAndMap: state.app.get('syncListAndMap'),
+  currentLanguage: state.locale.get('language'),
 }))
 class ResultList extends Component {
   static propTypes = {
@@ -26,6 +27,7 @@ class ResultList extends Component {
     categories: PropTypes.object,
     items: PropTypes.object,
     syncListAndMap: PropTypes.bool,
+    currentLanguage: PropTypes.string,
     // from react-redux connect
     dispatch: PropTypes.func,
   };
@@ -146,7 +148,7 @@ class ResultList extends Component {
   }
 
   updateHeight() {
-    const container = document.getElementsByClassName('ResultView');
+    const container = document.getElementsByClassName(window.innerWidth < 770 ? 'ResultList' : 'ResultView');
     const upperContent = document.getElementsByClassName('upperContent');
 
     if (container.length > 0 && upperContent.length > 0) {
@@ -154,13 +156,15 @@ class ResultList extends Component {
         containerHeight:
           container[0].clientHeight
           - upperContent[0].clientHeight
-          - 30,
+          - (window.innerWidth < 770 ? 10 : 30),
       });
+
+      console.log(container[0].clientHeight, upperContent[0].clientHeight, this.state);
     }
   }
 
   render() {
-    const { items, placeSelected, categories, hoveredElement, selectedElement } = this.props;
+    const { items, placeSelected, categories, hoveredElement, selectedElement, currentLanguage } = this.props;
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
@@ -195,6 +199,7 @@ class ResultList extends Component {
               category={ category }
               isHovered={ isHovered }
               isSelected={ isSelected }
+              currentLanguage={ currentLanguage }
               onHover={ () => this.hoverItem(item) }
               onLeave={ () => this.leaveItem() }
               onClick={ () => this.selectItem(item) }

@@ -38,8 +38,12 @@ export default class Dashboard extends Component {
     const { items, categories, activeFilters, mobileView } = this.props;
 
     const filteredItems = items.filter((item) => {
-      const itemCategory = categories.find((c) => item.get('categories') ? item.get('categories').includes( c.get('name') ) : true ); // check if category exists for saved legacy states
-      if (itemCategory && !itemCategory.get('show')) return false;
+      const itemCategories = categories.filter((c) => item.get('categories') ? item.get('categories').includes( c.get('name') ) && c.get('show') : true ); // check if category exists for saved legacy states
+
+      if(itemCategories.size === 0) {
+        return false;
+      }
+
       if (activeFilters.size === 0) return true;
 
       // check which filter is active and if the item qualifies

@@ -10,6 +10,7 @@ import ExternalLinkOverlay from './ExternalLinkOverlay';
 
 @connect(state => ({
   articles: state.app.get('articles'),
+  categories: state.app.get('categories'),
   placeMapData: state.app.get('placeMapData'),
   showCityInfo: state.app.get('showCityInfo'),
   commonscat: state.app.get('commonscat'),
@@ -18,6 +19,7 @@ import ExternalLinkOverlay from './ExternalLinkOverlay';
 class CityInfo extends Component {
   static propTypes = {
     articles: PropTypes.instanceOf(List),
+    categories: PropTypes.instanceOf(List),
     placeMapData: PropTypes.instanceOf(Map),
     commonscat: PropTypes.string,
     gpxlink: PropTypes.string,
@@ -41,7 +43,7 @@ class CityInfo extends Component {
   }
 
   render() {
-    const { articles, placeMapData, commonscat, showCityInfo, gpxlink } = this.props;
+    const { articles, categories, placeMapData, commonscat, showCityInfo, gpxlink } = this.props;
 
     const classnames = classNames('CityInfo', {
       'CityInfo--active': showCityInfo,
@@ -108,10 +110,12 @@ class CityInfo extends Component {
             defaultMessage='Hier können Sie eine GPX-Datei herunterladen.'
           />);
 
+          const currentCategories = categories.toJS().filter((c) => c.show).map((c) => c.name).join('|');
+
           externalLinkOverlay = (<ExternalLinkOverlay
             title={ title }
             text={ text }
-            link={ gpxlink }
+            link={ `${ gpxlink }&categories=${ currentCategories }` }
             closeAction={ () => this.setState({ 'shownLink': null }) }
           />);
           break;
