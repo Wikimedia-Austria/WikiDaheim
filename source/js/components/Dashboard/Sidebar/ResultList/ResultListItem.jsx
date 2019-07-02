@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Truncate from 'react-truncate';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
+import SourceName from 'components/Global/SourceName';
 
 class ResultListItem extends Component {
   static propTypes = {
@@ -135,7 +136,7 @@ class ResultListItem extends Component {
                   defaultMessage='Quelle:'
                 />
                 <br />
-                { sourceInfo.get('title') }
+                <SourceName source={ sourceInfo.get('title') } />
               </Truncate>
             </p>
           </a>
