@@ -16,6 +16,7 @@ import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disab
   categories: state.app.get('categories'),
   placeSelected: state.app.get('placeSelected'),
   syncListAndMap: state.app.get('syncListAndMap'),
+  currentLanguage: state.locale.get('language'),
 }))
 class ResultList extends Component {
   static propTypes = {
@@ -26,6 +27,7 @@ class ResultList extends Component {
     categories: PropTypes.object,
     items: PropTypes.object,
     syncListAndMap: PropTypes.bool,
+    currentLanguage: PropTypes.string,
     // from react-redux connect
     dispatch: PropTypes.func,
   };
@@ -162,7 +164,7 @@ class ResultList extends Component {
   }
 
   render() {
-    const { items, placeSelected, categories, hoveredElement, selectedElement } = this.props;
+    const { items, placeSelected, categories, hoveredElement, selectedElement, currentLanguage } = this.props;
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
@@ -197,6 +199,7 @@ class ResultList extends Component {
               category={ category }
               isHovered={ isHovered }
               isSelected={ isSelected }
+              currentLanguage={ currentLanguage }
               onHover={ () => this.hoverItem(item) }
               onLeave={ () => this.leaveItem() }
               onClick={ () => this.selectItem(item) }
