@@ -147,7 +147,7 @@ const actionsMap = {
     }));
 
     // merge Image Requests with other categories if they are a duplicate
-    let imageRequests = items.filter((item) => item.category === 'request');
+    const imageRequests = items.filter((item) => item.category === 'request');
     const nonImageRequests = items.filter((item) => !['request', 'commons'].includes(item.category));
 
     // loop through all non-image-requests and check if there is an image request nearby
