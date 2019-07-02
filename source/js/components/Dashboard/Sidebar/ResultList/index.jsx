@@ -146,7 +146,7 @@ class ResultList extends Component {
   }
 
   updateHeight() {
-    const container = document.getElementsByClassName('ResultView');
+    const container = document.getElementsByClassName(window.innerWidth < 770 ? 'ResultList' : 'ResultView');
     const upperContent = document.getElementsByClassName('upperContent');
 
     if (container.length > 0 && upperContent.length > 0) {
@@ -154,8 +154,10 @@ class ResultList extends Component {
         containerHeight:
           container[0].clientHeight
           - upperContent[0].clientHeight
-          - 30,
+          - (window.innerWidth < 770 ? 10 : 30),
       });
+
+      console.log(container[0].clientHeight, upperContent[0].clientHeight, this.state);
     }
   }
 
