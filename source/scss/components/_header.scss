@@ -31,24 +31,43 @@
     .Header-claim {
       flex: 1;
       display:flex;
-      text-align: center;
-      align-items:center;
+      text-align: left;
+      align-items:flex-start;
+
+      @include md {
+        text-align: center;
+        align-items:center;
+      }
 
       button {
         height:$header-height/10*6;
         min-height:2em;
         width:100%;
-        margin:0 1em 0 4.5rem;
+        margin:0 1em 0 0.5em;
         background-image:url(../assets/img/wikidaheim-claim.svg);
         background-repeat:no-repeat;
         background-size: contain;
         background-position: center center;
+
+        @include md {
+          margin:0 1em 0 4.5rem;
+        }
       }
     }
 
     .Header-menuToggle {
-      width: $header-height;
+      width: $header-height - .5em;
       min-width: 2em;
+    }
+
+    .Header-languageSwitch {
+      .Dropdown-placeholder {
+        font-size: .7em;
+
+        @include md {
+          font-size: 1em;
+        }
+      }
     }
   }
 
