@@ -4,7 +4,8 @@
     "in_menu": true,
     "menu_title" : {
       "de" : "Über",
-      "en" : "About"
+      "en" : "About",
+      "it" : "Abour"
     }
   },
 
@@ -13,7 +14,8 @@
     "in_menu": true,
     "menu_title" : {
       "de" : "Themen",
-      "en" : "Topics"
+      "en" : "Topics",
+      "it" : "Tema"
     }
   },
 
@@ -22,7 +24,8 @@
     "in_menu": true,
     "menu_title" : {
       "de" : "Wettbewerb",
-      "en" : "Competition"
+      "en" : "Competition",
+      "it" : "Competizione"
     }
   },
   
@@ -31,7 +34,8 @@
     "in_menu": true,
     "menu_title" : {
       "de" : "Wiki Loves Monuments",
-      "en" : "Wiki Loves Monuments"
+      "en" : "Wiki Loves Monuments",
+      "it" : "Wiki Loves Monuments"
     }
   },  
 
@@ -40,7 +44,8 @@
     "in_menu": true,
     "menu_title" : {
       "de" : "Credits",
-      "en" : "Credits"
+      "en" : "Credits",
+      "it" : "Credits"
     }
   },
   {
@@ -48,7 +53,8 @@
     "in_menu": false,
     "menu_title" : {
       "de" : "Denkmale",
-      "en" : "Monuments"
+      "en" : "Monuments",
+      "it" : "Monumenti"
     }
   }  
 ]
