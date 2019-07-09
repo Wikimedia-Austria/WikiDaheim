@@ -47,7 +47,7 @@ const initialState = Map({
   categoriesError: false,
   categories: new List(),
 
-  activeFilters: new Set(),
+  activeFilters: new List(),
 
   placeSelected: false,
   placeLoading: false,
