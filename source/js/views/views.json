@@ -38,6 +38,16 @@
       "it" : "Wiki Loves Monuments"
     }
   },  
+  
+  {
+    "slug" : "tagdesdenkmals",
+    "in_menu": false,
+    "menu_title" : {
+      "de" : "Tag des Denkmals",
+      "en" : "Tag des Denkmals",
+      "it" : "Tag des Denkmals"
+    }
+  },   
 
   {
     "slug" : "credits",
