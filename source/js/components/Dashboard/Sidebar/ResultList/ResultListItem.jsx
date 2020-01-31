@@ -42,7 +42,7 @@ class ResultListItem extends Component {
     let photoInfoLink = null;
 
     // add the currently selected language as caption language
-    const uploadLink = item.get('uploadLink').replace('captionlang=de', `captionlang=${ currentLanguage }`);
+    const uploadLink = item.get('uploadLink').replace('captionlang=de', `captionlang=${ currentLanguage }&uselang=${ currentLanguage }`);
 
     if (item.get('foto')) {
       const photoLinkString = item.get('foto')
