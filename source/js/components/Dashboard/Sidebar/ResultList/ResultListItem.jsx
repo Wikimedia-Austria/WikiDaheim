@@ -56,7 +56,7 @@ class ResultListItem extends Component {
       isAudio = item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/);
 
       if (!isAudio) {
-        const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ item.get('foto') }?width=256`;
+        const url = `https://commons.wikimedia.org/w/thumb.php?f=${ encodeURIComponent(item.get('foto')) }&width=256`;
         photoContainerStyle.backgroundImage = `url('${ url }')`;
 
         // parse hex categoryColor, make 50% transparent for background in PhotoContainer
