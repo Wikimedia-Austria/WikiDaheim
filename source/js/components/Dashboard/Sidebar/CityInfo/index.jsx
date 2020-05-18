@@ -92,7 +92,7 @@ class CityInfo extends Component {
           externalLinkOverlay = (<ExternalLinkOverlay
             title={ title }
             text={ text }
-            link={ `http://regiowiki.at/wiki/${ currentArticle.get('source') }` }
+            link={ `https://regiowiki.at/wiki/${ currentArticle.get('source') }` }
             closeAction={ () => this.setState({ 'shownLink': null }) }
           />);
           break;

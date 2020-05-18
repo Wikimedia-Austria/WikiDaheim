@@ -425,7 +425,7 @@ class ResultMap extends Component {
       const photoContainerStyle = {};
       if (hoveredElement.get('foto') && !hoveredElement.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
         hasPhoto = true;
-        const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${ hoveredElement.get('foto') }?width=256`;
+        const url = `https://commons.wikimedia.org/w/thumb.php?f=${ encodeURIComponent(hoveredElement.get('foto')) }&width=256`;
         photoContainerStyle.backgroundImage = `url('${ url }')`;
       } else if (descriptionText && descriptionText.length > 0) {
         hasText = true;
