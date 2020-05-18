@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
 import MapSyncToggle from 'components/Global/MapSyncToggle';
-import classNames from 'classnames';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const Map = ReactMapboxGl({
@@ -314,7 +313,7 @@ class ResultMap extends Component {
     adds hover effect to other municipailties
   */
   updateHighlightedArea(map) {
-    const { placeMapData, placeSelected } = this.props;
+    const { placeMapData } = this.props;
     const municipalityName = placeMapData.get('text');
     const municipalityGkz = placeMapData.get('iso');
 

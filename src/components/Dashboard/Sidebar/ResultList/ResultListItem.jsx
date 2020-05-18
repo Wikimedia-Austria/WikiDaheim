@@ -16,6 +16,7 @@ class ResultListItem extends Component {
     onHover: PropTypes.func,
     onLeave: PropTypes.func,
     onClick: PropTypes.func,
+    style: PropTypes.object,
   };
 
   render() {
@@ -28,6 +29,7 @@ class ResultListItem extends Component {
       onHover,
       onLeave,
       onClick,
+      style,
     } = this.props;
     const categoryColor = category.get('color');
 
@@ -182,6 +184,7 @@ class ResultListItem extends Component {
         onMouseEnter={ window.USER_IS_TOUCHING ? null : onHover }
         onMouseLeave={ window.USER_IS_TOUCHING ? null : onLeave }
         onClick={ onClick }
+        style={ style }
       >
         <div className='Details-Container'>
           <div

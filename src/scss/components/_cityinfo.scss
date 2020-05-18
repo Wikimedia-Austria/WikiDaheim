@@ -12,6 +12,8 @@
     position: relative;
     z-index: auto;
     pointer-events: all;
+    top: -10px;
+    margin-bottom: -20px;
   }
 
   .CityInfo-Closer {
@@ -65,7 +67,6 @@
   background-color: white;
   color: $primary-color;
   padding: 0 1rem 3rem;
-  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
   z-index: $z-index-menu - 10;
   overflow: hidden;
   position: absolute;
@@ -75,6 +76,12 @@
   transform: translateY(100%);
   transition: transform .4s ease;
 
+  @include shadow-box;
+
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+
   @include md {
     position: relative;
     bottom: auto;
@@ -83,11 +90,13 @@
     right: auto;
     margin: 0 0.5rem 1rem;
     padding-bottom: 1rem;
+    padding-top: 10px;
     transform: none;
   }
 
   .CityInfo-Content {
     padding-left: 0.2rem;
+    display: flex;
 
     .CityInfo-Link {
       color: $primary-color;
@@ -95,16 +104,17 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding: 0.2rem 0 0 4rem;
-      margin: 1.5rem 0;
-      line-height: 1.5em;
-      height: 3rem;
+      padding: 0rem 0 0 3.25rem;
+      margin: 1rem 0;
+      line-height: 1.4em;
+      height: 2.5rem;
+      flex: 1;
 
       strong {
-        font-size: 1.2rem;
+        font-size: 1rem;
 
         @include md {
-          font-size: 1.5rem;
+          font-size: 1rem;
         }
       }
 
@@ -123,8 +133,8 @@
         position: absolute;
         left: 0;
         top: 0;
-        width:3rem;
-        height:3rem;
+        width:2.5rem;
+        height:2.5rem;
         padding:.2rem;
         margin-right: 1rem;
         background-color: $primary-color;
@@ -146,7 +156,7 @@
   .CityInfo-Footer {
     border-top: 1px solid rgba(0,0,0,.2);
     display: flex;
-    margin-top: 0.75rem;
+    margin-top: 0;
     padding-top: 0.75rem;
 
     .CityInfo-Link {

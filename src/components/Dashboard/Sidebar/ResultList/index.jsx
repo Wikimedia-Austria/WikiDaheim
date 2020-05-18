@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Immutable, { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
-import Infinite from 'react-infinite';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
 import scrollTo from 'lib/scrollTo';
 import { FormattedMessage } from 'react-intl';
 import ResultListItem from './ResultListItem';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
+import { List as InfiniteList } from 'react-virtualized';
 
 class ResultList extends Component {
   static propTypes = {
@@ -27,6 +27,7 @@ class ResultList extends Component {
     super(props);
     this.state = {
       containerHeight: 5,
+      containerWidth: 5,
       sortedList: new List(),
       inSelectTimeout: false,
     };
@@ -73,7 +74,7 @@ class ResultList extends Component {
       const currentIndex = nextState.sortedList.findIndex((item) => item.get('id') === nextProps.selectedElement.get('id'));
 
       if (currentIndex && window.innerWidth < 770) {
-        scrollTo(list, (currentIndex * 112) - 5, 400);
+        // scrollTo(list, (currentIndex * 112) - 5, 400);
       }
     }
 
@@ -118,7 +119,7 @@ class ResultList extends Component {
 
   scrollTop() {
     const list = document.getElementsByClassName('ResultList-List')[0];
-    scrollTo(list, 0, 1000);
+    //scrollTo(list, 0, 1000);
   }
 
   selectItem(item) {
@@ -147,7 +148,8 @@ class ResultList extends Component {
         containerHeight:
           container[0].clientHeight
           - upperContent[0].clientHeight
-          - (window.innerWidth < 770 ? 10 : 30),
+          - (window.innerWidth < 770 ? 10 : 0),
+        containerWidth: upperContent[0].clientWidth,
       });
     }
   }
@@ -178,24 +180,33 @@ class ResultList extends Component {
 
     return (
       <div className='ResultList-ListWrapper'>
-        <Infinite containerHeight={ this.state.containerHeight } elementHeight={ window.innerWidth < 770 ? 112 : 144 } className='ResultList-List'>
-          { sortedItems.map((item) => {
+        <InfiniteList
+          height={ this.state.containerHeight }
+          width={ this.state.containerWidth }
+          rowHeight={ window.innerWidth < 770 ? 112 : 130 }
+          className='ResultList-List'
+          rowRenderer={({ index, isScrolling, key, style }) => {
+            const item = sortedItems.get(index);
             const category = categories.find((c) => c.get('name') === item.get('category'));
             const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
             const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
-            return (<ResultListItem
-              item={ item }
-              category={ category }
-              isHovered={ isHovered }
-              isSelected={ isSelected }
-              currentLanguage={ currentLanguage }
-              onHover={ () => this.hoverItem(item) }
-              onLeave={ () => this.leaveItem() }
-              onClick={ () => this.selectItem(item) }
-              key={ item.get('id') }
-            />);
-          }) }
-        </Infinite>
+            return (
+              <ResultListItem
+                key={ key }
+                item={ item }
+                category={ category }
+                isHovered={ isHovered }
+                isSelected={ isSelected }
+                currentLanguage={ currentLanguage }
+                onHover={ () => this.hoverItem(item) }
+                onLeave={ () => this.leaveItem() }
+                onClick={ () => this.selectItem(item) }
+                style={ style }
+              />
+            );
+          }}
+          rowCount={sortedItems.size}
+        />
       </div>
     );
   }

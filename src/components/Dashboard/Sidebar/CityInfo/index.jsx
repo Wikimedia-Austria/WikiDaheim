@@ -116,7 +116,7 @@ class CityInfo extends Component {
       }
     }
     return (
-      <div>
+      <>
         <section className={ classnames }>
           <button className='CityInfo-Closer' onClick={ this.toggleCityInfo } />
           <div className='CityInfo-Wrapper'>
@@ -135,12 +135,14 @@ class CityInfo extends Component {
                   {(text) => (<strong>{text}</strong>)}
                 </FormattedMessage>
 
-                <FormattedMessage
-                  id='uploadPhoto.description'
-                  description='Description text for Photo Upload Button'
-                  defaultMessage='Lade ein Foto zu {cityName} hoch'
-                  values={ { cityName } }
-                />
+                <span>
+                  <FormattedMessage
+                    id='uploadPhoto.description'
+                    description='Description text for Photo Upload Button'
+                    defaultMessage='Lade ein Foto zu {cityName} hoch'
+                    values={ { cityName } }
+                  />
+                </span>
               </a>
               <a
                 href={ currentArticle.get('editLink') }
@@ -203,7 +205,8 @@ class CityInfo extends Component {
             <MapSyncToggle />
           </div>
         </section>
-        { externalLinkOverlay }</div>
+        { externalLinkOverlay }
+        </>
     );
   }
 

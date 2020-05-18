@@ -21,8 +21,11 @@
   padding: 1rem;
   position: relative;
   z-index: $z-index-menu - 9;
-  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
   margin: 0;
+
+  @include shadow-box;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 
   @include md {
     margin: 0 0.5rem;
@@ -59,8 +62,8 @@
   }
 
   .SearchBar-Suggestions {
-    background-color: $secondary-color;
-    color: $secondary-color-contrast;
+    background-color: white;
+    color: black;
     cursor: pointer;
     font-size: 1.5rem;
     position: absolute;
@@ -71,6 +74,10 @@
     width:100%;
     padding: 0;
     z-index:$z-index-suggestions;
+
+    @include shadow-box;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     .ViennaWarning {
       background-color: $unavailable-color;
@@ -83,7 +90,13 @@
     }
 
     .highlighted {
-      background-color:lighten($secondary-color, 15%);
+      background-color: #e4e4e4;
+    }
+
+    @include md {
+      left: 4.25rem;
+      right: 1rem;
+      width: auto;
     }
   }
 
