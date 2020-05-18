@@ -6,18 +6,6 @@
     position: relative;
     height: 100%;
     width: 100%;
-
-    &.ResultMap-Wrapper--shifted {
-      @include md {
-        width:133%;
-        min-width: calc(100% + 400px);
-        max-width: calc(100% + 600px);
-      }
-
-      @include lg {
-        min-width: calc(100% + 470px);
-      }
-    }
   }
 
   .SyncListToggle {
@@ -52,10 +40,18 @@
 .mapboxgl-popup {
   pointer-events: none !important;
 
-  &.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  .mapboxgl-popup-tip {
     position: absolute;
-    bottom: -10px;
     left: calc(50% - 10px);
+  }
+
+  &.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    top: -10px;
+    border-bottom-color: inherit;
+  }
+
+  &.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    bottom: -10px;
     border-top-color: inherit;
   }
 }
@@ -158,24 +154,31 @@
     padding: .5em;
   }
 
-  .mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-in {
+  .mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
+    color: black;
     background-image:url(../../assets/icons/icon_plus.svg) !important;
   }
 
-  .mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-out {
+  .mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
     background-image:url(../../assets/icons/icon_minus.svg) !important;
   }
 
-  .mapboxgl-ctrl-icon.mapboxgl-ctrl-compass {
-    background-image:url(../../assets/icons/icon_compass.svg) !important;
-    padding:5px !important;
+  .mapboxgl-ctrl-compass {
+    display: none;
 
-    span {
-      display:none;
+    /*
+    .mapboxgl-ctrl-icon {
+      background-image:url(../../assets/icons/icon_compass.svg) !important;
+      padding:5px !important;
+
+      span {
+        display:none;
+      }
     }
+    */
   }
 
-  .mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate {
+  .mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
     background-image:url(../../assets/icons/icon_locate.svg) !important;
   }
 }

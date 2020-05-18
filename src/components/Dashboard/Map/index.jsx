@@ -56,9 +56,11 @@ class ResultMap extends Component {
     };
 
     this.prepareMap = this.prepareMap.bind(this);
-    this.componentWillUpdate = this.componentWillUpdate.bind(this);
+    this.loadMissingMapImage = this.loadMissingMapImage.bind(this);
+    this.UNSAFE_componentWillUpdate = this.UNSAFE_componentWillUpdate.bind(this);
     this.onMapMove = this.onMapMove.bind(this);
     this.updateHighlightedArea = this.updateHighlightedArea.bind(this);
+    this.updateMapPadding = this.updateMapPadding.bind(this);
     this.triggerMunicipalityHover = this.triggerMunicipalityHover.bind(this);
     this.triggerMunicipalityLeave = this.triggerMunicipalityLeave.bind(this);
     this.triggerMunicipalitySelect = this.triggerMunicipalitySelect.bind(this);
@@ -79,7 +81,7 @@ class ResultMap extends Component {
     dispatch(mapPositionChanged(coordinates));
   }
 
-  componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate(nextProps) {
     /*
      * move the center of the map to the city center when a new city is selected
      */
@@ -118,9 +120,8 @@ class ResultMap extends Component {
     /*
       re-adjust the map center after adding the sidebar shift
     */
-
     if (!this.props.placeSelected && nextProps.placeSelected) {
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 400);
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
   }
 
@@ -142,16 +143,13 @@ class ResultMap extends Component {
     sets mapbox.js options and registers event listeners for the map
   */
   prepareMap(map) {
-    const { categories, dispatch } = this.props;
+    const { dispatch } = this.props;
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new mapboxgl.GeolocateControl());
 
-    /* load category marker images */
-    categories.forEach((category) => {
-      map.loadImage(category.get('marker'), (error, image) => {
-        map.addImage(category.get('name'), image);
-      });
-    });
+    //disable drag rotate and touch rotate
+    map.dragRotate.disable();
+    map.touchZoomRotate.disableRotation();
 
     if (!window.USER_IS_TOUCHING) {
       /*
@@ -204,6 +202,25 @@ class ResultMap extends Component {
     map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));
 
     this.updateHighlightedArea(map);
+    this.updateMapPadding(map);
+  }
+
+  loadMissingMapImage(map, e) {
+    const { categories } = this.props;
+    const missingImage = e.id;
+
+    // add an empty placeholder to prevent mapbox from complaining about the missing image until the image is loaded
+    map.addImage(missingImage, { width: 38, height: 52, data: new Uint8Array(38 * 52 * 4) });
+
+    /* load category marker image */
+    const filteredCategories = categories.filter((category) => missingImage === category.get('name'));
+
+    if(filteredCategories.size > 0) {
+      const category = filteredCategories.get(0);
+      map.loadImage(category.get('marker'), (error, image) => {
+        map.updateImage(missingImage, image);
+      });
+    }
   }
 
   triggerMunicipalityHover(e, map) {
@@ -297,7 +314,7 @@ class ResultMap extends Component {
     adds hover effect to other municipailties
   */
   updateHighlightedArea(map) {
-    const { placeMapData } = this.props;
+    const { placeMapData, placeSelected } = this.props;
     const municipalityName = placeMapData.get('text');
     const municipalityGkz = placeMapData.get('iso');
 
@@ -339,6 +356,16 @@ class ResultMap extends Component {
     }
   }
 
+  // Updates the Map offset to fit the sidebar
+  updateMapPadding(map) {
+    const { placeSelected } = this.props;
+    if( placeSelected && window.innerWidth > 768 ) {
+      map.setPadding({
+        left: window.innerWidth / 3
+      });
+    }
+  }
+
   /*
     render the map
   */
@@ -348,7 +375,6 @@ class ResultMap extends Component {
       categories,
       hoveredElement,
       hoveredMunicipality,
-      placeSelected,
     } = this.props;
 
     const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
@@ -430,7 +456,10 @@ class ResultMap extends Component {
             'backgroundColor': hoveredCategory.get('color'),
             'borderColor': hoveredCategory.get('color'),
           } }
-          offset={ [0, -30] }
+          offset={{
+            top: [0, 20],
+            bottom: [0, -30],
+          }}
         >
           { hasPhoto ? <div className='PhotoContainer' style={ photoContainerStyle } /> : null }
 
@@ -453,12 +482,7 @@ class ResultMap extends Component {
       );
     }
 
-    const wrapperClasses = classNames(
-      'ResultMap-Wrapper',
-      { 'ResultMap-Wrapper--shifted': placeSelected }
-    );
-
-    return (<div className='ResultMap'><div className={ wrapperClasses }>
+    return (<div className='ResultMap'><div className="ResultMap-Wrapper">
       <Map
         style='mapbox://styles/wikimediaaustria/cji05myuu486p2slazs7ljpyw' // eslint-disable-line react/style-prop-object
         containerStyle={ {
@@ -469,7 +493,9 @@ class ResultMap extends Component {
         onStyleLoad={ this.prepareMap }
         onMoveEnd={ this.onMapMove }
         onMoveStart={ this.updateHighlightedArea }
+        onStyleImageMissing={ this.loadMissingMapImage }
         zoom={ this.state.zoom }
+        onResize={ this.updateMapPadding }
       >
         <Source id='items' geoJsonSource={ GEO_JSON_RESULTS } />
         <Source

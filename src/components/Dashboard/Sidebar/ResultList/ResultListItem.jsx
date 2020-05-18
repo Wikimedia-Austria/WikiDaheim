@@ -195,11 +195,13 @@ class ResultListItem extends Component {
               className='PhotoContainer-UploadButton'
               style={ { 'backgroundColor': categoryColor } }
             >
-              <FormattedMessage
-                id='uploadPhoto'
-                description='Text for Photo Upload-Button'
-                defaultMessage='Foto hochladen'
-              />
+              <span>
+                <FormattedMessage
+                  id='uploadPhoto'
+                  description='Text for Photo Upload-Button'
+                  defaultMessage='Foto hochladen'
+                />
+              </span>
             </a>
             { photoInfoLink }
           </div>

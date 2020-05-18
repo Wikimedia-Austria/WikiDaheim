@@ -36,7 +36,7 @@ class ResultList extends Component {
     this.updateHeight = this.updateHeight.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.worker = new DistanceSort();
   }
 
@@ -54,7 +54,7 @@ class ResultList extends Component {
     this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     // scroll top when list reorders
     if (
       nextState.sortedList &&
