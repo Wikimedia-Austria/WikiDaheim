@@ -1,0 +1,29 @@
+.SyncListToggle {
+  .SyncListToggle-Button {
+    background-color: white;
+    line-height: 2.5em;
+    padding: 0 1em 0 2.5em;
+    font-size: 0.9rem;
+    color: $primary-color;
+
+    &::after {
+      content:'';
+      position:absolute;
+      left: 0.5em;
+      width: 1.5em;
+      height: 1.5em;
+      bottom: 0.6em;
+      background-image: url(../../assets/icons/icon_unchecked.svg);
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size: contain;
+    }
+
+    &.SyncListToggle-Button--active {
+      &::after {
+        background: url(../../assets/icons/icon_checked.svg);
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}

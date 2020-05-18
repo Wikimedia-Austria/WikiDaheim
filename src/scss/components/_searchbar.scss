@@ -1,0 +1,155 @@
+.SearchBar-Loader {
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+  width: 4.2rem;
+  height: 100%;
+  background-color: $primary-color;
+
+  .SearchBar-Loader-inner {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+.SearchBar-Bar {
+  background-color: $primary-color;
+  display:flex;
+  align-items: center;
+  padding: 1rem;
+  position: relative;
+  z-index: $z-index-menu - 9;
+  box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+  margin: 0;
+
+  @include md {
+    margin: 0 0.5rem;
+  }
+
+  &::before {
+    content:'';
+    display: block;
+    width:3.25em;
+    height:2.5em;
+    padding:.2em 0.75em .2em .2em;
+    margin-right: 1em;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+
+    background-image:url(../../assets/icons/icon_search.svg);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+  }
+
+  > div {
+    flex:1;
+  }
+
+  input {
+    width: 100%;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    color:$primary-color-contrast;
+    font-size:1.5rem;
+    outline:none;
+  }
+
+  .SearchBar-Suggestions {
+    background-color: $secondary-color;
+    color: $secondary-color-contrast;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    overflow: auto;
+    left:0;
+    width:100%;
+    padding: 0;
+    z-index:$z-index-suggestions;
+
+    .ViennaWarning {
+      background-color: $unavailable-color;
+      color: white;
+      font-size:.8em;
+    }
+
+    div {
+      padding: 1rem;
+    }
+
+    .highlighted {
+      background-color:lighten($secondary-color, 15%);
+    }
+  }
+
+  .SearchBar-Filter {
+    flex:0 1 auto;
+
+    @include md {
+      display:none;
+    }
+
+    .FilterButton {
+      width:calc(1.6em + 2vh);
+      height:calc(1.6em + 2vh);
+      position:relative;
+      background-image:url(../../assets/icons/icon_filter.svg);
+      background-size:contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+
+      &.FilterButton--filtersActive::after {
+        position:absolute;
+        content:'';
+        top:.25em;
+        right:0;
+        width:1.5em;
+        height:1.5em;
+        border-radius:50%;
+        background-color: $unavailable-color;
+      }
+    }
+
+    span {
+      display:none;
+    }
+  }
+
+  .SearchBar-CityInfoToggle {
+    height: 2.5rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    border: 1rem solid $primary-color;
+    border-left-width: 0.75rem;
+    border-right-width: 0.75rem;
+    transform: translateX(0.5rem);
+
+    &::before,
+    &::after {
+      content: '';
+      height: 0.5rem;
+      width: 0.5rem;
+      border-radius: 50%;
+      background-color: white;
+      position: absolute;
+      top:0;
+      left:0;
+      transform: translateY(-0.9rem);
+    }
+
+    &::after {
+      transform: translateY(0.9rem);
+    }
+
+    @include md {
+      display: none;
+    }
+  }
+}

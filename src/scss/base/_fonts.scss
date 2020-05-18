@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Space Mono'), local('SpaceMono-Regular'), url(../../assets/fonts/SpaceMono-Regular-webfont.woff) format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Space Mono Bold'), local('SpaceMono-Bold'), url(../../assets/fonts/SpaceMono-Bold-webfont.woff) format('woff2');
+}
+
+$main-font: "Space Mono", "Times New Roman", serif;
+
+h2 {
+  font-size: 1.5em;
+}

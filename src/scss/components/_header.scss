@@ -1,0 +1,141 @@
+.Header {
+  height: $header-height;
+  min-height: 4em;
+
+  .Header-bar {
+    display: flex;
+    position:fixed;
+    z-index:$z-index-menu - 1;
+    top:0;
+    left:0;
+    right:0;
+    background-color:white;
+    height: $header-height;
+    min-height: 4em;
+    align-items:center;
+    line-height: 0;
+
+    img {
+      height: $header-height;
+      padding:0.5em;
+      min-height:4em;
+      box-sizing: border-box;
+    }
+
+    .Header-logo {
+      @include md {
+        margin-left: 1rem;
+      }
+    }
+
+    .Header-claim {
+      flex: 1;
+      display:flex;
+      text-align: left;
+      align-items:flex-start;
+
+      @include md {
+        text-align: center;
+        align-items:center;
+      }
+
+      button {
+        height:$header-height/10*6;
+        min-height:2em;
+        width:100%;
+        margin:0 1em 0 0.5em;
+        background-image:url(/assets/img/wikidaheim-claim.svg);
+        background-repeat:no-repeat;
+        background-size: contain;
+        background-position: center center;
+
+        @include md {
+          margin:0 1em 0 4.5rem;
+        }
+      }
+    }
+
+    .Header-menuToggle {
+      width: $header-height - .5em;
+      min-width: 2em;
+    }
+
+    .Header-languageSwitch {
+      .Dropdown-placeholder {
+        font-size: .7em;
+
+        @include md {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+
+  .Header-menu {
+    z-index: $z-index-menu;
+    background-color: $primary-color;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    padding:$header-height 5vw 0 5vw;
+    transform: translateX(100%);
+    min-width: 250px;
+
+    transition: transform .4s ease;
+
+    &.Header-menu--active {
+      transform: translateX(0);
+    }
+
+    footer {
+      position:absolute;
+      bottom:1em;
+      left:5vw;
+    }
+
+    footer a {
+      display:block;
+      color:white;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+
+      span {
+        display: inline-block;
+        color: $primary-color-contrast;
+        font-size: 2em;
+        position: relative;
+        margin-bottom: .5em;
+
+        &:after {
+          content:'';
+          position:absolute;
+          left:0;
+          bottom:0;
+          width:0;
+          height:0;
+          border-bottom:.1em solid fade-out($primary-color-contrast, .5);
+          transition:width .2s ease, border-bottom-color .2s ease;
+        }
+      }
+
+      &:hover {
+        span {
+          &:after {
+            width:100%;
+          }
+        }
+      }
+
+      &.Menu-link--active span {
+        &:after {
+          width: 100%;
+          border-bottom-color: $primary-color-contrast;
+        }
+      }
+    }
+  }
+}
