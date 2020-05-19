@@ -95,7 +95,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.2.0",
     "uuid": "^3.1.0",
-    "viewport-units-buggyfill": "^0.6.2"
+    "viewport-units-buggyfill": "^0.6.2",
+    "wikimedia-commons-file-path": "^1.2.0"
   },
   "description": "WikiDaheim Client for Wikimedia Austria",
   "author": "Benedikt Reiter",
