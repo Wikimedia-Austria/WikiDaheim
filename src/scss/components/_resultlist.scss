@@ -28,6 +28,10 @@
   }
 }
 
+.ResultListItem-Wrapper {
+  padding: 0 0 5px;
+}
+
 .ResultListItem {
   margin: 0;
   min-height:100px;
@@ -37,7 +41,6 @@
   color: $text-color;
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(2px);
-  transition: max-height .2s ease;
   overflow: hidden;
 
   @include shadow-box;

@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import Immutable, { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
-import scrollTo from 'lib/scrollTo';
 import { FormattedMessage } from 'react-intl';
 import ResultListItem from './ResultListItem';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
-import { List as InfiniteList } from 'react-virtualized';
+import { AutoSizer, List as InfiniteList } from 'react-virtualized';
 
 class ResultList extends Component {
   static propTypes = {
@@ -26,15 +25,15 @@ class ResultList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      containerHeight: 5,
-      containerWidth: 5,
       sortedList: new List(),
       inSelectTimeout: false,
     };
 
     this.hoverItem = this.hoverItem.bind(this);
     this.leaveItem = this.leaveItem.bind(this);
-    this.updateHeight = this.updateHeight.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+
+    this._list = React.createRef();
   }
 
   UNSAFE_componentWillMount() {
@@ -43,9 +42,6 @@ class ResultList extends Component {
 
   componentDidMount() {
     const { items, currentMapPosition } = this.props;
-
-    this.updateHeight();
-    window.addEventListener('resize', this.updateHeight);
 
     this.worker.postMessage({
       currentMapPosition: currentMapPosition.toJS(),
@@ -58,24 +54,26 @@ class ResultList extends Component {
   UNSAFE_componentWillUpdate(nextProps, nextState) {
     // scroll top when list reorders
     if (
+      this._list.current &&
       nextState.sortedList &&
       this.state.sortedList &&
       this.state.sortedList.size > 0 &&
       nextState.sortedList.size > 0 &&
       this.state.sortedList.get(0).get('id') !== nextState.sortedList.get(0).get('id')
     ) {
-      this.scrollTop();
-      this.updateHeight();
+      console.log('reordered');
+      this._list.current.recomputeRowHeights();
+      this._list.current.scrollToPosition(0);
     } else if (
+      this._list.current &&
+      (
         (!this.props.selectedElement && nextProps.selectedElement) ||
         (this.props.selectedElement && this.props.selectedElement.get('id') !== nextProps.selectedElement.get('id'))
-      ) {
-      const list = document.getElementsByClassName('ResultList-List')[0];
+      )
+    ) {
       const currentIndex = nextState.sortedList.findIndex((item) => item.get('id') === nextProps.selectedElement.get('id'));
 
-      if (currentIndex && window.innerWidth < 770) {
-        // scrollTo(list, (currentIndex * 112) - 5, 400);
-      }
+      this._list.current.scrollToRow( currentIndex );
     }
 
     // check if we get a new list
@@ -101,8 +99,23 @@ class ResultList extends Component {
     }*/
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateHeight);
+  // check if a row is selected. if so, recalculate the specific row height
+  componentDidUpdate(prevProps) {
+    const { _list } = this;
+    const prevSelectedElement = prevProps.selectedElement;
+
+    // we can't store this.props.selectedElement to a var as it will be undefined (why???)
+
+    if(
+      _list.current &&
+      (
+        (!prevSelectedElement && this.props.selectedElement) ||
+        (prevSelectedElement && !this.props.selectedElement) ||
+        prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
+      )
+    ) {
+      _list.current.recomputeRowHeights();
+    }
   }
 
   hoverItem(item) {
@@ -117,11 +130,6 @@ class ResultList extends Component {
     dispatch(placeItemLeave());
   }
 
-  scrollTop() {
-    const list = document.getElementsByClassName('ResultList-List')[0];
-    //scrollTo(list, 0, 1000);
-  }
-
   selectItem(item) {
     const { dispatch } = this.props;
 
@@ -134,27 +142,14 @@ class ResultList extends Component {
       this.setState({
         inSelectTimeout: false,
       });
-    }, 10000);
+    }, 5000);
 
     dispatch(placeItemSelect(item, 'list'));
   }
 
-  updateHeight() {
-    const container = document.getElementsByClassName(window.innerWidth < 770 ? 'ResultList' : 'ResultView');
-    const upperContent = document.getElementsByClassName('upperContent');
-
-    if (container.length > 0 && upperContent.length > 0) {
-      this.setState({
-        containerHeight:
-          container[0].clientHeight
-          - upperContent[0].clientHeight
-          - (window.innerWidth < 770 ? 10 : 0),
-        containerWidth: upperContent[0].clientWidth,
-      });
-    }
-  }
 
   render() {
+    console.log( 'rerendering list' );
     const { items, placeSelected, categories, hoveredElement, selectedElement, currentLanguage } = this.props;
     const sortedItems = this.state.sortedList;
 
@@ -168,7 +163,8 @@ class ResultList extends Component {
           defaultMessage='Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.'
         />
       </div>);
-    } else if (items.size !== 0 && sortedItems.size === 0) {
+    } else if (
+      items.size !== 0 && sortedItems.size === 0 ) {
       return (<div className='ResultList-EmptyInfo'>
         <FormattedMessage
           id='filter.resultssorting'
@@ -180,33 +176,59 @@ class ResultList extends Component {
 
     return (
       <div className='ResultList-ListWrapper'>
-        <InfiniteList
-          height={ this.state.containerHeight }
-          width={ this.state.containerWidth }
-          rowHeight={ window.innerWidth < 770 ? 112 : 130 }
-          className='ResultList-List'
-          rowRenderer={({ index, isScrolling, key, style }) => {
-            const item = sortedItems.get(index);
-            const category = categories.find((c) => c.get('name') === item.get('category'));
-            const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
-            const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
-            return (
-              <ResultListItem
-                key={ key }
-                item={ item }
-                category={ category }
-                isHovered={ isHovered }
-                isSelected={ isSelected }
-                currentLanguage={ currentLanguage }
-                onHover={ () => this.hoverItem(item) }
-                onLeave={ () => this.leaveItem() }
-                onClick={ () => this.selectItem(item) }
-                style={ style }
-              />
-            );
-          }}
-          rowCount={sortedItems.size}
-        />
+        <AutoSizer>
+          {({height, width}) => (
+            <InfiniteList
+              rowCount={sortedItems.size}
+              height={ height }
+              width={ width }
+              rowHeight={ ({index}) => {
+                const item = this.state.sortedList.get(index);
+                const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+
+                if(isSelected) return window.innerWidth < 770 ? 112 : 319;
+                return window.innerWidth < 770 ? 112 : 135;
+              } }
+              className='ResultList-List'
+              ref={this._list}
+              rowRenderer={({ index, isScrolling, key, style }) => {
+                /*if( isScrolling ) {
+                  return (
+                    <div className="ResultListItem-Wrapper" style={ style }>
+                      <div className="ResultListItem">
+                        <div className="Details-Container">
+                          <div className="PhotoContainer">
+                            <
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }*/
+
+                const item = sortedItems.get(index);
+                const category = categories.find((c) => c.get('name') === item.get('category'));
+                const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
+                const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+                return (
+                  <ResultListItem
+                    key={ key }
+                    item={ item }
+                    category={ category }
+                    isHovered={ isHovered }
+                    isSelected={ isSelected }
+                    isScrolling={ isScrolling }
+                    currentLanguage={ currentLanguage }
+                    onHover={ () => this.hoverItem(item) }
+                    onLeave={ () => this.leaveItem() }
+                    onClick={ () => this.selectItem(item) }
+                    style={ style }
+                  />
+                );
+              }}
+            />
+          )}
+        </AutoSizer>
       </div>
     );
   }
