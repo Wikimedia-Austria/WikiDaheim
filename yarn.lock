@@ -2803,6 +2803,11 @@ bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
+blueimp-md5@^2.10.0:
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/blueimp-md5/-/blueimp-md5-2.16.0.tgz#9018bb805e4ee05512e0e8cbdb9305eeecbdc87c"
+  integrity sha512-j4nzWIqEFpLSbdhUApHRGDwfXbV8ALhqOn+FY5L6XBdKPAXU9BpGgFSbDsgqogfqPPR9R2WooseWCsfhfEC6uQ==
+
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -11963,6 +11968,13 @@ wide-align@^1.1.0:
   integrity sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
   dependencies:
     string-width "^1.0.2 || 2"
+
+wikimedia-commons-file-path@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/wikimedia-commons-file-path/-/wikimedia-commons-file-path-1.2.0.tgz#5331a430629700012203efeee3572270b280e525"
+  integrity sha512-nUFMGHmZIUiat6YcX82SIUf7NRzYFCVw8UZSfH0XcUm+BF6+i8POj9C1idMj4OPTgc6ZtGhElDCS0ovphJXGaw==
+  dependencies:
+    blueimp-md5 "^2.10.0"
 
 word-wrap@~1.2.3:
   version "1.2.3"

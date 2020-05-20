@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
 import { FormattedMessage } from 'react-intl';
+import getFilePath from 'wikimedia-commons-file-path';
 import CategoryName from 'components/Global/CategoryName';
 import SourceName from 'components/Global/SourceName';
 
@@ -75,7 +76,7 @@ class ResultListItem extends Component {
         isAudio = item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/);
 
         if (!isAudio) {
-          const url = `https://commons.wikimedia.org/w/thumb.php?f=${ encodeURIComponent(item.get('foto')) }&width=256`;
+          const url = getFilePath(item.get('foto'), 256);
           photoContainerStyle.backgroundImage = `url('${ url }')`;
         } else {
           delete photoContainerStyle.backgroundColor;

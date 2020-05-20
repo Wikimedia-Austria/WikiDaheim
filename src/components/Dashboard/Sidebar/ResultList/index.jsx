@@ -34,9 +34,6 @@ class ResultList extends Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
 
     this._list = React.createRef();
-  }
-
-  UNSAFE_componentWillMount() {
     this.worker = new DistanceSort();
   }
 
@@ -52,29 +49,6 @@ class ResultList extends Component {
   }
 
   UNSAFE_componentWillUpdate(nextProps, nextState) {
-    // scroll top when list reorders
-    if (
-      this._list.current &&
-      nextState.sortedList &&
-      this.state.sortedList &&
-      this.state.sortedList.size > 0 &&
-      nextState.sortedList.size > 0 &&
-      this.state.sortedList.get(0).get('id') !== nextState.sortedList.get(0).get('id')
-    ) {
-      console.log('reordered');
-      this._list.current.recomputeRowHeights();
-      this._list.current.scrollToPosition(0);
-    } else if (
-      this._list.current &&
-      (
-        (!this.props.selectedElement && nextProps.selectedElement) ||
-        (this.props.selectedElement && this.props.selectedElement.get('id') !== nextProps.selectedElement.get('id'))
-      )
-    ) {
-      const currentIndex = nextState.sortedList.findIndex((item) => item.get('id') === nextProps.selectedElement.get('id'));
-
-      this._list.current.scrollToRow( currentIndex );
-    }
 
     // check if we get a new list
     if (
@@ -100,22 +74,46 @@ class ResultList extends Component {
   }
 
   // check if a row is selected. if so, recalculate the specific row height
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { _list } = this;
     const prevSelectedElement = prevProps.selectedElement;
 
-    // we can't store this.props.selectedElement to a var as it will be undefined (why???)
+        // we can't store this.props.selectedElement to a var as it will be undefined (why???)
 
-    if(
-      _list.current &&
-      (
-        (!prevSelectedElement && this.props.selectedElement) ||
-        (prevSelectedElement && !this.props.selectedElement) ||
-        prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
-      )
-    ) {
-      _list.current.recomputeRowHeights();
-    }
+        if(
+          _list.current &&
+          (
+            (!prevSelectedElement && this.props.selectedElement) ||
+            (prevSelectedElement && !this.props.selectedElement) ||
+            prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
+          )
+        ) {
+          _list.current.recomputeRowHeights();
+        }
+
+        // scroll top when list reorders
+        if (
+          this._list.current &&
+          prevState.sortedList &&
+          this.state.sortedList &&
+          this.state.sortedList.size > 0 &&
+          prevState.sortedList.size > 0 &&
+          this.state.sortedList.get(0).get('id') !== prevState.sortedList.get(0).get('id')
+        ) {
+          this._list.current.recomputeRowHeights();
+          console.log('scrolling to 0');
+          this._list.current.scrollToPosition(0);
+        } else if (
+          this._list.current &&
+          (
+            (this.props.selectedElement && !prevProps.selectedElement) ||
+            (this.props.selectedElement && this.props.selectedElement.get('id') !== prevProps.selectedElement.get('id'))
+          )
+        ) {
+          const currentIndex = this.state.sortedList.findIndex((item) => item.get('id') === this.props.selectedElement.get('id'));
+          console.log('scrollingtorow');
+          this._list.current.scrollToRow( currentIndex );
+        }
   }
 
   hoverItem(item) {
@@ -192,20 +190,6 @@ class ResultList extends Component {
               className='ResultList-List'
               ref={this._list}
               rowRenderer={({ index, isScrolling, key, style }) => {
-                /*if( isScrolling ) {
-                  return (
-                    <div className="ResultListItem-Wrapper" style={ style }>
-                      <div className="ResultListItem">
-                        <div className="Details-Container">
-                          <div className="PhotoContainer">
-                            <
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }*/
-
                 const item = sortedItems.get(index);
                 const category = categories.find((c) => c.get('name') === item.get('category'));
                 const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');

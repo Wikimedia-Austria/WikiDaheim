@@ -12,6 +12,7 @@ import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
 import MapSyncToggle from 'components/Global/MapSyncToggle';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import getFilePath from 'wikimedia-commons-file-path';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
@@ -441,7 +442,7 @@ class ResultMap extends Component {
       const photoContainerStyle = {};
       if (hoveredElement.get('foto') && !hoveredElement.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
         hasPhoto = true;
-        const url = `https://commons.wikimedia.org/w/thumb.php?f=${ encodeURIComponent(hoveredElement.get('foto')) }&width=256`;
+        const url = getFilePath(hoveredElement.get('foto'), 256);
         photoContainerStyle.backgroundImage = `url('${ url }')`;
       } else if (descriptionText && descriptionText.length > 0) {
         hasText = true;
