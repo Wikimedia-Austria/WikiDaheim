@@ -85,7 +85,11 @@ class ResultList extends Component {
           (
             (!prevSelectedElement && this.props.selectedElement) ||
             (prevSelectedElement && !this.props.selectedElement) ||
-            prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
+            (
+              prevSelectedElement &&
+              this.props.selectedElement &&
+              prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
+            )
           )
         ) {
           _list.current.recomputeRowHeights();
@@ -101,7 +105,6 @@ class ResultList extends Component {
           this.state.sortedList.get(0).get('id') !== prevState.sortedList.get(0).get('id')
         ) {
           this._list.current.recomputeRowHeights();
-          console.log('scrolling to 0');
           this._list.current.scrollToPosition(0);
         } else if (
           this._list.current &&
@@ -111,7 +114,6 @@ class ResultList extends Component {
           )
         ) {
           const currentIndex = this.state.sortedList.findIndex((item) => item.get('id') === this.props.selectedElement.get('id'));
-          console.log('scrollingtorow');
           this._list.current.scrollToRow( currentIndex );
         }
   }

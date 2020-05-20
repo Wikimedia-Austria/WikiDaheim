@@ -89,14 +89,16 @@
     width: auto;
     right: auto;
     margin: 0 0.5rem 1rem;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     padding-top: 10px;
     transform: none;
   }
 
   .CityInfo-Content {
-    padding-left: 0.2rem;
+    margin-left: -0.5rem;
+    width: calc( 100% + 1rem );
     display: flex;
+    align-items: flex-start;
 
     .CityInfo-Link {
       color: $primary-color;
@@ -104,14 +106,24 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding: 0rem 0 0 3.25rem;
-      margin: 1rem 0;
-      line-height: 1.4em;
-      height: 2.5rem;
-      flex: 1;
+      padding: 0.65rem 0.5rem 0.5rem 3.5rem;
+      margin: 0.5rem 0.25rem 0.5rem 0;
+      line-height: 1.2em;
+      border-radius: 3px;
+      flex-grow: 1;
+      transition: background-color .1s ease-in-out;
+
+      &:hover {
+        background-color: rgb(240, 240, 240);
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       strong {
         font-size: 1rem;
+        margin-bottom: 0.1rem;
 
         @include md {
           font-size: 1rem;
@@ -121,6 +133,7 @@
       span {
         font-family: sans-serif;
         color: fade_out($primary-color, 0.4);
+        font-size: .85rem;
 
         a {
           color: fade_out($primary-color, 0.4);
@@ -131,8 +144,8 @@
         content:'';
         display: block;
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 0.5rem;
+        top: 0.5rem;
         width:2.5rem;
         height:2.5rem;
         padding:.2rem;
@@ -154,15 +167,25 @@
   }
 
   .CityInfo-Footer {
-    border-top: 1px solid rgba(0,0,0,.2);
+    border-top: 1px solid rgba(0,0,0,.1);
     display: flex;
     margin-top: 0;
-    padding-top: 0.75rem;
+    padding-top: 0.5rem;
+    margin-left: -0.5rem;
+    width: calc( 100% + 1rem );
 
     .CityInfo-Link {
-      color: rgba(0,0,0,.8);
-      text-decoration: underline;
-      padding-right: 1em;
+      padding: 0.5rem;
+      color: $primary-color;
+      font-weight: bold;
+      font-size: 0.85rem;
+      border-radius: 3px;
+      margin-right: 0.25rem;
+      transition: background-color .1s ease-in-out;
+
+      &:hover {
+        background-color: rgb(240, 240, 240);
+      }
     }
   }
 }

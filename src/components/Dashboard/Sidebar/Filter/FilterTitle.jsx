@@ -53,18 +53,20 @@ class FilterTitle extends Component {
           />
         </h2>
 
-        <CategoryFilter asIcons={ true } />
+        <div className="FilterTitle-Right">
+          <CategoryFilter asIcons={ true } />
 
-        <button
-          className={ ButtonClass }
-          onClick={ this.toggle }
-        >
-          <FormattedMessage
-            id='filter.filterButtonTitle'
-            description='Title of the Filter Menu Toggle-Button'
-            defaultMessage='Liste filtern'
-          />
-        </button>
+          <button
+            className={ ButtonClass }
+            onClick={ this.toggle }
+          >
+            <FormattedMessage
+              id='filter.filterButtonTitle'
+              description='Title of the Filter Menu Toggle-Button'
+              defaultMessage='Liste filtern'
+            />
+          </button>
+        </div>
       </header>
     );
   }

@@ -32,9 +32,10 @@ class LanguageSwitch extends Component {
       <Dropdown
         value={ currentLanguage }
         onChange={ this.handleChange }
+        placeholder="TEST"
         options={ languages.map((l) => ({
           value: l.locale,
-          label: l.title,
+          label: l.locale,
         })) }
       />
     );

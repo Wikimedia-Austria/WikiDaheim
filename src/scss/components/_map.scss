@@ -114,8 +114,7 @@
 
 
 .mapboxgl-ctrl-top-right {
-  right: auto !important;
-  left: calc(100vw - 40px) !important;
+  margin: 0.5rem;
 }
 
 .mapboxgl-ctrl-bottom-left {
@@ -123,28 +122,17 @@
   transform: translate(-100%, -20px);
 }
 
-.mapboxgl-ctrl-bottom-right {
-  right: auto !important;
-  left: 100vw !important;
-  transform: translateX(-100%);
-  min-width: 300px;
-  bottom: 4.5rem !important;
-
-  @include md {
-    bottom: 0 !important;
-  }
-}
-
 .mapboxgl-ctrl-group {
-  box-shadow:none !important;
-  background-color: $primary-color !important;
-  border-radius:0 !important;
+  box-shadow:$ui-shadow !important;
+  background-color: white !important;
+  border-radius:$ui-radius !important;
+  border: $ui-border;
 
   > button {
-    border-bottom-color: $primary-color-contrast !important;
+    border-bottom-color: $ui-border !important;
 
     &:hover {
-      background-color: $secondary-color !important;
+      background-color: rgb(240, 240, 240) !important;
     }
   }
 
