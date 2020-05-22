@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FALLBACK_LANGUAGE } from 'config/config';
+import { FALLBACK_LANGUAGE } from 'config';
 import classNames from 'classnames';
 import Views from 'views';
 

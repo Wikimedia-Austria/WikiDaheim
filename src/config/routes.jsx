@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { PUBLIC_ROOT } from 'config/config';
+import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
 
 import Dashboard from 'components/Dashboard';

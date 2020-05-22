@@ -4,6 +4,7 @@ import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { loadState, saveState } from 'lib/localStorage';
+import historySyncMiddleware from 'redux/middleware/historySync';
 
 import createRootReducer from './reducers';
 
@@ -19,7 +20,8 @@ export default () => {
     composeWithDevTools(
       applyMiddleware(
         thunk,
-        routerMiddleware(history)
+        routerMiddleware(history),
+        historySyncMiddleware
       )
     )
   );

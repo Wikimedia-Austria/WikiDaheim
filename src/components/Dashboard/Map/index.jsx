@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
 import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
-import { MAPBOX_API_KEY } from 'config/config';
+import { MAPBOX_API_KEY } from 'config';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace } from 'redux/actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';

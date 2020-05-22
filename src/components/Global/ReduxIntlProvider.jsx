@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
-import { FALLBACK_LANGUAGE } from 'config/config';
+import { FALLBACK_LANGUAGE } from 'config';
 
 import de from 'translations/locales/de';
 import en from 'translations/locales/en';

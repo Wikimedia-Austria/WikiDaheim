@@ -9,10 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import findGetParameter from 'lib/findGetParameter';
 import { setLanguage } from 'redux/actions/locale';
 
-//import svgSprite from 'svg-sprite-loader/runtime/sprite.build';
 import languages from 'translations/languages.json';
-
-//const sprite = svgSprite.stringify();
 
 class Root extends Component {
   static propTypes = {
@@ -44,13 +41,6 @@ class Root extends Component {
         <div className='Page'>
           <Routes />
         </div>
-
-        {/* SVG sprite injected inline, to make it work in IE10 and IE11
-        <div
-          style={ { display: 'none' } }
-          dangerouslySetInnerHTML={ { __html: sprite } } // eslint-disable-line react/no-danger
-        />
-          */}
 
         <FormattedMessage
           id='gdpr.cookietext'

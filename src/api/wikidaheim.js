@@ -1,4 +1,4 @@
-import { WIKIDAHEIM_ENDPOINT } from '../config/config';
+import { WIKIDAHEIM_ENDPOINT } from 'config';
 
 const listCategories = () => {
   return fetch(`${ WIKIDAHEIM_ENDPOINT }?format=json&action=query&type=structure`, {

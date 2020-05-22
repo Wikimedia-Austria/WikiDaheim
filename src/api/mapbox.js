@@ -1,4 +1,4 @@
-import { COUNTRY_CODE, MAPBOX_API_KEY } from 'config/config';
+import { COUNTRY_CODE, MAPBOX_API_KEY } from 'config';
 import languages from 'translations/languages.json';
 
 const search = (query, lang) => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { routeCodes } from 'config/routes';
-import { FALLBACK_LANGUAGE } from 'config/config';
+import { FALLBACK_LANGUAGE } from 'config';
 
 import pages from 'views/views';
 
