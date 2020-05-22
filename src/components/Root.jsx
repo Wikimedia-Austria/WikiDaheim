@@ -14,7 +14,7 @@ import languages from 'translations/languages.json';
 
 //const sprite = svgSprite.stringify();
 
-class App extends Component {
+class Root extends Component {
   static propTypes = {
     children: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
     // from react-redux connect
@@ -78,4 +78,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, null, null, { pure: false })(App);
+export default connect(null, null, null, { pure: false })(Root);

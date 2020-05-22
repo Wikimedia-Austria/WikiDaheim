@@ -1,21 +1,25 @@
+import { createBrowserHistory } from 'history';
 import { createStore, applyMiddleware } from 'redux';
+import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { loadState, saveState } from 'lib/localStorage';
 
-import rootReducer from '../redux/reducers';
+import createRootReducer from './reducers';
 
-const persistedState = loadState();
+export const persistedState = loadState();
+export const history = createBrowserHistory();
 
 // Creating store
 export default () => {
 
   const store = createStore(
-    rootReducer,
+    createRootReducer(history),
     persistedState,
     composeWithDevTools(
       applyMiddleware(
-        thunk
+        thunk,
+        routerMiddleware(history)
       )
     )
   );

@@ -8,6 +8,7 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "^1.5.9",
     "@formatjs/intl-relativetimeformat": "^4.5.16",
+    "connected-react-router": "^6.8.0",
     "geolib": "^3.2.1",
     "immutable": "^3",
     "mapbox-gl": "^1.10.1",
