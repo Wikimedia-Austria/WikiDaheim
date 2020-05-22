@@ -314,6 +314,8 @@ class ResultMap extends Component {
     adds hover effect to other municipailties
   */
   updateHighlightedArea(map) {
+    if( ! map._loaded ) return;
+
     const { placeMapData } = this.props;
     const municipalityName = placeMapData.get('text');
     const municipalityGkz = placeMapData.get('iso');
