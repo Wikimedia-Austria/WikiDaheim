@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
-import { toggleCityInfo } from 'actions/app';
+import { toggleCityInfo } from 'redux/actions/app';
 import MapSyncToggle from 'components/Global/MapSyncToggle';
 import ExternalLinkOverlay from './ExternalLinkOverlay';
 

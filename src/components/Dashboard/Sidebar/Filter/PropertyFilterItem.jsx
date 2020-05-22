@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { toggleFilter } from 'actions/app';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import { toggleFilter } from 'redux/actions/app';
+import Immutable from 'immutable';
 
 class PropertyFilterItem extends Component {
   static propTypes = {
     title: PropTypes.string,
     id: PropTypes.string,
-    activeFilters: ImmutablePropTypes.list,
+    activeFilters: PropTypes.instanceOf(Immutable.List),
 
     dispatch: PropTypes.func,
   };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { toggleCategory } from 'actions/app';
+import { toggleCategory } from 'redux/actions/app';
 import CategoryName from 'components/Global/CategoryName';
 import { Base64 } from 'js-base64';
 import { injectIntl } from 'react-intl';

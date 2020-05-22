@@ -9,15 +9,8 @@ import configureStore from './config/store';
 import ReduxIntlProvider from './components/Global/ReduxIntlProvider';
 import Client from './components/Client';
 
-/* POLYFILLS */
-import es6Promise from 'es6-promise';
-import 'isomorphic-fetch';
-
 // Load SCSS
 import './scss/app.scss';
-
-// Run Polyfills
-es6Promise.polyfill();
 
 // Init Redux-Store
 const store = configureStore();

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { loadState, saveState } from 'lib/localStorage';
 
-import rootReducer from '../reducers';
+import rootReducer from '../redux/reducers';
 
 const persistedState = loadState();
 

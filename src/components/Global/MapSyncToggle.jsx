@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { toggleSyncListAndMap } from 'actions/app';
+import { toggleSyncListAndMap } from 'redux/actions/app';
 import { FormattedMessage } from 'react-intl';
 
 class MapSyncToggle extends Component {

@@ -8,10 +8,8 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "^1.5.9",
     "@formatjs/intl-relativetimeformat": "^4.5.16",
-    "es6-promise": "^4.2.8",
     "geolib": "^3.2.1",
     "immutable": "^3",
-    "isomorphic-fetch": "^2.2.1",
     "mapbox-gl": "^1.10.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
@@ -19,7 +17,6 @@
     "react-cookie-banner": "^4.1.0",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
-    "react-immutable-proptypes": "^2.2.0",
     "react-intl": "^4.5.4",
     "react-mapbox-gl": "^4.8.3",
     "react-redux": "^7.2.0",

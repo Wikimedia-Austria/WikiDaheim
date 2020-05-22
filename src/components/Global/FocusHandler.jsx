@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { mobileViewSwitch } from 'actions/app';
+import { mobileViewSwitch } from 'redux/actions/app';
 
 class FocusHandler extends Component {
   static propTypes = {

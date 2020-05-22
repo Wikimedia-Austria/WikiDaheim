@@ -20,6 +20,8 @@ export default () => (
   <Switch>
     <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
 
+    <Route path={ `${routeCodes.DASHBOARD}@:latlng/:municipaliy_id?/:municipality_name?/:selected_object?` } component={ Dashboard } />
+
     { loadedPages.map((page) => (
       <Route
         exact

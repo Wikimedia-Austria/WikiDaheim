@@ -7,7 +7,7 @@ import Header from './Global/Header';
 import CookieBanner from 'react-cookie-banner';
 import { FormattedMessage } from 'react-intl';
 import findGetParameter from 'lib/findGetParameter';
-import { setLanguage } from 'actions/locale';
+import { setLanguage } from 'redux/actions/locale';
 
 //import svgSprite from 'svg-sprite-loader/runtime/sprite.build';
 import languages from 'translations/languages.json';

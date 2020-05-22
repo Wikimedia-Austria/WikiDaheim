@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import CategoryFilterItem from './CategoryFilterItem';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import Immutable from 'immutable';
 
 class CategoryFilter extends Component {
   static propTypes = {
     asIcons: PropTypes.bool,
-    categories: ImmutablePropTypes.list,
+    categories: PropTypes.instanceOf(Immutable.List),
   };
 
   render() {

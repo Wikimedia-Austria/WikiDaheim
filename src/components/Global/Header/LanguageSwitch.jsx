@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setLanguage } from 'actions/locale';
+import { setLanguage } from 'redux/actions/locale';
 import Dropdown from 'react-dropdown';
 
 import languages from 'translations/languages.json';

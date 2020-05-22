@@ -5,14 +5,14 @@ import { fromJS } from 'immutable';
 import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config/config';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace } from 'redux/actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
 import MapSyncToggle from 'components/Global/MapSyncToggle';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import getFilePath from 'wikimedia-commons-file-path';
+import Immutable from 'immutable';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
@@ -21,7 +21,7 @@ const Map = ReactMapboxGl({
 class ResultMap extends Component {
   static propTypes = {
     placeMapData: PropTypes.object,
-    currentMapPosition: ImmutablePropTypes.list,
+    currentMapPosition: PropTypes.instanceOf(Immutable.List),
     currentMapZoom: PropTypes.number,
     categories: PropTypes.object,
     items: PropTypes.object,

@@ -1,5 +1,5 @@
-import mapboxApi from '../api/mapbox';
-import wikiDaheimApi from '../api/wikidaheim';
+import mapboxApi from '../../api/mapbox';
+import wikiDaheimApi from '../../api/wikidaheim';
 
 export const AUTOCOMPLETE_ACTION_START = 'AUTOCOMPLETE_ACTION_START';
 export const AUTOCOMPLETE_ACTION_ERROR = 'AUTOCOMPLETE_ACTION_ERROR';

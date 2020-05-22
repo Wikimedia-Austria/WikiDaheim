@@ -1,4 +1,3 @@
-import 'es6-promise';
 import { COUNTRY_CODE, MAPBOX_API_KEY } from 'config/config';
 import languages from 'translations/languages.json';
 

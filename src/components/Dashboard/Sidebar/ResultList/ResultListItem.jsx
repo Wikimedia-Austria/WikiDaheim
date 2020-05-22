@@ -204,22 +204,26 @@ class ResultListItem extends Component {
               className={ photoContainerClass }
               style={ photoContainerStyle }
             >
-              <a
-                href={ uploadLink }
-                target='_blank'
-                rel='noopener noreferrer'
-                className='PhotoContainer-UploadButton'
-                style={ { 'backgroundColor': categoryColor } }
-              >
-                <span>
-                  <FormattedMessage
-                    id='uploadPhoto'
-                    description='Text for Photo Upload-Button'
-                    defaultMessage='Foto hochladen'
-                  />
-                </span>
-              </a>
-              { photoInfoLink }
+              {!isScrolling && (
+                <>
+                  <a
+                    href={ uploadLink }
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='PhotoContainer-UploadButton'
+                    style={ { 'backgroundColor': categoryColor } }
+                  >
+                    <span>
+                      <FormattedMessage
+                        id='uploadPhoto'
+                        description='Text for Photo Upload-Button'
+                        defaultMessage='Foto hochladen'
+                      />
+                    </span>
+                  </a>
+                  { photoInfoLink }
+                </>
+              ) }
             </div>
 
             <div className='Details'>
@@ -235,14 +239,19 @@ class ResultListItem extends Component {
                     ) }
                   </Truncate>
                 </h2>
-                <div className='Details-Category' style={ { color: categoryColor } }>
-                  {item.get('categories') && item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+                {!isScrolling && (
+                  <div className='Details-Category' style={ { color: categoryColor } }>
+                    {item.get('categories') && item.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+                  </div>
+                )}
+              </div>
+              {!isScrolling && (
+                <div className="Details-Sbs">
+                  { location }
+                  { source }
                 </div>
-              </div>
-              <div className="Details-Sbs">
-                { location }
-                { source }
-              </div>
+              )}
+
             </div>
           </div>
 

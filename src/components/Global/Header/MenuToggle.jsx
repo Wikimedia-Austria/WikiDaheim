@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { toggleMenu } from 'actions/menu';
+import { toggleMenu } from 'redux/actions/menu';
 
 class MenuToggle extends Component {
   static propTypes = {

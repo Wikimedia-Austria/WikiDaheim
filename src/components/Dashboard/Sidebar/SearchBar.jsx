@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { FormattedMessage } from 'react-intl';
-import { autocomplete, selectPlace, toggleCityInfo } from 'actions/app';
+import { autocomplete, selectPlace, toggleCityInfo } from 'redux/actions/app';
 import { BounceLoader } from 'react-spinners';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import Immutable from 'immutable';
 
 class SearchBar extends Component {
   static propTypes = {
-    searchData: ImmutablePropTypes.list,
+    searchData: PropTypes.instanceOf(Immutable.List),
     searchText: PropTypes.string,
     // from react-redux connect
     dispatch: PropTypes.func,

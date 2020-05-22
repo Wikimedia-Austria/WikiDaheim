@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import Immutable from 'immutable';
 
-import { loadCategories } from 'actions/app';
+import { loadCategories } from 'redux/actions/app';
 
 import Map from './Map';
 import Sidebar from './Sidebar';
@@ -18,8 +18,8 @@ class Dashboard extends Component {
     // from react-redux connect
     dispatch: PropTypes.func,
     activeFilters: PropTypes.object,
-    categories: ImmutablePropTypes.list,
-    items: ImmutablePropTypes.list,
+    categories: PropTypes.instanceOf(Immutable.List),
+    items: PropTypes.instanceOf(Immutable.List),
     mobileView: PropTypes.string,
   }
 

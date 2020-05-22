@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Immutable, { List, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
-import { placeItemHover, placeItemLeave, placeItemSelect } from 'actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect } from 'redux/actions/app';
 import { FormattedMessage } from 'react-intl';
 import ResultListItem from './ResultListItem';
 import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
@@ -139,7 +139,6 @@ class ResultList extends Component {
 
 
   render() {
-    console.log( 'rerendering list' );
     const { items, placeSelected, categories, hoveredElement, selectedElement, currentLanguage } = this.props;
     const sortedItems = this.state.sortedList;
 
