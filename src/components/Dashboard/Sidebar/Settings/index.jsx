@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import EnableClusteringToggle from './EnableClusteringToggle';
 import MapSyncToggle from './MapSyncToggle';
-import { toggleSettings } from 'redux/actions/app';
+import { toggleSettings } from 'redux/actions/menu';
 
 
 class Settings extends Component {
@@ -46,5 +46,5 @@ class Settings extends Component {
 }
 
 export default connect(state => ({
-  showSettings: state.app.get('showSettings'),
+  showSettings: state.menu.get('showSettings'),
 }))(Settings);

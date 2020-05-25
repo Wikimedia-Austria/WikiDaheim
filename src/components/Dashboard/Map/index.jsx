@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
@@ -123,15 +123,6 @@ class ResultMap extends Component {
     if (!prevProps.placeSelected && this.props.placeSelected) {
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
-
-    /**
-     * re-render Map if Clustering is Enabled / Disabled
-    */
-
-    if( prevProps.enableClustering !== this.props.enableClustering && this._map ) {
-      console.log( this._map );
-      this._map.state.map.triggerRepaint();
-    }
   }
 
   /*
@@ -153,8 +144,6 @@ class ResultMap extends Component {
   */
   prepareMap(map) {
     const { dispatch } = this.props;
-
-    this._map = map;
 
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new mapboxgl.GeolocateControl());
@@ -537,7 +526,6 @@ class ResultMap extends Component {
         onStyleImageMissing={ this.loadMissingMapImage }
         zoom={ this.state.zoom }
         onResize={ this.updateMapPadding }
-        ref={ ref => this._map = ref }
       >
         <Source
           id='municipality-hover-item'

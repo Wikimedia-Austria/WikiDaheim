@@ -34,7 +34,6 @@ import {
   TOGGLE_FILTER,
   TOGGLE_SYNC_LIST_MAP,
   TOGGLE_CLUSTERING,
-  TOGGLE_SETTINGS,
 
   MOBILE_VIEW_SWITCH,
   TOGGLE_CITY_INFO,
@@ -72,7 +71,6 @@ const initialState = Map({
   syncListAndMap: true,
   showCityInfo: false,
   enableClustering: true,
-  showSettings: false,
 });
 
 const actionsMap = {
@@ -360,14 +358,6 @@ const actionsMap = {
 
     return state.merge({
       showCityInfo,
-    });
-  },
-
-  [TOGGLE_SETTINGS]: (state) => {
-    const showSettings = !state.get('showSettings');
-
-    return state.merge({
-      showSettings,
     });
   },
 };

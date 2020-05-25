@@ -3,11 +3,13 @@ import { Map } from 'immutable';
 import {
   TOGGLE_MENU,
   TOGGLE_FILTER_MENU,
+  TOGGLE_SETTINGS
 } from '../actions/menu';
 
 const initialState = Map({
   showMenu: false,
   showFilterMenu: false,
+  showSettings: false,
 });
 
 const actionsMap = {
@@ -16,6 +18,8 @@ const actionsMap = {
 
     return state.merge({
       showMenu,
+      showSettings: false,
+      showFilterMenu: false
     });
   },
   [TOGGLE_FILTER_MENU]: (state) => {
@@ -23,6 +27,18 @@ const actionsMap = {
 
     return state.merge({
       showFilterMenu,
+      showSettings: false,
+      showMenu: false,
+    });
+  },
+
+  [TOGGLE_SETTINGS]: (state) => {
+    const showSettings = !state.get('showSettings');
+
+    return state.merge({
+      showSettings,
+      showMenu: false,
+      showFilterMenu: false,
     });
   },
 };

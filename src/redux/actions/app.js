@@ -36,7 +36,6 @@ export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
 export const TOGGLE_SYNC_LIST_MAP = 'TOGGLE_SYNC_LIST_MAP';
 export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
 export const TOGGLE_CLUSTERING = 'TOGGLE_CLUSTERING';
-export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS';
 
 /*
   AUTOCOMPLETE ACTIONS
@@ -288,12 +287,6 @@ export function toggleSyncListAndMap() {
 export function toggleClustering() {
   return {
     type: TOGGLE_CLUSTERING,
-  };
-}
-
-export function toggleSettings() {
-  return {
-    type: TOGGLE_SETTINGS,
   };
 }
 

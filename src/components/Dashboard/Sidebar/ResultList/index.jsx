@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { placeItemHover, placeItemLeave, placeItemSelect } from 'redux/actions/app';
 import { FormattedMessage } from 'react-intl';
 import ResultListItem from './ResultListItem';
-import DistanceSort from 'worker-loader!workers/distanceSort.js'; //eslint-disable-line
+import DistanceSort from 'workers/distanceSort.worker.js'; //eslint-disable-line
 import { AutoSizer, List as InfiniteList } from 'react-virtualized';
 
 class ResultList extends Component {
