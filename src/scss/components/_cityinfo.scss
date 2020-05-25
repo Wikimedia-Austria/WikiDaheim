@@ -14,6 +14,7 @@
     pointer-events: all;
     top: -10px;
     margin-bottom: -20px;
+    overflow: visible;
   }
 
   .CityInfo-Closer {
@@ -25,24 +26,6 @@
     height: 100vh;
     background-color: transparent;
     transition: background-color .4s ease;
-
-    @include md {
-      display: none;
-    }
-  }
-
-
-  .SyncListToggle {
-    border-top: 1px solid rgba(0,0,0,.2);
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-
-    .SyncListToggle-Button {
-      position: relative;
-      text-align: left;
-      line-height: 1.25em;
-      min-height: 2.25rem;
-    }
 
     @include md {
       display: none;
@@ -92,6 +75,7 @@
     padding-bottom: 0.5rem;
     padding-top: 10px;
     transform: none;
+    overflow: visible;
   }
 
   .CityInfo-Content {
@@ -172,6 +156,7 @@
     margin-top: 0;
     padding-top: 0.5rem;
     margin-left: -0.5rem;
+    margin-right: -0.5rem;
     width: calc( 100% + 1rem );
 
     .CityInfo-Link {
@@ -182,6 +167,12 @@
       border-radius: 3px;
       margin-right: 0.25rem;
       transition: background-color .1s ease-in-out;
+      position: relative;
+
+      &.CityInfo-Link--right {
+        margin-left: auto;
+        margin-right: 0;
+      }
 
       &:hover {
         background-color: rgb(240, 240, 240);

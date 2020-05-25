@@ -33,6 +33,8 @@ import {
 
   TOGGLE_FILTER,
   TOGGLE_SYNC_LIST_MAP,
+  TOGGLE_CLUSTERING,
+  TOGGLE_SETTINGS,
 
   MOBILE_VIEW_SWITCH,
   TOGGLE_CITY_INFO,
@@ -69,6 +71,8 @@ const initialState = Map({
   mobileView: 'map',
   syncListAndMap: true,
   showCityInfo: false,
+  enableClustering: true,
+  showSettings: false,
 });
 
 const actionsMap = {
@@ -343,11 +347,27 @@ const actionsMap = {
     });
   },
 
+  [TOGGLE_CLUSTERING]: (state) => {
+    const enableClustering = !state.get('enableClustering');
+
+    return state.merge({
+      enableClustering,
+    });
+  },
+
   [TOGGLE_CITY_INFO]: (state) => {
     const showCityInfo = !state.get('showCityInfo');
 
     return state.merge({
       showCityInfo,
+    });
+  },
+
+  [TOGGLE_SETTINGS]: (state) => {
+    const showSettings = !state.get('showSettings');
+
+    return state.merge({
+      showSettings,
     });
   },
 };

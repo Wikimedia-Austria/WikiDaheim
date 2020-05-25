@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
@@ -10,7 +10,6 @@ import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
-import MapSyncToggle from 'components/Global/MapSyncToggle';
 import getFilePath from 'wikimedia-commons-file-path';
 import Immutable from 'immutable';
 
@@ -29,6 +28,7 @@ class ResultMap extends Component {
     hoveredMunicipality: PropTypes.object,
     selectedElement: PropTypes.object,
     placeSelected: PropTypes.bool,
+    enableClustering: PropTypes.bool,
 
     // from react-redux connect
     dispatch: PropTypes.func,
@@ -57,7 +57,7 @@ class ResultMap extends Component {
 
     this.prepareMap = this.prepareMap.bind(this);
     this.loadMissingMapImage = this.loadMissingMapImage.bind(this);
-    this.UNSAFE_componentWillUpdate = this.UNSAFE_componentWillUpdate.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.onMapMove = this.onMapMove.bind(this);
     this.updateHighlightedArea = this.updateHighlightedArea.bind(this);
     this.updateMapPadding = this.updateMapPadding.bind(this);
@@ -81,13 +81,13 @@ class ResultMap extends Component {
     dispatch(mapPositionChanged(coordinates));
   }
 
-  UNSAFE_componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     /*
      * move the center of the map to the city center when a new city is selected
      */
-    if (this.state.coordinates[0] === 0 || nextProps.placeMapData.get('id') !== this.props.placeMapData.get('id')) {
+    if (prevState.coordinates[0] === 0 || this.props.placeMapData.get('id') !== prevProps.placeMapData.get('id')) {
       // prevent the map from moving on every redux state change
-      const coordinates = nextProps.placeMapData.get('geometry').get('coordinates').toJS();
+      const coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({
         coordinates,
         zoom: [12],
@@ -97,8 +97,8 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the currently selected POI
     */
-    const currentSelected = this.props.selectedElement;
-    const nextSelected = nextProps.selectedElement;
+    const currentSelected = prevProps.selectedElement;
+    const nextSelected = this.props.selectedElement;
 
     if (
       (!currentSelected && nextSelected) ||
@@ -120,8 +120,17 @@ class ResultMap extends Component {
     /*
       re-adjust the map center after adding the sidebar shift
     */
-    if (!this.props.placeSelected && nextProps.placeSelected) {
+    if (!prevProps.placeSelected && this.props.placeSelected) {
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+    }
+
+    /**
+     * re-render Map if Clustering is Enabled / Disabled
+    */
+
+    if( prevProps.enableClustering !== this.props.enableClustering && this._map ) {
+      console.log( this._map );
+      this._map.state.map.triggerRepaint();
     }
   }
 
@@ -144,6 +153,9 @@ class ResultMap extends Component {
   */
   prepareMap(map) {
     const { dispatch } = this.props;
+
+    this._map = map;
+
     map.addControl(new mapboxgl.NavigationControl());
     map.addControl(new mapboxgl.GeolocateControl());
 
@@ -155,7 +167,8 @@ class ResultMap extends Component {
       /*
         trigger Pin hover
       */
-      map.on('mousemove', 'unclustered-point', (e) => {
+
+      const unclusteredMouseMove = (e) => {
         const { hoveredElement } = this.props;
 
         // only trigger if we move over a new pin
@@ -167,13 +180,29 @@ class ResultMap extends Component {
         dispatch(placeItemHover(
           this.props.items.find((c) => c.get('id') === e.features[0].properties.id)
         ));
-      });
+      }
 
-      map.on('mouseleave', 'unclustered-point', () => {
+      const unclusteredMouseLeave = () => {
         const canvas = map.getCanvas();
         canvas.style.cursor = '';
 
         dispatch(placeItemLeave());
+      }
+
+      map.on('mousemove', 'unclustered-point', (e) => {
+        unclusteredMouseMove(e);
+      });
+
+      map.on('mouseleave', 'unclustered-point', () => {
+        unclusteredMouseLeave();
+      });
+
+      map.on('mousemove', 'unclustered-point-uncluster', (e) => {
+        unclusteredMouseMove(e);
+      });
+
+      map.on('mouseleave', 'unclustered-point-uncluster', () => {
+        unclusteredMouseLeave();
       });
 
       /*
@@ -379,6 +408,8 @@ class ResultMap extends Component {
       categories,
       hoveredElement,
       hoveredMunicipality,
+      enableClustering,
+
     } = this.props;
 
     const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
@@ -400,10 +431,16 @@ class ResultMap extends Component {
         })
       ),
       },
+      cluster: false,
+      clusterMaxZoom: 2, // Max zoom to cluster points on
+    };
+
+    const GEO_JSON_RESULTS_CLUSTERED = {
+      ...GEO_JSON_RESULTS,
       cluster: true,
       clusterMaxZoom: 14, // Max zoom to cluster points on
       clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
-    };
+    }
 
     // show the mouse-hover-popup
     let popup = null;
@@ -500,8 +537,8 @@ class ResultMap extends Component {
         onStyleImageMissing={ this.loadMissingMapImage }
         zoom={ this.state.zoom }
         onResize={ this.updateMapPadding }
+        ref={ ref => this._map = ref }
       >
-        <Source id='items' geoJsonSource={ GEO_JSON_RESULTS } />
         <Source
           id='municipality-hover-item'
           geoJsonSource={ {
@@ -509,70 +546,97 @@ class ResultMap extends Component {
             data: { type: 'FeatureCollection', features: [] },
           } }
         />
-        <Layer
-          id='clusters'
-          sourceId='items'
-          type='circle'
-          paint={ {
-            'circle-color': {
-              property: 'point_count',
-              type: 'interval',
-              stops: [
-                    [0, '#57599A'],
-                    [30, '#373974'],
-                    [70, '#23224E'],
-              ],
-            },
-            'circle-radius': {
-              property: 'point_count',
-              type: 'interval',
-              stops: [
-                    [0, 20],
-                    [30, 30],
-                    [70, 40],
-              ],
-            },
-          } }
-          layerOptions={ {
-            filter: ['has', 'point_count'],
-          } }
-        />
 
-        <Layer
-          id='cluster-count'
-          type='symbol'
-          sourceId='items'
-          layerOptions={ {
-            filter: ['has', 'point_count'],
-          } }
-          layout={ {
-            'text-field': '{point_count_abbreviated}',
-            'text-font': ['Space Mono Bold', 'Arial Unicode MS Bold'],
-            'text-size': 12,
-          } }
-          paint={ {
-            'text-color': '#FFFFFF',
-          } }
-        />
+        <Source id='items' geoJsonSource={ GEO_JSON_RESULTS_CLUSTERED } />
+        <Source id='items-unclustered' geoJsonSource={ GEO_JSON_RESULTS } />
 
-        <Layer
-          id='unclustered-point'
-          type='symbol'
-          sourceId='items'
-          layerOptions={ {
-            filter: ['!has', 'point_count'],
-          } }
-          layout={ {
-            'icon-image': {
-              property: 'category',
-              type: 'categorical',
-              stops: categories.toJS().map((cat) => [cat.name, cat.name]),
-            },
-            'icon-size': 0.5,
-            'icon-offset': [0, -10],
-            'icon-allow-overlap': true,
-          } }
-        />
+        { ! enableClustering && (<>
+          <Layer
+            id='unclustered-point-uncluster'
+            type='symbol'
+            sourceId='items-unclustered'
+            layerOptions={ {
+              filter: ['!has', 'point_count'],
+            } }
+            layout={ {
+              'icon-image': {
+                property: 'category',
+                type: 'categorical',
+                stops: categories.toJS().map((cat) => [cat.name, cat.name]),
+              },
+              'icon-size': 0.5,
+              'icon-offset': [0, -10],
+              'icon-allow-overlap': true,
+            } }
+          />
+        </>) }
+
+        { !! enableClustering && (<>
+          <Layer
+            id='clusters'
+            sourceId='items'
+            type='circle'
+            paint={ {
+              'circle-color': {
+                property: 'point_count',
+                type: 'interval',
+                stops: [
+                      [0, '#57599A'],
+                      [30, '#373974'],
+                      [70, '#23224E'],
+                ],
+              },
+              'circle-radius': {
+                property: 'point_count',
+                type: 'interval',
+                stops: [
+                      [0, 20],
+                      [30, 30],
+                      [70, 40],
+                ],
+              },
+            } }
+            layerOptions={ {
+              filter: ['has', 'point_count'],
+            } }
+          />
+
+          <Layer
+            id='cluster-count'
+            type='symbol'
+            sourceId='items'
+            layerOptions={ {
+              filter: ['has', 'point_count'],
+            } }
+            layout={ {
+              'text-field': '{point_count_abbreviated}',
+              'text-font': ['Space Mono Bold', 'Arial Unicode MS Bold'],
+              'text-size': 12,
+            } }
+            paint={ {
+              'text-color': '#FFFFFF',
+            } }
+          />
+
+          <Layer
+            id='unclustered-point'
+            type='symbol'
+            sourceId={'items'}
+            layerOptions={ {
+              filter: ['!has', 'point_count'],
+            } }
+            layout={ {
+              'icon-image': {
+                property: 'category',
+                type: 'categorical',
+                stops: categories.toJS().map((cat) => [cat.name, cat.name]),
+              },
+              'icon-size': 0.5,
+              'icon-offset': [0, -10],
+              'icon-allow-overlap': true,
+            } }
+          />
+        </>) }
 
         <Layer
           id='municipality-hover'
@@ -586,7 +650,6 @@ class ResultMap extends Component {
         {popup}
       </Map></div>
       <FocusHandler view='map' />
-      <MapSyncToggle />
     </div>
     );
   }
@@ -602,4 +665,5 @@ export default connect(state => ({
   hoveredMunicipality: state.app.get('hoveredMunicipality'),
   selectedElement: state.app.get('selectedElement'),
   placeSelected: state.app.get('placeSelected'),
+  enableClustering: state.app.get('enableClustering'),
 }))(ResultMap);

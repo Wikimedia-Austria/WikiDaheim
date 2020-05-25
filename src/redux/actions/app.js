@@ -35,6 +35,8 @@ export const MOBILE_VIEW_SWITCH = 'MOBILE_VIEW_SWITCH';
 
 export const TOGGLE_SYNC_LIST_MAP = 'TOGGLE_SYNC_LIST_MAP';
 export const TOGGLE_CITY_INFO = 'TOGGLE_CITY_INFO';
+export const TOGGLE_CLUSTERING = 'TOGGLE_CLUSTERING';
+export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS';
 
 /*
   AUTOCOMPLETE ACTIONS
@@ -180,58 +182,9 @@ function placeToggleCategory(data) {
   };
 }
 
-/*
-function placeLoadCategoryActionStart(data) {
-  return {
-    type: PLACE_LOAD_CATEGORY_ACTION_START,
-    data,
-  };
-}
-
-function placeLoadCategoryActionSuccess(data) {
-  return {
-    type: PLACE_LOAD_CATEGORY_ACTION_SUCCESS,
-    data,
-  };
-}
-
-function placeLoadCategoryActionError(error) {
-  return {
-    type: PLACE_LOAD_CATEGORY_ACTION_ERROR,
-    error,
-  };
-}
-*/
-
 export function toggleCategory(categoryName) {
-  return function (dispatch /* , getState */) {
+  return function (dispatch) {
     dispatch(placeToggleCategory(categoryName));
-
-    // currently disabled, as we load all categories at the initial fetch of town data
-    /*
-    const state = getState().app;
-    const currentCategory = state.get('categories').find((category) =>
-      category.get('name') === categoryName
-    );
-
-    // check if the category is already loaded
-    if (state.get('placeSelected') && !currentCategory.get('loaded')) {
-      dispatch(placeLoadCategoryActionStart(categoryName));
-
-      const place = state.get('placeMapData');
-      const coordinates = place.get('geometry').get('coordinates');
-      const wikidata = place.get('properties').get('wikidata');
-
-      const location = {
-        longitude: coordinates.get(0),
-        latitude: coordinates.get(1),
-        wikidata,
-      };
-
-      wikiDaheimApi.getTownData(location, [categoryName], false)
-        .then(data => dispatch(placeLoadCategoryActionSuccess(data)))
-        .catch(error => dispatch(placeLoadCategoryActionError(error)));
-    } */
   };
 }
 
@@ -329,6 +282,18 @@ export function mobileViewSwitch(data) {
 export function toggleSyncListAndMap() {
   return {
     type: TOGGLE_SYNC_LIST_MAP,
+  };
+}
+
+export function toggleClustering() {
+  return {
+    type: TOGGLE_CLUSTERING,
+  };
+}
+
+export function toggleSettings() {
+  return {
+    type: TOGGLE_SETTINGS,
   };
 }
 

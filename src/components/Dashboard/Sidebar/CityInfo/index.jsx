@@ -5,7 +5,7 @@ import { List, Map } from 'immutable';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import { toggleCityInfo } from 'redux/actions/app';
-import MapSyncToggle from 'components/Global/MapSyncToggle';
+import Settings from '../Settings';
 import ExternalLinkOverlay from './ExternalLinkOverlay';
 
 class CityInfo extends Component {
@@ -201,8 +201,9 @@ class CityInfo extends Component {
                   defaultMessage='GPX-Datei'
                 />
               </button>
+
+              <Settings />
             </footer>
-            <MapSyncToggle />
           </div>
         </section>
         { externalLinkOverlay }
