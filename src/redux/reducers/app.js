@@ -29,6 +29,7 @@ import {
 
   MAP_POSITION_CHANGED,
   MAP_ZOOM_CHANGED,
+  MAP_LOADED,
 
   TOGGLE_FILTER,
   TOGGLE_SYNC_LIST_MAP,
@@ -63,6 +64,7 @@ const initialState = Map({
   selectedElement: null,
   currentMapPosition: fromJS([13.2, 47.516231]),
   currentMapZoom: 7,
+  mapLoaded: false,
 
   mobileView: 'map',
   syncListAndMap: true,
@@ -319,7 +321,14 @@ const actionsMap = {
     });
   },
 
-  // MAP ZOOM change
+  // MAP LOADED
+  [MAP_LOADED]: (state, action) => {
+    return state.merge({
+      mapLoaded: true,
+    });
+  },
+
+  // MOBILE VIEW SWITCH
   [MOBILE_VIEW_SWITCH]: (state, action) => {
     return state.merge({
       mobileView: action.data,

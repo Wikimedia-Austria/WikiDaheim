@@ -39,6 +39,7 @@
 
 .mapboxgl-popup {
   pointer-events: none !important;
+  border-radius: $ui-radius !important;
 
   .mapboxgl-popup-tip {
     position: absolute;
@@ -62,9 +63,9 @@
   font-family: $main-font;
   font-variant-ligatures: none;
   padding: .5em .5em !important;
-  border-radius:none !important;
   text-align: center;
   pointer-events: none !important;
+  max-width: 20em;
 
   strong {
     font-weight:normal;
@@ -91,6 +92,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border-top-left-radius: $ui-radius;
+    border-top-right-radius: $ui-radius;
   }
 
   .TextContainer {
@@ -108,6 +111,19 @@
     p, span {
       font-size: 0.8rem;
       color: black;
+    }
+  }
+
+  .DescriptionContainer {
+    strong {
+      font-weight: bold;
+      line-height: 1.3;
+      font-size: 1rem;
+    }
+
+    span {
+      font-family: sans-serif;
+      opacity: 0.75;
     }
   }
 }

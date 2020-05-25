@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { FormattedMessage } from 'react-intl';
-import { clearState } from 'lib/localStorage';
+import { clearState } from 'redux/localStorage';
 import Menu from './Menu';
 import MenuToggle from './MenuToggle';
 import LanguageSwitch from './LanguageSwitch';

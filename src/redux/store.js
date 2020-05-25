@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { loadState, saveState } from 'lib/localStorage';
+import { loadState, saveState } from 'redux/localStorage';
 import historySyncMiddleware from 'redux/middleware/historySync';
 
 import createRootReducer from './reducers';

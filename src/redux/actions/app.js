@@ -27,6 +27,7 @@ export const PLACE_ITEM_SELECT = 'PLACE_ITEM_SELECT';
 export const MUNICIPALITY_HOVER = 'MUNICIPALITY_HOVER';
 export const MUNICIPALITY_LEAVE = 'MUNICIPALITY_LEAVE';
 
+export const MAP_LOADED = 'MAP_LOADED';
 export const MAP_POSITION_CHANGED = 'MAP_POSITION_CHANGED';
 export const MAP_ZOOM_CHANGED = 'MAP_ZOOM_CHANGED';
 
@@ -297,6 +298,13 @@ export function mapPositionChanged(data) {
         data,
       });
     }, 100);
+  };
+}
+
+/* MAP LOADED */
+export function mapLoaded() {
+  return {
+    type: MAP_LOADED,
   };
 }
 

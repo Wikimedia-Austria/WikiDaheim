@@ -5,7 +5,7 @@ import { fromJS } from 'immutable';
 import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace } from 'redux/actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, mapLoaded } from 'redux/actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
@@ -203,6 +203,8 @@ class ResultMap extends Component {
 
     this.updateHighlightedArea(map);
     this.updateMapPadding(map);
+
+    dispatch(mapLoaded());
   }
 
   loadMissingMapImage(map, e) {
@@ -264,7 +266,7 @@ class ResultMap extends Component {
       }));
 
       this.updateHighlightedArea(map);
-    }, 0);
+    }, 20);
   }
 
   triggerMunicipalityLeave(e, map) {

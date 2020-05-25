@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 import {
   MAP_POSITION_CHANGED,
   PLACE_SELECT_ACTION_SUCCESS,
-  LOAD_CATEGORIES_ACTION_SUCCESS,
+  MAP_LOADED,
   selectPlace
 } from 'redux/actions/app';
 import { PUBLIC_ROOT } from 'config';
@@ -42,21 +42,21 @@ export default store => next => action => {
       let title = placeData.get('text');
       let wikidata = placeProperties.get('wikidata');
 
-      url += `/${wikidata || iso || id}/${title}`;
+      url += `/${encodeURIComponent(wikidata || iso || id)}/${encodeURIComponent(title)}`;
     }
 
     dispatch( replace( url ) );
   }
 
-  if ( LOAD_CATEGORIES_ACTION_SUCCESS === type ) {
+  if ( MAP_LOADED === type ) {
     const startPattern = `${PUBLIC_ROOT}@`;
     if( initialLocation.startsWith( startPattern ) ) {
       const props = initialLocation.substr( startPattern.length).split('/');
 
       if( props.length >= 3 ) {
         const latlng = props[0].split(',').map(Number);
-        const id = props[1];
-        const text = props[2];
+        const id = decodeURIComponent(props[1]);
+        const text = decodeURIComponent(props[2]);
         const properties = id.startsWith('Q') ? { wikidata: id } : {};
 
         const data = {
@@ -74,6 +74,10 @@ export default store => next => action => {
         if( !id.startsWith('Q') ) {
           data.iso = id;
         }
+
+        // check if this was a window reload
+        const placeData = state.app.get('placeMapData');
+        if( placeData.get('text') === text ) return;
 
         setTimeout(() => dispatch(selectPlace(fromJS( data ))), 100);
       }
