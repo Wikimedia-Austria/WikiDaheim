@@ -195,7 +195,7 @@ class ResultMap extends Component {
       });
 
       /*
-       trigger municipality hover (small zoom size layer)
+      trigger municipality hover (small zoom size layer)
       */
       map.on('mousemove', 'municipalities', (e) => this.triggerMunicipalityHover(e, map));
       map.on('mouseleave', 'municipalities', (e) => this.triggerMunicipalityLeave(e, map));
@@ -207,14 +207,17 @@ class ResultMap extends Component {
       map.on('mouseleave', 'municipalities-detail', (e) => this.triggerMunicipalityLeave(e, map));
     }
 
-    map.on('click', 'unclustered-point', (e) => {
+    const unclusteredClick = (e) => {
       dispatch(placeItemSelect(
         this.props.items.find((c) => c.get('id') === e.features[0].properties.id),
         'map'
       ));
 
       //e.stopPropagation();
-    });
+    }
+
+    map.on('click', 'unclustered-point', (e) => { unclusteredClick( e ) });
+    map.on('click', 'unclustered-point-uncluster', (e) => { unclusteredClick( e ) });
 
     map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
     map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));

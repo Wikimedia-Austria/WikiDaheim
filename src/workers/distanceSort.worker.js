@@ -1,6 +1,7 @@
 import { getDistance } from 'geolib';
 import { fromJS } from 'immutable';
 
+//eslint-disable-next-line no-restricted-globals
 self.addEventListener('message', e => {
   const currentMapPosition = fromJS(e.data.currentMapPosition);
   const items = fromJS(e.data.items);
@@ -28,5 +29,6 @@ self.addEventListener('message', e => {
     return 0;
   });
 
+  //eslint-disable-next-line no-restricted-globals
   self.postMessage(sortedItems.toJS());
 });

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-webpack-loader-syntax */
-/*
+
 import about_de from './about_de.html';
 import about_en from './about_en.html';
 import about_it from './about_it.html';
@@ -63,6 +63,3 @@ const views = {
 };
 
 export default views;
-*/
-
-export default {};
