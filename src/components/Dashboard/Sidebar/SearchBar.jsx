@@ -62,7 +62,7 @@ class SearchBar extends Component {
         || item.text === 'Vienna'
       ) {
         return (
-          <div className='ViennaWarning'>
+          <div className='ViennaWarning' key="viennaWarn">
             <FormattedMessage
               id='search.viennaWarning'
               description='Warning to search for Viennese district.'
@@ -72,7 +72,7 @@ class SearchBar extends Component {
         );
       }
       return (
-        <div className={ isHighlighted ? 'highlighted' : '' }>
+        <div className={ isHighlighted ? 'highlighted' : '' } key={item.text}>
           {item.text}
           {item.context.map((context) => {
             const id = context.id.split('.');

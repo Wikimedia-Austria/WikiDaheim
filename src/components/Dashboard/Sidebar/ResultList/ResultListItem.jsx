@@ -134,7 +134,6 @@ class ResultListItem extends Component {
       let sourceInfo = item.get('source');
 
       if( !List.isList(sourceInfo) ) sourceInfo = new List([ sourceInfo ]);
-      console.log(sourceInfo);
 
       if (sourceInfo) {
         source = (

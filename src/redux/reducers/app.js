@@ -153,7 +153,7 @@ const actionsMap = {
     // merge Image Requests with other categories if they are a duplicate
     let imageRequests = items.filter((item) => item.category === 'request');
     const nonImageRequests = items.filter((item) => !['request', 'commons'].includes(item.category));
-    try {
+
     // loop through all non-image-requests and check if there is an image request nearby
     // if so, add the information to the current item and discard to image request item
     const mappedNonImageRequests = nonImageRequests.map((item, index, arr) => {
@@ -177,8 +177,6 @@ const actionsMap = {
           categories: item.categories.concat(nearestElement.categories.filter((cat) => item.categories.indexOf(cat) < 0)),
           source,
         });
-
-        console.log(item);
       });
 
 
@@ -189,8 +187,7 @@ const actionsMap = {
       cloneNonImageRequest.splice(index, 1);
 
       const nearestNonImageRequestElement = cloneNonImageRequest.find((r) => isPointWithinRadius(r, item, 15));
-
-      console.log(nearestNonImageRequestElement);*/
+      */
 
       return item;
     });
@@ -211,10 +208,6 @@ const actionsMap = {
       commonscat: action.data.commonscat,
       gpxlink: action.data.GPX,
     });
-
-  } catch(e) {
-    console.log(e);
-  }
   },
 
   [PLACE_TOGGLE_CATEGORY]: (state, action) => {
