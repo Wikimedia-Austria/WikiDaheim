@@ -180,7 +180,7 @@ class ResultList extends Component {
               } }
               className='ResultList-List'
               ref={this._list}
-              rowRenderer={({ index, isScrolling, key, style }) => {
+              rowRenderer={({ index, isScrolling, isVisible, key, style }) => {
                 const item = sortedItems.get(index);
                 const category = categories.find((c) => c.get('name') === item.get('category'));
                 const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
@@ -192,7 +192,7 @@ class ResultList extends Component {
                     category={ category }
                     isHovered={ isHovered }
                     isSelected={ isSelected }
-                    isScrolling={ isScrolling }
+                    isScrolling={ !isVisible }
                     currentLanguage={ currentLanguage }
                     onHover={ () => this.hoverItem(item) }
                     onLeave={ () => this.leaveItem() }

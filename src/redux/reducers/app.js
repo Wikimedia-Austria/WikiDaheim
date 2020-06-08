@@ -151,29 +151,51 @@ const actionsMap = {
     }));
 
     // merge Image Requests with other categories if they are a duplicate
-    const imageRequests = items.filter((item) => item.category === 'request');
+    let imageRequests = items.filter((item) => item.category === 'request');
     const nonImageRequests = items.filter((item) => !['request', 'commons'].includes(item.category));
-
+    try {
     // loop through all non-image-requests and check if there is an image request nearby
     // if so, add the information to the current item and discard to image request item
-    const mappedNonImageRequests = nonImageRequests.map((item) => {
-      const nearestElement = imageRequests.find((r) => isPointWithinRadius(r, item, 15));
+    const mappedNonImageRequests = nonImageRequests.map((item, index, arr) => {
+      const nearestElements = imageRequests.filter((r) => isPointWithinRadius(r, item, 15));
 
-      if (nearestElement) {
+      nearestElements.forEach(nearestElement => {
         // rm request from request array
         imageRequests.splice(
           imageRequests.findIndex(i => i.id === nearestElement.id)
         , 1);
 
+        // add the source
+        const source = Array.isArray(item.source) ? item.source : [item.source];
+        const addedSource = nearestElement.source || { title: nearestElement.name, link: nearestElement.editLink };
+
+        //check if the source already exists
+        if(source.filter(i => i.link === addedSource.link).length === 0) source.push(addedSource);
+
         // populate item with information from the request
-        return Object.assign({}, item, {
-          categories: item.categories.concat(nearestElement.categories),
-          source: nearestElement.source || { title: nearestElement.name, link: nearestElement.editLink },
+        item = Object.assign({}, item, {
+          categories: item.categories.concat(nearestElement.categories.filter((cat) => item.categories.indexOf(cat) < 0)),
+          source,
         });
-      }
+
+        console.log(item);
+      });
+
+
+
+      /*
+      Boilerplate for searching within category
+      const cloneNonImageRequest = arr.slice();
+      cloneNonImageRequest.splice(index, 1);
+
+      const nearestNonImageRequestElement = cloneNonImageRequest.find((r) => isPointWithinRadius(r, item, 15));
+
+      console.log(nearestNonImageRequestElement);*/
 
       return item;
     });
+
+
 
     const processedItems = mappedNonImageRequests.concat(
       imageRequests,
@@ -189,6 +211,10 @@ const actionsMap = {
       commonscat: action.data.commonscat,
       gpxlink: action.data.GPX,
     });
+
+  } catch(e) {
+    console.log(e);
+  }
   },
 
   [PLACE_TOGGLE_CATEGORY]: (state, action) => {

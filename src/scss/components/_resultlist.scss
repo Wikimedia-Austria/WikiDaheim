@@ -165,9 +165,11 @@
     }
 
     .Details-Sbs {
+      font-family: sans-serif;
 
       @include md {
         display: flex;
+        align-items: flex-end;
       }
 
       a {
@@ -222,8 +224,19 @@
     }
 
     .Details-Source {
-      p > span > span > span:nth-of-type(1) {
-        font-weight: bold;
+      font-family: sans-serif;
+
+      a {
+        display: inline-block;
+
+        &::after {
+          content: ', ';
+          padding-right: .25em;
+        }
+
+        &:last-child::after {
+          display: none;
+        }
       }
 
       @include md {

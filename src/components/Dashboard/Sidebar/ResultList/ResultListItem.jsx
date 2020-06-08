@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Truncate from 'react-truncate';
+import { List } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import getFilePath from 'wikimedia-commons-file-path';
 import CategoryName from 'components/Global/CategoryName';
@@ -130,29 +131,33 @@ class ResultListItem extends Component {
       }
 
       // pre-render the source info (if any)
-      const sourceInfo = item.get('source');
+      let sourceInfo = item.get('source');
+
+      if( !List.isList(sourceInfo) ) sourceInfo = new List([ sourceInfo ]);
+      console.log(sourceInfo);
 
       if (sourceInfo) {
         source = (
           <div className='Details-Source'>
-            <a
-              href={ sourceInfo.get('link') }
-              target='_blank'
-              rel='noopener noreferrer'
-              title={ sourceInfo.get('title') }
-            >
-              <p>
-                <Truncate lines={ 2 }>
-                  <FormattedMessage
-                    id='item.imageRequestSource'
-                    description='Title for the Image Request Source Headline'
-                    defaultMessage='Quelle:'
-                  />
-                  <br />
-                  <SourceName source={ sourceInfo.get('title') } />
-                </Truncate>
-              </p>
-            </a>
+            <p>
+              <FormattedMessage
+                id='item.imageRequestSource'
+                description='Title for the Image Request Source Headline'
+                defaultMessage='Quellen:'
+              />
+              <br />
+              { sourceInfo.map( src => (
+                <a
+                  href={ src.get('link') }
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  title={ src.get('title') }
+                  key={ src.get('link') }
+                >
+                  <SourceName source={ src.get('title') } />
+                </a>
+              ) ) }
+            </p>
           </div>
         );
       }
