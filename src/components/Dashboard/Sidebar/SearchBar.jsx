@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 import { FormattedMessage } from 'react-intl';
 import { autocomplete, selectPlace, toggleCityInfo } from 'redux/actions/app';
-import { BounceLoader } from 'react-spinners';
+import { RotateSpinner } from "react-spinners-kit";
 import Immutable from 'immutable';
 
 class SearchBar extends Component {
@@ -91,7 +91,7 @@ class SearchBar extends Component {
           {isLoading ? (
             <div className='SearchBar-Loader'>
               <div className='SearchBar-Loader-inner'>
-                <BounceLoader
+                <RotateSpinner
                   color={ '#fff' }
                   loading={ true }
                 />

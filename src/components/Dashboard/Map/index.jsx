@@ -28,6 +28,7 @@ class ResultMap extends Component {
     hoveredMunicipality: PropTypes.object,
     selectedElement: PropTypes.object,
     placeSelected: PropTypes.bool,
+    placeLoading: PropTypes.bool,
     enableClustering: PropTypes.bool,
 
     // from react-redux connect
@@ -85,7 +86,10 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the city center when a new city is selected
      */
-    if (prevState.coordinates[0] === 0 || this.props.placeMapData.get('id') !== prevProps.placeMapData.get('id')) {
+
+     console.log(this.props.placeLoading);
+    if (prevState.coordinates[0] === 0 || ( !this.props.placeLoading && prevProps.placeLoading) ) {
+      console.log(this.props.placeMapData);
       // prevent the map from moving on every redux state change
       const coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({
@@ -656,5 +660,6 @@ export default connect(state => ({
   hoveredMunicipality: state.app.get('hoveredMunicipality'),
   selectedElement: state.app.get('selectedElement'),
   placeSelected: state.app.get('placeSelected'),
+  placeLoading: state.app.get('placeLoading'),
   enableClustering: state.app.get('enableClustering'),
 }))(ResultMap);

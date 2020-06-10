@@ -11,12 +11,13 @@ import Filter from './Filter';
 
 class Sidebar extends Component {
   static propTypes = {
-    placeSelected: PropTypes.bool,
+    placeLoading: PropTypes.bool,
+    placeLoaded: PropTypes.bool,
     items: PropTypes.object,
   };
 
   render() {
-    const { placeSelected, items } = this.props;
+    const { placeSelected, placeLoading, items } = this.props;
 
     return (
       <div className='ResultList'>
@@ -24,10 +25,10 @@ class Sidebar extends Component {
           <SearchBar />
 
           {placeSelected ? <CityInfo /> : null}
-          {placeSelected ? <Filter items={ items } /> : null}
+          {placeSelected && !placeLoading ? <Filter items={ items } /> : null}
         </div>
 
-        {placeSelected ? <ResultList items={ items } /> : <Page page={ { slug: 'index' } } />}
+        {placeSelected ? !placeLoading ? <ResultList items={ items } /> : null : <Page page={ { slug: 'index' } } />}
         <FocusHandler view='list' />
       </div>
     );
@@ -36,4 +37,5 @@ class Sidebar extends Component {
 
 export default connect(state => ({
   placeSelected: state.app.get('placeSelected'),
+  placeLoading: state.app.get('placeLoading'),
 }))(Sidebar);

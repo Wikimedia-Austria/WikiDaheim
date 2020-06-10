@@ -5,7 +5,7 @@ import { FALLBACK_LANGUAGE } from 'config';
 import classNames from 'classnames';
 import Views from 'views';
 
-class About extends Component {
+class Page extends Component {
   static propTypes = {
     page: PropTypes.object,
     currentLanguage: PropTypes.string,
@@ -47,4 +47,4 @@ class About extends Component {
 
 export default connect(state => ({
   currentLanguage: state.locale.get('language'),
-}))(About);
+}))(Page);

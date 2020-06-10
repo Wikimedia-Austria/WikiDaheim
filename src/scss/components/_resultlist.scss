@@ -273,6 +273,7 @@
   }
 
   .Details-Text {
+    position: relative;
     height: 9rem;
     padding: 1rem;
     font-size: 0.9rem;
@@ -282,9 +283,19 @@
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     background-color:rgba(0, 0, 0, 0.05);
+    font-family: sans-serif;
 
     p {
       margin-bottom: 0;
+    }
+
+    a {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      text-align: right;
+      font-family: $main-font;
+      font-weight: bold;
     }
   }
 

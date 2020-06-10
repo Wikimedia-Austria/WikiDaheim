@@ -106,6 +106,8 @@ html {
 
 .Page {
   background-color: rgb(245, 245, 245);
+  background-image: url('../../assets/img/pattern.png');
+  background-attachment: fixed;
   overflow: hidden;
   min-height: calc( 100vh -  56px);
 }
@@ -120,6 +122,7 @@ html {
   background-color: white;
 
   @include shadow-box;
+  box-shadow: $ui-shadow, 0 0 40rem 20rem rgba(245, 245, 245, .8);
 
   width: 90%;
   @include sm { width: 66.666666%; }
@@ -207,7 +210,7 @@ html {
     margin-bottom: 1rem;
 
     border-radius: $ui-radius;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(250, 250, 250);
 
     &:last-child {
       border-bottom: none;
@@ -233,6 +236,39 @@ html {
     div {
       flex: 1;
 
+    }
+  }
+
+  &.TextPage--Feedback {
+    form {
+      display: flex;
+      flex-direction: column;
+      margin: 2rem 0 1rem;
+    }
+
+    input, textarea {
+      margin-bottom: 1rem;
+      font-family: sans-serif;
+      padding: 1rem;
+      @include shadow-box;
+    }
+
+    textarea {
+      min-height: 10rem;
+    }
+
+    input[type="submit"] {
+      background-color: $primary-color;
+      color: white;
+      text-transform: uppercase;
+      font-family: $main-font;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    p.legal {
+      font-size: 0.85em;
+      opacity: .75;
     }
   }
 }

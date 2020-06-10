@@ -125,10 +125,11 @@ const actionsMap = {
     return state.merge({
       searchLoading: false,
       searchData: new List(),
-      searchText: action.data.get('text'),
+      searchText: action.data.get('text') || '...',
       placeMapData: action.data,
       placeLoading: true,
       placeError: null,
+      items: new List(),
     });
   },
   [PLACE_SELECT_ACTION_ERROR]: (state, action) => {
@@ -199,9 +200,25 @@ const actionsMap = {
       items.filter((item) => item.category === 'commons')
     );
 
+    console.log(action.data);
     return state.merge({
       placeSelected: true,
       placeLoading: false,
+      searchText: action.data.name,
+      placeMapData: {
+        ...state.get('placeMapData').toJS(),
+        text: action.data.name,
+        iso: action.data.gemeindekennzahl,
+        properties: {
+          wikidata: action.data.wikidata,
+        },
+        geometry: {
+          coordinates: [
+            action.data.location.longitude,
+            action.data.location.latitude,
+          ]
+        }
+      },
       categories,
       items: processedItems,
       articles: action.data.articles,

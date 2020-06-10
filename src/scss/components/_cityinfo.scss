@@ -187,7 +187,7 @@
   left:0;
   right:0;
   bottom:0;
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(0,0,0,.2);
   z-index: $z-index-menu + 200;
   display: flex;
   justify-content: flex-end;
@@ -202,17 +202,19 @@
   .ExternalLink-Overlay-Inner {
     background-color:white;
     position:relative;
-    padding:3em;
+    padding:2em;
     box-shadow:.1em .1em .3em rgba(0,0,0,.15);
     flex: 0;
 
+    @include shadow-box;
+
     @include md {
-      max-width: 50%;
+      max-width: 35rem;
     }
 
     button {
       position:absolute;
-      top:3em;
+      top:2em;
       right:3em;
       line-height:2em;
       text-decoration: underline;
@@ -232,14 +234,19 @@
 
     a {
       display:block;
-      line-height:2.5em;
+      line-height:3em;
       background-color: $secondary-color;
       color: $secondary-color-contrast;
-      font-size:1.2em;
+      font-size:1em;
       text-decoration:none;
       padding:0 .5em;
       text-align:center;
       margin-top: 2rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+
+      @include shadow-box;
     }
   }
 }

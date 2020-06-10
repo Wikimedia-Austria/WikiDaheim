@@ -5,10 +5,12 @@ import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
 
 import Dashboard from 'components/Dashboard';
+import Feedback from 'components/Feedback';
 import Page from 'components/Page';
 
 const routeCodes = {
   DASHBOARD: PUBLIC_ROOT,
+  FEEDBACK: `${PUBLIC_ROOT}feedback`
 };
 
 const loadedPages = pages.map((page) => {
@@ -21,6 +23,8 @@ export default () => (
     <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
 
     <Route path={ `${routeCodes.DASHBOARD}@:latlng/:municipaliy_id?/:municipality_name?/:selected_object?` } component={ Dashboard } />
+
+    <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
 
     { loadedPages.map((page) => (
       <Route

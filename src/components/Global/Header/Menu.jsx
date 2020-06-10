@@ -42,6 +42,15 @@ class Header extends Component {
           </NavLink>
         )) }
 
+        <NavLink
+          activeClassName='Menu-link--active'
+          className='Menu-link'
+          exact
+          to={ routeCodes.FEEDBACK }
+          >
+          <span>Feedback</span>
+        </NavLink>
+
         <footer>
           <FormattedMessage
             id='menu.facebook'

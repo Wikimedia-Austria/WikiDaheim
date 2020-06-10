@@ -148,18 +148,21 @@ export function selectPlace(place) {
   return function (dispatch, getState) {
     dispatch(placeSelectActionStart(place));
 
-    const coordinates = place.get('geometry').get('coordinates');
+    const coordinates = place.get('geometry') ? place.get('geometry').get('coordinates') : null;
     const wikidata = place.get('properties').get('wikidata');
     const iso = place.get('iso');
-    const name = place.get('text');
+    const name = place.get('text') || 'Loading...';
 
     const location = {
-      longitude: coordinates.get(0),
-      latitude: coordinates.get(1),
       name,
       iso,
       wikidata,
     };
+
+    if( coordinates ) {
+      location.longitude = coordinates.get(0);
+      location.latitude = coordinates.get(1);
+    }
 
     // const selectedCats = getState().app.get('categories').filter((cat) => cat.get('show'));
     const selectedCats = getState().app.get('categories'); // always load all categories
