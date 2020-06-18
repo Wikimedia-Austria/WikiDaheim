@@ -11,7 +11,7 @@ import { PUBLIC_ROOT } from 'config';
 let initialLocation = window.location.pathname;
 
 export default store => next => action => {
-  const { type, data } = action;
+  const { type } = action;
   const { dispatch, getState } = store;
   const state = getState();
 
@@ -47,7 +47,7 @@ export default store => next => action => {
 
       // check if this was a window reload
       const placeData = state.app.get('placeMapData');
-      //if( placeData.get('properties').get('wikidata') === wikidata ) return;
+      if( placeData.get('properties').get('wikidata') === wikidata ) return;
 
       setTimeout(() => dispatch(selectPlace(fromJS( { properties: { wikidata } } ))), 100);
     }
