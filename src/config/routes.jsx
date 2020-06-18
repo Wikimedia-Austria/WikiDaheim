@@ -5,7 +5,7 @@ import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
 
 import Dashboard from 'components/Dashboard';
-import Feedback from 'components/Feedback';
+//import Feedback from 'components/Feedback';
 import Page from 'components/Page';
 
 const routeCodes = {
