@@ -1,0 +1,109 @@
+.SettingsPanel {
+  position: relative;
+  right: 0;
+  padding: 0;
+  transition: opacity .2s ease, right .2s ease;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+
+  @include md {
+    position: absolute;
+    right: -2.5rem;
+    opacity: 0;
+    width: auto;
+    transform: translate(100%, -1rem);
+    padding: 1em;
+    background-color: $secondary-color;
+    @include shadow-box;
+    border-top: none;
+    margin-top: 0;
+    pointer-events: none;
+  }
+
+  &::after {
+    display: none;
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: -0.95rem;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 1rem 1rem 1rem 0;
+    border-color: transparent $secondary-color transparent transparent;
+
+    @include md {
+      display: block;
+    }
+  }
+
+  &.SettingsPanel--active {
+    pointer-events: all;
+    opacity: 1;
+    right: -1.5rem;
+  }
+}
+
+.SyncListToggle,
+.EnableClusteringToggle {
+  margin-bottom: .5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .SyncListToggle-Button,
+  .EnableClusteringToggle-Button {
+    border-radius: 3px;
+    line-height: 2em;
+    padding: 0 1em 0 3em;
+    font-size: 0.9rem;
+    position: relative;
+    min-width: 100%;
+    text-align: left;
+    transition: background-color .2s ease;
+
+    @include md {
+      background-color: $primary-color;
+      line-height: 3em;
+      color: white;
+    }
+
+    &:hover {
+      line-height: 2em;
+
+      @include md {
+        line-height: 3em;
+        background-color: darken($primary-color, 5%);
+      }
+    }
+
+    &::after {
+      content:'';
+      position:absolute;
+      left: 1em;
+      width: 1.5em;
+      height: 1.5em;
+      bottom: 0.3em;
+      background-image: url(../../assets/icons/icon_unchecked.svg);
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size: contain;
+
+
+      @include md {
+        bottom: 0.85em;
+      }
+    }
+
+    &.SyncListToggle-Button--active,
+    &.EnableClusteringToggle-Button--active {
+      &::after {
+        background: url(../../assets/icons/icon_checked.svg);
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}
