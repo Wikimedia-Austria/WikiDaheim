@@ -1,4 +1,5 @@
 # WikiDaheim
+[![Build Status](https://travis-ci.org/Wikimedia-Austria/WikiDaheim.svg?branch=master)](https://travis-ci.org/Wikimedia-Austria/WikiDaheim)
 
 ## Prerequisites
 1. Install [Node.js](https://nodejs.org/), [yarn](https://yarnpkg.com/lang/en/)
