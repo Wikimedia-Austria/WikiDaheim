@@ -175,8 +175,8 @@ class ResultList extends Component {
                 const item = this.state.sortedList.get(index);
                 const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
 
-                if(isSelected) return window.innerWidth < 770 ? 112 : 319;
-                return window.innerWidth < 770 ? 112 : 135;
+                if(isSelected) return window.innerWidth < 770 ? 263 : 319;
+                return window.innerWidth < 770 ? 105 : 135;
               } }
               className='ResultList-List'
               ref={this._list}

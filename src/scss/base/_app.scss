@@ -113,7 +113,7 @@ html {
 }
 
 .TextPage {
-  margin: 5vh auto 3em;
+  margin: 1.5rem auto 3em;
   padding: 1.5em 2em 1em;
   text-align:left;
   position: relative;
@@ -127,6 +127,9 @@ html {
   width: 90%;
   @include sm { width: 66.666666%; }
   @include ml { width: 50%; }
+  @include md {
+    margin-top: 3rem;
+  }
 
   h1 {
     text-align:center;
@@ -172,14 +175,15 @@ html {
   }
 
   &.TextPage--index {
-    margin: 0;
+    margin: 1rem 0.5rem 0;
     padding: 1.5rem 2rem 1rem;
     width: auto;
     background-color: white;
     font-size: 0.9em;
     overflow: auto;
-
     @include shadow-box;
+
+
 
     @include md {
       margin: 1rem 0.5rem 0;

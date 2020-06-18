@@ -13,10 +13,10 @@
 2. Run `yarn run manage:translations` to get the translation status
 3. check the console output for needed changes
 
-You can find the languages files in `source/translations/locales`.
+You can find the languages files in `src/translations/locales`.
 
-To add a new language add it to `source/translations/languages.json` and re-run the translation manager. A new file for the language will be created.
-Also translate all Views in `source/js/views/` as well as their names in `views.json`.
+To add a new language add it to `src/translations/languages.json` and re-run the translation manager. A new file for the language will be created.
+Also translate all Views in `src/views/` as well as their names in `views.json`.
 
 ## Deploy
 1. Run `yarn run build`

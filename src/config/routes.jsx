@@ -18,13 +18,14 @@ const loadedPages = pages.map((page) => {
   return page;
 });
 
+// add feedback form:
+// <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
+
 export default () => (
   <Switch>
     <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
 
     <Route path={ `${routeCodes.DASHBOARD}@:latlng/:municipaliy_id?/:municipality_name?/:selected_object?` } component={ Dashboard } />
-
-    <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
 
     { loadedPages.map((page) => (
       <Route
