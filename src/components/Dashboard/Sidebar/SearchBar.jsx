@@ -137,7 +137,8 @@ export default connect(state => ({
   isLoading: (
     state.app.get('categoriesLoading') ||
     state.app.get('searchLoading') ||
-    state.app.get('placeLoading')
+    state.app.get('placeLoading') ||
+    !state.app.get('mapLoaded')
   ),
   placeSelected: state.app.get('placeSelected'),
 }))(SearchBar);
