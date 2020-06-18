@@ -5,6 +5,7 @@ import Truncate from 'react-truncate';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import SourceName from 'components/Global/SourceName';
+import getFilePath from 'wikimedia-commons-file-path';
 
 class ResultListItem extends Component {
   static propTypes = {
@@ -56,7 +57,7 @@ class ResultListItem extends Component {
       isAudio = item.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/);
 
       if (!isAudio) {
-        const url = `https://commons.wikimedia.org/w/thumb.php?f=${ encodeURIComponent(item.get('foto')) }&width=256`;
+        const url = getFilePath(item.get('foto'), 256);
         photoContainerStyle.backgroundImage = `url('${ url }')`;
 
         // parse hex categoryColor, make 50% transparent for background in PhotoContainer
