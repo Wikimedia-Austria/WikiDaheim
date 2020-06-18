@@ -63,7 +63,7 @@ class ResultListItem extends Component {
 
     if(!isScrolling) {
       // add the currently selected language as caption language
-      uploadLink = item.get('uploadLink').replace('captionlang=de', `captionlang=${ currentLanguage }`);
+      uploadLink = item.get('uploadLink').replace('captionlang=de', `captionlang=${ currentLanguage }&uselang=${ currentLanguage }`);
 
       if (item.get('foto')) {
         const photoLinkString = item.get('foto')
