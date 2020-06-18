@@ -17,7 +17,6 @@ export default store => next => action => {
 
   if(
     [
-      MAP_POSITION_CHANGED,
       PLACE_SELECT_ACTION_SUCCESS
     ].includes( type )
   ) {
