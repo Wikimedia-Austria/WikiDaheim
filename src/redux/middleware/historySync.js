@@ -47,7 +47,7 @@ export default store => next => action => {
 
       // check if this was a window reload
       const placeData = state.app.get('placeMapData');
-      if( placeData.get('properties').get('wikidata') === wikidata ) return;
+      if( placeData && placeData.get('properties') && placeData.get('properties').get('wikidata') === wikidata ) return;
 
       setTimeout(() => dispatch(selectPlace(fromJS( { properties: { wikidata } } ))), 100);
     }
