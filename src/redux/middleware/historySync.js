@@ -1,7 +1,6 @@
 import { replace } from 'connected-react-router';
 import { fromJS } from 'immutable';
 import {
-  MAP_POSITION_CHANGED,
   PLACE_SELECT_ACTION_SUCCESS,
   MAP_LOADED,
   selectPlace
