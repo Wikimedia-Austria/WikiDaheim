@@ -31,7 +31,7 @@
   "item.missingTitle": "Title is missing",
   "item.photoLinkTitle": "Information {isAudio, select, yes {to the audio file} other {to the picture}}",
   "item.readArticle": "read article",
-  "item.viewCommons": "view category on Commons",
+  "item.viewCommons": "view entry",
   "item.viewEntry": "view entry",
   "map.switchMunicipality": "switch to municipality",
   "map.toggleSyncListAndMap": "Sort list by map centre",
