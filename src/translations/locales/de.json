@@ -31,7 +31,7 @@
   "item.missingTitle": "Titel fehlt",
   "item.photoLinkTitle": "Informationen {isAudio, select, yes {zur Audiodatei} other {zum Foto}}",
   "item.readArticle": "Artikel lesen",
-  "item.viewCommons": "zur Commons-Kategorie",
+  "item.viewCommons": "zum Eintrag",
   "item.viewEntry": "zum Eintrag",
   "map.switchMunicipality": "zu Gebiet wechseln",
   "map.toggleSyncListAndMap": "Liste nach Kartenmittelpunkt sortieren",
