@@ -254,7 +254,12 @@ html {
       margin-bottom: 1rem;
       font-family: sans-serif;
       padding: 1rem;
+      transition: opacity .2s ease;
       @include shadow-box;
+
+      &:disabled {
+        opacity: .5;
+      }
     }
 
     textarea {

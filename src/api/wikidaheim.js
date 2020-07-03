@@ -48,7 +48,7 @@ const getTownData = (location, categories, getWikiData) => {
 };
 
 const getFeedbackFormToken = () => {
-  return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }?forma?token=new`, {
+  return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }?token=new`, {
     method: 'get',
   }).then((res) => {
     if (!res.ok) throw Error(res.statusText);
@@ -56,10 +56,31 @@ const getFeedbackFormToken = () => {
   }).then(json => {
     return json.token;
   });
-}
+};
+
+const submitFeedbackForm = (token, subject, message) => {
+  return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }`, {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token,
+      subject,
+      message,
+    })
+  }).then((res) => {
+    if (!res.ok) throw Error(res.statusText);
+    return res.json();
+  }).then(json => {
+    return json;
+  });
+};
 
 export default {
   listCategories,
   getTownData,
   getFeedbackFormToken,
+  submitFeedbackForm,
 };
