@@ -2,7 +2,38 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
+import { getFeedbackFormToken } from 'src/api/wikidaheim';
+
 class Feedback extends Component {
+
+  constructor(props) {
+    this.countdownTimeout = null;
+
+    super(props);
+
+    this.state = {
+      token: null,
+      countdown: -1,
+      tokenIssued: null,
+    };
+  }
+
+  async componentDidMount() {
+    this.setState({
+      token: null,
+      countdown: -1,
+      tokenIssued: null,
+    });
+
+    const token = await getFeedbackFormToken();
+    console.log(token);
+  }
+
+  componentWillUnmount() {
+    if(this.countdownTimeout) {
+      clearTimeout(this.countdownTimeout);
+    }
+  }
 
   render() {
 

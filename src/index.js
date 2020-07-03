@@ -2,7 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './workers/serviceWorker';
+import * as Sentry from '@sentry/browser';
+import { SENTRY_DSN } from './config';
 
+// add sentry error tracking
+//Sentry.init({dsn: SENTRY_DSN});
+
+//initialize React-App
 ReactDOM.render(
   <App />,
   document.getElementById('root')

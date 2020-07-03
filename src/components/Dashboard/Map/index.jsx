@@ -86,10 +86,7 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the city center when a new city is selected
      */
-
-     console.log(this.props.placeLoading);
     if (prevState.coordinates[0] === 0 || ( !this.props.placeLoading && prevProps.placeLoading) ) {
-      console.log(this.props.placeMapData);
       // prevent the map from moving on every redux state change
       const coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({
@@ -386,8 +383,15 @@ class ResultMap extends Component {
   }
 
   // Updates the Map offset to fit the sidebar
-  updateMapPadding(map) {
+  async updateMapPadding(map) {
     const { placeSelected } = this.props;
+
+    // when we are currently zooming await the end of it as otherwise zooming will be aborted
+    const sleep = m => new Promise(r => setTimeout(r, m))
+    while(map._zooming) {
+      await sleep(200);
+    }
+
     if( placeSelected && window.innerWidth > 768 ) {
       map.setPadding({
         left: window.innerWidth / 3
