@@ -248,6 +248,13 @@ html {
       display: flex;
       flex-direction: column;
       margin: 2rem 0 1rem;
+      position: relative;
+    }
+
+    .loader {
+      position: absolute;
+      right: 1rem;
+      bottom: 2rem;
     }
 
     input, textarea {
@@ -273,11 +280,27 @@ html {
       font-family: $main-font;
       font-weight: 600;
       letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .finishInfo {
+      padding: 1rem 1rem 1rem;
+      margin: 2rem 0;
+      background-color: #7EC460;
+      color: white;
+
+      @include shadow-box;
+
+      h2 {
+        margin: 0;
+      }
     }
 
     p.legal {
       font-size: 0.85em;
       opacity: .75;
     }
+
+
   }
 }

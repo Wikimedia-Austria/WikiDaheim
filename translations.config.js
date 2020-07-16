@@ -1,9 +1,9 @@
 const manageTranslations = require('react-intl-translations-manager').default;
-const languages = require('./source/translations/languages.json');
+const languages = require('./src/translations/languages.json');
 
 
 manageTranslations({
-  messagesDirectory: 'source/translations/extractedMessages',
-  translationsDirectory: 'source/translations/locales/',
+  messagesDirectory: 'src/translations/extractedMessages',
+  translationsDirectory: 'src/translations/locales/',
   languages: languages.map((l) => l.locale),
 });

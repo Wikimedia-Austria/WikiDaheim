@@ -6,7 +6,7 @@ export const FALLBACK_LANGUAGE = 'en';
 
 /* MAPBOX CONFIG */
 export const COUNTRY_CODE = 'at';
-export const MAPBOX_API_KEY = 'pk.eyJ1Ijoid2lraW1lZGlhYXVzdHJpYSIsImEiOiJjajUyZWw3MTMwZGVpMnJxbGsxdnN4ZnlqIn0.9D5QSHyd8fs0_Wg2zlFnQg';
+export const MAPBOX_API_KEY = 'pk.eyJ1Ijoid2lraW1lZGlhYXVzdHJpYSIsImEiOiJjajN5djFuM2IwMDJxMndsYmY4N2pwdjQxIn0.3qQnUxx9-XGSsAAA4uw7-Q';
 
 /* WIKIDAHEIM-API CONFIG */
 export const WIKIDAHEIM_ENDPOINT = 'https://api.wikidaheim.at/api.php';

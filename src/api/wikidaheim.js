@@ -59,17 +59,14 @@ const getFeedbackFormToken = () => {
 };
 
 const submitFeedbackForm = (token, subject, message) => {
+  const formData = new FormData();
+  formData.append('token', token);
+  formData.append('subject', subject);
+  formData.append('message', message);
+
   return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }`, {
     method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token,
-      subject,
-      message,
-    })
+    body: formData
   }).then((res) => {
     if (!res.ok) throw Error(res.statusText);
     return res.json();
