@@ -35,7 +35,7 @@ class CityInfo extends Component {
   }
 
   render() {
-    const { articles, categories, placeMapData, commonscat, showCityInfo, gpxlink } = this.props;
+    const { articles, categories, placeMapData, commonscat, showCityInfo, gpxlink, activeFilters } = this.props;
 
     const classnames = classNames('CityInfo', {
       'CityInfo--active': showCityInfo,
@@ -107,7 +107,7 @@ class CityInfo extends Component {
           externalLinkOverlay = (<ExternalLinkOverlay
             title={ title }
             text={ text }
-            link={ `${ gpxlink }&categories=${ currentCategories }` }
+            link={ `${ gpxlink }&categories=${ currentCategories }${(activeFilters.size === 0 && '&data=all') || ''}` }
             closeAction={ () => this.setState({ 'shownLink': null }) }
           />);
           break;
@@ -220,4 +220,5 @@ export default connect(state => ({
   showCityInfo: state.app.get('showCityInfo'),
   commonscat: state.app.get('commonscat'),
   gpxlink: state.app.get('gpxlink'),
+  activeFilters: state.app.get('activeFilters'),
 }))(CityInfo);

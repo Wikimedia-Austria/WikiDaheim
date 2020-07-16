@@ -149,7 +149,7 @@ export function selectPlace(place) {
     dispatch(placeSelectActionStart(place));
 
     const coordinates = place.get('geometry') ? place.get('geometry').get('coordinates') : null;
-    const wikidata = place.get('properties').get('wikidata');
+    const wikidata = ( place.get('properties') && place.get('properties').get('wikidata') ) || false;
     const iso = place.get('iso');
     const name = place.get('text') || 'Loading...';
 

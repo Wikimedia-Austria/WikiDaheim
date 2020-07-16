@@ -1,4 +1,4 @@
-import { WIKIDAHEIM_ENDPOINT } from 'config';
+import { WIKIDAHEIM_ENDPOINT, WIKIDAHEIM_FEEDBACK_ENDPOINT } from 'config';
 
 const listCategories = () => {
   return fetch(`${ WIKIDAHEIM_ENDPOINT }?format=json&action=query&type=structure`, {
@@ -47,7 +47,37 @@ const getTownData = (location, categories, getWikiData) => {
   });
 };
 
+const getFeedbackFormToken = () => {
+  return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }?token=new`, {
+    method: 'get',
+  }).then((res) => {
+    if (!res.ok) throw Error(res.statusText);
+    return res.json();
+  }).then(json => {
+    return json.token;
+  });
+};
+
+const submitFeedbackForm = (token, subject, message) => {
+  const formData = new FormData();
+  formData.append('token', token);
+  formData.append('subject', subject);
+  formData.append('message', message);
+
+  return fetch(`${ WIKIDAHEIM_FEEDBACK_ENDPOINT }`, {
+    method: 'post',
+    body: formData
+  }).then((res) => {
+    if (!res.ok) throw Error(res.statusText);
+    return res.json();
+  }).then(json => {
+    return json;
+  });
+};
+
 export default {
   listCategories,
   getTownData,
+  getFeedbackFormToken,
+  submitFeedbackForm,
 };

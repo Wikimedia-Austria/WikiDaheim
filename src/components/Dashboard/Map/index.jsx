@@ -5,6 +5,7 @@ import { fromJS } from 'immutable';
 import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config';
+import boundaries from 'config/boundaries.json';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, mapLoaded } from 'redux/actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
@@ -86,10 +87,7 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the city center when a new city is selected
      */
-
-     console.log(this.props.placeLoading);
     if (prevState.coordinates[0] === 0 || ( !this.props.placeLoading && prevProps.placeLoading) ) {
-      console.log(this.props.placeMapData);
       // prevent the map from moving on every redux state change
       const coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
       this.setState({
@@ -201,14 +199,8 @@ class ResultMap extends Component {
       /*
       trigger municipality hover (small zoom size layer)
       */
-      map.on('mousemove', 'municipalities', (e) => this.triggerMunicipalityHover(e, map));
-      map.on('mouseleave', 'municipalities', (e) => this.triggerMunicipalityLeave(e, map));
-
-      /*
-        trigger municipality hover (large zoom size layer)
-      */
-      map.on('mousemove', 'municipalities-detail', (e) => this.triggerMunicipalityHover(e, map));
-      map.on('mouseleave', 'municipalities-detail', (e) => this.triggerMunicipalityLeave(e, map));
+      map.on('mousemove', 'wd-municipalities', (e) => this.triggerMunicipalityHover(e, map));
+      map.on('mouseleave', 'wd-municipalities', (e) => this.triggerMunicipalityLeave(e, map));
     }
 
     const unclusteredClick = (e) => {
@@ -223,8 +215,7 @@ class ResultMap extends Component {
     map.on('click', 'unclustered-point', (e) => { unclusteredClick( e ) });
     map.on('click', 'unclustered-point-uncluster', (e) => { unclusteredClick( e ) });
 
-    map.on('click', 'municipalities', (e) => this.triggerMunicipalitySelect(e));
-    map.on('click', 'municipalities-detail', (e) => this.triggerMunicipalitySelect(e));
+    map.on('click', 'wd-municipalities', (e) => this.triggerMunicipalitySelect(e));
 
     this.updateHighlightedArea(map);
     this.updateMapPadding(map);
@@ -251,26 +242,16 @@ class ResultMap extends Component {
   }
 
   triggerMunicipalityHover(e, map) {
-    const { dispatch, hoveredElement } = this.props;
-    const { lngLat } = e;
-    const element = e.features[0];
-    const layerId = element.layer.id;
-    let iso;
-    let name;
-
-    if (hoveredElement) return;
-
-    if (layerId === 'municipalities') {
-      iso = element.properties.iso;
-      name = element.properties.name;
-    } else {
-      iso = element.properties.GKZ;
-      name = element.properties.PG;
-    }
-
+    const { dispatch, hoveredMunicipality } = this.props;
+    const { lngLat, features } = e;
+    const feature = features[0];
+    const { id } = feature;
 
     // check if we are already hovering over this place
-    // if (hoveredMunicipality && hoveredMunicipality.get('iso') === iso) return;
+    if (hoveredMunicipality && hoveredMunicipality.get('iso') === id) return;
+
+    // look up info about the municipality
+    const municipality = boundaries.find(e => e.feature_id === id);
 
     // clear the micro-timeout
     if (this.municipalityHoverTimer) clearTimeout(this.municipalityHoverTimer);
@@ -279,13 +260,14 @@ class ResultMap extends Component {
       the hover action is packed into a small timeout to reduce
       event calls when moving over a large area
     */
+
     this.municipalityHoverTimer = setTimeout(() => {
       const canvas = map.getCanvas();
       canvas.style.cursor = 'pointer';
 
       dispatch(municipalityHover({
-        iso,
-        name,
+        iso: id,
+        name: municipality.name,
         longitude: lngLat.lng,
         latitude: lngLat.lat,
       }));
@@ -306,33 +288,23 @@ class ResultMap extends Component {
 
   triggerMunicipalitySelect(e) {
     const { dispatch, hoveredElement } = this.props;
-    const { lngLat } = e;
-    const { properties, layer } = e.features[0];
-    let iso;
-    let name;
+    const { id } = e.features[0];
+
+    console.log(e);
 
     if (hoveredElement) return;
 
-    if (layer.id === 'municipalities') {
-      iso = properties.iso;
-      name = properties.name;
-    } else if (layer.id === 'municipalities-detail') {
-      iso = properties.GKZ;
-      name = properties.PG;
-    }
+    // look up info about the municipality
+    const municipality = boundaries.find(e => e.feature_id === id);
 
     dispatch(municipalityLeave());
     dispatch(selectPlace(fromJS({
-      id: iso,
-      iso,
-      text: name,
+      id,
+      iso: municipality.unit_code,
+      text: municipality.name,
       geometry: {
-        coordinates: [
-          lngLat.lng,
-          lngLat.lat,
-        ],
-      },
-      properties,
+        coordinates: municipality.centroid,
+      }
     })));
   }
 
@@ -343,40 +315,30 @@ class ResultMap extends Component {
   updateHighlightedArea(map) {
     if( ! map._loaded ) return;
 
-    const { placeMapData } = this.props;
-    const municipalityName = placeMapData.get('text');
-    const municipalityGkz = placeMapData.get('iso');
-
+    const { placeMapData, placeLoading } = this.props;
+    const municipalityId = placeMapData.get('iso');
     const { hoveredMunicipality } = this.props;
 
     // filter current municipality
-    if (municipalityName) {
-      const pre = placeMapData.get('text').includes('Wien,') ? 'Wien ' : '';
-      map.setFilter('municipalities', ['!=', 'name', pre + municipalityName]);
+    if (municipalityId && !placeLoading) {
+      // look up info about the municipality
+      const municipality = boundaries.find(e => e.unit_code === municipalityId);
 
-      if (municipalityGkz) map.setFilter('municipalities-detail', ['!=', 'GKZ', municipalityGkz.toString()]);
-      else map.setFilter('municipalities-detail', ['!=', 'PG', municipalityName]);
+      if(municipality) {
+        map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ['!=', '$id', municipality.feature_id]]);
+      }
     } else {
-      map.setFilter('municipalities', ['has', 'name']);
-      map.setFilter('municipalities-detail', ['has', 'GKZ']);
+      map.setFilter('wd-municipalities', ['==', 'iso_3166_1', 'AT']);
     }
+
 
     // hover-effect for municipalities
     if (map.getSource('municipality-hover-item')) {
       if (hoveredMunicipality) {
-        let features;
-
-        if (map.getZoom() <= 9.1) {
-          features = map.querySourceFeatures('composite', {
-            sourceLayer: 'gemeinden_wien_bezirke_geo',
-            filter: ['==', 'iso', hoveredMunicipality.get('iso')],
-          });
-        } else {
-          features = map.querySourceFeatures('composite', {
-            sourceLayer: 'GKZGN-1ab8iv',
-            filter: ['==', 'GKZ', hoveredMunicipality.get('iso')],
-          });
-        }
+        const features = map.querySourceFeatures('composite', {
+          sourceLayer: 'boundaries_admin_3',
+          filter: ['==', '$id', hoveredMunicipality.get('iso')],
+        });
 
         map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features });
       } else {
@@ -386,8 +348,15 @@ class ResultMap extends Component {
   }
 
   // Updates the Map offset to fit the sidebar
-  updateMapPadding(map) {
+  async updateMapPadding(map) {
     const { placeSelected } = this.props;
+
+    // when we are currently zooming await the end of it as otherwise zooming will be aborted
+    const sleep = m => new Promise(r => setTimeout(r, m))
+    while(map._zooming) {
+      await sleep(200);
+    }
+
     if( placeSelected && window.innerWidth > 768 ) {
       map.setPadding({
         left: window.innerWidth / 3
@@ -521,7 +490,7 @@ class ResultMap extends Component {
 
     return (<div className='ResultMap'><div className="ResultMap-Wrapper">
       <Map
-        style='mapbox://styles/wikimediaaustria/cji05myuu486p2slazs7ljpyw' // eslint-disable-line react/style-prop-object
+        style='mapbox://styles/wikimediaaustria/ckceqt44w0u9s1inyj4e2bort' // eslint-disable-line react/style-prop-object
         containerStyle={ {
           height: '100%',
           width: '100%',
@@ -640,6 +609,7 @@ class ResultMap extends Component {
           paint={ {
             'fill-color': '#000',
             'fill-opacity': 0.08,
+            'fill-antialias': true,
           } }
         />
         {popup}

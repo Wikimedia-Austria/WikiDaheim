@@ -1,12 +1,10 @@
 [
-  "gdpr.cookietext",
   "map.switchMunicipality",
   "cancel",
   "cityinfo.gpxTitle",
   "uploadPhoto",
   "uploadPhoto.description",
   "cityinfo.editWikiLink",
-  "cityinfo.editWikiLinkDescription",
   "filter.title",
   "filter.categoryFilterTitle",
   "filter.propertyFilterTitle",
@@ -16,7 +14,6 @@
   "filter.missingDescription",
   "filter.noresults",
   "filter.resultssorting",
-  "item.photoLinkTitle",
   "item.missingDescription",
   "item.viewCommons",
   "item.viewEntry",
@@ -33,5 +30,6 @@
   "category.request",
   "header.logoAlt",
   "menu.facebook",
-  "menu.imprint"
+  "menu.imprint",
+  "gdpr.cookietext"
 ]

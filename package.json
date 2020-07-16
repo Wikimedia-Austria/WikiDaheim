@@ -8,6 +8,7 @@
   "dependencies": {
     "@formatjs/intl-pluralrules": "^1.5.9",
     "@formatjs/intl-relativetimeformat": "^4.5.16",
+    "@sentry/browser": "^5.17.0",
     "connected-react-router": "^6.8.0",
     "geolib": "^3.2.1",
     "immutable": "^3",
@@ -36,7 +37,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
-    "manage:translations": "node ./translations.config.js"
+    "manage:translations": "NODE_ENV=production babel ./src >/dev/null && node ./translations.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,9 +55,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "babel-plugin-react-intl": "^7.8.1",
     "customize-cra": "^0.9.1",
     "html-loader": "^1.1.0",
     "react-app-rewired": "^2.1.6",
+    "react-intl-translations-manager": "^5.0.3",
     "worker-loader": "^2.0.0"
   }
 }

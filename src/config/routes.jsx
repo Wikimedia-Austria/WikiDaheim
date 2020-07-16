@@ -5,7 +5,7 @@ import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
 
 import Dashboard from 'components/Dashboard';
-//import Feedback from 'components/Feedback';
+import Feedback from 'components/Feedback';
 import Page from 'components/Page';
 
 const routeCodes = {
@@ -18,14 +18,9 @@ const loadedPages = pages.map((page) => {
   return page;
 });
 
-// add feedback form:
-// <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
-
 export default () => (
   <Switch>
     <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
-
-    <Route path={ `${routeCodes.DASHBOARD}@:latlng/:municipaliy_id?/:municipality_name?/:selected_object?` } component={ Dashboard } />
 
     { loadedPages.map((page) => (
       <Route
@@ -37,6 +32,8 @@ export default () => (
         ) }
       />
     )) }
+
+    <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
 
     <Route path='*' component={ Dashboard } />
   </Switch>
