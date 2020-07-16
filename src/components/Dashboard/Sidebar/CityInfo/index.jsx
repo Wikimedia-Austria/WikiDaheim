@@ -107,7 +107,7 @@ class CityInfo extends Component {
           externalLinkOverlay = (<ExternalLinkOverlay
             title={ title }
             text={ text }
-            link={ `${ gpxlink }&categories=${ currentCategories }${activeFilters.size === 0 && '&data=all' || ''}` }
+            link={ `${ gpxlink }&categories=${ currentCategories }${(activeFilters.size === 0 && '&data=all') || ''}` }
             closeAction={ () => this.setState({ 'shownLink': null }) }
           />);
           break;

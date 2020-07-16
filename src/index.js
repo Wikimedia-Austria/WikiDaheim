@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/browser';
 import { SENTRY_DSN } from './config';
 
 // add sentry error tracking
-//Sentry.init({dsn: SENTRY_DSN});
+Sentry.init({dsn: SENTRY_DSN});
 
 //initialize React-App
 ReactDOM.render(
