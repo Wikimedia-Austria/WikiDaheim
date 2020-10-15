@@ -37,7 +37,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
-    "manage:translations": "NODE_ENV=production babel ./src >/dev/null && node ./translations.config.js"
+    "manage:translations": "NODE_ENV=production babel ./src >/dev/null && node ./translations.config.js",
+    "check:boundaries": "node ./boundary-checker.js"
   },
   "eslintConfig": {
     "extends": "react-app"
