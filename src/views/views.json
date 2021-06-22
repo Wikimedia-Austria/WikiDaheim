@@ -53,7 +53,9 @@
     "slug" : "wle",
     "in_menu": true,
     "menu_title" : {
-      "de" : "Wiki Loves Monuments"
+      "de" : "Wiki Loves Earth",
+      "en" : "Wiki Loves Earth",
+      "it" : "Wiki Loves Earth"
     }
   },
   
@@ -61,7 +63,9 @@
     "slug" : "burgenland",
     "in_menu": true,
     "menu_title" : {
-      "de" : "Wiki Loves Monuments"
+      "de" : "Burgenland",
+      "en" : "Burgenland",
+      "it" : "Burgenland"
     }
   },
 
