@@ -30,6 +30,10 @@ import wlm_de from './wlm_de.html';
 import wlm_en from './wlm_en.html';
 import wlm_it from './wlm_it.html';
 
+import wle_de from './wle_de.html';
+
+import burgenland from './burgenland.html';
+
 const views = {
   about_de,
   about_en,
@@ -60,6 +64,10 @@ const views = {
   wlm_de,
   wlm_en,
   wlm_it,
+  
+  wle_de,
+  
+  burgenland,
 };
 
 export default views;
