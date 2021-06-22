@@ -47,7 +47,23 @@
       "en" : "Tag des Denkmals",
       "it" : "Tag des Denkmals"
     }
-  },   
+  },
+  
+    {
+    "slug" : "wle",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Wiki Loves Monuments"
+    }
+  },
+  
+    {
+    "slug" : "burgenland,
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Wiki Loves Monuments"
+    }
+  },
 
   {
     "slug" : "credits",
