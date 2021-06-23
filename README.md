@@ -1,5 +1,5 @@
 # WikiDaheim
-[![Build Status](https://travis-ci.org/Wikimedia-Austria/WikiDaheim.svg?branch=master)](https://travis-ci.org/Wikimedia-Austria/WikiDaheim)
+[![Build Status](https://github.com/Wikimedia-Austria/WikiDaheim/actions/workflows/node.js.yml/badge.svg)](https://github.com/Wikimedia-Austria/WikiDaheim/actions/workflows/node.js.yml)
 
 ## Prerequisites
 1. Install [Node.js](https://nodejs.org/), [yarn](https://yarnpkg.com/lang/en/)
