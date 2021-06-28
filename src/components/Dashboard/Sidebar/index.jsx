@@ -14,21 +14,22 @@ class Sidebar extends Component {
     placeLoading: PropTypes.bool,
     placeLoaded: PropTypes.bool,
     items: PropTypes.object,
+    campaign: PropTypes.string,
   };
 
   render() {
-    const { placeSelected, placeLoading, items } = this.props;
+    const { placeSelected, placeLoading, items, campaign } = this.props;
 
     return (
       <div className='ResultList'>
         <div className='upperContent'>
-          <SearchBar />
+          <SearchBar campaign={campaign} />
 
           {placeSelected ? <CityInfo /> : null}
           {placeSelected && !placeLoading ? <Filter items={ items } /> : null}
         </div>
 
-        {placeSelected ? !placeLoading ? <ResultList items={ items } /> : null : <Page page={ { slug: 'index' } } />}
+        {placeSelected ? !placeLoading ? <ResultList items={ items } /> : null : <Page page={ { slug: campaign === 'burgenland' ? 'burgenland' : 'index' } } />}
         <FocusHandler view='list' />
       </div>
     );

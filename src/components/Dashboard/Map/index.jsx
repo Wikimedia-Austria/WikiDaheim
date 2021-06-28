@@ -14,6 +14,9 @@ import FocusHandler from 'components/Global/FocusHandler';
 import getFilePath from 'wikimedia-commons-file-path';
 import Immutable from 'immutable';
 
+// filter all "Burgenland" municipalities for the Burgenland campaign
+const iso_campaign_burgenland = boundaries.filter(b => b.unit_code.startsWith(1)).map(b => b.feature_id);
+
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
 });
@@ -31,6 +34,7 @@ class ResultMap extends Component {
     placeSelected: PropTypes.bool,
     placeLoading: PropTypes.bool,
     enableClustering: PropTypes.bool,
+    campaign: PropTypes.string,
 
     // from react-redux connect
     dispatch: PropTypes.func,
@@ -41,6 +45,15 @@ class ResultMap extends Component {
 
     let coordinates = [13.2, 47.516231]; // Center of Austria
     let zoom = [7];
+
+    /*
+     * If we are in the Burgenland Campaign set the default zoom to burgenland
+     */
+    if('burgenland' === 'props.campaign') {
+      coordinates = [16.416665, 47.499998]; // Center of Burgenland
+      zoom = [8];
+    }
+
 
     /*
      *if a city is already selected chose its center as the map center
@@ -123,6 +136,29 @@ class ResultMap extends Component {
       re-adjust the map center after adding the sidebar shift
     */
     if (!prevProps.placeSelected && this.props.placeSelected) {
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+    }
+
+    /*
+     * When switching to a Campaign View adjust the Map
+    */
+    if(!prevProps.campaign && this.props.campaign && this.props.campaign === 'burgenland') {
+      // zoom to bugenland
+      this.setState({
+        coordinates: [16.416665, 47.499998],
+        zoom: [8],
+      });
+
+      // trigger resize event to update map
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+    } else if( prevProps.campaign && !this.props.campaign ) {
+      // zoom to austria
+      this.setState({
+        coordinates: [13.2, 47.516231],
+        zoom: [7],
+      });
+
+      // trigger resize event to update map
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
   }
@@ -315,9 +351,14 @@ class ResultMap extends Component {
   updateHighlightedArea(map) {
     if( ! map._loaded ) return;
 
-    const { placeMapData, placeLoading } = this.props;
+    const { placeMapData, placeLoading, campaign } = this.props;
     const municipalityId = placeMapData.get('iso');
     const { hoveredMunicipality } = this.props;
+
+    const special_filters = [];
+    if( campaign && 'burgenland' === campaign ) {
+      special_filters.push(["in", '$id', ...iso_campaign_burgenland]);
+    }
 
     // filter current municipality
     if (municipalityId && !placeLoading) {
@@ -325,10 +366,11 @@ class ResultMap extends Component {
       const municipality = boundaries.find(e => e.unit_code === municipalityId);
 
       if(municipality) {
-        map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ['!=', '$id', municipality.feature_id]]);
+        console.log('should filter bgld');
+        map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ['!=', '$id', municipality.feature_id], ...special_filters]);
       }
     } else {
-      map.setFilter('wd-municipalities', ['==', 'iso_3166_1', 'AT']);
+      map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ...special_filters]);
     }
 
 
@@ -362,6 +404,8 @@ class ResultMap extends Component {
         left: window.innerWidth / 3
       });
     }
+
+    this.updateHighlightedArea(map);
   }
 
   /*

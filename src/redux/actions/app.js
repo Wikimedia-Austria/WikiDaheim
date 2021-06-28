@@ -64,7 +64,7 @@ function autocompleteActionError(error) {
 
 let timeout = null;
 
-export function autocomplete(query) {
+export function autocomplete(query, campaign) {
   return function (dispatch, getState) {
     dispatch(autocompleteActionStart(query));
 
@@ -76,7 +76,12 @@ export function autocomplete(query) {
     timeout = setTimeout(() => {
       const lang = getState().locale.get('language');
 
-      mapboxApi.search(query, lang)
+      let region = false;
+      if(campaign && 'burgenland' === campaign) {
+        region = 'AT-1';
+      }
+
+      mapboxApi.search(query, lang, region)
         .then(data => dispatch(autocompleteActionSuccess(data)))
         .catch(error => dispatch(autocompleteActionError(error)));
     }, 300);

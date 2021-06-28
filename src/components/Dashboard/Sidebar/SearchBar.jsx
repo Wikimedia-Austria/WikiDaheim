@@ -15,6 +15,7 @@ class SearchBar extends Component {
     dispatch: PropTypes.func,
     isLoading: PropTypes.bool,
     placeSelected: PropTypes.bool,
+    campaign: PropTypes.string,
   };
 
   constructor() {
@@ -26,9 +27,9 @@ class SearchBar extends Component {
   }
 
   onInputChange(text) {
-    const { dispatch } = this.props;
+    const { dispatch, campaign } = this.props;
 
-    dispatch(autocomplete(text));
+    dispatch(autocomplete(text, campaign));
   }
 
   onPlaceSelect(place) {

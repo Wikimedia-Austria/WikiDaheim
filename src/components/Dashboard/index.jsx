@@ -21,6 +21,7 @@ class Dashboard extends Component {
     categories: PropTypes.instanceOf(Immutable.List),
     items: PropTypes.instanceOf(Immutable.List),
     mobileView: PropTypes.string,
+    campaign: PropTypes.string,
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { items, categories, activeFilters, mobileView } = this.props;
+    const { items, categories, activeFilters, mobileView, campaign } = this.props;
 
     const filteredItems = items.filter((item) => {
       const itemCategories = categories.filter((c) => item.get('categories') ? item.get('categories').includes( c.get('name') ) && c.get('show') : true ); // check if category exists for saved legacy states
@@ -60,8 +61,8 @@ class Dashboard extends Component {
       <div className='Dashboard'>
         <div className='Dashboard-Content'>
           <div className={ resultViewClasses }>
-            <Sidebar items={ filteredItems } />
-            {categories.size > 0 ? <Map items={ filteredItems } /> : null }
+            <Sidebar items={ filteredItems } campaign={campaign} />
+            {categories.size > 0 ? <Map items={ filteredItems } campaign={campaign} /> : null }
           </div>
         </div>
       </div>

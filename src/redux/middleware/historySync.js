@@ -21,6 +21,11 @@ export default store => next => action => {
   ) {
     let url = `${PUBLIC_ROOT}`;
 
+    // retain burgenland campaign
+    if(window.location.pathname.includes('burgenland')) {
+      url += 'burgenland/';
+    }
+
     /* UPDATE WIKIDATA ID */
     if( state.app.get('placeSelected') ) {
       const placeData = state.app.get('placeMapData');
@@ -41,7 +46,7 @@ export default store => next => action => {
     const startPattern = `${PUBLIC_ROOT}Q`;
     if( initialLocation.startsWith( startPattern ) ) {
       const props = initialLocation.substr( startPattern.length).split('/');
-      const wikidata = `Q${props[0]}`;
+      const wikidata = `Q${props[props.length-1]}`;
 
       // check if this was a window reload
       const placeData = state.app.get('placeMapData');
