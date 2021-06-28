@@ -30,6 +30,7 @@ export default store => next => action => {
     if( state.app.get('placeSelected') ) {
       const placeData = state.app.get('placeMapData');
       const placeProperties = placeData.get('properties');
+
       if(placeProperties) {
         let wikidata = placeProperties.get('wikidata');
 
@@ -43,17 +44,16 @@ export default store => next => action => {
   }
 
   if ( MAP_LOADED === type ) {
-    const startPattern = `${PUBLIC_ROOT}Q`;
-    if( initialLocation.startsWith( startPattern ) ) {
-      const props = initialLocation.substr( startPattern.length).split('/');
-      const wikidata = `Q${props[props.length-1]}`;
+      const props = initialLocation.split('/');
+      const wikidata = `${props[props.length-1]}`;
 
-      // check if this was a window reload
-      const placeData = state.app.get('placeMapData');
-      if( placeData && placeData.get('properties') && placeData.get('properties').get('wikidata') === wikidata ) return;
+      if(wikidata.startsWith('Q')) {
+        // check if this was a window reload
+        const placeData = state.app.get('placeMapData');
+        if( placeData && placeData.get('properties') && placeData.get('properties').get('wikidata') === wikidata ) return;
 
-      setTimeout(() => dispatch(selectPlace(fromJS( { properties: { wikidata } } ))), 100);
-    }
+        setTimeout(() => dispatch(selectPlace(fromJS( { properties: { wikidata } } ))), 100);
+      }
   }
 
   return next(action);
