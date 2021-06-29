@@ -15,6 +15,8 @@ import {
   PLACE_SELECT_ACTION_ERROR,
   PLACE_SELECT_ACTION_SUCCESS,
 
+  PLACE_SELECT_CLEAR,
+
   PLACE_TOGGLE_CATEGORY,
   PLACE_LOAD_CATEGORY_ACTION_START,
   PLACE_LOAD_CATEGORY_ACTION_ERROR,
@@ -227,6 +229,21 @@ const actionsMap = {
     });
   },
 
+  [PLACE_SELECT_CLEAR]: (state, action) => {
+    return state.merge({
+      placeSelected: false,
+      placeLoading: false,
+      placeError: null,
+      placeMapData: new Map(),
+      articles: new List(),
+      items: new List(),
+      commonscat: '',
+      gpxlink: '',
+      searchText: '',
+      searchLoading: false,
+    });
+  },
+
   [PLACE_TOGGLE_CATEGORY]: (state, action) => {
     const curr = state.get('categories');
 
@@ -250,6 +267,7 @@ const actionsMap = {
       categories,
     });
   },
+
   [TOGGLE_FILTER]: (state, action) => {
     const current = state.get('activeFilters');
     const toggle = action.data;
@@ -260,6 +278,7 @@ const actionsMap = {
       activeFilters,
     });
   },
+
   [PLACE_LOAD_CATEGORY_ACTION_START]: (state, action) => {
     console.error('DEPRECATED API IN USE');
     const curr = state.get('categories');
@@ -274,11 +293,13 @@ const actionsMap = {
       placeError: null,
     });
   },
+
   [PLACE_LOAD_CATEGORY_ACTION_ERROR]: (state, action) => {
     return state.merge({
       placeError: action.data,
     });
   },
+
   [PLACE_LOAD_CATEGORY_ACTION_SUCCESS]: (state, action) => {
     console.error('DEPRECATED API IN USE');
     const loadedCategory = action.data.selectedCats[0];
@@ -314,6 +335,7 @@ const actionsMap = {
       hoveredElement: action.data,
     });
   },
+
   [PLACE_ITEM_LEAVE]: (state) => {
     return state.merge({
       hoveredElement: null,
@@ -339,6 +361,7 @@ const actionsMap = {
       hoveredMunicipality: action.data,
     });
   },
+
   [MUNICIPALITY_LEAVE]: (state) => {
     return state.merge({
       hoveredMunicipality: null,

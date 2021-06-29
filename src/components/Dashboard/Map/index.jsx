@@ -6,7 +6,7 @@ import Truncate from 'react-truncate';
 import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config';
 import boundaries from 'config/boundaries.json';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, mapLoaded } from 'redux/actions/app';
+import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, placeSelectClear, mapLoaded } from 'redux/actions/app';
 import mapboxgl from 'mapbox-gl';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
@@ -142,12 +142,16 @@ class ResultMap extends Component {
     /*
      * When switching to a Campaign View adjust the Map
     */
+    const { dispatch } = this.props;
+
     if(!prevProps.campaign && this.props.campaign && this.props.campaign === 'burgenland') {
       // zoom to bugenland
       this.setState({
         coordinates: [16.416665, 47.499998],
         zoom: [8],
       });
+
+      dispatch(placeSelectClear());
 
       // trigger resize event to update map
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
@@ -157,6 +161,8 @@ class ResultMap extends Component {
         coordinates: [13.2, 47.516231],
         zoom: [7],
       });
+
+      dispatch(placeSelectClear());
 
       // trigger resize event to update map
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);

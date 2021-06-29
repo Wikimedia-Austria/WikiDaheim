@@ -13,6 +13,8 @@ export const PLACE_SELECT_ACTION_START = 'PLACE_SELECT_ACTION_START';
 export const PLACE_SELECT_ACTION_ERROR = 'PLACE_SELECT_ACTION_ERROR';
 export const PLACE_SELECT_ACTION_SUCCESS = 'PLACE_SELECT_ACTION_SUCCESS';
 
+export const PLACE_SELECT_CLEAR = 'PLACE_SELECT_CLEAR';
+
 export const PLACE_TOGGLE_CATEGORY = 'PLACE_TOGGLE_CATEGORY';
 export const PLACE_LOAD_CATEGORY_ACTION_START = 'PLACE_LOAD_CATEGORY_ACTION_START';
 export const PLACE_LOAD_CATEGORY_ACTION_ERROR = 'PLACE_LOAD_CATEGORY_ACTION_ERROR';
@@ -176,6 +178,13 @@ export function selectPlace(place) {
     wikiDaheimApi.getTownData(location, mappedCats, true)
       .then(data => dispatch(placeSelectActionSuccess(data)))
       .catch(error => dispatch(placeSelectActionError(error)));
+  };
+}
+
+/* CLEAR SELECTED PLACE */
+export function placeSelectClear() {
+  return {
+    type: PLACE_SELECT_CLEAR,
   };
 }
 

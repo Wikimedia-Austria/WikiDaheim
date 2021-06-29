@@ -22,7 +22,7 @@ const loadedPages = pages.map((page) => {
 export default () => (
   <Switch>
     <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
-    <Route exact path={ routeCodes.DASHBOARD_BURGENLAND }>
+    <Route path={ routeCodes.DASHBOARD_BURGENLAND }>
       <Dashboard campaign="burgenland" />
     </Route>
 
