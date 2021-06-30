@@ -61,7 +61,7 @@
 
   {
     "slug" : "tagdesdenkmals",
-    "in_menu": false,
+    "in_menu": true,
     "menu_title" : {
       "de" : "Tag des Denkmals",
       "en" : "Tag des Denkmals",
