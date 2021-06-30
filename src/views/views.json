@@ -40,32 +40,12 @@
   },
 
   {
-    "slug" : "burgenlandinfo",
-    "in_menu": true,
-    "menu_title" : {
-      "de" : "Burgenland Info",
-      "en" : "Burgenland Info",
-      "it" : "Burgenland"
-    }
-  },
-
-  {
     "slug" : "wlm",
     "in_menu": true,
     "menu_title" : {
       "de" : "Wiki Loves Monuments",
       "en" : "Wiki Loves Monuments",
       "it" : "Wiki Loves Monuments"
-    }
-  },
-
-  {
-    "slug" : "tagdesdenkmals",
-    "in_menu": true,
-    "menu_title" : {
-      "de" : "Tag des Denkmals",
-      "en" : "Tag des Denkmals",
-      "it" : "Tag des Denkmals"
     }
   },
 
@@ -79,6 +59,26 @@
     }
   },
 
+  {
+    "slug" : "tagdesdenkmals",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Tag des Denkmals",
+      "en" : "Tag des Denkmals",
+      "it" : "Tag des Denkmals"
+    }
+  },
+  
+  {
+    "slug" : "burgenlandinfo",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Burgenland Info",
+      "en" : "Burgenland Info",
+      "it" : "Burgenland"
+    }
+  },
+  
   {
     "slug" : "credits",
     "in_menu": true,
