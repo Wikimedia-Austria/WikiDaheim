@@ -33,6 +33,7 @@ import wlm_it from './wlm_it.html';
 import wle_de from './wle_de.html';
 
 import burgenland_de from './burgenland_de.html';
+import burgenlandinfo_de from './burgenlandinfo_de.html';
 
 const views = {
   about_de,
@@ -68,6 +69,8 @@ const views = {
   wle_de,
 
   burgenland_de,
+
+  burgenlandinfo_de,
 };
 
 export default views;
