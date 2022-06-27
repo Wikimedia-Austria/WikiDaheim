@@ -7,7 +7,8 @@ import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
 import { MAPBOX_API_KEY } from 'config';
 import boundaries from 'config/boundaries.json';
 import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, placeSelectClear, mapLoaded } from 'redux/actions/app';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
 import { FormattedMessage } from 'react-intl';
 import CategoryName from 'components/Global/CategoryName';
 import FocusHandler from 'components/Global/FocusHandler';
@@ -17,6 +18,7 @@ import Immutable from 'immutable';
 // filter all "Burgenland" municipalities for the Burgenland campaign
 const iso_campaign_burgenland = boundaries.filter(b => b.unit_code.startsWith(1)).map(b => b.feature_id);
 
+mapboxgl.workerClass = MapboxWorker;
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_API_KEY,
 });
