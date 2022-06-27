@@ -76,4 +76,4 @@ export default connect(state => ({
   items: state.app.get('items'),
   placeSelected: state.app.get('placeSelected'),
   mobileView: state.app.get('mobileView'),
-}), null, null, { pure: false })(Dashboard);
+}), null, null)(Dashboard);

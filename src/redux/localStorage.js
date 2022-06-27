@@ -48,7 +48,7 @@ export const saveState = (state) => {
     } catch (err) {
       // Ignore write errors
     }
-  }, 2000, state);
+  }, 1000, state);
 };
 
 export const clearState = () => {

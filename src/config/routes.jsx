@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
 import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
@@ -19,28 +20,28 @@ const loadedPages = pages.map((page) => {
   return page;
 });
 
-export default () => (
-  <Switch>
-    <Route exact path={ routeCodes.DASHBOARD } component={ Dashboard } />
-    <Route path={ routeCodes.DASHBOARD_BURGENLAND }>
-      <Dashboard campaign="burgenland" />
-    </Route>
+const history = createBrowserHistory({ window });
+
+const RoutesMapper = () => (
+  <Routes>
+    <Route exact path={ routeCodes.DASHBOARD } element={ <Dashboard /> } />
+    <Route path={ routeCodes.DASHBOARD_BURGENLAND } element={  <Dashboard campaign="burgenland" /> } />
+    <Route path={ `${routeCodes.DASHBOARD_BURGENLAND}/*` } element={  <Dashboard campaign="burgenland" /> } />
 
     { loadedPages.map((page) => (
       <Route
         exact
         key={ page.slug }
         path={ routeCodes[page.slug] }
-        render={ (routeProps) => (
-          <Page { ...routeProps } page={ page } />
-        ) }
+        element={ <Page page={ page } />}
       />
     )) }
 
-    <Route path={ routeCodes.FEEDBACK } component={ Feedback } />
+    <Route path={ routeCodes.FEEDBACK } element={ <Feedback /> } />
 
-    <Route path='*' component={ Dashboard } />
-  </Switch>
+    <Route path='*' element={ <Dashboard /> } />
+  </Routes>
 );
 
-export { routeCodes };
+export { routeCodes, history };
+export default RoutesMapper;

@@ -17,17 +17,17 @@ const messages = {
 
 if (!Intl.PluralRules) {
   require('@formatjs/intl-pluralrules/polyfill');
-  require('@formatjs/intl-pluralrules/dist/locale-data/de');
-  require('@formatjs/intl-pluralrules/dist/locale-data/en');
-  require('@formatjs/intl-pluralrules/dist/locale-data/hu');
-  require('@formatjs/intl-pluralrules/dist/locale-data/it');
+  require('@formatjs/intl-pluralrules/locale-data/de');
+  require('@formatjs/intl-pluralrules/locale-data/en');
+  require('@formatjs/intl-pluralrules/locale-data/hu');
+  require('@formatjs/intl-pluralrules/locale-data/it');
 }
 if (!Intl.RelativeTimeFormat) {
   require('@formatjs/intl-relativetimeformat/polyfill');
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/de');
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/en');
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/hu');
-  require('@formatjs/intl-relativetimeformat/dist/locale-data/it');
+  require('@formatjs/intl-relativetimeformat/locale-data/de');
+  require('@formatjs/intl-relativetimeformat/locale-data/en');
+  require('@formatjs/intl-relativetimeformat/locale-data/hu');
+  require('@formatjs/intl-relativetimeformat/locale-data/it');
 }
 
 function mapStateToProps(state) {

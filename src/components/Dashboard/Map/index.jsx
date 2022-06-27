@@ -332,8 +332,6 @@ class ResultMap extends Component {
     const { dispatch, hoveredElement } = this.props;
     const { id } = e.features[0];
 
-    console.log(e);
-
     if (hoveredElement) return;
 
     // look up info about the municipality
@@ -372,7 +370,6 @@ class ResultMap extends Component {
       const municipality = boundaries.find(e => e.unit_code === municipalityId);
 
       if(municipality) {
-        console.log('should filter bgld');
         map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ['!=', '$id', municipality.feature_id], ...special_filters]);
       }
     } else {

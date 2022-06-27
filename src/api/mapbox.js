@@ -34,6 +34,8 @@ const search = (query, lang, region) => {
   });
 };
 
-export default {
-  search,
+const mapBoxAPI = {
+  search
 };
+
+export default mapBoxAPI;

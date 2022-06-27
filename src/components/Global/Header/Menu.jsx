@@ -18,9 +18,7 @@ class Header extends Component {
     return (
       <div>
         <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          exact
+          className={({isActive}) => isActive ? 'Menu-link--active' : 'Menu-link'}
           to={ routeCodes.DASHBOARD }
         >
           <span>WikiDaheim</span>
@@ -29,9 +27,7 @@ class Header extends Component {
         { pages.filter(page => page.in_menu).map((page) => (
           <NavLink
             key={ page.slug }
-            activeClassName='Menu-link--active'
-            className='Menu-link'
-            exact
+            className={({isActive}) => isActive ? 'Menu-link--active' : 'Menu-link'}
             to={ routeCodes[page.slug] }
           >
             <span>
@@ -43,9 +39,7 @@ class Header extends Component {
         )) }
 
         <NavLink
-          activeClassName='Menu-link--active'
-          className='Menu-link'
-          exact
+          className={({isActive}) => isActive ? 'Menu-link--active' : 'Menu-link'}
           to={ routeCodes.FEEDBACK }
           >
           <span>Feedback</span>
@@ -93,4 +87,4 @@ class Header extends Component {
 
 export default connect(state => ({
   currentLanguage: state.locale.get('language'),
-}), null, null, { pure: false })(Header);
+}), null, null)(Header);

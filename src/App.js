@@ -3,10 +3,11 @@ import React from 'react';
 
 /* REDUX */
 import { Provider } from 'react-redux';
-import configureStore, { history } from 'redux/store';
+import configureStore from 'redux/store';
 
 /* ROUTER */
-import { ConnectedRouter } from 'connected-react-router';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import { history } from 'config/routes';
 
 /* APP COMPONENTS */
 import ReduxIntlProvider from 'components/Global/ReduxIntlProvider';
@@ -24,11 +25,11 @@ function App() {
   return (
     <Provider store={ store }>
       <ReduxIntlProvider>
-        <ConnectedRouter history={ history }>
+        <HistoryRouter history={history}>
           <ScrollToTop>
             <Root />
           </ScrollToTop>
-        </ConnectedRouter>
+        </HistoryRouter>
       </ReduxIntlProvider>
     </Provider>
   );

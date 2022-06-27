@@ -1,6 +1,5 @@
 const {
   override,
-  addBundleVisualizer,
   addWebpackModuleRule,
   getBabelLoader
 } = require("customize-cra");
@@ -15,8 +14,6 @@ const setGlobalObject = value => config => {
 }
 
 module.exports = (config, env) => {
-  const babelLoader = getBabelLoader(config);
-
   return override(
     setGlobalObject('(self || this)'),
     addWebpackModuleRule({

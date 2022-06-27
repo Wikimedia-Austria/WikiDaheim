@@ -1,4 +1,3 @@
-import { replace } from 'connected-react-router';
 import { fromJS } from 'immutable';
 import {
   PLACE_SELECT_ACTION_SUCCESS,
@@ -6,10 +5,11 @@ import {
   selectPlace
 } from 'redux/actions/app';
 import { PUBLIC_ROOT } from 'config';
+import { history } from 'config/routes';
 
 let initialLocation = window.location.pathname;
 
-export default store => next => action => {
+const historySync = store => next => action => {
   const { type } = action;
   const { dispatch, getState } = store;
   const state = getState();
@@ -40,7 +40,7 @@ export default store => next => action => {
       }
     }
 
-    dispatch( replace( url ) );
+    history.replace(url)
   }
 
   if ( MAP_LOADED === type ) {
@@ -58,3 +58,5 @@ export default store => next => action => {
 
   return next(action);
 }
+
+export default historySync;

@@ -75,9 +75,11 @@ const submitFeedbackForm = (token, subject, message) => {
   });
 };
 
-export default {
+const wikidaheimAPI = {
   listCategories,
   getTownData,
   getFeedbackFormToken,
   submitFeedbackForm,
 };
+
+export default wikidaheimAPI;

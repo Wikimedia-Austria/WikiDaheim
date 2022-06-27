@@ -70,4 +70,4 @@ class Header extends Component {
 
 export default connect(state => ({
   showMenu: state.menu.get('showMenu'),
-}), null, null, { pure: false })(Header);
+}), null, null)(Header);

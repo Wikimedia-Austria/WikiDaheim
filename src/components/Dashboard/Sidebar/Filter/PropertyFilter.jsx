@@ -13,12 +13,12 @@ class PropertyFilter extends Component {
           description='Title of the Missing Images-Filter'
           defaultMessage='Fehlende Bilder'
         >
-          {(title) => (
+          {title => {return (
             <PropertyFilterItem
-              title={ title }
+              title={ title[0] }
               id='missing_images'
             />
-          )}
+          )}}
         </FormattedMessage>
 
         <FormattedMessage
@@ -28,7 +28,7 @@ class PropertyFilter extends Component {
         >
           {(title) => (
             <PropertyFilterItem
-              title={ title }
+              title={ title[0] }
               id='missing_description'
             />
           )}

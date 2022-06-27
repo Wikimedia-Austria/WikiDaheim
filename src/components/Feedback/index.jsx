@@ -35,7 +35,6 @@ class Feedback extends Component {
 
     try {
       const token = await wikidaheim.getFeedbackFormToken();
-      console.log(token);
 
       this.setState({
         token,

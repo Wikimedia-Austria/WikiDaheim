@@ -1,27 +1,23 @@
-import { createBrowserHistory } from 'history';
 import { createStore, applyMiddleware } from 'redux';
-import { routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { loadState, saveState } from 'redux/localStorage';
-import historySyncMiddleware from 'redux/middleware/historySync';
+import historySync from './middleware/historySync';
 
 import createRootReducer from './reducers';
 
 export const persistedState = loadState();
-export const history = createBrowserHistory();
 
 // Creating store
-export default () => {
+const store = () => {
 
   const store = createStore(
-    createRootReducer(history),
+    createRootReducer(),
     persistedState,
     composeWithDevTools(
       applyMiddleware(
         thunk,
-        routerMiddleware(history),
-        historySyncMiddleware
+        historySync
       )
     )
   );
@@ -33,3 +29,5 @@ export default () => {
 
   return store;
 };
+
+export default store;

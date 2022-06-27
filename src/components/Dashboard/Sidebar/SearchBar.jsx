@@ -36,7 +36,9 @@ class SearchBar extends Component {
     const { searchData, dispatch } = this.props;
 
     const selectedPlace = searchData.find(
-      (obj) => obj.get('place_name') === place
+      (obj) => {
+        return obj.get('place_name') === place
+      }
     );
 
     if (selectedPlace.get('text') === 'Wien') return;

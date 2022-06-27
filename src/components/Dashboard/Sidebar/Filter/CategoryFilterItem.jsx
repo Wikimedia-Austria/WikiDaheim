@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { toggleCategory } from 'redux/actions/app';
 import CategoryName from 'components/Global/CategoryName';
-import { Base64 } from 'js-base64';
-import { injectIntl } from 'react-intl';
 
 class CategoryFilterItem extends Component {
   static propTypes = {
@@ -13,7 +11,6 @@ class CategoryFilterItem extends Component {
     asIcon: PropTypes.bool,
     // from react-redux connect
     dispatch: PropTypes.func,
-    intl: PropTypes.any,
   }
 
   constructor(props) {
@@ -30,7 +27,7 @@ class CategoryFilterItem extends Component {
 
 
   render() {
-    const { category, asIcon, intl } = this.props;
+    const { category, asIcon } = this.props;
 
     const ItemClass = classNames({
       'CategoryFilter-Item': true,
@@ -43,19 +40,17 @@ class CategoryFilterItem extends Component {
 
     if (asIcon) {
       const icon = category.get('icon');
-      style.backgroundImage = `url('data:image/svg+xml;base64,${ Base64.encode(icon) }')`;
+      style.backgroundImage = `url('data:image/svg+xml;base64,${ window.btoa(icon) }')`;
     } else {
       style.backgroundColor = category.get('color');
     }
-
-    const categoryName = intl.formatMessage({ id: `category.${ category.get('name') }` });
 
     return (
       <div
         className={ ItemClass }
         style={ style }
       >
-        <button onClick={ this.toggle } title={ categoryName }>
+        <button onClick={ this.toggle }>
           <CategoryName category={ category } />
         </button>
       </div>
@@ -64,4 +59,4 @@ class CategoryFilterItem extends Component {
 
 }
 
-export default connect()(injectIntl(CategoryFilterItem));
+export default connect()(CategoryFilterItem);

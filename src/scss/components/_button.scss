@@ -1,3 +1,5 @@
+@use "sass:math";
+
 button {
   -webkit-appearance: none;
   appearance: none;
@@ -18,7 +20,7 @@ button {
   right:0.5rem;
   background-color: transparent;
   height: $header-height;
-  width: $header-height/3*2;
+  width: math.div($header-height, 3)*2;
   min-height: 4em;
   min-width: 2.6em;
   z-index: $z-index-menu + 1;
@@ -48,7 +50,7 @@ button {
 
   &.Menu-toggle--active {
     span {
-      top: calc(50% - #{$lineHeight/2}) !important;
+      top: calc(50% - #{$lineHeight*0.5}) !important;
       border-color: $primary-color-contrast;
 
       transition: top .2s 0s ease-in,

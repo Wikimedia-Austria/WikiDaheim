@@ -85,4 +85,4 @@ export default connect(state => {
     showFilterMenu: state.menu.get('showFilterMenu'),
     filtersActive,
   };
-}, null, null, { pure: false })(FilterTitle);
+}, null, null)(FilterTitle);

@@ -1,5 +1,5 @@
 import { Map, List, fromJS } from 'immutable';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { isPointWithinRadius } from 'geolib';
 
 import {
@@ -92,7 +92,7 @@ const actionsMap = {
   [AUTOCOMPLETE_ACTION_SUCCESS]: (state, action) => {
     return state.merge({
       searchLoading: false,
-      searchData: action.data,
+      searchData: fromJS(action.data),
     });
   },
 
@@ -119,7 +119,7 @@ const actionsMap = {
 
     return state.merge({
       categoriesLoading: false,
-      categories,
+      categories: fromJS(categories),
     });
   },
 
@@ -202,12 +202,11 @@ const actionsMap = {
       items.filter((item) => item.category === 'commons')
     );
 
-    console.log(action.data);
     return state.merge({
       placeSelected: true,
       placeLoading: false,
       searchText: action.data.name,
-      placeMapData: {
+      placeMapData: fromJS({
         ...state.get('placeMapData').toJS(),
         text: action.data.name,
         iso: action.data.gemeindekennzahl,
@@ -220,10 +219,10 @@ const actionsMap = {
             action.data.location.latitude,
           ]
         }
-      },
+      }),
       categories,
-      items: processedItems,
-      articles: action.data.articles,
+      items: fromJS(processedItems),
+      articles: fromJS(action.data.articles),
       commonscat: action.data.commonscat,
       gpxlink: action.data.GPX,
     });
@@ -358,7 +357,7 @@ const actionsMap = {
   // MAP MUNICIPALITIES HOVER
   [MUNICIPALITY_HOVER]: (state, action) => {
     return state.merge({
-      hoveredMunicipality: action.data,
+      hoveredMunicipality: new Map(action.data),
     });
   },
 
@@ -371,7 +370,7 @@ const actionsMap = {
   // MAP POSITION change
   [MAP_POSITION_CHANGED]: (state, action) => {
     return state.merge({
-      currentMapPosition: action.data,
+      currentMapPosition: fromJS(action.data),
     });
   },
 

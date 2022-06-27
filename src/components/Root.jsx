@@ -49,7 +49,7 @@ class Root extends Component {
         >
           {(text) => (
             <CookieBanner
-              message={ text }
+              message={ text[0] }
               onAccept={ () => {} }
               cookie='user-has-accepted-cookies'
               buttonMessage='OK'
@@ -68,4 +68,4 @@ class Root extends Component {
   }
 }
 
-export default connect(null, null, null, { pure: false })(Root);
+export default connect(null, null, null)(Root);

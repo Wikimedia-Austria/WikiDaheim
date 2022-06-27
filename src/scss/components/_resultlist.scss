@@ -225,9 +225,10 @@
 
     .Details-Source {
       font-family: sans-serif;
+      padding-top: 0.25rem;
 
       a {
-        display: inline-block;
+        display: inline;
 
         &::after {
           content: ', ';
@@ -236,6 +237,14 @@
 
         &:last-child::after {
           display: none;
+        }
+
+        &:first-of-type span {
+          padding-left: 0.25em;
+        }
+
+        span {
+          padding-right: 0;
         }
       }
 
