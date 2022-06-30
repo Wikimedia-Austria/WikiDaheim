@@ -1,15 +1,5 @@
 [
   {
-    "slug" : "burgenland",
-    "in_menu": true,
-    "menu_title" : {
-      "de" : "Burgenland-Karte",
-      "en" : "Burgenland Map",
-      "it" : "Burgenland"
-    }
-  },
-
-  {
     "slug" : "about",
     "in_menu": true,
     "menu_title" : {
@@ -68,17 +58,7 @@
       "it" : "Tag des Denkmals"
     }
   },
-  
-  {
-    "slug" : "burgenlandinfo",
-    "in_menu": true,
-    "menu_title" : {
-      "de" : "Burgenland Info",
-      "en" : "Burgenland Info",
-      "it" : "Burgenland"
-    }
-  },
-  
+    
   {
     "slug" : "credits",
     "in_menu": true,
