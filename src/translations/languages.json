@@ -10,9 +10,4 @@
     "title": "English",
     "mapbox_language_code": "en_GB"
   },
-  {
-    "locale": "it",
-    "title": "Italiano",
-    "mapbox_language_code": "it_IT"
-  }
 ]
