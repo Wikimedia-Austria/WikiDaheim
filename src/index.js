@@ -6,6 +6,12 @@ import * as Sentry from '@sentry/browser';
 import { SENTRY_DSN } from './config';
 import confirm from './lib/confirm';
 
+// force HTTPS
+const { location } = window;
+if (!serviceWorker.isLocalhost && location.protocol !== 'https:') {
+  location.replace(`https:${location.href.substring(location.protocol.length)}`);
+}
+
 // add sentry error tracking
 Sentry.init({dsn: SENTRY_DSN});
 
