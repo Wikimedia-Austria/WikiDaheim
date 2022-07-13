@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import * as serviceWorker from './workers/serviceWorker';
+import * as serviceWorker from './workers/serviceWorkerRegister';
 import * as Sentry from '@sentry/browser';
 import { SENTRY_DSN } from './config';
 import confirm from './lib/confirm';
