@@ -1,4 +1,6 @@
 import { WIKIDAHEIM_ENDPOINT, WIKIDAHEIM_FEEDBACK_ENDPOINT } from 'config';
+import boundaries from '../config/boundaries.json';
+import towns from '../config/wikidata-gkz.json';
 
 const listCategories = () => {
   return fetch(`${ WIKIDAHEIM_ENDPOINT }?format=json&action=query&type=structure`, {
@@ -75,11 +77,53 @@ const submitFeedbackForm = (token, subject, message) => {
   });
 };
 
+const search = (query, lang, gkzPrefix, maxResults = 7) => {
+  const filtered = towns
+    .filter(
+      (town) =>
+        town.gemeinde.toLowerCase().startsWith(query.toLowerCase()) &&
+        String(town.gemeindekennzahl).startsWith(gkzPrefix)
+    )
+    .slice(0, maxResults)
+    .map((town) => ({
+      id: "place." + town.gemeindekennzahl,
+      properties: {
+        wikidata: town.wikidata,
+      },
+      text: town.gemeinde,
+      place_name: town.gemeinde,
+      geometry: {
+        type: "Point",
+        coordinates: boundaries.find(
+          (b) => b.unit_code === town.gemeindekennzahl
+        )?.centroid,
+      },
+      context: [
+        {
+          id: "region." + String(town.gemeindekennzahl).slice(0, 1),
+          text: {
+            1: "Burgenland",
+            2: "Kärnten",
+            3: "Niederösterreich",
+            4: "Oberösterreich",
+            5: "Salzburg",
+            6: "Steiermark",
+            7: "Tirol",
+            8: "Vorarlberg",
+            9: "Wien",
+          }[String(town.gemeindekennzahl).slice(0, 1)],
+        },
+      ],
+    }));
+  return Promise.resolve(filtered);
+};
+
 const wikidaheimAPI = {
   listCategories,
   getTownData,
   getFeedbackFormToken,
   submitFeedbackForm,
+  search,
 };
 
 export default wikidaheimAPI;

@@ -1,4 +1,3 @@
-import mapboxApi from '../../api/mapbox';
 import wikiDaheimApi from '../../api/wikidaheim';
 
 export const AUTOCOMPLETE_ACTION_START = 'AUTOCOMPLETE_ACTION_START';
@@ -77,13 +76,8 @@ export function autocomplete(query, campaign) {
     // timeout to prevent a call to the API with every keystroke
     timeout = setTimeout(() => {
       const lang = getState().locale.get('language');
-
-      let region = false;
-      if(campaign && 'burgenland' === campaign) {
-        region = 'AT-1';
-      }
-
-      mapboxApi.search(query, lang, region)
+      const gkzPrefix = 'burgenland' === campaign ? "1" : "";
+      wikiDaheimApi.search(query, lang, gkzPrefix)
         .then(data => dispatch(autocompleteActionSuccess(data)))
         .catch(error => dispatch(autocompleteActionError(error)));
     }, 300);
