@@ -59,6 +59,6 @@
   "source.nature_park": "Naturpark",
   "source.nature_reserve": "Naturschutzgebiet",
   "source.wikidata": "Wikidata",
-  "uploadPhoto": "Media hochladen",
-  "uploadPhoto.description": "Lade eine Mediadatei (Bild, Audio, Video) zu {cityName} hoch"
+  "uploadPhoto": "Medien hochladen",
+  "uploadPhoto.description": "Lade eine Mediendatei (Bild, Audio, Video) zu {cityName} hoch"
 }
