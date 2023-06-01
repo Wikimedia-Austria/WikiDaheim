@@ -71,7 +71,7 @@ class Header extends Component {
             {(title) => (
               <a
                 className='Menu-link--imprint'
-                href='https://www.wikimedia.at/ueber-uns/kontakt/impressum/'
+                href='https://wikimedia.at/impressum-datenschutz/'
                 target='_blank'
                 rel='noopener noreferrer'
               >
