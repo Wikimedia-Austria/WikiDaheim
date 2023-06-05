@@ -41,11 +41,21 @@
 
     {
     "slug" : "wle",
-    "in_menu": true,
+    "in_menu": false,
     "menu_title" : {
       "de" : "Wiki Loves Earth",
       "en" : "Wiki Loves Earth",
       "it" : "Wiki Loves Earth"
+    }
+  },
+
+    {
+    "slug" : "wle",
+    "in_menu": true,
+    "menu_title" : {
+      "de" : "Immaterielles Kulturerbe",
+      "en" : "Intangible Cultural Heritage of Humanity",
+      "it" : "Patrimonio Culturale Immateriale dell'Umanità"
     }
   },
 
