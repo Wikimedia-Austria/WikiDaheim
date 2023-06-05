@@ -26,6 +26,9 @@ import topics_de from './topics_de.html';
 import topics_en from './topics_en.html';
 import topics_it from './topics_it.html';
 
+import unescoICH_de from './unescoICH_de.html';
+import unescoICH_en from './unescoICH_en.html';
+
 import wlm_de from './wlm_de.html';
 import wlm_en from './wlm_en.html';
 import wlm_it from './wlm_it.html';
@@ -61,6 +64,9 @@ const views = {
   topics_de,
   topics_en,
   topics_it,
+
+  unescoICH_de,
+  unescoICH_en,
 
   wlm_de,
   wlm_en,
