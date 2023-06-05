@@ -19,7 +19,7 @@ class Page extends Component {
 
     let content = `
       <h2>Error loading page.</h2>
-      <p>Neither the language-specific template nor the the fallback file was found.</p>
+      <p>Neither the language-specific template nor the fallback file was found.</p>
       <code>Searching for: "views/${ templateName }.html"</code>
     `;
 
