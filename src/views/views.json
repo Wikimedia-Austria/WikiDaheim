@@ -50,12 +50,12 @@
   },
 
     {
-    "slug" : "wle",
+    "slug" : "unescoICH",
     "in_menu": true,
     "menu_title" : {
       "de" : "Immaterielles Kulturerbe",
-      "en" : "Intangible Cultural Heritage of Humanity",
-      "it" : "Patrimonio Culturale Immateriale dell'Umanità"
+      "en" : "Intangible Cultural Heritage",
+      "it" : "Patrimonio Culturale Immateriale"
     }
   },
 
