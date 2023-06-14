@@ -34,7 +34,7 @@
     "wikimedia-commons-file-path": "^2.1.1"
   },
   "engines": {
-    "node": ">=16.0.0 <17.0.0"
+    "node": ">=18.0.0 <19.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -42,9 +42,6 @@
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "manage:translations": "formatjs extract 'src/components/**/*.js*' --out-file src/translations/extractedMessages.json --format simple",
     "check:boundaries": "node ./boundary-checker.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
