@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from 'history';
 
 import { PUBLIC_ROOT } from 'config';
 import pages from 'views/views.json';
