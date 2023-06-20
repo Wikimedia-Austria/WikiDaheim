@@ -129,6 +129,17 @@ const CityInfo = ({ onTriggerGpxDownload }) => {
 
             <button
               className="CityInfo-Link"
+              onClick={() => setActiveLink("unesco")}
+            >
+              <FormattedMessage
+                id="cityinfo.unescoTitle"
+                description="Title for Uneco-Link"
+                defaultMessage="UNESCO"
+              />
+            </button>
+
+            <button
+              className="CityInfo-Link"
               onClick={() => setActiveLink("gpx")}
             >
               <FormattedMessage
@@ -157,6 +168,15 @@ const CityInfo = ({ onTriggerGpxDownload }) => {
           titleId="cityinfo.gpxTitle"
           textId="cityinfo.gpxText"
           onClick={() => onTriggerGpxDownload()}
+          closeAction={() => setActiveLink(null)}
+        />
+      )}
+
+      {activeLink === "unesco" && (
+        <ExternalLinkOverlay
+          titleId="cityinfo.unescoPopupTitle"
+          textId="cityinfo.unescoText"
+          link="https://de.wikipedia.org/wiki/Immaterielles_Kulturerbe_in_Österreich"
           closeAction={() => setActiveLink(null)}
         />
       )}

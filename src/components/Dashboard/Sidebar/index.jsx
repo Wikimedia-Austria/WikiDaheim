@@ -18,19 +18,14 @@ const Sidebar = ({ items }) => {
       <div className="upperContent">
         <SearchBar />
 
-        {placeSelected ? (
+        {placeSelected && (
           <CityInfo onTriggerGpxDownload={() => triggerGpxDownload()} />
-        ) : null}
-        {placeSelected && !placeLoading ? <Filter items={items} /> : null}
+        )}
+        {placeSelected && !placeLoading && <Filter items={items} />}
       </div>
 
-      {placeSelected ? (
-        !placeLoading ? (
-          <ResultList items={items} />
-        ) : null
-      ) : (
-        <Page page={{ slug: "index" }} />
-      )}
+      {placeSelected && !placeLoading && <ResultList items={items} />}
+      {!placeSelected && <Page page={{ slug: "index" }} />}
       <FocusHandler view="list" />
     </div>
   );

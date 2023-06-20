@@ -1,57 +1,50 @@
-import { Map, List, fromJS } from 'immutable';
-import { v4 as uuidv4 } from 'uuid';
-import { isPointWithinRadius } from 'geolib';
+import { Map, List, fromJS } from "immutable";
+import { v4 as uuidv4 } from "uuid";
+import { isPointWithinRadius } from "geolib";
 
 import {
   AUTOCOMPLETE_ACTION_START,
   AUTOCOMPLETE_ACTION_ERROR,
   AUTOCOMPLETE_ACTION_SUCCESS,
-
   LOAD_CATEGORIES_ACTION_START,
   LOAD_CATEGORIES_ACTION_ERROR,
   LOAD_CATEGORIES_ACTION_SUCCESS,
-
   PLACE_SELECT_ACTION_START,
   PLACE_SELECT_ACTION_ERROR,
   PLACE_SELECT_ACTION_SUCCESS,
-
   PLACE_SELECT_CLEAR,
-
   PLACE_TOGGLE_CATEGORY,
   PLACE_LOAD_CATEGORY_ACTION_START,
   PLACE_LOAD_CATEGORY_ACTION_ERROR,
   PLACE_LOAD_CATEGORY_ACTION_SUCCESS,
-
   PLACE_ITEM_HOVER,
   PLACE_ITEM_LEAVE,
   PLACE_ITEM_SELECT,
-
   MUNICIPALITY_HOVER,
   MUNICIPALITY_LEAVE,
-
   MAP_POSITION_CHANGED,
   MAP_ZOOM_CHANGED,
   MAP_LOADED,
-
   TOGGLE_FILTER,
+  SET_SEARCH_FILTER,
   TOGGLE_SYNC_LIST_MAP,
   TOGGLE_CLUSTERING,
-
   MOBILE_VIEW_SWITCH,
   TOGGLE_CITY_INFO,
-} from '../actions/app';
+} from "../actions/app";
 
 const initialState = Map({
   searchLoading: false,
   searchError: null,
   searchData: new List(),
-  searchText: '',
+  searchText: "",
 
   categoriesLoading: true,
   categoriesError: false,
   categories: new List(),
 
   activeFilters: new List(),
+  searchFilter: "",
 
   placeSelected: false,
   placeLoading: false,
@@ -59,8 +52,8 @@ const initialState = Map({
   placeMapData: new Map(),
   articles: new List(),
   items: new List(),
-  commonscat: '',
-  gpxlink: '',
+  commonscat: "",
+  gpxlink: "",
 
   hoveredElement: null,
   hoveredMunicipality: null,
@@ -69,7 +62,7 @@ const initialState = Map({
   currentMapZoom: 7,
   mapLoaded: false,
 
-  mobileView: 'map',
+  mobileView: "map",
   syncListAndMap: true,
   showCityInfo: false,
   enableClustering: true,
@@ -109,8 +102,8 @@ const actionsMap = {
     });
   },
   [LOAD_CATEGORIES_ACTION_SUCCESS]: (state, action) => {
-    const categories = action.data.map(
-      (category) => Object.assign({}, category, {
+    const categories = action.data.map((category) =>
+      Object.assign({}, category, {
         show: true,
         loaded: false,
         loading: false,
@@ -127,11 +120,12 @@ const actionsMap = {
     return state.merge({
       searchLoading: false,
       searchData: new List(),
-      searchText: action.data.get('text') || '...',
+      searchText: action.data.get("text") || "...",
       placeMapData: action.data,
       placeLoading: true,
       placeError: null,
       items: new List(),
+      searchFilter: "", // reset search filter?
     });
   },
   [PLACE_SELECT_ACTION_ERROR]: (state, action) => {
@@ -142,47 +136,60 @@ const actionsMap = {
   },
   [PLACE_SELECT_ACTION_SUCCESS]: (state, action) => {
     // update which categories are already loaded
-    const categories = state.get('categories').map((category) => {
-      const loaded = action.data.selectedCats.includes(category.get('name'));
-      return category.set('loaded', loaded);
+    const categories = state.get("categories").map((category) => {
+      const loaded = action.data.selectedCats.includes(category.get("name"));
+      return category.set("loaded", loaded);
     });
 
     // add UIDs to the items as the API doesn't
-    const items = action.data.categories.map((item) => Object.assign({}, item, {
-      id: uuidv4(),
-      categories: [item.category],
-    }));
+    const items = action.data.categories.map((item) =>
+      Object.assign({}, item, {
+        id: uuidv4(),
+        categories: [item.category],
+      })
+    );
 
     // merge Image Requests with other categories if they are a duplicate
-    let imageRequests = items.filter((item) => item.category === 'request');
-    const nonImageRequests = items.filter((item) => !['request', 'commons'].includes(item.category));
+    let imageRequests = items.filter((item) => item.category === "request");
+    const nonImageRequests = items.filter(
+      (item) => !["request", "commons"].includes(item.category)
+    );
 
     // loop through all non-image-requests and check if there is an image request nearby
     // if so, add the information to the current item and discard to image request item
     const mappedNonImageRequests = nonImageRequests.map((item, index, arr) => {
-      const nearestElements = imageRequests.filter((r) => isPointWithinRadius(r, item, 15));
+      const nearestElements = imageRequests.filter((r) =>
+        isPointWithinRadius(r, item, 15)
+      );
 
-      nearestElements.forEach(nearestElement => {
+      nearestElements.forEach((nearestElement) => {
         // rm request from request array
         imageRequests.splice(
-          imageRequests.findIndex(i => i.id === nearestElement.id)
-        , 1);
+          imageRequests.findIndex((i) => i.id === nearestElement.id),
+          1
+        );
 
         // add the source
         const source = Array.isArray(item.source) ? item.source : [item.source];
-        const addedSource = nearestElement.source || { title: nearestElement.name, link: nearestElement.editLink };
+        const addedSource = nearestElement.source || {
+          title: nearestElement.name,
+          link: nearestElement.editLink,
+        };
 
         //check if the source already exists
-        if(source.filter(i => i.link === addedSource.link).length === 0) source.push(addedSource);
+        if (source.filter((i) => i.link === addedSource.link).length === 0)
+          source.push(addedSource);
 
         // populate item with information from the request
         item = Object.assign({}, item, {
-          categories: item.categories.concat(nearestElement.categories.filter((cat) => item.categories.indexOf(cat) < 0)),
+          categories: item.categories.concat(
+            nearestElement.categories.filter(
+              (cat) => item.categories.indexOf(cat) < 0
+            )
+          ),
           source,
         });
       });
-
-
 
       /*
       Boilerplate for searching within category
@@ -195,11 +202,9 @@ const actionsMap = {
       return item;
     });
 
-
-
     const processedItems = mappedNonImageRequests.concat(
       imageRequests,
-      items.filter((item) => item.category === 'commons')
+      items.filter((item) => item.category === "commons")
     );
 
     return state.merge({
@@ -207,7 +212,7 @@ const actionsMap = {
       placeLoading: false,
       searchText: action.data.name,
       placeMapData: fromJS({
-        ...state.get('placeMapData').toJS(),
+        ...state.get("placeMapData").toJS(),
         text: action.data.name,
         iso: action.data.gemeindekennzahl,
         properties: {
@@ -217,8 +222,8 @@ const actionsMap = {
           coordinates: [
             action.data.location.longitude,
             action.data.location.latitude,
-          ]
-        }
+          ],
+        },
       }),
       categories,
       items: fromJS(processedItems),
@@ -236,30 +241,34 @@ const actionsMap = {
       placeMapData: new Map(),
       articles: new List(),
       items: new List(),
-      commonscat: '',
-      gpxlink: '',
-      searchText: '',
+      commonscat: "",
+      gpxlink: "",
+      searchText: "",
       searchLoading: false,
     });
   },
 
   [PLACE_TOGGLE_CATEGORY]: (state, action) => {
-    const curr = state.get('categories');
+    const curr = state.get("categories");
 
     // check if all categories are selected
-    const allSelected = !curr.find((c) => !c.get('show'));
+    const allSelected = !curr.find((c) => !c.get("show"));
 
     // if it would "untoggle" this only category untoggle all other categories
     let categories = curr.map((category) => {
-      if (allSelected) return category.merge({ 'show': !!(category.get('name') === action.data) });
-      else if (category.get('name') === action.data) return category.merge({ 'show': !category.get('show') });
+      if (allSelected)
+        return category.merge({
+          show: !!(category.get("name") === action.data),
+        });
+      else if (category.get("name") === action.data)
+        return category.merge({ show: !category.get("show") });
       return category;
     });
 
     // now check if we cleared all selections
-    const noneSelected = !categories.find((c) => c.get('show'));
+    const noneSelected = !categories.find((c) => c.get("show"));
     if (noneSelected) {
-      categories = curr.map((category) => category.merge({ 'show': true }));
+      categories = curr.map((category) => category.merge({ show: true }));
     }
 
     return state.merge({
@@ -268,22 +277,30 @@ const actionsMap = {
   },
 
   [TOGGLE_FILTER]: (state, action) => {
-    const current = state.get('activeFilters');
+    const current = state.get("activeFilters");
     const toggle = action.data;
-    const activeFilters =
-      current.includes(toggle) ? current.filterNot(x => x === toggle) : current.push(toggle);
+    const activeFilters = current.includes(toggle)
+      ? current.filterNot((x) => x === toggle)
+      : current.push(toggle);
 
     return state.merge({
       activeFilters,
     });
   },
 
+  [SET_SEARCH_FILTER]: (state, action) => {
+    return state.merge({
+      searchFilter: action.data,
+    });
+  },
+
   [PLACE_LOAD_CATEGORY_ACTION_START]: (state, action) => {
-    console.error('DEPRECATED API IN USE');
-    const curr = state.get('categories');
+    console.error("DEPRECATED API IN USE");
+    const curr = state.get("categories");
     const categories = curr.update(
-      curr.findIndex((cat) => cat.get('name') === action.data), (old) => {
-        return old.merge({ 'loading': true });
+      curr.findIndex((cat) => cat.get("name") === action.data),
+      (old) => {
+        return old.merge({ loading: true });
       }
     );
 
@@ -300,12 +317,13 @@ const actionsMap = {
   },
 
   [PLACE_LOAD_CATEGORY_ACTION_SUCCESS]: (state, action) => {
-    console.error('DEPRECATED API IN USE');
+    console.error("DEPRECATED API IN USE");
     const loadedCategory = action.data.selectedCats[0];
 
-    const curr = state.get('categories');
+    const curr = state.get("categories");
     const categories = curr.update(
-      curr.findIndex((cat) => cat.get('name') === loadedCategory), (old) => {
+      curr.findIndex((cat) => cat.get("name") === loadedCategory),
+      (old) => {
         return old.merge({
           loaded: true,
           loading: false,
@@ -314,13 +332,13 @@ const actionsMap = {
     );
 
     // add UIDs to the items as the API doesn't, also prepare for category merging
-    const newItems = action.data.categories.map((item) => (
+    const newItems = action.data.categories.map((item) =>
       Object.assign({}, item, {
         id: uuidv4(),
         categories: [item.category],
       })
-    ));
-    const items = state.get('items').merge(newItems);
+    );
+    const items = state.get("items").merge(newItems);
 
     return state.merge({
       categories,
@@ -344,13 +362,13 @@ const actionsMap = {
   // MAP ITEM SELECT
   [PLACE_ITEM_SELECT]: (state, action) => {
     const selectedElement = action.data.merge({
-      'source': action.source,
-      'lastChange': Date.now(),
+      source: action.source,
+      lastChange: Date.now(),
     });
 
     return state.merge({
       selectedElement,
-      mobileView: 'list',
+      mobileView: "list",
     });
   },
 
@@ -396,7 +414,7 @@ const actionsMap = {
   },
 
   [TOGGLE_SYNC_LIST_MAP]: (state) => {
-    const syncListAndMap = !state.get('syncListAndMap');
+    const syncListAndMap = !state.get("syncListAndMap");
 
     return state.merge({
       syncListAndMap,
@@ -404,7 +422,7 @@ const actionsMap = {
   },
 
   [TOGGLE_CLUSTERING]: (state) => {
-    const enableClustering = !state.get('enableClustering');
+    const enableClustering = !state.get("enableClustering");
 
     return state.merge({
       enableClustering,
@@ -412,7 +430,7 @@ const actionsMap = {
   },
 
   [TOGGLE_CITY_INFO]: (state) => {
-    const showCityInfo = !state.get('showCityInfo');
+    const showCityInfo = !state.get("showCityInfo");
 
     return state.merge({
       showCityInfo,

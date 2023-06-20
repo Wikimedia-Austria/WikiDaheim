@@ -297,3 +297,19 @@
     background-repeat: no-repeat;
   }
 }
+
+.SearchFilter {
+  display: flex;
+  padding-top: 1rem;
+
+  input {
+    flex: 1;
+    padding: 0.5em;
+    font-size: 1.3em;
+    border: none;
+    background-color: $primary-color;
+    border-bottom: 1px solid $primary-color-contrast;
+    color: $primary-color-contrast;
+    outline: none;
+  }
+}

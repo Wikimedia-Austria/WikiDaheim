@@ -23,6 +23,7 @@ export const PLACE_LOAD_CATEGORY_ACTION_SUCCESS =
   "PLACE_LOAD_CATEGORY_ACTION_SUCCESS";
 
 export const TOGGLE_FILTER = "TOGGLE_FILTER";
+export const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 
 export const PLACE_ITEM_HOVER = "PLACE_ITEM_HOVER";
 export const PLACE_ITEM_LEAVE = "PLACE_ITEM_LEAVE";
@@ -209,6 +210,14 @@ export function toggleCategory(categoryName) {
 export function toggleFilter(data) {
   return {
     type: TOGGLE_FILTER,
+    data,
+  };
+}
+
+/* SEARCH FILTER */
+export function setSearchFilter(data) {
+  return {
+    type: SET_SEARCH_FILTER,
     data,
   };
 }
