@@ -21,6 +21,7 @@ import monuments_en from './monuments_en.html';
 import monuments_it from './monuments_it.html';
 
 import tagdesdenkmals_de from './tagdesdenkmals_de.html';
+import tagdesdenkmals_en from './tagdesdenkmals_en.html';
 
 import topics_de from './topics_de.html';
 import topics_en from './topics_en.html';
@@ -60,6 +61,7 @@ const views = {
   monuments_it,
 
   tagdesdenkmals_de,
+  tagdesdenkmals_en,
 
   topics_de,
   topics_en,
