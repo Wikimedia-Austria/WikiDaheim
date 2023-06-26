@@ -1,6 +1,5 @@
 import { WIKIDAHEIM_ENDPOINT, WIKIDAHEIM_FEEDBACK_ENDPOINT } from "config";
-import boundaries from "../config/boundaries.json";
-import towns from "../config/wikidata-gkz.json";
+import boundaries from "../config/boundaries_mapped.json";
 
 const listCategories = () => {
   return fetch(
@@ -92,27 +91,33 @@ const submitFeedbackForm = (token, subject, message) => {
 };
 
 const search = (query, lang, maxResults = 7) => {
-  const filtered = towns
-    .filter((town) =>
-      town.gemeinde.toLowerCase().startsWith(query.toLowerCase())
+  const filtered = boundaries.filter((town) =>
+    town.name.toLowerCase().startsWith(query.toLowerCase())
+  );
+
+  const mapped = filtered
+    // remove duplicates from mapbox (due to multiple boundaries per town from municipality fusion)
+    .filter(
+      (town, index) =>
+        filtered.findIndex((e) => e.unit_code === town.unit_code) === index
     )
+    // slide to max results
     .slice(0, maxResults)
+    // mao to match legacy mapbox format
     .map((town) => ({
-      id: "place." + town.gemeindekennzahl,
+      id: "place." + town.unit_code,
       properties: {
         wikidata: town.wikidata,
       },
-      text: town.gemeinde,
-      place_name: town.gemeinde,
+      text: town.name,
+      place_name: town.name,
       geometry: {
         type: "Point",
-        coordinates: boundaries.find(
-          (b) => b.unit_code === town.gemeindekennzahl
-        )?.centroid,
+        coordinates: town.centroid,
       },
       context: [
         {
-          id: "region." + String(town.gemeindekennzahl).slice(0, 1),
+          id: "region." + String(town.unit_code).slice(0, 1),
           text: {
             1: "Burgenland",
             2: "Kärnten",
@@ -123,11 +128,11 @@ const search = (query, lang, maxResults = 7) => {
             7: "Tirol",
             8: "Vorarlberg",
             9: "Wien",
-          }[String(town.gemeindekennzahl).slice(0, 1)],
+          }[String(town.unit_code).slice(0, 1)],
         },
       ],
     }));
-  return Promise.resolve(filtered);
+  return Promise.resolve(mapped);
 };
 
 const wikidaheimAPI = {
