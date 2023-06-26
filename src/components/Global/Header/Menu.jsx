@@ -43,26 +43,16 @@ class Header extends Component {
               </span>
             </NavLink>
           ))}
-
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "Menu-link--active" : "Menu-link"
-          }
-          to={routeCodes.FEEDBACK}
-        >
-          <span>Feedback</span>
-        </NavLink>
-
         <footer>
           <FormattedMessage
-            id="menu.facebook"
-            description="Link title to WikiDaheim Facebook-Page"
-            defaultMessage="Facebook"
+            id="menu.email"
+            description="Feedback email address"
+            defaultMessage="Email"
           >
             {(title) => (
               <a
-                className="Menu-link--facebook"
-                href="https://facebook.com/wikiDaheim"
+                className="Menu-link--email"
+                href="mailto:wikidaheim@wikimedia.at"
                 target="_blank"
                 rel="noopener noreferrer"
               >
