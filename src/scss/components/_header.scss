@@ -69,11 +69,12 @@
 
         @include shadow-box;
       }
-      .Dropdown-placeholder {
-        font-size: .7em;
+      .Dropdown-placeholder,
+      .Dropdown-option {
+        font-size: 1.25rem;
 
         @include md {
-          font-size: 1em;
+          font-size: 1.5rem;
         }
       }
     }
