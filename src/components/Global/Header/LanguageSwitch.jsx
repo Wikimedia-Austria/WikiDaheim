@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { setLanguage } from 'redux/actions/locale';
-import Dropdown from 'react-dropdown';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { setLanguage } from "redux/actions/locale";
+import Dropdown from "react-dropdown";
 
-import languages from 'translations/languages.json';
+import languages from "translations/languages.json";
 
 class LanguageSwitch extends Component {
   static propTypes = {
@@ -30,19 +30,17 @@ class LanguageSwitch extends Component {
 
     return (
       <Dropdown
-        value={ currentLanguage }
-        onChange={ this.handleChange }
-        placeholder="TEST"
-        options={ languages.map((l) => ({
+        value={currentLanguage}
+        onChange={this.handleChange}
+        options={languages.map((l) => ({
           value: l.locale,
           label: l.locale,
-        })) }
+        }))}
       />
     );
   }
-
 }
 
-export default connect(state => ({
-  currentLanguage: state.locale.get('language'),
+export default connect((state) => ({
+  currentLanguage: state.locale.get("language"),
 }))(LanguageSwitch);

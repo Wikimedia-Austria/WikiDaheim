@@ -1,147 +1,80 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Autocomplete from 'react-autocomplete';
-import { FormattedMessage } from 'react-intl';
-import { autocomplete, selectPlace, toggleCityInfo } from 'redux/actions/app';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Autocomplete from "react-autocomplete";
+import { FormattedMessage } from "react-intl";
+import { autocomplete, selectPlace, toggleCityInfo } from "redux/actions/app";
 import { RotateSpinner } from "react-spinners-kit";
-import Immutable from 'immutable';
 
-class SearchBar extends Component {
-  static propTypes = {
-    searchData: PropTypes.instanceOf(Immutable.List),
-    searchText: PropTypes.string,
-    // from react-redux connect
-    dispatch: PropTypes.func,
-    isLoading: PropTypes.bool,
-    placeSelected: PropTypes.bool,
-    campaign: PropTypes.string,
+const SearchBar = () => {
+  const dispatch = useDispatch();
+  const searchData = useSelector((state) => state.app.get("searchData"));
+  const searchText = useSelector((state) => state.app.get("searchText"));
+  const isLoading = useSelector(
+    (state) =>
+      state.app.get("categoriesLoading") ||
+      state.app.get("searchLoading") ||
+      state.app.get("placeLoading") ||
+      !state.app.get("mapLoaded")
+  );
+  const placeSelected = useSelector((state) => state.app.get("placeSelected"));
+
+  const onPlaceSelect = (place) => {
+    const selectedPlace = searchData.find((p) => p.get("place_name") === place);
+    dispatch(selectPlace(selectedPlace));
   };
 
-  constructor() {
-    super();
+  const renderItem = (item, isHighlighted) => (
+    <div className={isHighlighted ? "highlighted" : ""} key={item.text}>
+      {item.text}
+      {item.context.map((context) => {
+        const id = context.id.split(".");
+        if (["region"].includes(id[0])) {
+          return `, ${context.text}`;
+        }
+        return "";
+      })}
+    </div>
+  );
 
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onPlaceSelect = this.onPlaceSelect.bind(this);
-    this.toggleCityInfo = this.toggleCityInfo.bind(this);
-  }
-
-  onInputChange(text) {
-    const { dispatch, campaign } = this.props;
-
-    dispatch(autocomplete(text, campaign));
-  }
-
-  onPlaceSelect(place) {
-    const { searchData, dispatch } = this.props;
-
-    const selectedPlace = searchData.find(
-      (obj) => {
-        return obj.get('place_name') === place
-      }
-    );
-
-    if (selectedPlace.get('text') === 'Wien') return;
-
-    dispatch(selectPlace(selectedPlace));
-  }
-
-  toggleCityInfo() {
-    const { dispatch } = this.props;
-    dispatch(toggleCityInfo());
-  }
-
-  render() {
-    const {
-      isLoading,
-      searchData,
-      searchText,
-      placeSelected,
-    } = this.props;
-
-    const renderItem = (item, isHighlighted) => {
-      if (
-        item.text === 'Wien'
-        || item.text === 'Vienna'
-      ) {
-        return (
-          <div className='ViennaWarning' key="viennaWarn">
-            <FormattedMessage
-              id='search.viennaWarning'
-              description='Warning to search for Viennese district.'
-              defaultMessage='Bei der Suche in Wien bitte den gewünschten Bezirk angeben. (zB Ottakring)'
-            />
-          </div>
-        );
-      }
-      return (
-        <div className={ isHighlighted ? 'highlighted' : '' } key={item.text}>
-          {item.text}
-          {item.context.map((context) => {
-            const id = context.id.split('.');
-            if (['region'].includes(id[0])) {
-              return `, ${ context.text }`;
-            }
-            return '';
-          })}
-        </div>
-      );
-    };
-
-    return (
-      <section className='SearchBar'>
-        <div className='SearchBar-Bar'>
-          {isLoading ? (
-            <div className='SearchBar-Loader'>
-              <div className='SearchBar-Loader-inner'>
-                <RotateSpinner
-                  color={ '#fff' }
-                  loading={ true }
-                />
-              </div>
+  return (
+    <section className="SearchBar">
+      <div className="SearchBar-Bar">
+        {isLoading ? (
+          <div className="SearchBar-Loader">
+            <div className="SearchBar-Loader-inner">
+              <RotateSpinner color={"#fff"} loading={true} />
             </div>
-          ) : null}
-          <FormattedMessage
-            id='search.placeholder'
-            description='Placeholder Text for Search Bar'
-            defaultMessage='Gemeinde hier suchen...'
-          >
-            {(placeholder) => (
-              <Autocomplete
-                inputProps={ { placeholder, accessKey: 'f' } }
-                getItemValue={ (item) => item.place_name }
-                items={ searchData.toJS() }
-                renderItem={ renderItem }
-                renderMenu={ (items) => (
-                  <div className='SearchBar-Suggestions' children={ items } /> // eslint-disable-line react/no-children-prop
-                ) }
-                value={ searchText }
-                onChange={ (e) => this.onInputChange(e.target.value) }
-                onSelect={ (v) => this.onPlaceSelect(v) }
-              />
-            )}
-          </FormattedMessage>
-          {placeSelected ? (
-            <button
-              className='SearchBar-CityInfoToggle'
-              onClick={ this.toggleCityInfo }
+          </div>
+        ) : null}
+        <FormattedMessage
+          id="search.placeholder"
+          description="Placeholder Text for Search Bar"
+          defaultMessage="Gemeinde hier suchen..."
+        >
+          {(placeholder) => (
+            <Autocomplete
+              inputProps={{ placeholder, accessKey: "f" }}
+              getItemValue={(item) => item.place_name}
+              items={searchData.toJS()}
+              renderItem={renderItem}
+              renderMenu={(items) => (
+                <div className="SearchBar-Suggestions" children={items} /> // eslint-disable-line react/no-children-prop
+              )}
+              value={searchText}
+              onChange={(e) => dispatch(autocomplete(e.target.value))}
+              onSelect={(v) => onPlaceSelect(v)}
             />
-          ) : null}
-        </div>
-      </section>
-    );
-  }
+          )}
+        </FormattedMessage>
+        {placeSelected ? (
+          <button
+            className="SearchBar-CityInfoToggle"
+            onClick={() => dispatch(toggleCityInfo())}
+          />
+        ) : null}
+      </div>
+    </section>
+  );
+};
 
-}
-
-export default connect(state => ({
-  searchData: state.app.get('searchData'),
-  searchText: state.app.get('searchText'),
-  isLoading: (
-    state.app.get('categoriesLoading') ||
-    state.app.get('searchLoading') ||
-    state.app.get('placeLoading') ||
-    !state.app.get('mapLoaded')
-  ),
-  placeSelected: state.app.get('placeSelected'),
-}))(SearchBar);
+export default SearchBar;

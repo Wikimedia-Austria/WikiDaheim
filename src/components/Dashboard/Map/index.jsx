@@ -1,22 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { fromJS } from 'immutable';
-import Truncate from 'react-truncate';
-import ReactMapboxGl, { Layer, Source, Popup } from 'react-mapbox-gl';
-import { MAPBOX_API_KEY } from 'config';
-import boundaries from 'config/boundaries.json';
-import { placeItemHover, placeItemLeave, placeItemSelect, mapPositionChanged, mapZoomChanged, municipalityHover, municipalityLeave, selectPlace, placeSelectClear, mapLoaded } from 'redux/actions/app';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
-import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
-import { FormattedMessage } from 'react-intl';
-import CategoryName from 'components/Global/CategoryName';
-import FocusHandler from 'components/Global/FocusHandler';
-import getFilePath from 'wikimedia-commons-file-path';
-import Immutable from 'immutable';
-
-// filter all "Burgenland" municipalities for the Burgenland campaign
-const iso_campaign_burgenland = boundaries.filter(b => b.unit_code.startsWith(1)).map(b => b.feature_id);
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { fromJS } from "immutable";
+import Truncate from "react-truncate";
+import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
+import { MAPBOX_API_KEY } from "config";
+import boundaries from "config/boundaries_mapped.json";
+import {
+  placeItemHover,
+  placeItemLeave,
+  placeItemSelect,
+  mapPositionChanged,
+  mapZoomChanged,
+  municipalityHover,
+  municipalityLeave,
+  selectPlace,
+  placeSelectClear,
+  mapLoaded,
+} from "redux/actions/app";
+import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
+import { FormattedMessage } from "react-intl";
+import CategoryName from "components/Global/CategoryName";
+import FocusHandler from "components/Global/FocusHandler";
+import getFilePath from "wikimedia-commons-file-path";
+import Immutable from "immutable";
 
 mapboxgl.workerClass = MapboxWorker;
 const Map = ReactMapboxGl({
@@ -51,11 +59,10 @@ class ResultMap extends Component {
     /*
      * If we are in the Burgenland Campaign set the default zoom to burgenland
      */
-    if('burgenland' === 'props.campaign') {
+    if ("burgenland" === "props.campaign") {
       coordinates = [16.416665, 47.499998]; // Center of Burgenland
       zoom = [8];
     }
-
 
     /*
      *if a city is already selected chose its center as the map center
@@ -87,12 +94,12 @@ class ResultMap extends Component {
     /*
      * dispatch a map position change for the result list on map initialization
      * TODO: maybe deprecated due to map show on start?
-    */
+     */
     const { dispatch, placeMapData } = this.props;
     let { coordinates } = this.state;
 
-    if (placeMapData.get('geometry')) {
-      coordinates = placeMapData.get('geometry').get('coordinates').toJS();
+    if (placeMapData.get("geometry")) {
+      coordinates = placeMapData.get("geometry").get("coordinates").toJS();
     }
 
     dispatch(mapPositionChanged(coordinates));
@@ -102,9 +109,15 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the city center when a new city is selected
      */
-    if (prevState.coordinates[0] === 0 || ( !this.props.placeLoading && prevProps.placeLoading) ) {
+    if (
+      prevState.coordinates[0] === 0 ||
+      (!this.props.placeLoading && prevProps.placeLoading)
+    ) {
       // prevent the map from moving on every redux state change
-      const coordinates = this.props.placeMapData.get('geometry').get('coordinates').toJS();
+      const coordinates = this.props.placeMapData
+        .get("geometry")
+        .get("coordinates")
+        .toJS();
       this.setState({
         coordinates,
         zoom: [12],
@@ -113,18 +126,19 @@ class ResultMap extends Component {
 
     /*
      * move the center of the map to the currently selected POI
-    */
+     */
     const currentSelected = prevProps.selectedElement;
     const nextSelected = this.props.selectedElement;
 
     if (
       (!currentSelected && nextSelected) ||
-      (currentSelected && currentSelected.get('lastChange') !== nextSelected.get('lastChange'))
+      (currentSelected &&
+        currentSelected.get("lastChange") !== nextSelected.get("lastChange"))
     ) {
-      if (parseFloat(nextSelected.get('longitude')) > 0.0) {
+      if (parseFloat(nextSelected.get("longitude")) > 0.0) {
         const coordinates = [
-          parseFloat(nextSelected.get('longitude')),
-          parseFloat(nextSelected.get('latitude')),
+          parseFloat(nextSelected.get("longitude")),
+          parseFloat(nextSelected.get("latitude")),
         ];
 
         this.setState({
@@ -138,15 +152,19 @@ class ResultMap extends Component {
       re-adjust the map center after adding the sidebar shift
     */
     if (!prevProps.placeSelected && this.props.placeSelected) {
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
     }
 
     /*
      * When switching to a Campaign View adjust the Map
-    */
+     */
     const { dispatch } = this.props;
 
-    if(!prevProps.campaign && this.props.campaign && this.props.campaign === 'burgenland') {
+    if (
+      !prevProps.campaign &&
+      this.props.campaign &&
+      this.props.campaign === "burgenland"
+    ) {
       // zoom to bugenland
       this.setState({
         coordinates: [16.416665, 47.499998],
@@ -156,8 +174,8 @@ class ResultMap extends Component {
       dispatch(placeSelectClear());
 
       // trigger resize event to update map
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
-    } else if( prevProps.campaign && !this.props.campaign ) {
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
+    } else if (prevProps.campaign && !this.props.campaign) {
       // zoom to austria
       this.setState({
         coordinates: [13.2, 47.516231],
@@ -167,7 +185,7 @@ class ResultMap extends Component {
       dispatch(placeSelectClear());
 
       // trigger resize event to update map
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
     }
   }
 
@@ -207,59 +225,81 @@ class ResultMap extends Component {
         const { hoveredElement } = this.props;
 
         // only trigger if we move over a new pin
-        if (hoveredElement && hoveredElement.get('id') === e.features[0].properties.id) return;
+        if (
+          hoveredElement &&
+          hoveredElement.get("id") === e.features[0].properties.id
+        )
+          return;
 
         const canvas = map.getCanvas();
-        canvas.style.cursor = 'pointer';
+        canvas.style.cursor = "pointer";
 
-        dispatch(placeItemHover(
-          this.props.items.find((c) => c.get('id') === e.features[0].properties.id)
-        ));
-      }
+        dispatch(
+          placeItemHover(
+            this.props.items.find(
+              (c) => c.get("id") === e.features[0].properties.id
+            )
+          )
+        );
+      };
 
       const unclusteredMouseLeave = () => {
         const canvas = map.getCanvas();
-        canvas.style.cursor = '';
+        canvas.style.cursor = "";
 
         dispatch(placeItemLeave());
-      }
+      };
 
-      map.on('mousemove', 'unclustered-point', (e) => {
+      map.on("mousemove", "unclustered-point", (e) => {
         unclusteredMouseMove(e);
       });
 
-      map.on('mouseleave', 'unclustered-point', () => {
+      map.on("mouseleave", "unclustered-point", () => {
         unclusteredMouseLeave();
       });
 
-      map.on('mousemove', 'unclustered-point-uncluster', (e) => {
+      map.on("mousemove", "unclustered-point-uncluster", (e) => {
         unclusteredMouseMove(e);
       });
 
-      map.on('mouseleave', 'unclustered-point-uncluster', () => {
+      map.on("mouseleave", "unclustered-point-uncluster", () => {
         unclusteredMouseLeave();
       });
 
       /*
       trigger municipality hover (small zoom size layer)
       */
-      map.on('mousemove', 'wd-municipalities', (e) => this.triggerMunicipalityHover(e, map));
-      map.on('mouseleave', 'wd-municipalities', (e) => this.triggerMunicipalityLeave(e, map));
+      map.on("mousemove", "wd-municipalities", (e) =>
+        this.triggerMunicipalityHover(e, map)
+      );
+      map.on("mouseleave", "wd-municipalities", (e) =>
+        this.triggerMunicipalityLeave(e, map)
+      );
     }
 
     const unclusteredClick = (e) => {
-      dispatch(placeItemSelect(
-        this.props.items.find((c) => c.get('id') === e.features[0].properties.id),
-        'map'
-      ));
+      dispatch(
+        placeItemSelect(
+          this.props.items.find(
+            (c) => c.get("id") === e.features[0].properties.id
+          ),
+          "map"
+        )
+      );
 
       //e.stopPropagation();
-    }
+    };
 
-    map.on('click', 'unclustered-point', (e) => { unclusteredClick( e ) });
-    map.on('click', 'unclustered-point-uncluster', (e) => { unclusteredClick( e ) });
+    map.on("click", "unclustered-point", (e) => {
+      unclusteredClick(e);
+    });
+    map.on("click", "unclustered-point-uncluster", (e) => {
+      unclusteredClick(e);
+    });
 
-    map.on('click', 'wd-municipalities', (e) => this.triggerMunicipalitySelect(e));
+    map.on("click", "wd-municipalities", (e) =>
+      this.triggerMunicipalitySelect(e)
+    );
 
     this.updateHighlightedArea(map);
     this.updateMapPadding(map);
@@ -272,14 +312,20 @@ class ResultMap extends Component {
     const missingImage = e.id;
 
     // add an empty placeholder to prevent mapbox from complaining about the missing image until the image is loaded
-    map.addImage(missingImage, { width: 38, height: 52, data: new Uint8Array(38 * 52 * 4) });
+    map.addImage(missingImage, {
+      width: 38,
+      height: 52,
+      data: new Uint8Array(38 * 52 * 4),
+    });
 
     /* load category marker image */
-    const filteredCategories = categories.filter((category) => missingImage === category.get('name'));
+    const filteredCategories = categories.filter(
+      (category) => missingImage === category.get("name")
+    );
 
-    if(filteredCategories.size > 0) {
+    if (filteredCategories.size > 0) {
       const category = filteredCategories.get(0);
-      map.loadImage(category.get('marker'), (error, image) => {
+      map.loadImage(category.get("marker"), (error, image) => {
         map.updateImage(missingImage, image);
       });
     }
@@ -292,10 +338,10 @@ class ResultMap extends Component {
     const { id } = feature;
 
     // check if we are already hovering over this place
-    if (hoveredMunicipality && hoveredMunicipality.get('iso') === id) return;
+    if (hoveredMunicipality && hoveredMunicipality.get("iso") === id) return;
 
     // look up info about the municipality
-    const municipality = boundaries.find(e => e.feature_id === id);
+    const municipality = boundaries.find((e) => e.feature_id === id);
 
     // clear the micro-timeout
     if (this.municipalityHoverTimer) clearTimeout(this.municipalityHoverTimer);
@@ -307,14 +353,16 @@ class ResultMap extends Component {
 
     this.municipalityHoverTimer = setTimeout(() => {
       const canvas = map.getCanvas();
-      canvas.style.cursor = 'pointer';
+      canvas.style.cursor = "pointer";
 
-      dispatch(municipalityHover({
-        iso: id,
-        name: municipality.name,
-        longitude: lngLat.lng,
-        latitude: lngLat.lat,
-      }));
+      dispatch(
+        municipalityHover({
+          iso: id,
+          name: municipality.name,
+          longitude: lngLat.lng,
+          latitude: lngLat.lat,
+        })
+      );
 
       this.updateHighlightedArea(map);
     }, 20);
@@ -325,7 +373,7 @@ class ResultMap extends Component {
     const canvas = map.getCanvas();
 
     if (this.municipalityHoverTimer) clearTimeout(this.municipalityHoverTimer);
-    canvas.style.cursor = '';
+    canvas.style.cursor = "";
 
     dispatch(municipalityLeave());
   }
@@ -337,17 +385,21 @@ class ResultMap extends Component {
     if (hoveredElement) return;
 
     // look up info about the municipality
-    const municipality = boundaries.find(e => e.feature_id === id);
+    const municipality = boundaries.find((e) => e.feature_id === id);
 
     dispatch(municipalityLeave());
-    dispatch(selectPlace(fromJS({
-      id,
-      iso: municipality.unit_code,
-      text: municipality.name,
-      geometry: {
-        coordinates: municipality.centroid,
-      }
-    })));
+    dispatch(
+      selectPlace(
+        fromJS({
+          id,
+          iso: municipality.unit_code,
+          text: municipality.name,
+          geometry: {
+            coordinates: municipality.centroid,
+          },
+        })
+      )
+    );
   }
 
   /*
@@ -355,41 +407,45 @@ class ResultMap extends Component {
     adds hover effect to other municipailties
   */
   updateHighlightedArea(map) {
-    if( ! map._loaded ) return;
+    if (!map._loaded) return;
 
-    const { placeMapData, placeLoading, campaign } = this.props;
-    const municipalityId = placeMapData.get('iso');
+    const { placeMapData, placeLoading } = this.props;
+    const municipalityId = placeMapData.get("iso");
     const { hoveredMunicipality } = this.props;
-
-    const special_filters = [];
-    if( campaign && 'burgenland' === campaign ) {
-      special_filters.push(["in", '$id', ...iso_campaign_burgenland]);
-    }
 
     // filter current municipality
     if (municipalityId && !placeLoading) {
       // look up info about the municipality
-      const municipality = boundaries.find(e => e.unit_code === municipalityId);
+      const isoCodes = boundaries
+        .filter((e) => e.unit_code === municipalityId)
+        .map((b) => ["!=", "$id", b.feature_id]);
 
-      if(municipality) {
-        map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ['!=', '$id', municipality.feature_id], ...special_filters]);
+      if (isoCodes.length > 0) {
+        map.setFilter("wd-municipalities", [
+          "all",
+          ["==", "iso_3166_1", "AT"],
+          ...isoCodes,
+        ]);
       }
     } else {
-      map.setFilter('wd-municipalities', ['all', ['==', 'iso_3166_1', 'AT'], ...special_filters]);
+      map.setFilter("wd-municipalities", ["all", ["==", "iso_3166_1", "AT"]]);
     }
 
-
     // hover-effect for municipalities
-    if (map.getSource('municipality-hover-item')) {
+    if (map.getSource("municipality-hover-item")) {
       if (hoveredMunicipality) {
-        const features = map.querySourceFeatures('composite', {
-          sourceLayer: 'boundaries_admin_3',
-          filter: ['==', '$id', hoveredMunicipality.get('iso')],
+        const features = map.querySourceFeatures("composite", {
+          sourceLayer: "boundaries_admin_3",
+          filter: ["==", "$id", hoveredMunicipality.get("iso")],
         });
 
-        map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features });
+        map
+          .getSource("municipality-hover-item")
+          .setData({ type: "FeatureCollection", features });
       } else {
-        map.getSource('municipality-hover-item').setData({ type: 'FeatureCollection', features: [] });
+        map
+          .getSource("municipality-hover-item")
+          .setData({ type: "FeatureCollection", features: [] });
       }
     }
   }
@@ -399,14 +455,14 @@ class ResultMap extends Component {
     const { placeSelected } = this.props;
 
     // when we are currently zooming await the end of it as otherwise zooming will be aborted
-    const sleep = m => new Promise(r => setTimeout(r, m))
-    while(map._zooming) {
+    const sleep = (m) => new Promise((r) => setTimeout(r, m));
+    while (map._zooming) {
       await sleep(200);
     }
 
-    if( placeSelected && window.innerWidth > 768 ) {
+    if (placeSelected && window.innerWidth > 768) {
       map.setPadding({
-        left: window.innerWidth / 3
+        left: window.innerWidth / 3,
       });
     }
 
@@ -423,27 +479,30 @@ class ResultMap extends Component {
       hoveredElement,
       hoveredMunicipality,
       enableClustering,
-
     } = this.props;
 
-    const filteredItems = items.toJS().filter((item) => parseFloat(item.longitude) > 0.0);
+    const filteredItems = items
+      .toJS()
+      .filter((item) => parseFloat(item.longitude) > 0.0);
 
     const GEO_JSON_RESULTS = {
-      type: 'geojson',
+      type: "geojson",
       data: {
-        'type': 'FeatureCollection',
-        'features': filteredItems.map((item) => ({
-          'type': 'Feature',
-          'properties': {
-            'id': item.id,
-            'category': item.category,
+        type: "FeatureCollection",
+        features: filteredItems.map((item) => ({
+          type: "Feature",
+          properties: {
+            id: item.id,
+            category: item.category,
           },
-          'geometry': {
-            'type': 'Point',
-            'coordinates': [parseFloat(item.longitude), parseFloat(item.latitude)],
+          geometry: {
+            type: "Point",
+            coordinates: [
+              parseFloat(item.longitude),
+              parseFloat(item.latitude),
+            ],
           },
-        })
-      ),
+        })),
       },
       cluster: false,
       clusterMaxZoom: 2, // Max zoom to cluster points on
@@ -454,7 +513,7 @@ class ResultMap extends Component {
       cluster: true,
       clusterMaxZoom: 14, // Max zoom to cluster points on
       clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
-    }
+    };
 
     // show the mouse-hover-popup
     let popup = null;
@@ -462,223 +521,253 @@ class ResultMap extends Component {
     if (hoveredMunicipality) {
       popup = (
         <Popup
-          coordinates={ [parseFloat(hoveredMunicipality.get('longitude')), parseFloat(hoveredMunicipality.get('latitude'))] }
-          offset={
-            [0, -15]
-           }
-          style={ {
-            'backgroundColor': 'black',
-          } }
+          coordinates={[
+            parseFloat(hoveredMunicipality.get("longitude")),
+            parseFloat(hoveredMunicipality.get("latitude")),
+          ]}
+          offset={[0, -15]}
+          style={{
+            backgroundColor: "black",
+          }}
         >
           <FormattedMessage
-            id='map.switchMunicipality'
-            description='Title for the Switch Municipality Popup'
-            defaultMessage='zu Gebiet wechseln'
+            id="map.switchMunicipality"
+            description="Title for the Switch Municipality Popup"
+            defaultMessage="zu Gebiet wechseln"
           />
-          <strong>{hoveredMunicipality.get('name')}</strong>
+          <strong>{hoveredMunicipality.get("name")}</strong>
         </Popup>
       );
     }
 
-    if (window.innerWidth > 669 && hoveredElement && hoveredElement.get('longitude') && hoveredElement.get('latitude')) {
-      const hoveredCategory = categories.find((c) => c.get('name') === hoveredElement.get('category'));
-      const address = hoveredElement.get('adresse');
+    if (
+      window.innerWidth > 669 &&
+      hoveredElement &&
+      hoveredElement.get("longitude") &&
+      hoveredElement.get("latitude")
+    ) {
+      const hoveredCategory = categories.find(
+        (c) => c.get("name") === hoveredElement.get("category")
+      );
+      const address = hoveredElement.get("adresse");
       let hasPhoto = false;
-      const descriptionText = hoveredElement.get('beschreibung');
+      const descriptionText = hoveredElement.get("beschreibung");
       let hasText = false;
 
-      let popUpAddress = '';
+      let popUpAddress = "";
       if (address) {
-        popUpAddress = (
-          <span>, { address }</span>
-        );
+        popUpAddress = <span>, {address}</span>;
       }
 
       const photoContainerStyle = {};
-      if (hoveredElement.get('foto') && !hoveredElement.get('foto').match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)) {
+      if (
+        hoveredElement.get("foto") &&
+        !hoveredElement
+          .get("foto")
+          .match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)
+      ) {
         hasPhoto = true;
-        const url = getFilePath(hoveredElement.get('foto'), 256);
-        photoContainerStyle.backgroundImage = `url('${ url }')`;
+        const url = getFilePath(hoveredElement.get("foto"), 256);
+        photoContainerStyle.backgroundImage = `url('${url}')`;
       } else if (descriptionText && descriptionText.length > 0) {
         hasText = true;
       }
 
-
       popup = (
         <Popup
-          coordinates={ [parseFloat(hoveredElement.get('longitude')), parseFloat(hoveredElement.get('latitude'))] }
-          style={ {
-            'backgroundColor': hoveredCategory.get('color'),
-            'borderColor': hoveredCategory.get('color'),
-          } }
+          coordinates={[
+            parseFloat(hoveredElement.get("longitude")),
+            parseFloat(hoveredElement.get("latitude")),
+          ]}
+          style={{
+            backgroundColor: hoveredCategory.get("color"),
+            borderColor: hoveredCategory.get("color"),
+          }}
           offset={{
             top: [0, 20],
             bottom: [0, -30],
           }}
         >
-          { hasPhoto ? <div className='PhotoContainer' style={ photoContainerStyle } /> : null }
+          {hasPhoto ? (
+            <div className="PhotoContainer" style={photoContainerStyle} />
+          ) : null}
 
-          { hasText ? <div className='TextContainer'>
-            <div>
-              <Truncate lines={ 4 }>
-                <p
-                  dangerouslySetInnerHTML={ { __html: descriptionText } } // eslint-disable-line
-                />
-              </Truncate>
+          {hasText ? (
+            <div className="TextContainer">
+              <div>
+                <Truncate lines={4}>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: descriptionText }} // eslint-disable-line
+                  />
+                </Truncate>
+              </div>
             </div>
-          </div> : null }
+          ) : null}
 
-          <div className='DescriptionContainer'>
-            <strong>{hoveredElement.get('name')}</strong>
-            {hoveredElement.get('categories') && hoveredElement.get('categories').map(c => <CategoryName category={ c } key={ c } />) }
+          <div className="DescriptionContainer">
+            <strong>{hoveredElement.get("name")}</strong>
+            {hoveredElement.get("categories") &&
+              hoveredElement
+                .get("categories")
+                .map((c) => <CategoryName category={c} key={c} />)}
             {popUpAddress}
           </div>
         </Popup>
       );
     }
 
-    return (<div className='ResultMap'><div className="ResultMap-Wrapper">
-      <Map
-        style='mapbox://styles/wikimediaaustria/ckceqt44w0u9s1inyj4e2bort' // eslint-disable-line react/style-prop-object
-        containerStyle={ {
-          height: '100%',
-          width: '100%',
-        } }
-        center={ this.state.coordinates }
-        onStyleLoad={ this.prepareMap }
-        onMoveEnd={ this.onMapMove }
-        onMoveStart={ this.updateHighlightedArea }
-        onStyleImageMissing={ this.loadMissingMapImage }
-        zoom={ this.state.zoom }
-        onResize={ this.updateMapPadding }
-      >
-        <Source
-          id='municipality-hover-item'
-          geoJsonSource={ {
-            type: 'geojson',
-            data: { type: 'FeatureCollection', features: [] },
-          } }
-        />
+    return (
+      <div className="ResultMap">
+        <div className="ResultMap-Wrapper">
+          <Map
+            style="mapbox://styles/wikimediaaustria/ckceqt44w0u9s1inyj4e2bort" // eslint-disable-line react/style-prop-object
+            containerStyle={{
+              height: "100%",
+              width: "100%",
+            }}
+            center={this.state.coordinates}
+            onStyleLoad={this.prepareMap}
+            onMoveEnd={this.onMapMove}
+            onMoveStart={this.updateHighlightedArea}
+            onStyleImageMissing={this.loadMissingMapImage}
+            zoom={this.state.zoom}
+            onResize={this.updateMapPadding}
+          >
+            <Source
+              id="municipality-hover-item"
+              geoJsonSource={{
+                type: "geojson",
+                data: { type: "FeatureCollection", features: [] },
+              }}
+            />
 
-        <Source id='items' geoJsonSource={ GEO_JSON_RESULTS_CLUSTERED } />
-        <Source id='items-unclustered' geoJsonSource={ GEO_JSON_RESULTS } />
+            <Source id="items" geoJsonSource={GEO_JSON_RESULTS_CLUSTERED} />
+            <Source id="items-unclustered" geoJsonSource={GEO_JSON_RESULTS} />
 
-        { ! enableClustering && (<>
-          <Layer
-            id='unclustered-point-uncluster'
-            type='symbol'
-            sourceId='items-unclustered'
-            layerOptions={ {
-              filter: ['!has', 'point_count'],
-            } }
-            layout={ {
-              'icon-image': {
-                property: 'category',
-                type: 'categorical',
-                stops: categories.toJS().map((cat) => [cat.name, cat.name]),
-              },
-              'icon-size': 0.5,
-              'icon-offset': [0, -10],
-              'icon-allow-overlap': true,
-            } }
-          />
-        </>) }
+            {!enableClustering && (
+              <>
+                <Layer
+                  id="unclustered-point-uncluster"
+                  type="symbol"
+                  sourceId="items-unclustered"
+                  layerOptions={{
+                    filter: ["!has", "point_count"],
+                  }}
+                  layout={{
+                    "icon-image": {
+                      property: "category",
+                      type: "categorical",
+                      stops: categories
+                        .toJS()
+                        .map((cat) => [cat.name, cat.name]),
+                    },
+                    "icon-size": 0.5,
+                    "icon-offset": [0, -10],
+                    "icon-allow-overlap": true,
+                  }}
+                />
+              </>
+            )}
 
-        { !! enableClustering && (<>
-          <Layer
-            id='clusters'
-            sourceId='items'
-            type='circle'
-            paint={ {
-              'circle-color': {
-                property: 'point_count',
-                type: 'interval',
-                stops: [
-                      [0, '#57599A'],
-                      [30, '#373974'],
-                      [70, '#23224E'],
-                ],
-              },
-              'circle-radius': {
-                property: 'point_count',
-                type: 'interval',
-                stops: [
-                      [0, 20],
-                      [30, 30],
-                      [70, 40],
-                ],
-              },
-            } }
-            layerOptions={ {
-              filter: ['has', 'point_count'],
-            } }
-          />
+            {!!enableClustering && (
+              <>
+                <Layer
+                  id="clusters"
+                  sourceId="items"
+                  type="circle"
+                  paint={{
+                    "circle-color": {
+                      property: "point_count",
+                      type: "interval",
+                      stops: [
+                        [0, "#57599A"],
+                        [30, "#373974"],
+                        [70, "#23224E"],
+                      ],
+                    },
+                    "circle-radius": {
+                      property: "point_count",
+                      type: "interval",
+                      stops: [
+                        [0, 20],
+                        [30, 30],
+                        [70, 40],
+                      ],
+                    },
+                  }}
+                  layerOptions={{
+                    filter: ["has", "point_count"],
+                  }}
+                />
 
-          <Layer
-            id='cluster-count'
-            type='symbol'
-            sourceId='items'
-            layerOptions={ {
-              filter: ['has', 'point_count'],
-            } }
-            layout={ {
-              'text-field': '{point_count_abbreviated}',
-              'text-font': ['Space Mono Bold', 'Arial Unicode MS Bold'],
-              'text-size': 12,
-            } }
-            paint={ {
-              'text-color': '#FFFFFF',
-            } }
-          />
+                <Layer
+                  id="cluster-count"
+                  type="symbol"
+                  sourceId="items"
+                  layerOptions={{
+                    filter: ["has", "point_count"],
+                  }}
+                  layout={{
+                    "text-field": "{point_count_abbreviated}",
+                    "text-font": ["Space Mono Bold", "Arial Unicode MS Bold"],
+                    "text-size": 12,
+                  }}
+                  paint={{
+                    "text-color": "#FFFFFF",
+                  }}
+                />
 
-          <Layer
-            id='unclustered-point'
-            type='symbol'
-            sourceId={'items'}
-            layerOptions={ {
-              filter: ['!has', 'point_count'],
-            } }
-            layout={ {
-              'icon-image': {
-                property: 'category',
-                type: 'categorical',
-                stops: categories.toJS().map((cat) => [cat.name, cat.name]),
-              },
-              'icon-size': 0.5,
-              'icon-offset': [0, -10],
-              'icon-allow-overlap': true,
-            } }
-          />
-        </>) }
+                <Layer
+                  id="unclustered-point"
+                  type="symbol"
+                  sourceId={"items"}
+                  layerOptions={{
+                    filter: ["!has", "point_count"],
+                  }}
+                  layout={{
+                    "icon-image": {
+                      property: "category",
+                      type: "categorical",
+                      stops: categories
+                        .toJS()
+                        .map((cat) => [cat.name, cat.name]),
+                    },
+                    "icon-size": 0.5,
+                    "icon-offset": [0, -10],
+                    "icon-allow-overlap": true,
+                  }}
+                />
+              </>
+            )}
 
-        <Layer
-          id='municipality-hover'
-          type='fill'
-          sourceId='municipality-hover-item'
-          paint={ {
-            'fill-color': '#000',
-            'fill-opacity': 0.08,
-            'fill-antialias': true,
-          } }
-        />
-        {popup}
-      </Map></div>
-      <FocusHandler view='map' />
-    </div>
+            <Layer
+              id="municipality-hover"
+              type="fill"
+              sourceId="municipality-hover-item"
+              paint={{
+                "fill-color": "#000",
+                "fill-opacity": 0.08,
+                "fill-antialias": true,
+              }}
+            />
+            {popup}
+          </Map>
+        </div>
+        <FocusHandler view="map" />
+      </div>
     );
   }
-
 }
 
-export default connect(state => ({
-  placeMapData: state.app.get('placeMapData'),
-  currentMapPosition: state.app.get('currentMapPosition'),
-  currentMapZoom: state.app.get('currentMapZoom'),
-  categories: state.app.get('categories'),
-  hoveredElement: state.app.get('hoveredElement'),
-  hoveredMunicipality: state.app.get('hoveredMunicipality'),
-  selectedElement: state.app.get('selectedElement'),
-  placeSelected: state.app.get('placeSelected'),
-  placeLoading: state.app.get('placeLoading'),
-  enableClustering: state.app.get('enableClustering'),
+export default connect((state) => ({
+  placeMapData: state.app.get("placeMapData"),
+  currentMapPosition: state.app.get("currentMapPosition"),
+  currentMapZoom: state.app.get("currentMapZoom"),
+  categories: state.app.get("categories"),
+  hoveredElement: state.app.get("hoveredElement"),
+  hoveredMunicipality: state.app.get("hoveredMunicipality"),
+  selectedElement: state.app.get("selectedElement"),
+  placeSelected: state.app.get("placeSelected"),
+  placeLoading: state.app.get("placeLoading"),
+  enableClustering: state.app.get("enableClustering"),
 }))(ResultMap);
