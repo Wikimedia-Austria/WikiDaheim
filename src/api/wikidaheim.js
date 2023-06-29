@@ -1,4 +1,4 @@
-import { WIKIDAHEIM_ENDPOINT, WIKIDAHEIM_FEEDBACK_ENDPOINT } from "config";
+import { WIKIDAHEIM_ENDPOINT /*, WIKIDAHEIM_FEEDBACK_ENDPOINT*/ } from "config";
 import boundaries from "../config/boundaries_mapped.json";
 
 const listCategories = () => {
@@ -58,6 +58,7 @@ const getTownData = (location, categories, getWikiData) => {
     });
 };
 
+/*
 const getFeedbackFormToken = () => {
   return fetch(`${WIKIDAHEIM_FEEDBACK_ENDPOINT}?token=new`, {
     method: "get",
@@ -89,10 +90,18 @@ const submitFeedbackForm = (token, subject, message) => {
       return json;
     });
 };
+*/
 
 const search = (query, lang, maxResults = 7) => {
+  // helper function to make string lower case,
+  // replace "sankt" with "st." and remove umlauts
+  const normalizeQueryString = (name) =>
+    name.toLowerCase().replace("sankt", "st.");
+
+  const normalizedQuery = normalizeQueryString(query);
+
   const filtered = boundaries.filter((town) =>
-    town.name.toLowerCase().startsWith(query.toLowerCase())
+    normalizeQueryString(town.name).includes(normalizedQuery)
   );
 
   const mapped = filtered
@@ -101,9 +110,9 @@ const search = (query, lang, maxResults = 7) => {
       (town, index) =>
         filtered.findIndex((e) => e.unit_code === town.unit_code) === index
     )
-    // slide to max results
+    // slice to max results
     .slice(0, maxResults)
-    // mao to match legacy mapbox format
+    // map to match legacy mapbox format
     .map((town) => ({
       id: "place." + town.unit_code,
       properties: {
@@ -138,8 +147,8 @@ const search = (query, lang, maxResults = 7) => {
 const wikidaheimAPI = {
   listCategories,
   getTownData,
-  getFeedbackFormToken,
-  submitFeedbackForm,
+  //getFeedbackFormToken,
+  //submitFeedbackForm,
   search,
 };
 
