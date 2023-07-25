@@ -92,7 +92,7 @@ const submitFeedbackForm = (token, subject, message) => {
 };
 */
 
-const search = (query, lang, maxResults = 7) => {
+const search = (query, lang, maxResults = 10) => {
   // helper function to make string lower case,
   // replace "sankt" with "st." and remove umlauts
   const normalizeQueryString = (name) =>
@@ -110,6 +110,24 @@ const search = (query, lang, maxResults = 7) => {
       (town, index) =>
         filtered.findIndex((e) => e.unit_code === town.unit_code) === index
     )
+    // sort by name - and move matches staring with query to top
+    .sort((a, b) => {
+      const aName = normalizeQueryString(a.name);
+      const bName = normalizeQueryString(b.name);
+      if (
+        aName.startsWith(normalizedQuery) &&
+        !bName.startsWith(normalizedQuery)
+      )
+        return -1;
+      if (
+        !aName.startsWith(normalizedQuery) &&
+        bName.startsWith(normalizedQuery)
+      )
+        return 1;
+      if (aName < bName) return -1;
+      if (aName > bName) return 1;
+      return 0;
+    })
     // slice to max results
     .slice(0, maxResults)
     // map to match legacy mapbox format
