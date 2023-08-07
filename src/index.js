@@ -2,8 +2,6 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import * as serviceWorker from "./workers/serviceWorkerRegister";
-import * as Sentry from "@sentry/browser";
-import { SENTRY_DSN } from "./config";
 import confirm from "./lib/confirm";
 
 // force HTTPS
@@ -13,9 +11,6 @@ if (!serviceWorker.isLocalhost && location.protocol !== "https:") {
     `https:${location.href.substring(location.protocol.length)}`
   );
 }
-
-// add sentry error tracking
-Sentry.init({ dsn: SENTRY_DSN });
 
 const container = document.getElementById("root");
 const root = createRoot(container);
