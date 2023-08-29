@@ -37,10 +37,15 @@ To run on another server:
 The frontend is mailny build with the help of the following libraries:
 
 - [React](https://reactjs.org/)
+  The base JS Framwork of the App.
 - [Immutable.js](https://immutable-js.github.io/immutable-js/)
+  Prevents variables from being mutated.
 - [Redux](https://redux.js.org/)
+  Management of the current app state. Also provides actions and reducers.
 - [React Router](https://reacttraining.com/react-router/)
+  Routing of the app.
 - [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) via React wrapper `react-mapbox-gl`
+  Rendering of the map.
 
 ### API
 
@@ -67,6 +72,13 @@ New categories won't appear in the app if they are not provided by the Wikidahei
 ### Components
 
 The main entry point is `src/index.js`. The main components are located in `src/components/` and the static pages, accessible via the menu, in `src/views/`. The entrypoint for the Dashboard is `src/components/Dashboard/index.jsx`.
+
+The Dasboard is split into the following components:
+
+- Map (`src/components/Dashboard/Map/index.jsx`)
+  Renders the Mapbox map and the map controls. Also reacts to state changes and updates the map accordingly.
+- Sidebar (`src/components/Dashboard/Sidebar/index.jsx`)
+  Renders the Searchbar, Informaation about the currently selected municipality, Filters and Item List.
 
 ### Styles
 
