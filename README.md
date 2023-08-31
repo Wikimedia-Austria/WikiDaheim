@@ -34,7 +34,7 @@ To run on another server:
 
 ## Dependencies and Structure
 
-The frontend is mailny build with the help of the following libraries:
+The frontend is mainly built with the help of the following libraries:
 
 - [React](https://reactjs.org/)  
   The base JS Framwork of the App.
@@ -66,7 +66,7 @@ The latest wikidata-gkz list can be downloaded from [the Wikidaheim API](https:/
 
 #### Adding new item Categories
 
-For new item Categories to appear in the app, they have to be added to `src/components/Global/CategoryName.json`. Please note that the category name has to be the same as the one used in the Wikidaheim API. Also do not forget do add the new category the the translation files.
+For new item Categories to appear in the app, they have to be added to `src/components/Global/CategoryName.jsx`. Please note that the category name has to be the same as the one used in the Wikidaheim API. Also do not forget to add the new category to the translation files.
 New categories won't appear in the app if they are not provided by the Wikidaheim API as well. The category color and icon will be provided by the API.
 
 ### Components
@@ -78,7 +78,7 @@ The Dasboard is split into the following components:
 - Map (`src/components/Dashboard/Map/index.jsx`)  
   Renders the Mapbox map and the map controls. Also reacts to state changes and updates the map accordingly.
 - Sidebar (`src/components/Dashboard/Sidebar/index.jsx`)  
-  Renders the Searchbar, Informaation about the currently selected municipality, Filters and Item List.
+  Renders the Searchbar, Information about the currently selected municipality, Filters and Item List.
 
 ### Styles
 
