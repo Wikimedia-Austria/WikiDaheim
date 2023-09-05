@@ -32,7 +32,14 @@ To run on another server:
 1. Run `yarn build`
 2. transfer the `build/`-Folder to the root of a webserver.
 
-## Dependencies and Structure
+## Overview of the WikiDaheim App
+
+The WikiDaheim App
+- consists of the backend retrieving data from various sources like lists (e.g. Liste der denkmalgeschützten Objekte in ...), wikidata (items assigned to Austria via property P17=Q40), configured wanted images (Bilderwünsche), intersection of Commons categories for general features of municipalities like schools or sport venues, etc. The backend is maintained by [pixelhaufen](https://github.com/pixelhaufen)
+- and consists of the frontend (described here) and maintained by [reiterbene](https://github.com/reiterbene)
+- and is based on wikipedia data maintained by the various Austrian communities in the wikiversum (see [WP:WikiDaheim](https://de.wikipedia.org/wiki/Wikipedia:WikiDaheim) and associated talk page).
+  
+## Dependencies and Structure of the frontend
 
 The frontend is mainly built with the help of the following libraries:
 
@@ -58,7 +65,7 @@ The map layer is managed by Mapbox Studio. To update the map layer, open the [Ma
 
 #### Matching of Mapbox Boundaries and WikiData IDs
 
-The wikidaheim API returns WikiData IDs for each municipality. To map these IDs to the corresponding Mapbox-ID, the `src/config/boundaries_mapped.json` file is used. This file combines the WikiData Index File (`src/config/wikidata-gkz.json`) with the Mapbox Boundary Index File (`src/config/boundaries.json`). To merge the files automatically, run `yarn check:boundaries`. This will start a CLI tool that will try to merge the files. If the match can't be made automatically, the user will be asked to enter the correct match.
+The wikidaheim API returns WikiData IDs for each municipality (name of the municipality, WikiData ID, Gemeindekennzahl). To map these IDs to the corresponding Mapbox-ID, the `src/config/boundaries_mapped.json` file is used. This file combines the WikiData Index File (`src/config/wikidata-gkz.json`) with the Mapbox Boundary Index File (`src/config/boundaries.json`). Data are matched by the Gemeindekennzahl, which is used as unit_code in the Mapbox Boundary Index File. To merge the files automatically, run `yarn check:boundaries`. This will start a CLI tool that will try to merge the files. If the match can't be made automatically, the user will be asked to enter the correct match.
 
 Updated mapbox boundary files have to be directly aquired from [Mapbox](https://docs.mapbox.com/data/boundaries/reference/). Currently the app uses Mapbox Boundaries v3.
 
@@ -68,6 +75,7 @@ The latest wikidata-gkz list can be downloaded from [the Wikidaheim API](https:/
 
 For new item Categories to appear in the app, they have to be added to `src/components/Global/CategoryName.jsx`. Please note that the category name has to be the same as the one used in the Wikidaheim API. Also do not forget to add the new category to the translation files.
 New categories won't appear in the app if they are not provided by the Wikidaheim API as well. The category color and icon will be provided by the API.
+Most icons are in tangram style and were provided by [Letitia Lehner, mooi-design.com](https://mooi-design.com) and are located in [Category:Logos of WikiDaheim](https://commons.wikimedia.org/wiki/Category:Logos_of_WikiDaheim).
 
 ### Components
 
@@ -78,7 +86,7 @@ The Dasboard is split into the following components:
 - Map (`src/components/Dashboard/Map/index.jsx`)  
   Renders the Mapbox map and the map controls. Also reacts to state changes and updates the map accordingly.
 - Sidebar (`src/components/Dashboard/Sidebar/index.jsx`)  
-  Renders the Searchbar, Information about the currently selected municipality, Filters and Item List.
+  Renders the Searchbar, Information about the currently selected municipality, Filters and Item List. It implements also the gpx-export.
 
 ### Styles
 
