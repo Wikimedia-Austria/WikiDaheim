@@ -102,6 +102,13 @@ The main state is located in [`src/redux/reducers/index.js`](src/redux/reducers/
 
 Changes to the state can be made by dispatching actions. The actions are located in [`src/redux/actions/`](src/redux/actions/). The reducers are located in [`src/redux/reducers/`](src/redux/reducers/).
 
+### GPX Export
+The GPX Exporter ist implemented as React Hook located in [`src/hooks/useDownloadGpx.js`](src/hooks/useDownloadGpx.js). It provides a `useDownloadGpx` function which converts the location list (provided to the hook as argument) to a gpx file and triggers a download. The locations are converted using the [`gpx-builder`](https://github.com/fabulator/gpx-builder) library.
+
+### Editing Static Pages
+Static pages are located in [`src/views/`](src/views/). The create a new page, simply create a HTML file with the slug name of the static page (slug = the permalink of the page), suffixed with the language of the page (e.g. pagename_en.html). Afterwards register the page by its slug in [views.json](src/views/views.json). When the option "in_menu" is enabled, the page will show up in the hamburger menu.
+
+
 ## Future Changes and Additions
 
 These proposed changes are ideas for future technical improvements. The code base is from 2017 and therefore not up to date with the latest React standards. The following changes would improve the code base:
