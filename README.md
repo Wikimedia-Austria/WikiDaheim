@@ -18,10 +18,10 @@
 ### Translate
 
 1. Update the translation index by running `yarn build`
-2. Run `yarn manage:translations` to get the translation status. Most of the used strings are now located in `src/translations/extractedMessages.json` and can be translated.
+2. Run `yarn manage:translations` to get the translation status. Most of the used strings are now located in [`src/translations/extractedMessages.json`](src/translations/extractedMessages.json) and can be translated.
 
-You can find and edit the languages files in `src/translations/locales`.
-Also translate all Views in `src/views/` as well as their names in `views.json`.
+You can find and edit the languages files in [`src/translations/locales`](src/translations/locales).
+Also translate all Views in [`src/views/`](src/views/) as well as their names in `views.json`.
 
 ### Deploy
 
@@ -56,7 +56,7 @@ The frontend is mainly built with the help of the following libraries:
 
 ### API
 
-- The data is provided via the external "WikiDaheim"-API. The used endpoints can be found at `src/api/wikidaheim.js`.
+- The data is provided via the external "WikiDaheim"-API. The used endpoints can be found at [`src/api/wikidaheim.js`](src/api/wikidaheim.js).
 - The map data is provided via the [Mapbox GL JS API](https://www.mapbox.com/mapbox-gl-js/api/).
 
 #### Updating the Map Layer
@@ -65,7 +65,7 @@ The map layer is managed by Mapbox Studio. To update the map layer, open the [Ma
 
 #### Matching of Mapbox Boundaries and WikiData IDs
 
-The wikidaheim API returns WikiData IDs for each municipality (name of the municipality, WikiData ID, Gemeindekennzahl). To map these IDs to the corresponding Mapbox-ID, the `src/config/boundaries_mapped.json` file is used. This file combines the WikiData Index File (`src/config/wikidata-gkz.json`) with the Mapbox Boundary Index File (`src/config/boundaries.json`). Data are matched by the Gemeindekennzahl, which is used as unit_code in the Mapbox Boundary Index File. To merge the files automatically, run `yarn check:boundaries`. This will start a CLI tool that will try to merge the files. If the match can't be made automatically, the user will be asked to enter the correct match.
+The wikidaheim API returns WikiData IDs for each municipality (name of the municipality, WikiData ID, Gemeindekennzahl). To map these IDs to the corresponding Mapbox-ID, the [`src/config/boundaries_mapped.json`](src/config/boundaries_mapped.json) file is used. This file combines the WikiData Index File ([`src/config/wikidata-gkz.json`](src/config/wikidata-gkz.json)) with the Mapbox Boundary Index File ([`src/config/boundaries.json`](src/config/boundaries.json)). Data are matched by the Gemeindekennzahl, which is used as unit_code in the Mapbox Boundary Index File. To merge the files automatically, run `yarn check:boundaries`. This will start a CLI tool that will try to merge the files. If the match can't be made automatically, the user will be asked to enter the correct match.
 
 Updated mapbox boundary files have to be directly aquired from [Mapbox](https://docs.mapbox.com/data/boundaries/reference/). Currently the app uses Mapbox Boundaries v3.
 
@@ -73,40 +73,40 @@ The latest wikidata-gkz list can be downloaded from [the Wikidaheim API](https:/
 
 #### Adding new item Categories
 
-For new item Categories to appear in the app, they have to be added to `src/components/Global/CategoryName.jsx`. Please note that the category name has to be the same as the one used in the Wikidaheim API. Also do not forget to add the new category to the translation files.
+For new item Categories to appear in the app, they have to be added to [`src/components/Global/CategoryName.jsx`](src/components/Global/CategoryName.jsx). Please note that the category name has to be the same as the one used in the Wikidaheim API. Also do not forget to add the new category to the translation files.
 New categories won't appear in the app if they are not provided by the Wikidaheim API as well. The category color and icon will be provided by the API.
 Most icons are in tangram style and were provided by [Letitia Lehner, mooi-design.com](https://mooi-design.com) and are located in [Category:Logos of WikiDaheim](https://commons.wikimedia.org/wiki/Category:Logos_of_WikiDaheim).
 
 ### Components
 
-The main entry point is `src/index.js`. The main components are located in `src/components/` and the static pages, accessible via the menu, in `src/views/`. The entrypoint for the Dashboard is `src/components/Dashboard/index.jsx`.
+The main entry point is [`src/index.js`](src/index.js). The main components are located in [`src/components/`](src/components/) and the static pages, accessible via the menu, in [`src/views/`](src/views/). The entrypoint for the Dashboard is [`src/components/Dashboard/index.jsx`](src/components/Dashboard/index.jsx).
 
 The Dasboard is split into the following components:
 
-- Map (`src/components/Dashboard/Map/index.jsx`)  
+- Map ([`src/components/Dashboard/Map/index.jsx`](src/components/Dashboard/Map/index.jsx))  
   Renders the Mapbox map and the map controls. Also reacts to state changes and updates the map accordingly.
-- Sidebar (`src/components/Dashboard/Sidebar/index.jsx`)  
+- Sidebar ([`src/components/Dashboard/Sidebar/index.jsx`](src/components/Dashboard/Sidebar/index.jsx))  
   Renders the Searchbar, Information about the currently selected municipality, Filters and Item List. It implements also the gpx-export.
 
 ### Styles
 
-The styles are located in `src/scss/` and are written in SCSS.
+The styles are located in [`src/scss/`](src/scss/) and are written in SCSS.
 
 ### State Management
 
-The main state is located in `src/redux/reducers/index.js`. The state is split into the following parts:
+The main state is located in [`src/redux/reducers/index.js`](src/redux/reducers/index.js). The state is split into the following parts:
 
 - `app`: Contains the current state of the map, the loaded municipality and the currently selected list item
 - `locale`: Contains the currently selected locale
 - `menu`: Contains the current state of the menu
 
-Changes to the state can be made by dispatching actions. The actions are located in `src/redux/actions/`. The reducers are located in `src/redux/reducers/`.
+Changes to the state can be made by dispatching actions. The actions are located in [`src/redux/actions/`](src/redux/actions/). The reducers are located in [`src/redux/reducers/`](src/redux/reducers/).
 
 ## Future Changes and Additions
 
 These proposed changes are ideas for future technical improvements. The code base is from 2017 and therefore not up to date with the latest React standards. The following changes would improve the code base:
 
-- Refactor the rather large `src/components/Dashboard/Map/index.jsx` file.
+- Refactor the rather large [`src/components/Dashboard/Map/index.jsx`](src/components/Dashboard/Map/index.jsx) file.
 - Switch all components to functional components.
 - Convert the project to TypeScript and therefore get rid of Immutable.js.
-- Replace the complex Redux state management with React Hooks & e.g. `zustand.js``.
+- Replace the complex Redux state management with React Hooks & e.g. `zustand.js`.
