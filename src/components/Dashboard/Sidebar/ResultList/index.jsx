@@ -149,7 +149,7 @@ class ResultList extends Component {
         <FormattedMessage
           id='filter.noresults'
           description='Infotext if there are no elements matching the filter criteria.'
-          defaultMessage='Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.'
+          defaultMessage='Kein Objekt entspricht deinen Kriterien. Versuche die Filtereinstellungen zu ändern.'
         />
       </div>);
     } else if (
