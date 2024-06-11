@@ -82,7 +82,7 @@
     "slug" : "monuments",
     "in_menu": false,
     "menu_title" : {
-      "de" : "Denkmale",
+      "de" : "Denkmäler",
       "en" : "Monuments",
       "it" : "Monumenti"
     }
