@@ -5,7 +5,7 @@
   "category.kellergasse": "Cellar streets",
   "category.naturdenkmal": "Nature",
   "category.publicart": "Public Art / Culture",
-  "category.request": "Point of Interest",
+  "category.request": "Points of Interest",
   "cityinfo.editWikiLink": "Edit article on Wikipedia",
   "cityinfo.editWikiLinkDescription": "Missing topics: {missingSectionsCount, plural, =0 {none} other {}}",
   "cityinfo.gpxText": "Download a GPX file of the objects on your map.",
