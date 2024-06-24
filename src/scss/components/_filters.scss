@@ -11,15 +11,13 @@
 
   .FilterTitle-Left {
     flex: 1;
-    text-shadow:
-      2px 2px 2px rgba(255, 255, 255, 0.7),
-      0 2px 2px rgba(255, 255, 255, 0.7),
-      2px 0 2px rgba(255, 255, 255, 0.7),
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.7),
+      0 2px 2px rgba(255, 255, 255, 0.7), 2px 0 2px rgba(255, 255, 255, 0.7),
       -2px -2px 2px rgba(255, 255, 255, 0.7),
-      0 -2px 2px rgba(255, 255, 255, 0.7),
-      -2px 0 2px rgba(255, 255, 255, 0.7);
+      0 -2px 2px rgba(255, 255, 255, 0.7), -2px 0 2px rgba(255, 255, 255, 0.7);
 
-    h2, span {
+    h2,
+    span {
       margin: 0;
       color: $primary-color;
     }
@@ -27,7 +25,7 @@
     span {
       display: block;
       font-size: 0.85rem;
-      margin-top: -.4em;
+      margin-top: -0.4em;
     }
   }
 
@@ -42,7 +40,7 @@
 
   button {
     color: $primary-color;
-    transition: background-color .2s ease;
+    transition: background-color 0.2s ease;
     padding: 0.25rem;
     margin-left: 0.5rem;
     font-weight: bold;
@@ -51,7 +49,7 @@
     position: relative;
 
     &::before {
-      content: '';
+      content: "";
       display: inline-block;
       border-left: 1px solid #ccc;
       position: absolute;
@@ -67,19 +65,19 @@
 }
 
 .FilterSection {
-  position:absolute;
-  left:0;
-  bottom:0;
-  right:0;
-  padding:1em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 1em;
   padding-top: 0;
   background-color: $secondary-color;
-  z-index:$z-index-suggestions + 100;
-  color:white;
-  overflow:auto;
+  z-index: $z-index-suggestions + 100;
+  color: white;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
   transform: translateY(100%);
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
   max-height: 95%;
 
   @include shadow-box;
@@ -101,15 +99,13 @@
     max-height: 1000px;
     z-index: $z-index-menu - 10;
     margin: 0 0.5rem;
-    box-shadow:.1em .1em .3em rgba(0,0,0,.15);
+    box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.15);
     z-index: auto;
     overflow: visible;
     pointer-events: none;
     transform: translateX(105%);
     opacity: 0;
-    transition:
-      transform .3s ease,
-      opacity .3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 
     &.FilterSection--active {
       pointer-events: all;
@@ -118,7 +114,7 @@
     }
 
     &::before {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       top: 11rem;
@@ -156,13 +152,13 @@
 
   footer {
     button {
-      display:block;
-      width:100%;
+      display: block;
+      width: 100%;
       font-size: 2em;
       color: $primary-color;
-      padding:.5em 0;
+      padding: 0.5em 0;
       background-color: $primary-color-contrast;
-      font-weight:bold;
+      font-weight: bold;
       text-transform: uppercase;
       margin-top: 1rem;
       font-size: 1.4em;
@@ -186,17 +182,17 @@
 
   .CategoryFilter-Item {
     width: calc(50% - 0.5em);
-    margin:0.25em;
+    margin: 0.25em;
     border-radius: 2px;
 
-    button{
-      position:relative;
+    button {
+      position: relative;
       padding: 0.5em 0 0.5em 0.5em;
-      width:100%;
+      width: 100%;
       color: $primary-color-contrast;
       text-decoration: none;
-      transition:opacity .2s, background-color .2s;
-      text-align:left;
+      transition: opacity 0.2s, background-color 0.2s;
+      text-align: left;
       font-size: 0.95rem;
 
       @include md {
@@ -206,16 +202,16 @@
 
     &.CategoryFilter-Item--active {
       button {
-        opacity:1;
+        opacity: 1;
 
         &:before {
-          opacity:0;
-          background-color: rgba(255,255,255, .2);
+          opacity: 0;
+          background-color: rgba(255, 255, 255, 0.2);
         }
 
         &:hover {
           &:before {
-            opacity:1;
+            opacity: 1;
           }
         }
       }
@@ -240,8 +236,8 @@
         opacity: 0;
         font-size: 0;
         position: absolute;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         margin: 0;
@@ -260,7 +256,7 @@
 }
 
 .PropertyFilter {
-  display:flex;
+  display: flex;
   gap: 0.5rem;
 
   button.PropertyFilter-Item {
@@ -271,12 +267,12 @@
     text-align: left;
     font-size: 0.95em;
     padding: 0.5em 0 0.5em 0.5em;
-    margin-bottom: .5em;
-    transition: background-color .2s ease;
+    margin-bottom: 0.5em;
+    transition: background-color 0.2s ease;
     border-radius: 2px;
 
     &:last-child {
-      border-right:none;
+      border-right: none;
     }
 
     &:hover {
@@ -285,24 +281,26 @@
   }
 }
 
-.CategoryFilter-Item button, .PropertyFilter-Item {
+.CategoryFilter-Item button,
+.PropertyFilter-Item {
   &::after {
-    content:'';
-    position:absolute;
+    content: "";
+    position: absolute;
     right: 0.5em;
     width: 1.5em;
     height: 1.5em;
     bottom: 0.6em;
-    background-image: url(../../assets/icons/icon_unchecked.svg);
-    background-repeat:no-repeat;
-    background-position:center;
+    background-image: url(/src/assets/icons/icon_unchecked.svg);
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: contain;
   }
 }
 
-.PropertyFilter-Item--active, .CategoryFilter-Item--active button {
+.PropertyFilter-Item--active,
+.CategoryFilter-Item--active button {
   &::after {
-    background: url(../../assets/icons/icon_checked.svg);
+    background: url(/src/assets/icons/icon_checked.svg);
     background-repeat: no-repeat;
   }
 }

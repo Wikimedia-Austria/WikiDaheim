@@ -2,7 +2,11 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Autocomplete from "react-autocomplete";
 import { FormattedMessage } from "react-intl";
-import { autocomplete, selectPlace, toggleCityInfo } from "redux/actions/app";
+import {
+  autocomplete,
+  selectPlace,
+  toggleCityInfo,
+} from "/src/redux/actions/app";
 import { RotateSpinner } from "react-spinners-kit";
 
 const SearchBar = () => {

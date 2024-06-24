@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import Immutable from "immutable";
 
-import { loadCategories } from "redux/actions/app";
+import { loadCategories } from "/src/redux/actions/app";
 
 import Map from "./Map";
 import Sidebar from "./Sidebar";

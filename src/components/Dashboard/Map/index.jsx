@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { fromJS } from "immutable";
 import Truncate from "react-truncate";
 import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
-import { MAPBOX_API_KEY } from "config";
-import boundaries from "config/boundaries_mapped.json";
+import { MAPBOX_API_KEY } from "/src/config";
+import boundaries from "/src/config/boundaries_mapped.json";
 import {
   placeItemHover,
   placeItemLeave,
@@ -17,12 +17,12 @@ import {
   selectPlace,
   placeSelectClear,
   mapLoaded,
-} from "redux/actions/app";
+} from "/src/redux/actions/app";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
-import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
+import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker?worker";
 import { FormattedMessage } from "react-intl";
-import CategoryName from "components/Global/CategoryName";
-import FocusHandler from "components/Global/FocusHandler";
+import CategoryName from "/src/components/Global/CategoryName";
+import FocusHandler from "/src/components/Global/FocusHandler";
 import getFilePath from "wikimedia-commons-file-path";
 import Immutable from "immutable";
 
@@ -364,7 +364,7 @@ class ResultMap extends Component {
         })
       );
 
-      this.updateHighlightedArea(map);
+      setTimeout(() => this.updateHighlightedArea(map), 10);
     }, 20);
   }
 
@@ -433,6 +433,7 @@ class ResultMap extends Component {
 
     // hover-effect for municipalities
     if (map.getSource("municipality-hover-item")) {
+      console.log(hoveredMunicipality);
       if (hoveredMunicipality) {
         const features = map.querySourceFeatures("composite", {
           sourceLayer: "boundaries_admin_3",

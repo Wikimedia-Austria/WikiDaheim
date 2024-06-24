@@ -2,11 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import { PUBLIC_ROOT } from "config";
-import pages from "views/views.json";
+import { PUBLIC_ROOT } from "/src/config";
+import pages from "/src/views/views.json";
 
-import Dashboard from "components/Dashboard";
-import Page from "components/Page";
+import Dashboard from "/src/components/Dashboard";
+import Page from "/src/components/Page";
 
 const routeCodes = {
   DASHBOARD: PUBLIC_ROOT,

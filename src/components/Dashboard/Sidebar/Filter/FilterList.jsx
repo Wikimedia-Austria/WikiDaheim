@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { connect } from "react-redux";
-import { toggleFilterMenu } from "redux/actions/menu";
+import { toggleFilterMenu } from "/src/redux/actions/menu";
 import { FormattedMessage } from "react-intl";
 import CategoryFilter from "./CategoryFilter";
 import PropertyFilter from "./PropertyFilter";

@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import FocusHandler from "components/Global/FocusHandler";
-import Page from "components/Page";
+import FocusHandler from "/src/components/Global/FocusHandler";
+import Page from "/src/components/Page";
 import ResultList from "./ResultList";
 import SearchBar from "./SearchBar";
 import CityInfo from "./CityInfo";
 import Filter from "./Filter";
-import useDownloadGpx from "hooks/useDownloadGpx";
+import useDownloadGpx from "/src/hooks/useDownloadGpx";
 
 const Sidebar = ({ items }) => {
   const placeSelected = useSelector((state) => state.app.get("placeSelected"));

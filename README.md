@@ -35,10 +35,11 @@ To run on another server:
 ## Overview of the WikiDaheim App
 
 The WikiDaheim App
+
 - consists of the backend retrieving data from various sources like lists (e.g. Liste der denkmalgeschützten Objekte in ...), wikidata (items assigned to Austria via property P17=Q40), configured wanted images (Bilderwünsche), intersection of Commons categories for general features of municipalities like schools or sport venues, etc. The backend is maintained by [pixelhaufen](https://github.com/pixelhaufen)
 - and consists of the frontend (described here) and maintained by [reiterbene](https://github.com/reiterbene)
 - and is based on wikipedia data maintained by the various Austrian communities in the wikiversum (see [WP:WikiDaheim](https://de.wikipedia.org/wiki/Wikipedia:WikiDaheim) and associated talk page).
-  
+
 ## Dependencies and Structure of the frontend
 
 The frontend is mainly built with the help of the following libraries:
@@ -103,11 +104,27 @@ The main state is located in [`src/redux/reducers/index.js`](src/redux/reducers/
 Changes to the state can be made by dispatching actions. The actions are located in [`src/redux/actions/`](src/redux/actions/). The reducers are located in [`src/redux/reducers/`](src/redux/reducers/).
 
 ### GPX Export
+
 The GPX Exporter ist implemented as React Hook located in [`src/hooks/useDownloadGpx.js`](src/hooks/useDownloadGpx.js). It provides a `useDownloadGpx` function which converts the location list (provided to the hook as argument) to a gpx file and triggers a download. The locations are converted using the [`gpx-builder`](https://github.com/fabulator/gpx-builder) library.
 
 ### Editing Static Pages
+
 Static pages are located in [`src/views/`](src/views/). The create a new page, simply create a HTML file with the slug name of the static page (slug = the permalink of the page), suffixed with the language of the page (e.g. pagename_en.html). Afterwards register the page by its slug in [views.json](src/views/views.json). When the option "in_menu" is enabled, the page will show up in the hamburger menu.
 
+## Outdated Dependencies
+
+- [react-mapbox-gl](https://www.npmjs.com/package/react-mapbox-gl)
+  is not updatedated anymore and should be replaced by [react-map-gl](https://www.npmjs.com/package/react-map-gl).
+- [mapbox-gl](https://www.npmjs.com/package/mapbox-gl)
+  is not updated as react-mapbox-gl is not compatible with the latest major version of mapbox-gl.
+- [react-autocomplete](https://www.npmjs.com/package/react-autocomplete)
+  is not updated anymore and should be replaced by a maintained alternative.
+- [react-dropdown](https://www.npmjs.com/package/react-dropdown)
+  is not updated anymore and should be replaced by a maintained alternative.
+- [react-spinner-kit](https://www.npmjs.com/package/react-spinner-kit)
+  is not updated anymore and should be replaced by a maintained alternative. Alternatively, the spinner can be implemented with CSS.
+- [react-truncate](https://www.npmjs.com/package/react-truncate)
+  is not updated anymore and should be replaced by a maintained alternative.
 
 ## Future Changes and Additions
 

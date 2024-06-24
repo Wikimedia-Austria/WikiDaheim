@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Immutable, { List, fromJS } from 'immutable';
-import PropTypes from 'prop-types';
-import { placeItemHover, placeItemLeave, placeItemSelect } from 'redux/actions/app';
-import { FormattedMessage } from 'react-intl';
-import ResultListItem from './ResultListItem';
-import DistanceSort from 'workers/distanceSort.worker.js'; //eslint-disable-line
-import { AutoSizer, List as InfiniteList } from 'react-virtualized';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Immutable, { List, fromJS } from "immutable";
+import PropTypes from "prop-types";
+import {
+  placeItemHover,
+  placeItemLeave,
+  placeItemSelect,
+} from "/src/redux/actions/app";
+import { FormattedMessage } from "react-intl";
+import ResultListItem from "./ResultListItem";
+import DistanceSort from "/src/workers/distanceSort.worker.js?worker";
+import { AutoSizer, List as InfiniteList } from "react-virtualized";
 
 class ResultList extends Component {
   static propTypes = {
@@ -45,7 +49,8 @@ class ResultList extends Component {
       items: items.toJS(),
     });
 
-    this.worker.onmessage = (m) => this.setState({ sortedList: fromJS(m.data) });
+    this.worker.onmessage = (m) =>
+      this.setState({ sortedList: fromJS(m.data) });
   }
 
   // check if a row is selected. if so, recalculate the specific row height
@@ -55,17 +60,14 @@ class ResultList extends Component {
 
     // we can't store this.props.selectedElement to a var as it will be undefined (why???)
 
-    if(
+    if (
       _list.current &&
-      (
-        (!prevSelectedElement && this.props.selectedElement) ||
+      ((!prevSelectedElement && this.props.selectedElement) ||
         (prevSelectedElement && !this.props.selectedElement) ||
-        (
-          prevSelectedElement &&
+        (prevSelectedElement &&
           this.props.selectedElement &&
-          prevSelectedElement.get('id') !== this.props.selectedElement.get('id')
-        )
-      )
+          prevSelectedElement.get("id") !==
+            this.props.selectedElement.get("id")))
     ) {
       _list.current.recomputeRowHeights();
     }
@@ -77,27 +79,29 @@ class ResultList extends Component {
       this.state.sortedList &&
       this.state.sortedList.size > 0 &&
       prevState.sortedList.size > 0 &&
-      this.state.sortedList.get(0).get('id') !== prevState.sortedList.get(0).get('id')
+      this.state.sortedList.get(0).get("id") !==
+        prevState.sortedList.get(0).get("id")
     ) {
       this._list.current.recomputeRowHeights();
       this._list.current.scrollToPosition(0);
     } else if (
       this._list.current &&
-      (
-        (this.props.selectedElement && !prevProps.selectedElement) ||
-        (this.props.selectedElement && this.props.selectedElement.get('id') !== prevProps.selectedElement.get('id'))
-      )
+      ((this.props.selectedElement && !prevProps.selectedElement) ||
+        (this.props.selectedElement &&
+          this.props.selectedElement.get("id") !==
+            prevProps.selectedElement.get("id")))
     ) {
-      const currentIndex = this.state.sortedList.findIndex((item) => item.get('id') === this.props.selectedElement.get('id'));
-      this._list.current.scrollToRow( currentIndex );
+      const currentIndex = this.state.sortedList.findIndex(
+        (item) => item.get("id") === this.props.selectedElement.get("id")
+      );
+      this._list.current.scrollToRow(currentIndex);
     }
 
     // check if we get a new list
     if (
-      (
-        !this.state.inSelectTimeout && this.props.syncListAndMap &&
-        this.props.currentMapPosition !== prevProps.currentMapPosition
-      ) ||
+      (!this.state.inSelectTimeout &&
+        this.props.syncListAndMap &&
+        this.props.currentMapPosition !== prevProps.currentMapPosition) ||
       !Immutable.is(this.props.items, prevProps.items) ||
       (!this.props.syncListAndMap && prevProps.syncListAndMap)
     ) {
@@ -134,70 +138,91 @@ class ResultList extends Component {
       });
     }, 5000);
 
-    dispatch(placeItemSelect(item, 'list'));
+    dispatch(placeItemSelect(item, "list"));
   }
 
-
   render() {
-    const { items, placeSelected, categories, hoveredElement, selectedElement, currentLanguage } = this.props;
+    const {
+      items,
+      placeSelected,
+      categories,
+      hoveredElement,
+      selectedElement,
+      currentLanguage,
+    } = this.props;
     const sortedItems = this.state.sortedList;
 
     if (!placeSelected) return null;
 
     if (items.size === 0) {
-      return (<div className='ResultList-EmptyInfo'>
-        <FormattedMessage
-          id='filter.noresults'
-          description='Infotext if there are no elements matching the filter criteria.'
-          defaultMessage='Kein Objekt entspricht deinen Kriterien. Versuche die Filtereinstellungen zu ändern.'
-        />
-      </div>);
-    } else if (
-      items.size !== 0 && sortedItems.size === 0 ) {
-      return (<div className='ResultList-EmptyInfo'>
-        <FormattedMessage
-          id='filter.resultssorting'
-          description='Infotext if the Elements in the List are being sorted.'
-          defaultMessage='Objekte werden analysiert...'
-        />
-      </div>);
+      return (
+        <div className="ResultList-EmptyInfo">
+          <FormattedMessage
+            id="filter.noresults"
+            description="Infotext if there are no elements matching the filter criteria."
+            defaultMessage="Kein Objekt entspricht deinen Kriterien. Versuche die Filtereinstellungen zu ändern."
+          />
+        </div>
+      );
+    } else if (items.size !== 0 && sortedItems.size === 0) {
+      return (
+        <div className="ResultList-EmptyInfo">
+          <FormattedMessage
+            id="filter.resultssorting"
+            description="Infotext if the Elements in the List are being sorted."
+            defaultMessage="Objekte werden analysiert..."
+          />
+        </div>
+      );
     }
 
     return (
-      <div className='ResultList-ListWrapper'>
+      <div className="ResultList-ListWrapper">
         <AutoSizer>
-          {({height, width}) => (
+          {({ height, width }) => (
             <InfiniteList
               rowCount={sortedItems.size}
-              height={ height }
-              width={ width }
-              rowHeight={ ({index}) => {
+              height={height}
+              width={width}
+              rowHeight={({ index }) => {
                 const item = this.state.sortedList.get(index);
-                const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+                const isSelected =
+                  selectedElement &&
+                  item.get("id") === selectedElement.get("id");
 
-                if(isSelected) return window.innerWidth < 770 ? 263 : window.innerWidth < 1999 ? 319 : 345;
+                if (isSelected)
+                  return window.innerWidth < 770
+                    ? 263
+                    : window.innerWidth < 1999
+                    ? 319
+                    : 345;
                 return window.innerWidth < 770 ? 105 : 135;
-              } }
-              className='ResultList-List'
+              }}
+              className="ResultList-List"
               ref={this._list}
               rowRenderer={({ index, isScrolling, isVisible, key, style }) => {
                 const item = sortedItems.get(index);
-                const category = categories.find((c) => c.get('name') === item.get('category'));
-                const isHovered = hoveredElement && item.get('id') === hoveredElement.get('id');
-                const isSelected = selectedElement && item.get('id') === selectedElement.get('id');
+                const category = categories.find(
+                  (c) => c.get("name") === item.get("category")
+                );
+                const isHovered =
+                  hoveredElement && item.get("id") === hoveredElement.get("id");
+                const isSelected =
+                  selectedElement &&
+                  item.get("id") === selectedElement.get("id");
                 return (
                   <ResultListItem
-                    key={ key }
-                    item={ item }
-                    category={ category }
-                    isHovered={ isHovered }
-                    isSelected={ isSelected }
-                    isScrolling={ !isVisible }
-                    currentLanguage={ currentLanguage }
-                    onHover={ () => this.hoverItem(item) }
-                    onLeave={ () => this.leaveItem() }
-                    onClick={ () => this.selectItem(item) }
-                    style={ style }
+                    key={key}
+                    item={item}
+                    category={category}
+                    isHovered={isHovered}
+                    isSelected={isSelected}
+                    isScrolling={!isVisible}
+                    currentLanguage={currentLanguage}
+                    onHover={() => this.hoverItem(item)}
+                    onLeave={() => this.leaveItem()}
+                    onClick={() => this.selectItem(item)}
+                    style={style}
                   />
                 );
               }}
@@ -207,15 +232,14 @@ class ResultList extends Component {
       </div>
     );
   }
-
 }
 
-export default connect(state => ({
-  currentMapPosition: state.app.get('currentMapPosition'),
-  hoveredElement: state.app.get('hoveredElement'),
-  selectedElement: state.app.get('selectedElement'),
-  categories: state.app.get('categories'),
-  placeSelected: state.app.get('placeSelected'),
-  syncListAndMap: state.app.get('syncListAndMap'),
-  currentLanguage: state.locale.get('language'),
+export default connect((state) => ({
+  currentMapPosition: state.app.get("currentMapPosition"),
+  hoveredElement: state.app.get("hoveredElement"),
+  selectedElement: state.app.get("selectedElement"),
+  categories: state.app.get("categories"),
+  placeSelected: state.app.get("placeSelected"),
+  syncListAndMap: state.app.get("syncListAndMap"),
+  currentLanguage: state.locale.get("language"),
 }))(ResultList);

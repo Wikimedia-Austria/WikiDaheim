@@ -2,7 +2,7 @@ html {
   font-family: $main-font;
   font-variant-ligatures: none;
 
-  font-size:12px;
+  font-size: 12px;
 
   @include lg {
     font-size: 14px;
@@ -14,25 +14,25 @@ html {
 }
 
 .Dashboard {
-  height:calc(100vh - #{$header-height});
-  display:flex;
+  height: calc(100vh - #{$header-height});
+  display: flex;
   flex-direction: column;
 
   .Dashboard-Content {
-    flex:1;
-    position:relative;
-    overflow:auto;
+    flex: 1;
+    position: relative;
+    overflow: auto;
   }
 }
 
 .ResultView {
   position: fixed;
-  display:flex;
+  display: flex;
   flex-direction: column-reverse;
   top: $header-height;
-  right:0;
-  bottom:0;
-  left:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
 
   @include md {
@@ -42,14 +42,14 @@ html {
   }
 
   .ResultList {
-    flex:3;
+    flex: 3;
     position: absolute;
     height: 80%;
     top: calc(100% - 4.5rem);
     left: 0;
     right: 0;
     z-index: $z-index-menu - 9;
-    transition: top .4s ease;
+    transition: top 0.4s ease;
 
     @include md {
       height: auto;
@@ -63,10 +63,10 @@ html {
   }
 
   .ResultMap {
-    flex:1;
-    position:relative;
+    flex: 1;
+    position: relative;
     transform: translateY(-40%);
-    transition: transform .4s ease;
+    transition: transform 0.4s ease;
 
     @include md {
       flex: 3;
@@ -75,11 +75,11 @@ html {
     }
 
     .mapboxgl-map {
-      position:absolute;
-      top:0;
-      left:0;
-      bottom:0;
-      right:0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
   }
 
@@ -106,41 +106,46 @@ html {
 
 .Page {
   background-color: rgb(245, 245, 245);
-  background-image: url('../../assets/img/pattern.png');
+  background-image: url("/src/assets/img/pattern.png");
   background-attachment: fixed;
   overflow: hidden;
-  min-height: calc( 100vh -  56px);
+  min-height: calc(100vh - 56px);
 }
 
 .TextPage {
   margin: 1.5rem auto 3em;
   padding: 1.5em 2em 1em;
-  text-align:left;
+  text-align: left;
   position: relative;
   -moz-osx-font-smoothing: grayscale;
   color: $text-color;
   background-color: white;
 
   @include shadow-box;
-  box-shadow: $ui-shadow, 0 0 40rem 20rem rgba(245, 245, 245, .8);
+  box-shadow: $ui-shadow, 0 0 40rem 20rem rgba(245, 245, 245, 0.8);
 
   width: 90%;
-  @include sm { width: 66.666666%; }
-  @include ml { width: 50%; }
+  @include sm {
+    width: 66.666666%;
+  }
+  @include ml {
+    width: 50%;
+  }
   @include md {
     margin-top: 3rem;
   }
 
   h1 {
-    text-align:center;
+    text-align: center;
     margin-top: 1rem;
     padding-bottom: 2rem;
     margin-bottom: 3rem;
     border-bottom: $ui-border;
   }
 
-  h2, h3 {
-    margin-top:2em;
+  h2,
+  h3 {
+    margin-top: 2em;
 
     &:first-child {
       margin-top: 0;
@@ -152,12 +157,12 @@ html {
   }
 
   ul {
-    padding-left:20px;
+    padding-left: 20px;
     font-family: sans-serif;
     line-height: 1.4;
 
     li {
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
     }
   }
 
@@ -184,8 +189,6 @@ html {
     overflow: auto;
     @include shadow-box;
 
-
-
     @include md {
       margin: 1rem 0.5rem 0;
     }
@@ -208,10 +211,10 @@ html {
   }
 
   .TextPage-CategoryInfo {
-    display:flex;
+    display: flex;
     align-items: center;
-    text-align:left;
-    padding:2em 1em;
+    text-align: left;
+    padding: 2em 1em;
     margin-bottom: 1rem;
 
     border-radius: $ui-radius;
@@ -222,16 +225,16 @@ html {
     }
 
     h2 {
-      margin-top:0;
+      margin-top: 0;
     }
 
     p {
-      margin-bottom:0;
+      margin-bottom: 0;
     }
 
     aside {
-      width:50px;
-      margin-right:1.5em;
+      width: 50px;
+      margin-right: 1.5em;
 
       @include sm {
         width: 150px;
@@ -240,7 +243,6 @@ html {
 
     div {
       flex: 1;
-
     }
   }
 
@@ -258,15 +260,16 @@ html {
       bottom: 2rem;
     }
 
-    input, textarea {
+    input,
+    textarea {
       margin-bottom: 1rem;
       font-family: sans-serif;
       padding: 1rem;
-      transition: opacity .2s ease;
+      transition: opacity 0.2s ease;
       @include shadow-box;
 
       &:disabled {
-        opacity: .5;
+        opacity: 0.5;
       }
     }
 
@@ -287,7 +290,7 @@ html {
     .finishInfo {
       padding: 1rem 1rem 1rem;
       margin: 2rem 0;
-      background-color: #7EC460;
+      background-color: #7ec460;
       color: white;
 
       @include shadow-box;
@@ -299,9 +302,7 @@ html {
 
     p.legal {
       font-size: 0.85em;
-      opacity: .75;
+      opacity: 0.75;
     }
-
-
   }
 }

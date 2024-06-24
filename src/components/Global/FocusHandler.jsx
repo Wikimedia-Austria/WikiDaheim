@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { mobileViewSwitch } from 'redux/actions/app';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { mobileViewSwitch } from "/src/redux/actions/app";
 
 class FocusHandler extends Component {
   static propTypes = {
@@ -29,24 +29,21 @@ class FocusHandler extends Component {
   render() {
     const { currentMobileView, view } = this.props;
 
-    const classnames = classNames(
-      'FocusHandler',
-      `FocusHandler-${ view }`, {
-        'FocusHandler--current': currentMobileView === view,
-        'FocusHandler--ready': currentMobileView !== view,
-      }
-    );
+    const classnames = classNames("FocusHandler", `FocusHandler-${view}`, {
+      "FocusHandler--current": currentMobileView === view,
+      "FocusHandler--ready": currentMobileView !== view,
+    });
 
     return (
       <div // eslint-disable-line jsx-a11y/no-static-element-interactions
-        className={ classnames }
-        onClick={ this.handleClick }
-        onTouchMove={ this.handleClick }
+        className={classnames}
+        onClick={this.handleClick}
+        onTouchMove={this.handleClick}
       />
     );
   }
 }
 
-export default connect(state => ({
-  currentMobileView: state.app.get('mobileView'),
+export default connect((state) => ({
+  currentMobileView: state.app.get("mobileView"),
 }))(FocusHandler);

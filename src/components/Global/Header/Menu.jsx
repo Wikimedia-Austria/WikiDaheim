@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { routeCodes } from "config/routes";
-import { FALLBACK_LANGUAGE } from "config";
+import { routeCodes } from "/src/config/routes";
+import { FALLBACK_LANGUAGE } from "/src/config";
 
-import pages from "views/views";
+import pages from "/src/views/views";
+
+console.log(pages);
 
 class Header extends Component {
   static propTypes = {

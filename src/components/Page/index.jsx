@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { FALLBACK_LANGUAGE } from 'config';
-import classNames from 'classnames';
-import Views from 'views';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { FALLBACK_LANGUAGE } from "/src/config";
+import classNames from "classnames";
+import Views from "/src/views";
 
 class Page extends Component {
   static propTypes = {
@@ -15,29 +15,29 @@ class Page extends Component {
     const { currentLanguage } = this.props;
     const { slug } = this.props.page;
 
-    const templateName = `${ slug }_${ currentLanguage }`;
+    const templateName = `${slug}_${currentLanguage}`;
 
     let content = `
       <h2>Error loading page.</h2>
       <p>Neither the language-specific template nor the fallback file was found.</p>
-      <code>Searching for: "views/${ templateName }.html"</code>
+      <code>Searching for: "views/${templateName}.html"</code>
     `;
 
-    if (Views.hasOwnProperty(`${ slug }_${ currentLanguage }`)) { // eslint-disable-line no-prototype-builtins
-      content = Views[`${ slug }_${ currentLanguage }`];
-    } else if (Views.hasOwnProperty(`${ slug }_${ FALLBACK_LANGUAGE }`)) { // eslint-disable-line no-prototype-builtins
-      content = Views[`${ slug }_${ FALLBACK_LANGUAGE }`];
+    if (Views.hasOwnProperty(`${slug}_${currentLanguage}`)) {
+      // eslint-disable-line no-prototype-builtins
+      content = Views[`${slug}_${currentLanguage}`];
+    } else if (Views.hasOwnProperty(`${slug}_${FALLBACK_LANGUAGE}`)) {
+      // eslint-disable-line no-prototype-builtins
+      content = Views[`${slug}_${FALLBACK_LANGUAGE}`];
     }
 
-    const ItemClass = classNames(
-      'TextPage',
-      `TextPage--${ slug }`
-    );
+    const ItemClass = classNames("TextPage", `TextPage--${slug}`);
 
     return (
       <div
-        className={ ItemClass }
-        dangerouslySetInnerHTML={   // eslint-disable-line react/no-danger
+        className={ItemClass}
+        dangerouslySetInnerHTML={
+          // eslint-disable-line react/no-danger
           { __html: content }
         }
       />
@@ -45,6 +45,6 @@ class Page extends Component {
   }
 }
 
-export default connect(state => ({
-  currentLanguage: state.locale.get('language'),
+export default connect((state) => ({
+  currentLanguage: state.locale.get("language"),
 }))(Page);

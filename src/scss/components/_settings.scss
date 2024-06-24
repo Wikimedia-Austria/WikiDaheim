@@ -2,7 +2,7 @@
   position: relative;
   right: 0;
   padding: 0;
-  transition: opacity .2s ease, right .2s ease;
+  transition: opacity 0.2s ease, right 0.2s ease;
   width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   margin-top: 0.5rem;
@@ -24,7 +24,7 @@
 
   &::after {
     display: none;
-    content: '';
+    content: "";
     position: absolute;
     top: 1rem;
     left: -0.95rem;
@@ -48,7 +48,7 @@
 
 .SyncListToggle,
 .EnableClusteringToggle {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 
   &:last-child {
     margin-bottom: 0;
@@ -63,7 +63,7 @@
     position: relative;
     min-width: 100%;
     text-align: left;
-    transition: background-color .2s ease;
+    transition: background-color 0.2s ease;
 
     @include md {
       background-color: $primary-color;
@@ -81,17 +81,16 @@
     }
 
     &::after {
-      content:'';
-      position:absolute;
+      content: "";
+      position: absolute;
       left: 1em;
       width: 1.5em;
       height: 1.5em;
       bottom: 0.3em;
-      background-image: url(../../assets/icons/icon_unchecked.svg);
-      background-repeat:no-repeat;
-      background-position:center;
+      background-image: url(/src/assets/icons/icon_unchecked.svg);
+      background-repeat: no-repeat;
+      background-position: center;
       background-size: contain;
-
 
       @include md {
         bottom: 0.85em;
@@ -101,7 +100,7 @@
     &.SyncListToggle-Button--active,
     &.EnableClusteringToggle-Button--active {
       &::after {
-        background: url(../../assets/icons/icon_checked.svg);
+        background: url(/src/assets/icons/icon_checked.svg);
         background-repeat: no-repeat;
       }
     }

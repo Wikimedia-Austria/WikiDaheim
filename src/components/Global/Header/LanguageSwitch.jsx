@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { setLanguage } from "redux/actions/locale";
+import { setLanguage } from "/src/redux/actions/locale";
 import Dropdown from "react-dropdown";
 
-import languages from "translations/languages.json";
+import languages from "/src/translations/languages.json";
 
 class LanguageSwitch extends Component {
   static propTypes = {

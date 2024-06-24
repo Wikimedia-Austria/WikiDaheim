@@ -1,8 +1,10 @@
+window.global ||= window; // fix for react-autocomplete
+
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import * as serviceWorker from "./workers/serviceWorkerRegister";
-import confirm from "./lib/confirm";
+import confirm from "./utils/confirm";
 
 // force HTTPS
 const { location } = window;

@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-import { FormattedMessage } from 'react-intl';
-import { clearState } from 'redux/localStorage';
-import Menu from './Menu';
-import MenuToggle from './MenuToggle';
-import LanguageSwitch from './LanguageSwitch';
+import { FormattedMessage } from "react-intl";
+import { clearState } from "/src/redux/localStorage";
+import Menu from "./Menu";
+import MenuToggle from "./MenuToggle";
+import LanguageSwitch from "./LanguageSwitch";
 
-import wikiDaheimLogo from 'assets/img/wikidaheim-logo.svg';
+import wikiDaheimLogo from "/src/assets/img/wikidaheim-logo.svg";
 
 class Header extends Component {
   static propTypes = {
@@ -18,48 +18,41 @@ class Header extends Component {
 
   clearAndReload() {
     clearState();
-    window.location = '/';
+    window.location = "/";
   }
 
   render() {
-    const {
-      showMenu,
-    } = this.props;
+    const { showMenu } = this.props;
 
     const headerMenuClass = classNames({
-      'Header-menu': true,
-      'Header-menu--active': showMenu,
+      "Header-menu": true,
+      "Header-menu--active": showMenu,
     });
 
     return (
-      <div className='Header'>
-        <div className='Header-bar'>
-          <div className='Header-logo'>
-            <button onClick={ this.clearAndReload }>
+      <div className="Header">
+        <div className="Header-bar">
+          <div className="Header-logo">
+            <button onClick={this.clearAndReload}>
               <FormattedMessage
-                id='header.logoAlt'
-                description='Alt Text of the header Logo'
-                defaultMessage='WikiDaheim-Logo'
+                id="header.logoAlt"
+                description="Alt Text of the header Logo"
+                defaultMessage="WikiDaheim-Logo"
               >
-                {(alt) => (
-                  <img
-                    src={ wikiDaheimLogo }
-                    alt={ alt }
-                  />
-                )}
+                {(alt) => <img src={wikiDaheimLogo} alt={alt} />}
               </FormattedMessage>
             </button>
           </div>
-          <div className='Header-claim'>
-            <button onClick={ this.clearAndReload } />
+          <div className="Header-claim">
+            <button onClick={this.clearAndReload} />
           </div>
-          <div className='Header-languageSwitch'>
+          <div className="Header-languageSwitch">
             <LanguageSwitch />
           </div>
-          <div className='Header-menuToggle' />
+          <div className="Header-menuToggle" />
         </div>
 
-        <div className={ headerMenuClass }>
+        <div className={headerMenuClass}>
           <Menu />
         </div>
         <MenuToggle />
@@ -68,6 +61,10 @@ class Header extends Component {
   }
 }
 
-export default connect(state => ({
-  showMenu: state.menu.get('showMenu'),
-}), null, null)(Header);
+export default connect(
+  (state) => ({
+    showMenu: state.menu.get("showMenu"),
+  }),
+  null,
+  null
+)(Header);

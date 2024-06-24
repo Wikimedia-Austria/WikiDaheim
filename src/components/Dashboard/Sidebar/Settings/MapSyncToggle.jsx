@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { toggleSyncListAndMap } from 'redux/actions/app';
-import { FormattedMessage } from 'react-intl';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { toggleSyncListAndMap } from "/src/redux/actions/app";
+import { FormattedMessage } from "react-intl";
 
 class MapSyncToggle extends Component {
   static propTypes = {
@@ -26,25 +26,23 @@ class MapSyncToggle extends Component {
   render() {
     const { syncListAndMap } = this.props;
 
-    const classnames = classNames(
-      'SyncListToggle-Button', {
-        'SyncListToggle-Button--active': syncListAndMap,
-      }
-    );
+    const classnames = classNames("SyncListToggle-Button", {
+      "SyncListToggle-Button--active": syncListAndMap,
+    });
 
     return (
-      <div className='SyncListToggle'>
+      <div className="SyncListToggle">
         <FormattedMessage
-          id='map.toggleSyncListAndMap'
-          description='Text for the Sync List and Map Toggle-Button'
-          defaultMessage='Liste beim Verschieben der Karte synchronisieren'
+          id="map.toggleSyncListAndMap"
+          description="Text for the Sync List and Map Toggle-Button"
+          defaultMessage="Liste beim Verschieben der Karte synchronisieren"
         >
           {(text) => (
             <button // eslint-disable-line jsx-a11y/no-static-element-interactions
-              className={ classnames }
-              onClick={ this.handleClick }
+              className={classnames}
+              onClick={this.handleClick}
             >
-              { text }
+              {text}
             </button>
           )}
         </FormattedMessage>
@@ -53,6 +51,6 @@ class MapSyncToggle extends Component {
   }
 }
 
-export default connect(state => ({
-  syncListAndMap: state.app.get('syncListAndMap'),
+export default connect((state) => ({
+  syncListAndMap: state.app.get("syncListAndMap"),
 }))(MapSyncToggle);

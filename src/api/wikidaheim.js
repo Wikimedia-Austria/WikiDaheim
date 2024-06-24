@@ -1,4 +1,6 @@
-import { WIKIDAHEIM_ENDPOINT /*, WIKIDAHEIM_FEEDBACK_ENDPOINT*/ } from "config";
+import {
+  WIKIDAHEIM_ENDPOINT /*, WIKIDAHEIM_FEEDBACK_ENDPOINT*/,
+} from "/src/config";
 import boundaries from "../config/boundaries_mapped.json";
 
 const listCategories = () => {

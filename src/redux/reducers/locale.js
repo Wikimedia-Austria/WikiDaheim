@@ -1,13 +1,13 @@
-import { Map } from 'immutable';
+import { Map } from "immutable";
 
-import { SET_LOCALE } from 'redux/actions/locale';
-import { FALLBACK_LANGUAGE } from 'config';
+import { SET_LOCALE } from "/src/redux/actions/locale";
+import { FALLBACK_LANGUAGE } from "/src/config";
 
-import languages from 'translations/languages.json';
+import languages from "/src/translations/languages.json";
 
-const detectedLanguage = languages.filter(
-  l => l.locale === navigator.language.substring(0, 2)
-).map(l => l.locale);
+const detectedLanguage = languages
+  .filter((l) => l.locale === navigator.language.substring(0, 2))
+  .map((l) => l.locale);
 
 const initialState = Map({
   language: detectedLanguage[0] || FALLBACK_LANGUAGE,
