@@ -13,14 +13,23 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.app.get("searchData"));
   const searchText = useSelector((state) => state.app.get("searchText"));
-  const isLoading = useSelector(
-    (state) =>
-      state.app.get("categoriesLoading") ||
-      state.app.get("searchLoading") ||
-      state.app.get("placeLoading") ||
-      !state.app.get("mapLoaded")
-  );
   const placeSelected = useSelector((state) => state.app.get("placeSelected"));
+  const categoriesLoading = useSelector((state) =>
+    state.app.get("categoriesLoading")
+  );
+  const searchLoading = useSelector((state) => state.app.get("searchLoading"));
+  const placeLoading = useSelector((state) => state.app.get("placeLoading"));
+  const mapLoaded = useSelector((state) => state.app.get("mapLoaded"));
+
+  const isLoading =
+    categoriesLoading || searchLoading || placeLoading || !mapLoaded;
+
+  console.log("LoadingStates", {
+    categoriesLoading,
+    searchLoading,
+    placeLoading,
+    mapLoaded,
+  });
 
   const onPlaceSelect = (place) => {
     const selectedPlace = searchData.find((p) => p.get("place_name") === place);
