@@ -1,6 +1,7 @@
 import { Map, List, fromJS } from "immutable";
 import uuidv4 from "/src/utils/uuidv4";
 import { isPointWithinRadius } from "geolib";
+import confirm from "/src/utils/confirm";
 
 import {
   AUTOCOMPLETE_ACTION_START,
@@ -129,9 +130,17 @@ const actionsMap = {
     });
   },
   [PLACE_SELECT_ACTION_ERROR]: (state, action) => {
+    confirm({
+      title: "Fehler beim Laden des Ortes / Error loading municipality",
+      content: action.error,
+      confirmTitle: "OK",
+    });
+
     return state.merge({
       placeLoading: false,
       placeError: action.data,
+      searchText: "",
+      searchLoading: false,
     });
   },
   [PLACE_SELECT_ACTION_SUCCESS]: (state, action) => {

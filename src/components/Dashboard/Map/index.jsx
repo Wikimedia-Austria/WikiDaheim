@@ -109,12 +109,20 @@ class ResultMap extends Component {
     /*
      * move the center of the map to the city center when a new city is selected
      */
+    const {
+      placeLoading,
+      placeMapData,
+      selectedElement,
+      placeSelected,
+      campaign,
+    } = this.props;
     if (
-      prevState.coordinates[0] === 0 ||
-      (!this.props.placeLoading && prevProps.placeLoading)
+      (prevState.coordinates[0] === 0 ||
+        (!placeLoading && prevProps.placeLoading)) &&
+      placeMapData.get("geometry")
     ) {
       // prevent the map from moving on every redux state change
-      const coordinates = this.props.placeMapData
+      const coordinates = placeMapData
         .get("geometry")
         .get("coordinates")
         .toJS();
@@ -128,7 +136,7 @@ class ResultMap extends Component {
      * move the center of the map to the currently selected POI
      */
     const currentSelected = prevProps.selectedElement;
-    const nextSelected = this.props.selectedElement;
+    const nextSelected = selectedElement;
 
     if (
       (!currentSelected && nextSelected) ||
@@ -151,7 +159,7 @@ class ResultMap extends Component {
     /*
       re-adjust the map center after adding the sidebar shift
     */
-    if (!prevProps.placeSelected && this.props.placeSelected) {
+    if (!prevProps.placeSelected && placeSelected) {
       setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
     }
 
@@ -160,11 +168,7 @@ class ResultMap extends Component {
      */
     const { dispatch } = this.props;
 
-    if (
-      !prevProps.campaign &&
-      this.props.campaign &&
-      this.props.campaign === "burgenland"
-    ) {
+    if (!prevProps.campaign && campaign && campaign === "burgenland") {
       // zoom to bugenland
       this.setState({
         coordinates: [16.416665, 47.499998],
@@ -175,7 +179,7 @@ class ResultMap extends Component {
 
       // trigger resize event to update map
       setTimeout(() => window.dispatchEvent(new Event("resize")), 100);
-    } else if (prevProps.campaign && !this.props.campaign) {
+    } else if (prevProps.campaign && !campaign) {
       // zoom to austria
       this.setState({
         coordinates: [13.2, 47.516231],
@@ -433,7 +437,6 @@ class ResultMap extends Component {
 
     // hover-effect for municipalities
     if (map.getSource("municipality-hover-item")) {
-      console.log(hoveredMunicipality);
       if (hoveredMunicipality) {
         const features = map.querySourceFeatures("composite", {
           sourceLayer: "boundaries_admin_3",

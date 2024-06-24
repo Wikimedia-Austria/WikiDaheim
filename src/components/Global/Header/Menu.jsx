@@ -8,8 +8,6 @@ import { FALLBACK_LANGUAGE } from "/src/config";
 
 import pages from "/src/views/views";
 
-console.log(pages);
-
 class Header extends Component {
   static propTypes = {
     currentLanguage: PropTypes.string,
