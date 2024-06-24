@@ -200,9 +200,13 @@
     }
 
     .Details-Category {
-      .CategoryName--request:nth-child(2) {
-        color: black;
+      span:nth-child(2) {
+        &::before {
+          content: ", ";
+        }
+      }
 
+      span:nth-child(3) {
         &::before {
           content: ", ";
         }

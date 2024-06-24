@@ -24,13 +24,6 @@ const SearchBar = () => {
   const isLoading =
     categoriesLoading || searchLoading || placeLoading || !mapLoaded;
 
-  console.log("LoadingStates", {
-    categoriesLoading,
-    searchLoading,
-    placeLoading,
-    mapLoaded,
-  });
-
   const onPlaceSelect = (place) => {
     const selectedPlace = searchData.find((p) => p.get("place_name") === place);
     dispatch(selectPlace(selectedPlace));

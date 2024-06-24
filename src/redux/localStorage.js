@@ -13,7 +13,7 @@ export const loadState = () => {
     const parsedState = JSON.parse(serializedState);
 
     // RESET MAP LOADED
-    parsedState.app.mapLoaded = false;
+    parsedState.app.mapLoaded = true;
 
     // If Place Loading is still active, do not load the state - reset app instead
     if (parsedState.app.placeLoading) {

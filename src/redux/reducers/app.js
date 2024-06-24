@@ -61,7 +61,7 @@ const initialState = Map({
   selectedElement: null,
   currentMapPosition: fromJS([13.2, 47.516231]),
   currentMapZoom: 7,
-  mapLoaded: false,
+  mapLoaded: true,
 
   mobileView: "map",
   syncListAndMap: true,
@@ -200,14 +200,6 @@ const actionsMap = {
         });
       });
 
-      /*
-      Boilerplate for searching within category
-      const cloneNonImageRequest = arr.slice();
-      cloneNonImageRequest.splice(index, 1);
-
-      const nearestNonImageRequestElement = cloneNonImageRequest.find((r) => isPointWithinRadius(r, item, 15));
-      */
-
       return item;
     });
 
@@ -215,6 +207,39 @@ const actionsMap = {
       imageRequests,
       items.filter((item) => item.category === "commons")
     );
+
+    // merge by wikiData ID
+    const mergedItems = processedItems.reduce((acc, item) => {
+      // check if wd-item prop exists
+      if (!item["wd-item"]) {
+        return acc.concat(item);
+      }
+
+      // check if item already exists in acc
+      const existingItem = acc.find((i) => i["wd-item"] === item["wd-item"]);
+
+      // if it exists, merge the categories
+      if (existingItem) {
+        existingItem.categories = existingItem.categories.concat(
+          item.categories.filter(
+            (cat) => existingItem.categories.indexOf(cat) < 0
+          )
+        );
+
+        const source = Array.isArray(existingItem.source)
+          ? existingItem.source
+          : [existingItem.source];
+        const addedSource = Array.isArray(item.source)
+          ? item.source
+          : [item.source];
+
+        existingItem.source = source.concat(addedSource);
+        console.log("Merged Items by wikidata ID", existingItem, item);
+        return acc;
+      }
+
+      return acc.concat(item);
+    }, []);
 
     return state.merge({
       placeSelected: true,
@@ -235,7 +260,7 @@ const actionsMap = {
         },
       }),
       categories,
-      items: fromJS(processedItems),
+      items: fromJS(mergedItems),
       articles: fromJS(action.data.articles),
       commonscat: action.data.commonscat,
       gpxlink: action.data.GPX,
