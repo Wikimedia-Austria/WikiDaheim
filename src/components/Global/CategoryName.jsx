@@ -22,7 +22,7 @@ export default class CategoryName extends Component {
       case 'denkmalliste':
         message = (<FormattedMessage
           id='category.denkmalliste'
-          defaultMessage='Denkmale'
+          defaultMessage='Denkmäler'
         />);
         break;
 

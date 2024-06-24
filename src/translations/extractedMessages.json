@@ -1,7 +1,7 @@
 {
   "cancel": "Abbrechen",
   "category.commons": "Gemeingüter",
-  "category.denkmalliste": "Denkmale",
+  "category.denkmalliste": "Denkmäler",
   "category.kellergasse": "Kellergassen",
   "category.naturdenkmal": "Natur",
   "category.publicart": "Public Art",
@@ -24,7 +24,7 @@
   "filter.itemCount": "{itemCount, plural, =0 {keine Objekte} one {1 Objekte} other {{itemCount} Objekte} }",
   "filter.missingDescription": "Fehlende Beschreibung",
   "filter.missingImages": "Fehlende Bilder",
-  "filter.noresults": "Kein Objekt entspricht deinen Kriteren. Versuche die Filtereinstellungen zu ändern.",
+  "filter.noresults": "Kein Objekt entspricht deinen Kriterien. Versuche die Filtereinstellungen zu ändern.",
   "filter.propertyFilterTitle": "Eigenschaften",
   "filter.resultssorting": "Objekte werden analysiert...",
   "filter.searchInfo": "Suche:",
