@@ -5,7 +5,7 @@ const makeDialogContent = ({ content, title, cancelTitle, confirmTitle }) => `
     <h1>${title}</h1>
     <p>${content}</p>
     <div class="actions">
-      <button value="cancel">${cancelTitle}</button>
+      ${cancelTitle ? `<button value="cancel">${cancelTitle}</button>` : ""}
       <button value="confirm">${confirmTitle}</button>
     </div>
   </form>
@@ -16,7 +16,12 @@ const confirm = ({ content, title, cancelTitle, confirmTitle }) => {
 
   dialogPolyfill.registerDialog(dialog);
 
-  dialog.innerHTML = makeDialogContent({ content, title, cancelTitle, confirmTitle });
+  dialog.innerHTML = makeDialogContent({
+    content,
+    title,
+    cancelTitle,
+    confirmTitle,
+  });
   document.body.appendChild(dialog);
   dialog.showModal();
 

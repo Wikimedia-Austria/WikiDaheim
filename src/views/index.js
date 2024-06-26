@@ -1,43 +1,41 @@
-/* eslint-disable import/no-webpack-loader-syntax */
+import about_de from "./about_de.html?raw";
+import about_en from "./about_en.html?raw";
+import about_it from "./about_it.html?raw";
 
-import about_de from './about_de.html';
-import about_en from './about_en.html';
-import about_it from './about_it.html';
+import competition_de from "./competition_de.html?raw";
+import competition_en from "./competition_en.html?raw";
+import competition_it from "./competition_it.html?raw";
 
-import competition_de from './competition_de.html';
-import competition_en from './competition_en.html';
-import competition_it from './competition_it.html';
+import credits_de from "./credits_de.html?raw";
+import credits_en from "./credits_en.html?raw";
+import credits_it from "./credits_it.html?raw";
 
-import credits_de from './credits_de.html';
-import credits_en from './credits_en.html';
-import credits_it from './credits_it.html';
+import index_de from "./index_de.html?raw";
+import index_en from "./index_en.html?raw";
+import index_it from "./index_it.html?raw";
 
-import index_de from './index_de.html';
-import index_en from './index_en.html';
-import index_it from './index_it.html';
+import monuments_de from "./monuments_de.html?raw";
+import monuments_en from "./monuments_en.html?raw";
+import monuments_it from "./monuments_it.html?raw";
 
-import monuments_de from './monuments_de.html';
-import monuments_en from './monuments_en.html';
-import monuments_it from './monuments_it.html';
+import tagdesdenkmals_de from "./tagdesdenkmals_de.html?raw";
+import tagdesdenkmals_en from "./tagdesdenkmals_en.html?raw";
 
-import tagdesdenkmals_de from './tagdesdenkmals_de.html';
-import tagdesdenkmals_en from './tagdesdenkmals_en.html';
+import topics_de from "./topics_de.html?raw";
+import topics_en from "./topics_en.html?raw";
+import topics_it from "./topics_it.html?raw";
 
-import topics_de from './topics_de.html';
-import topics_en from './topics_en.html';
-import topics_it from './topics_it.html';
+import unescoICH_de from "./unescoICH_de.html?raw";
+import unescoICH_en from "./unescoICH_en.html?raw";
 
-import unescoICH_de from './unescoICH_de.html';
-import unescoICH_en from './unescoICH_en.html';
+import wlm_de from "./wlm_de.html?raw";
+import wlm_en from "./wlm_en.html?raw";
+import wlm_it from "./wlm_it.html?raw";
 
-import wlm_de from './wlm_de.html';
-import wlm_en from './wlm_en.html';
-import wlm_it from './wlm_it.html';
+import wle_de from "./wle_de.html?raw";
 
-import wle_de from './wle_de.html';
-
-import burgenland_de from './burgenland_de.html';
-import burgenlandinfo_de from './burgenlandinfo_de.html';
+import burgenland_de from "./burgenland_de.html?raw";
+import burgenlandinfo_de from "./burgenlandinfo_de.html?raw";
 
 const views = {
   about_de,

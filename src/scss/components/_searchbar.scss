@@ -16,7 +16,7 @@
 
 .SearchBar-Bar {
   background-color: $primary-color;
-  display:flex;
+  display: flex;
   align-items: center;
   padding: 1rem;
   position: relative;
@@ -25,30 +25,30 @@
 
   @include shadow-box;
   border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
   @include md {
     margin: 0 0.5rem;
   }
 
   &::before {
-    content:'';
+    content: "";
     display: block;
-    width:3.25em;
-    height:2.5em;
-    padding:.2em 0.75em .2em .2em;
+    width: 3.25em;
+    height: 2.5em;
+    padding: 0.2em 0.75em 0.2em 0.2em;
     margin-right: 1em;
 
     border-right: 1px solid rgba(255, 255, 255, 0.5);
 
-    background-image:url(../../assets/icons/icon_search.svg);
-    background-size:contain;
+    background-image: url(/src/assets/icons/icon_search.svg);
+    background-size: contain;
     background-repeat: no-repeat;
     background-origin: content-box;
   }
 
   > div {
-    flex:1;
+    flex: 1;
   }
 
   input {
@@ -56,9 +56,9 @@
     appearance: none;
     border: none;
     background-color: transparent;
-    color:$primary-color-contrast;
-    font-size:1.5rem;
-    outline:none;
+    color: $primary-color-contrast;
+    font-size: 1.5rem;
+    outline: none;
   }
 
   .SearchBar-Suggestions {
@@ -70,10 +70,10 @@
     bottom: 0;
     transform: translateY(100%);
     overflow: auto;
-    left:0;
-    width:100%;
+    left: 0;
+    width: 100%;
     padding: 0;
-    z-index:$z-index-suggestions;
+    z-index: $z-index-suggestions;
 
     @include shadow-box;
     border-top-left-radius: 0;
@@ -82,7 +82,7 @@
     .ViennaWarning {
       background-color: $unavailable-color;
       color: white;
-      font-size:.8em;
+      font-size: 0.8em;
     }
 
     div {
@@ -101,35 +101,35 @@
   }
 
   .SearchBar-Filter {
-    flex:0 1 auto;
+    flex: 0 1 auto;
 
     @include md {
-      display:none;
+      display: none;
     }
 
     .FilterButton {
-      width:calc(1.6em + 2vh);
-      height:calc(1.6em + 2vh);
-      position:relative;
-      background-image:url(../../assets/icons/icon_filter.svg);
-      background-size:contain;
+      width: calc(1.6em + 2vh);
+      height: calc(1.6em + 2vh);
+      position: relative;
+      background-image: url(/src/assets/icons/icon_filter.svg);
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center center;
 
       &.FilterButton--filtersActive::after {
-        position:absolute;
-        content:'';
-        top:.25em;
-        right:0;
-        width:1.5em;
-        height:1.5em;
-        border-radius:50%;
+        position: absolute;
+        content: "";
+        top: 0.25em;
+        right: 0;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
         background-color: $unavailable-color;
       }
     }
 
     span {
-      display:none;
+      display: none;
     }
   }
 
@@ -146,14 +146,14 @@
 
     &::before,
     &::after {
-      content: '';
+      content: "";
       height: 0.5rem;
       width: 0.5rem;
       border-radius: 50%;
       background-color: white;
       position: absolute;
-      top:0;
-      left:0;
+      top: 0;
+      left: 0;
       transform: translateY(-0.9rem);
     }
 

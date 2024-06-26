@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 const DEFAULT_SIZE = 24;
 const icons = {};
 
-const req = require.context('../../../assets/icons', true, /.*\.svg$/);
+const req = require.context("..//src/assets/icons", true, /.*\.svg$/);
 
 req.keys().forEach((key) => {
   const icon = req(key).default;
-  const dimensions = icon.viewBox && icon.viewBox.split(' ');
+  const dimensions = icon.viewBox && icon.viewBox.split(" ");
 
   let width = DEFAULT_SIZE;
   let height = DEFAULT_SIZE;
@@ -19,7 +19,7 @@ req.keys().forEach((key) => {
   }
 
   icons[icon.id] = {
-    href: `#${ icon.id }`,
+    href: `#${icon.id}`,
     width,
     height,
   };
@@ -27,34 +27,25 @@ req.keys().forEach((key) => {
 
 export default class Icon extends Component {
   render() {
-    const {
-      className,
-      width,
-      height,
-      glyph,
-      style,
-    } = this.props;
+    const { className, width, height, glyph, style } = this.props;
 
     const icon = icons[glyph];
 
     if (!icon) {
-      console.error(`Icon.jsx - There is no "${ glyph }" glyph`); // eslint-disable-line no-console
+      console.error(`Icon.jsx - There is no "${glyph}" glyph`); // eslint-disable-line no-console
 
       return null;
     }
 
-    const combinedClassName = className ? `Icon Icon--${ glyph } ${ className }` : `Icon Icon--${ glyph }`;
+    const combinedClassName = className
+      ? `Icon Icon--${glyph} ${className}`
+      : `Icon Icon--${glyph}`;
     const w = parseInt(width, 10) || icon.width;
     const h = parseInt(height, 10) || icon.height;
 
     return (
-      <svg
-        style={ style }
-        className={ combinedClassName }
-        width={ w }
-        height={ h }
-      >
-        <use xlinkHref={ icon.href } />
+      <svg style={style} className={combinedClassName} width={w} height={h}>
+        <use xlinkHref={icon.href} />
       </svg>
     );
   }

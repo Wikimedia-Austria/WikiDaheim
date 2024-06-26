@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { FormattedMessage } from "react-intl";
-import { toggleCityInfo } from "redux/actions/app";
+import { toggleCityInfo } from "/src/redux/actions/app";
 import Settings from "../Settings";
 import ExternalLinkOverlay from "./ExternalLinkOverlay";
 

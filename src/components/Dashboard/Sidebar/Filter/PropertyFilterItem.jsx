@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { toggleFilter } from 'redux/actions/app';
-import Immutable from 'immutable';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classNames from "classnames";
+import { toggleFilter } from "/src/redux/actions/app";
+import Immutable from "immutable";
 
 class PropertyFilterItem extends Component {
   static propTypes = {
@@ -31,23 +31,19 @@ class PropertyFilterItem extends Component {
     const isActive = activeFilters.includes(id);
 
     const ItemClass = classNames({
-      'PropertyFilter-Item': true,
-      'PropertyFilter-Item--active': isActive,
+      "PropertyFilter-Item": true,
+      "PropertyFilter-Item--active": isActive,
     });
 
     return (
-      <button
-        className={ ItemClass }
-        onClick={ this.toggle }
-      >
-        { title }
+      <button className={ItemClass} onClick={this.toggle}>
+        {title}
         <span />
       </button>
     );
   }
-
 }
 
-export default connect(state => ({
-  activeFilters: state.app.get('activeFilters'),
+export default connect((state) => ({
+  activeFilters: state.app.get("activeFilters"),
 }))(PropertyFilterItem);

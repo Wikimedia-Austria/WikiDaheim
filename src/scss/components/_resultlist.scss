@@ -4,8 +4,8 @@
 
 .ResultList {
   display: flex;
-  height:100%;
-  overflow:hidden;
+  height: 100%;
+  overflow: hidden;
   flex-direction: column;
   background-color: white;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
@@ -17,7 +17,7 @@
   @include md {
     position: absolute;
     z-index: 1000;
-    width:33%;
+    width: 33%;
     min-width: 400px;
     max-width: 600px;
     height: auto;
@@ -38,9 +38,9 @@
 
 .ResultListItem {
   margin: 0;
-  min-height:100px;
-  max-height:100px;
-  transition:background-color .2s ease;
+  min-height: 100px;
+  max-height: 100px;
+  transition: background-color 0.2s ease;
   cursor: pointer;
   color: $text-color;
   background-color: rgba(255, 255, 255, 0.9);
@@ -56,11 +56,11 @@
   }
 
   &:nth-child(2) {
-    margin-top:0;
+    margin-top: 0;
   }
 
   &.ResultListItem--active {
-    background-color:rgba(235, 235, 235, 0.9);
+    background-color: rgba(235, 235, 235, 0.9);
   }
 
   &.ResultListItem--selected {
@@ -83,7 +83,7 @@
   .Details-Container {
     display: flex;
     flex-direction: row;
-    align-items:stretch;
+    align-items: stretch;
     height: 100px;
 
     @include md {
@@ -92,35 +92,35 @@
   }
 
   .PhotoContainer {
-    width:20%;
+    width: 20%;
     flex-shrink: 0;
-    position:relative;
-    margin-right:1em;
-    background: rgba(0,0,0,.2);
-    background-size:cover;
+    position: relative;
+    margin-right: 1em;
+    background: rgba(0, 0, 0, 0.2);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 
     &.PhotoContainer--Audio {
       background: white;
-      background-image: url(../../assets/icons/loudspeaker.svg);
+      background-image: url(/src/assets/icons/loudspeaker.svg);
       background-repeat: no-repeat;
       background-size: 60%;
       background-position: center;
     }
 
     .PhotoContainer-InfoButton {
-      display:block;
-      position:absolute;
-      bottom:.25em;
-      left:.25em;
-      width:2em;
-      height:2em;
-      opacity:.8;
-      transition:opacity .2s ease;
+      display: block;
+      position: absolute;
+      bottom: 0.25em;
+      left: 0.25em;
+      width: 2em;
+      height: 2em;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
 
-      background-image:url(../../assets/icons/icon_info.svg);
-      background-size:contain;
+      background-image: url(/src/assets/icons/icon_info.svg);
+      background-size: contain;
       background-repeat: no-repeat;
       background-origin: content-box;
 
@@ -129,34 +129,34 @@
       }
 
       span {
-        display:none;
+        display: none;
       }
     }
 
     .PhotoContainer-UploadButton {
-      display:block;
-      position:absolute;
-      top:0;
-      right:0;
-      width:2.5em;
-      height:2.5em;
-      padding:.2em;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2.5em;
+      height: 2.5em;
+      padding: 0.2em;
 
-      background-image:url(../../assets/icons/icon_upload.svg);
-      background-size:contain;
+      background-image: url(/src/assets/icons/icon_upload.svg);
+      background-size: contain;
       background-repeat: no-repeat;
       background-origin: content-box;
 
       span {
-        display:none;
+        display: none;
       }
     }
   }
 
   .Details {
-    padding:1em 1em 1em 0;
-    display:flex;
-    box-sizing:border-box;
+    padding: 1em 1em 1em 0;
+    display: flex;
+    box-sizing: border-box;
     flex-direction: column;
     flex: 1;
 
@@ -180,8 +180,8 @@
         pointer-events: none;
         max-height: 1.3em;
         overflow: hidden;
-        opacity: .5;
-        transition: opacity .15s ease;
+        opacity: 0.5;
+        transition: opacity 0.15s ease;
 
         @include md {
           max-height: none;
@@ -196,15 +196,19 @@
     .Details-Category,
     .Details-Location,
     .Details-Source {
-      font-size: .8em;
+      font-size: 0.8em;
     }
 
     .Details-Category {
-      .CategoryName--request:nth-child(2) {
-        color: black;
-
+      span:nth-child(2) {
         &::before {
-          content: ', ';
+          content: ", ";
+        }
+      }
+
+      span:nth-child(3) {
+        &::before {
+          content: ", ";
         }
       }
     }
@@ -213,13 +217,23 @@
     .Details-Source {
       flex: 1;
 
-      span { padding-right: 0.5em; }
-      br { display: none; }
-      strong { font-weight: bold; }
+      span {
+        padding-right: 0.5em;
+      }
+      br {
+        display: none;
+      }
+      strong {
+        font-weight: bold;
+      }
 
       @include md {
-        span { padding-right: 0; }
-        br { display: inherit; }
+        span {
+          padding-right: 0;
+        }
+        br {
+          display: inherit;
+        }
       }
     }
 
@@ -231,8 +245,8 @@
         display: inline;
 
         &::after {
-          content: ', ';
-          padding-right: .25em;
+          content: ", ";
+          padding-right: 0.25em;
         }
 
         &:last-child::after {
@@ -254,29 +268,30 @@
     }
 
     @include sm {
-      padding-bottom:1em;
+      padding-bottom: 1em;
       overflow: hidden;
     }
 
     h2 {
-      margin:0;
-      font-size:1em;
+      margin: 0;
+      font-size: 1em;
       color: $primary-color;
     }
 
-    p, strong {
-      font-size:.9em;
-      display:block;
+    p,
+    strong {
+      font-size: 0.9em;
+      display: block;
     }
 
     p {
-      margin-bottom:0;
+      margin-bottom: 0;
       max-height: 5em;
-      overflow:hidden;
+      overflow: hidden;
     }
 
     a {
-      font-size:.9em;
+      font-size: 0.9em;
       display: none;
     }
   }
@@ -291,7 +306,7 @@
     flex-direction: column;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    background-color:rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     font-family: sans-serif;
 
     p {
@@ -327,26 +342,26 @@
       }
 
       &::before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         left: 0;
         top: 0;
-        width:2rem;
-        height:2rem;
-        padding:.2rem;
+        width: 2rem;
+        height: 2rem;
+        padding: 0.2rem;
         margin-right: 1rem;
         background-color: $primary-color;
 
-        background-image:url(../../assets/icons/icon_upload.svg);
-        background-size:contain;
+        background-image: url(/src/assets/icons/icon_upload.svg);
+        background-size: contain;
         background-repeat: no-repeat;
         background-origin: content-box;
       }
 
       &.Details-Link-Article {
         &::before {
-          background-image:url(../../assets/icons/icon_plus_white.svg);
+          background-image: url(/src/assets/icons/icon_plus_white.svg);
         }
       }
     }

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { toggleMenu } from 'redux/actions/menu';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import { toggleMenu } from "/src/redux/actions/menu";
 
 class MenuToggle extends Component {
   static propTypes = {
@@ -24,28 +24,27 @@ class MenuToggle extends Component {
   }
 
   render() {
-    const {
-      showMenu,
-    } = this.props;
+    const { showMenu } = this.props;
 
     const btnClass = classNames({
-      'Menu-toggle': true,
-      'Menu-toggle--active': showMenu,
+      "Menu-toggle": true,
+      "Menu-toggle--active": showMenu,
     });
 
     return (
       <button
-        type='button'
-        className={ btnClass }
-        onClick={ this.handleToggleClick }
+        type="button"
+        className={btnClass}
+        onClick={this.handleToggleClick}
       >
-        <span /><span /><span />
+        <span />
+        <span />
+        <span />
       </button>
     );
   }
-
 }
 
-export default connect(state => ({
-  showMenu: state.menu.get('showMenu'),
+export default connect((state) => ({
+  showMenu: state.menu.get("showMenu"),
 }))(MenuToggle);

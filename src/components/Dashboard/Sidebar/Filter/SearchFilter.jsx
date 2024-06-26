@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchFilter } from "redux/actions/app";
+import { setSearchFilter } from "/src/redux/actions/app";
 import { FormattedMessage } from "react-intl";
 
 const SearchFilter = () => {
