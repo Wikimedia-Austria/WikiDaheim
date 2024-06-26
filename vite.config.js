@@ -31,6 +31,7 @@ function reactVirtualized() {
 export default defineConfig({
   build: {
     outDir: "build",
+    commonjsOptions: { transformMixedEsModules: true },
   },
   base: "/",
   plugins: [reactVirtualized(), react()],
