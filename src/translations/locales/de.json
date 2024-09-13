@@ -65,5 +65,5 @@
   "source.nature_reserve": "Naturschutzgebiet",
   "source.wikidata": "Wikidata",
   "uploadPhoto": "Medien hochladen",
-  "uploadPhoto.description": "Lade eine Mediendatei (Bild, Audio, Video) zu {cityName} hoch"
+  "uploadPhoto.description": "Wenn nicht unten in der Liste, lade eine Mediendatei (Bild, Audio, Video) zu {cityName} hier hoch"
 }
