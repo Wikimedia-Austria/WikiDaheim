@@ -65,5 +65,5 @@
   "source.nature_reserve": "Protected area",
   "source.wikidata": "Wikidata",
   "uploadPhoto": "Upload media",
-  "uploadPhoto.description": "Upload a media file (picture, audio, video) to {cityName}"
+  "uploadPhoto.description": "If not available below, upload a media file (picture, audio, video) to {cityName} here"
 }
