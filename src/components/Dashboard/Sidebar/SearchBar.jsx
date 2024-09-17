@@ -25,7 +25,7 @@ const SearchBar = () => {
     categoriesLoading || searchLoading || placeLoading || !mapLoaded;
 
   const onPlaceSelect = (place) => {
-    const selectedPlace = searchData.find((p) => p.get("place_name") === place);
+    const selectedPlace = searchData.find((p) => p.get("id") === place);
     dispatch(selectPlace(selectedPlace));
   };
 
@@ -60,7 +60,7 @@ const SearchBar = () => {
           {(placeholder) => (
             <Autocomplete
               inputProps={{ placeholder, accessKey: "f" }}
-              getItemValue={(item) => item.place_name}
+              getItemValue={(item) => item.id}
               items={searchData.toJS()}
               renderItem={renderItem}
               renderMenu={(items) => (
