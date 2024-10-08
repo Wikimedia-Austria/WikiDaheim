@@ -102,9 +102,13 @@ const search = (query, lang, maxResults = 10) => {
 
   const normalizedQuery = normalizeQueryString(query);
 
-  const filtered = boundaries.filter((town) =>
-    normalizeQueryString(town.name).includes(normalizedQuery)
-  );
+  const filtered = boundaries.filter((town) => {
+    if (normalizedQuery.toLowerCase() === "wien") {
+      return town.unit_code.slice(0, 1) == 9;
+    } else {
+      return normalizeQueryString(town.name).includes(normalizedQuery);
+    }
+  });
 
   const mapped = filtered
     // remove duplicates from mapbox (due to multiple boundaries per town from municipality fusion)
