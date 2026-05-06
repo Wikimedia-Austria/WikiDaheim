@@ -67,7 +67,7 @@ class ResultListItem extends Component {
         .get("uploadLink")
         .replace(
           "captionlang=de",
-          `captionlang=${currentLanguage}&uselang=${currentLanguage}`
+          `captionlang=${currentLanguage}&uselang=${currentLanguage}`,
         );
 
       if (item.get("foto")) {
@@ -84,7 +84,7 @@ class ResultListItem extends Component {
           .match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/);
 
         if (!isAudio) {
-          const url = getFilePath(item.get("foto"), 256);
+          const url = getFilePath(item.get("foto"), 250);
           photoContainerStyle.backgroundImage = `url('${url}')`;
         } else {
           delete photoContainerStyle.backgroundColor;

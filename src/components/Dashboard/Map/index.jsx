@@ -241,9 +241,9 @@ class ResultMap extends Component {
         dispatch(
           placeItemHover(
             this.props.items.find(
-              (c) => c.get("id") === e.features[0].properties.id
-            )
-          )
+              (c) => c.get("id") === e.features[0].properties.id,
+            ),
+          ),
         );
       };
 
@@ -274,10 +274,10 @@ class ResultMap extends Component {
       trigger municipality hover (small zoom size layer)
       */
       map.on("mousemove", "wd-municipalities", (e) =>
-        this.triggerMunicipalityHover(e, map)
+        this.triggerMunicipalityHover(e, map),
       );
       map.on("mouseleave", "wd-municipalities", (e) =>
-        this.triggerMunicipalityLeave(e, map)
+        this.triggerMunicipalityLeave(e, map),
       );
     }
 
@@ -285,10 +285,10 @@ class ResultMap extends Component {
       dispatch(
         placeItemSelect(
           this.props.items.find(
-            (c) => c.get("id") === e.features[0].properties.id
+            (c) => c.get("id") === e.features[0].properties.id,
           ),
-          "map"
-        )
+          "map",
+        ),
       );
 
       //e.stopPropagation();
@@ -302,7 +302,7 @@ class ResultMap extends Component {
     });
 
     map.on("click", "wd-municipalities", (e) =>
-      this.triggerMunicipalitySelect(e)
+      this.triggerMunicipalitySelect(e),
     );
 
     this.updateHighlightedArea(map);
@@ -324,7 +324,7 @@ class ResultMap extends Component {
 
     /* load category marker image */
     const filteredCategories = categories.filter(
-      (category) => missingImage === category.get("name")
+      (category) => missingImage === category.get("name"),
     );
 
     if (filteredCategories.size > 0) {
@@ -365,7 +365,7 @@ class ResultMap extends Component {
           name: municipality.name,
           longitude: lngLat.lng,
           latitude: lngLat.lat,
-        })
+        }),
       );
 
       setTimeout(() => this.updateHighlightedArea(map), 10);
@@ -401,8 +401,8 @@ class ResultMap extends Component {
           geometry: {
             coordinates: municipality.centroid,
           },
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -551,7 +551,7 @@ class ResultMap extends Component {
       hoveredElement.get("latitude")
     ) {
       const hoveredCategory = categories.find(
-        (c) => c.get("name") === hoveredElement.get("category")
+        (c) => c.get("name") === hoveredElement.get("category"),
       );
       const address = hoveredElement.get("adresse");
       let hasPhoto = false;
@@ -571,7 +571,7 @@ class ResultMap extends Component {
           .match(/\.(webm|wav|mid|midi|kar|flac|ogx|ogg|ogm|ogv|oga|spx|opus)/)
       ) {
         hasPhoto = true;
-        const url = getFilePath(hoveredElement.get("foto"), 256);
+        const url = getFilePath(hoveredElement.get("foto"), 250);
         photoContainerStyle.backgroundImage = `url('${url}')`;
       } else if (descriptionText && descriptionText.length > 0) {
         hasText = true;
